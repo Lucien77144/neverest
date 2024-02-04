@@ -2,6 +2,7 @@ import Renderer from './Renderer'
 import { Pane } from 'tweakpane'
 import * as THREE from 'three'
 import Camera from './Camera'
+import Time from './Utils/Time'
 
 export default class Experience {
   static _instance
@@ -71,16 +72,7 @@ export default class Experience {
     this.activeScene = {}
     this.camera = new Camera()
     this.renderer = new Renderer()
-    // this._initTime()
-
-    console.group('Experience')
-    console.log('Config:', this.config)
-    console.log('Debug:', this.debug)
-    console.log('Scene:', this.scene)
-    console.log('Active Scene:', this.activeScene)
-    console.log('Camera:', this.camera)
-    console.log('Renderer:', this.renderer)
-    console.groupEnd()
+    this.time = new Time()
 
     window.addEventListener('resize', this._resize())
 
