@@ -1,0 +1,24 @@
+[
+  {
+    "name": "default",
+    "data": {},
+    "items": [
+      {
+        "name": "lennaTexture",
+        "source": "/img/lenna.png",
+        "type": "texture"
+      }
+    ]
+  },
+  {
+    "name": "test",
+    "data": {},
+    "items": [
+      {
+        "name": "lennaTexture",
+        "source": "/img/lenna2.png",
+        "type": "texture"
+      }
+    ]
+  }
+]

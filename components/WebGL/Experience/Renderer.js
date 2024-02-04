@@ -33,11 +33,11 @@ export default class Renderer {
     this.debugFolder = this.debug.addFolder({
       title: 'Renderer',
     })
-
+    
     this.debugFolder
-      .addInput(this, 'clearColor', { view: 'color' }, { label: 'Clear Color' })
+      .addBinding(this.clearColor, 'color', { view: 'color' })
       .on('change', () => {
-        this.instance.setClearColor(this.clearColor, 1)
+        this.instance.setClearColor(this.clearColor.color, 1)
       })
   }
 

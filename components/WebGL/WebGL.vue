@@ -1,5 +1,5 @@
 <template>
-  <div ref="experience"></div>
+  <div id="exp" ref="experience"></div>
 </template>
 
 <script lang="js">
@@ -16,7 +16,7 @@ export default {
 </script>
 
 <style>
-canvas {
+#exp > canvas {
   height: 100vh !important;
   width: 100vw !important;
 }

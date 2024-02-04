@@ -5,7 +5,6 @@ import Camera from './Camera'
 import Time from './Utils/Time'
 import Sizes from './Utils/Sizes'
 import Resources from './Utils/Resources'
-import assets from './assets.json'
 
 export default class Experience {
   static _instance
@@ -27,7 +26,6 @@ export default class Experience {
     this.sizes = null
     this.debug = null
     this.scene = null
-    this.activeScene = null
     this.camera = null
     this.renderer = null
     this.time = null
@@ -81,12 +79,11 @@ export default class Experience {
 
     this.debug = this._getDebug()
     this.scene = this._getScene()
-    this.activeScene = {}
     this.sizes = new Sizes()
     this.camera = new Camera()
     this.renderer = new Renderer()
     this.time = new Time()
-    this.resources = new Resources(assets)
+    this.resources = new Resources()
 
     const geometry = new THREE.BoxGeometry()
     const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })

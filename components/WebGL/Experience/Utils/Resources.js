@@ -1,16 +1,17 @@
 import * as THREE from 'three'
 import EventEmitter from './EventEmitter.js'
 import Loader from './Loader.js'
+import sources from '../sources.json'
 
 export default class Resources extends EventEmitter {
   /**
    * Constructor
    */
-  constructor(_assets) {
+  constructor() {
     super()
 
     // New elements
-    this.assets = [..._assets]
+    this.assets = [...sources]
     this.items = {} // Will contain every resources
     this.groups = {}
     this.loader = null
