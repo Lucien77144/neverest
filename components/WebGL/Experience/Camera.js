@@ -2,6 +2,9 @@ import * as THREE from 'three'
 import Experience from './Experience'
 
 export default class Camera {
+  /**
+   * Constructor
+   */
   constructor() {
     // Get elements from experience
     this.experience = new Experience()

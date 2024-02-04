@@ -2,6 +2,9 @@ import Experience from './Experience'
 import * as THREE from 'three'
 
 export default class Renderer {
+  /**
+   * Constructor
+   */
   constructor() {
     // Get elements from experience
     this.experience = new Experience()
@@ -64,7 +67,7 @@ export default class Renderer {
     if (this.debug) this._setDebug()
 
     // Append canvas
-    this.experience.container.appendChild(this.instance.domElement)
+    this.experience.targetElement.appendChild(this.instance.domElement)
   }
 
   /**

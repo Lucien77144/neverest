@@ -1,5 +1,5 @@
 <template>
-  <div id="webgl" ref="wegbl"></div>
+  <div ref="experience"></div>
 </template>
 
 <script lang="js">
@@ -8,14 +8,16 @@ import Experience from './Experience/Experience.js';
 export default {
   name: 'WebGL',
   mounted() {
-    const exp = new Experience(this.$refs['wegbl']);
+    const exp = new Experience({
+      targetElement: this.$refs['experience']
+    });
   }
 }
 </script>
 
-<style scoped>
+<style>
 canvas {
-  height: 100vh;
-  width: 100vw;
+  height: 100vh !important;
+  width: 100vw !important;
 }
 </style>
