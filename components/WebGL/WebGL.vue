@@ -1,26 +1,32 @@
 <template>
+  <Loader v-if="loadValue !== 100" :loadValue="loadValue" />
   <div id="exp" ref="experience"></div>
 </template>
 
-<script lang="js">
-import Experience from './Experience/Experience.js';
+<script setup lang="ts">
+import Experience from './Experience/Experience.js'
 
-let exp = null;
-export default {
-  name: 'WebGL',
-  mounted() {
-    exp = new Experience({
-      targetElement: this.$refs['experience']
-    });
-  },
-  unmounted() {
-    exp.destroy();
-  }
-}
+const loadValue = ref(0)
+onMounted(() => {
+  const exp: any = new Experience({
+    targetElement: document.getElementById('exp'),
+  })
+
+  exp.resources.on('progress', () => {
+    loadValue.value = (exp.resources.loaded / exp.resources.toLoad) * 100
+  })
+
+  onUnmounted(() => {
+    exp.destroy()
+  })
+})
 </script>
 
 <style>
-#exp > canvas {
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
   height: 100vh !important;
   width: 100vw !important;
 }

@@ -11,15 +11,16 @@ export default class Resources extends EventEmitter {
     super()
 
     // New elements
-    this.sources = [
-      ...sources.filter((s) => !_groups || _groups.includes(s.name)),
-    ]
+    this.sources = []
     this.items = {} // Will contain every resources
     this.groups = {}
     this.loader = null
+    this.toLoad = null
+    this.loaded = null
 
     // Init
     this._init()
+    this.load(_groups)
   }
 
   /**
@@ -71,12 +72,34 @@ export default class Resources extends EventEmitter {
   }
 
   /**
+   * Load resources by groups (if unset, load all resources)
+   * @param {*} _groups Groups of resources to load
+   */
+  load(_groups) {
+    this.toLoad = 0
+    this.loaded = 0
+
+    this.sources = sources
+      .filter((s) => !_groups || _groups.includes(s.name))
+      .map((s) => ({
+        ...s,
+        items: s.items.filter((i) => {
+          if (!(i.name in this.items)) {
+            this.toLoad++
+            return true
+          }
+        }),
+      }))
+
+    this._loadNextGroup()
+  }
+
+  /**
    * Init
    */
   _init() {
     this.loader = new Loader()
     this._setGroups()
-    this._loadNextGroup()
 
     // Loader file end event
     this.loader.on('fileEnd', (_resource, _data) => {
@@ -94,6 +117,7 @@ export default class Resources extends EventEmitter {
 
       // Progress and event
       this.groups.current.loaded++
+      this.loaded++
       this.trigger('progress', [this.groups.current, _resource, data])
     })
 
@@ -113,29 +137,18 @@ export default class Resources extends EventEmitter {
   }
 
   /**
-   * Load
-   * @param {*} _groups Groups of resources to load
+   * Destroy and dispose ressources (if unset, destroy all resources)
+   * @param {*} _groups Groups of resources to destroy
    */
-  load(_groups) {
-    this.sources = sources
+  destroy(_groups) {
+    sources
       .filter((s) => !_groups || _groups.includes(s.name))
-      .map((s) => ({
-        ...s,
-        items: s.items.filter((i) => !(i.name in this.items)),
-      }))
-
-    this._loadNextGroup()
-  }
-
-  /**
-   * Destroy
-   */
-  destroy() {
-    for (const _itemKey in this.items) {
-      const item = this.items[_itemKey]
-      if (item instanceof THREE.Texture) {
-        item.dispose()
-      }
-    }
+      .flatMap((s) => s.items.map((i) => i.name))
+      .forEach((item) => {
+        if (this.items[item] instanceof THREE.Texture) {
+          this.items[item].dispose()
+        }
+        delete this.items[item]
+      })
   }
 }
