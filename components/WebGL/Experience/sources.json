@@ -11,6 +11,27 @@
     ]
   },
   {
+    "name": "models",
+    "data": {},
+    "items": [
+      {
+        "name": "woodHouse1",
+        "source": "/models/wood_house1.glb",
+        "type": "glb"
+      },
+      {
+        "name": "woodHouse2",
+        "source": "/models/wood_house2.glb",
+        "type": "glb"
+      },
+      {
+        "name": "woodHouse3",
+        "source": "/models/wood_house3.glb",
+        "type": "glb"
+      }
+    ]
+  },
+  {
     "name": "test",
     "data": {},
     "items": [

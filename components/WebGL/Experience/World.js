@@ -10,7 +10,7 @@ export default class World {
     this.experience = new Experience()
 
     // New elements
-    this.floor = null
+    this.components = null
 
     // Init
     this._init()
@@ -20,20 +20,26 @@ export default class World {
    * Init the world
    */
   _init() {
-    this.floor = new Floor()
+    this.components = {
+      floor: new Floor(),
+    }
   }
 
   /**
    * Update the world
    */
   update() {
-    this.floor.update()
+    Object.keys(this.components).forEach((_key) => {
+      this.components[_key].update()
+    })
   }
 
   /**
    * Destroy the world
    */
   destroy() {
-    this.floor.destroy()
+    Object.keys(this.components).forEach((_key) => {
+      this.components[_key].destroy()
+    })
   }
 }

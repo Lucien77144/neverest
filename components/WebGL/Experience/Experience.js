@@ -85,8 +85,13 @@ export default class Experience {
     this.camera = new Camera()
     this.renderer = new Renderer()
     this.time = new Time()
-    this.resources = new Resources()
+    this.resources = new Resources(['default', 'models'])
     this.world = new World()
+
+    setTimeout(() => {
+      // console.log(this.resources.items)
+      // this.resources.load(['default', 'test'])
+    }, 3000)
 
     this.sizes.on('resize', () => {
       this._resize()
@@ -111,6 +116,7 @@ export default class Experience {
   _update() {
     this.renderer.update()
     this.camera.update()
+    this.world.update()
 
     window.requestAnimationFrame(() => {
       this._update()
