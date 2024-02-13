@@ -28,6 +28,51 @@
         "name": "woodHouse3",
         "source": "/models/wood_house3.glb",
         "type": "glb"
+      },
+      {
+        "name": "woodHouse4",
+        "source": "/models/wood_house3.glb",
+        "type": "glb"
+      },
+      {
+        "name": "woodHouse5",
+        "source": "/models/wood_house3.glb",
+        "type": "glb"
+      },
+      {
+        "name": "woodHouse6",
+        "source": "/models/wood_house3.glb",
+        "type": "glb"
+      },
+      {
+        "name": "woodHouse7",
+        "source": "/models/wood_house3.glb",
+        "type": "glb"
+      },
+      {
+        "name": "woodHouse8",
+        "source": "/models/wood_house3.glb",
+        "type": "glb"
+      },
+      {
+        "name": "woodHouse9",
+        "source": "/models/wood_house3.glb",
+        "type": "glb"
+      },
+      {
+        "name": "woodHouse10",
+        "source": "/models/wood_house3.glb",
+        "type": "glb"
+      },
+      {
+        "name": "woodHouse11",
+        "source": "/models/wood_house3.glb",
+        "type": "glb"
+      },
+      {
+        "name": "woodHouse12",
+        "source": "/models/wood_house3.glb",
+        "type": "glb"
       }
     ]
   },

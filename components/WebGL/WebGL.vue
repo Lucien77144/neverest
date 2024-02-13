@@ -1,21 +1,56 @@
 <template>
-  <Loader v-if="loadValue !== 100" :loadValue="loadValue" />
-  <div id="exp" ref="experience"></div>
+  <div ref="loaderRef">
+    <Loader :loadValue="loadValue" />
+  </div>
+  <div ref="expRef" class="hidden"></div>
 </template>
 
 <script setup lang="ts">
 import Experience from './Experience/Experience.js'
+import gsap from 'gsap'
 
 const loadValue = ref(0)
+
+const expRef = ref<HTMLElement | null>(null)
+const loaderRef = ref<HTMLElement | null>(null)
+
+// Set opacity with gsap
+const setOpacity = (ref: Ref, opacity: number) => {
+  gsap.to(ref.value, {
+    opacity,
+    duration: 1,
+    ease: 'power2.easeInOut',
+    onComplete: () => {
+      if (opacity === 0) {
+        ref.value?.remove()
+      }
+    },
+  })
+}
+
+// On component mounted, create the experience
 onMounted(() => {
-  const exp: any = new Experience({
-    targetElement: document.getElementById('exp'),
+  const exp = new Experience({
+    targetElement: expRef.value,
+  })
+  const resources: any = exp.resources
+
+  // On resources progress, update loadValue
+  resources.on('progress', () => {
+    gsap.timeline().to(loadValue, {
+      value: (resources.loaded / resources.toLoad) * 100,
+      duration: 1,
+      ease: 'power2.inOut',
+      onComplete: () => {
+        if (loadValue.value === 100) {
+          setOpacity(expRef, 1)
+          setOpacity(loaderRef, 0)
+        }
+      },
+    })
   })
 
-  exp.resources.on('progress', () => {
-    loadValue.value = (exp.resources.loaded / exp.resources.toLoad) * 100
-  })
-
+  // On component unmounted, destroy the experience
   onUnmounted(() => {
     exp.destroy()
   })
@@ -29,5 +64,8 @@ canvas {
   left: 0;
   height: 100vh !important;
   width: 100vw !important;
+}
+.hidden {
+  opacity: 0;
 }
 </style>

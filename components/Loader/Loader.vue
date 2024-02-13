@@ -6,7 +6,7 @@ defineProps<{
 
 <template>
   <div class="loader">
-    <h1>{{ loadValue }}</h1>
+    <h1>{{ Math.floor(loadValue) }}</h1>
   </div>
 </template>
 
