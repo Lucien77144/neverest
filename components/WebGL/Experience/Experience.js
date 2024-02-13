@@ -85,13 +85,16 @@ export default class Experience {
     this.camera = new Camera()
     this.renderer = new Renderer()
     this.time = new Time()
-    this.resources = new Resources(['default', 'models'])
+    this.resources = new Resources(['default'])
     this.world = new World()
 
     setTimeout(() => {
-      // console.log(this.resources.items)
-      // this.resources.load(['default', 'test'])
-    }, 3000)
+      this.resources.load(['models', 'test'])
+    }, 1000)
+
+    this.resources.on('progress', () => {
+      console.log(this.resources.items)
+    })
 
     this.sizes.on('resize', () => {
       this._resize()

@@ -7,11 +7,13 @@ export default class Resources extends EventEmitter {
   /**
    * Constructor
    */
-  constructor() {
+  constructor(_groups) {
     super()
 
     // New elements
-    this.assets = [...sources]
+    this.sources = [
+      ...sources.filter((s) => !_groups || _groups.includes(s.name)),
+    ]
     this.items = {} // Will contain every resources
     this.groups = {}
     this.loader = null
@@ -24,7 +26,7 @@ export default class Resources extends EventEmitter {
    * Load next group
    */
   _loadNextGroup() {
-    this.groups.current = this.assets.shift()
+    this.groups.current = this.sources.shift()
     this.groups.current.toLoad = this.groups.current.items.length
     this.groups.current.loaded = 0
 
@@ -102,12 +104,27 @@ export default class Resources extends EventEmitter {
       // Trigger
       this.trigger('groupEnd', [this.groups.current])
 
-      if (this.assets.length > 0) {
+      if (this.sources.length > 0) {
         this._loadNextGroup()
       } else {
         this.trigger('end')
       }
     })
+  }
+
+  /**
+   * Load
+   * @param {*} _groups Groups of resources to load
+   */
+  load(_groups) {
+    this.sources = sources
+      .filter((s) => !_groups || _groups.includes(s.name))
+      .map((s) => ({
+        ...s,
+        items: s.items.filter((i) => !(i.name in this.items)),
+      }))
+
+    this._loadNextGroup()
   }
 
   /**
