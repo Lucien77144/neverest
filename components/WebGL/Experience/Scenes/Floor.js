@@ -22,31 +22,35 @@ export default class Floor {
   /**
    * Get geometry
    */
-  _getGeometry() {
-    return new THREE.PlaneGeometry(3, 3)
+  _setGeometry() {
+    this.geometry = new THREE.PlaneGeometry(10, 10)
   }
 
   /**
    * Get material
    */
-  _getMaterial() {
-    return new THREE.MeshBasicMaterial({ color: 0x00ff00 })
+  _setMaterial() {
+    this.material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
   }
 
   /**
    * Get mesh
    */
-  _getMesh() {
-    return new THREE.Mesh(this.geometry, this.material)
+  _setMesh() {
+    this.mesh = new THREE.Mesh(this.geometry, this.material)
+
+    this.mesh.rotation.x = -Math.PI / 2
+    this.mesh.position.y = -3
   }
 
   /**
    * Init the floor
    */
   _init() {
-    this.geometry = this._getGeometry()
-    this.material = this._getMaterial()
-    this.mesh = this._getMesh()
+    this._setGeometry()
+    this._setMaterial()
+    this._setMesh()
+
     this.scene.add(this.mesh)
   }
 
