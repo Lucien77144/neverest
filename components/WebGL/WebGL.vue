@@ -5,12 +5,16 @@
 <script lang="js">
 import Experience from './Experience/Experience.js';
 
+let exp = null;
 export default {
   name: 'WebGL',
   mounted() {
-    const exp = new Experience({
+    exp = new Experience({
       targetElement: this.$refs['experience']
     });
+  },
+  unmounted() {
+    exp.destroy();
   }
 }
 </script>

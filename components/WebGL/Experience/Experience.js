@@ -5,6 +5,7 @@ import Camera from './Camera'
 import Time from './Utils/Time'
 import Sizes from './Utils/Sizes'
 import Resources from './Utils/Resources'
+import World from './World'
 
 export default class Experience {
   static _instance
@@ -30,6 +31,7 @@ export default class Experience {
     this.renderer = null
     this.time = null
     this.resources = null
+    this.world = null
 
     // Init
     this._init()
@@ -84,11 +86,7 @@ export default class Experience {
     this.renderer = new Renderer()
     this.time = new Time()
     this.resources = new Resources()
-
-    const geometry = new THREE.BoxGeometry()
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
-    const cube = new THREE.Mesh(geometry, material)
-    this.scene.add(cube)
+    this.world = new World()
 
     this.sizes.on('resize', () => {
       this._resize()
@@ -117,5 +115,13 @@ export default class Experience {
     window.requestAnimationFrame(() => {
       this._update()
     })
+  }
+
+  destroy() {
+    this.sizes.off('resize')
+    this.renderer.instance.dispose()
+    this.time.stop()
+    this.resources.destroy()
+    this.world.destroy()
   }
 }
