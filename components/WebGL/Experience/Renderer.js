@@ -13,9 +13,11 @@ export default class Renderer {
     this.time = this.experience.time
     this.scene = this.experience.scene
     this.camera = this.experience.camera.instance
+    this.stats = this.experience.stats
 
     // New elements
     this.instance = null
+    this.context = null
     this.debugFolder = null
     this.clearColor = {
       color: '#ff0000',
@@ -33,12 +35,17 @@ export default class Renderer {
     this.debugFolder = this.debug.addFolder({
       title: 'Renderer',
     })
-    
+
     this.debugFolder
       .addBinding(this.clearColor, 'color', { view: 'color' })
       .on('change', () => {
         this.instance.setClearColor(this.clearColor.color, 1)
       })
+
+    // Panels
+    if (this.stats) {
+      this.stats.setRenderPanel(this.context)
+    }
   }
 
   /**
@@ -63,6 +70,9 @@ export default class Renderer {
     this.instance.toneMapping = THREE.NoToneMapping
     this.instance.toneMappingExposure = 1
 
+    // Context
+    this.context = this.instance.getContext()
+
     // Debug
     if (this.debug) this._setDebug()
 
@@ -82,6 +92,8 @@ export default class Renderer {
    * Update the renderer
    */
   update() {
+    this.stats?.beforeRender()
     this.instance.render(this.scene, this.camera)
+    this.stats?.afterRender()
   }
 }

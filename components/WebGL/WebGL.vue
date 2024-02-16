@@ -2,7 +2,7 @@
   <div ref="loaderRef">
     <Loader :loadValue="loadValue" />
   </div>
-  <div ref="expRef" class="hidden"></div>
+  <div ref="expRef" class="exp hidden"></div>
 </template>
 
 <script setup lang="ts">
@@ -58,7 +58,7 @@ onMounted(() => {
 </script>
 
 <style>
-canvas {
+.exp > canvas {
   position: fixed;
   top: 0;
   left: 0;

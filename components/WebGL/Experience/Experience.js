@@ -6,6 +6,7 @@ import Time from './Utils/Time'
 import Sizes from './Utils/Sizes'
 import Resources from './Utils/Resources'
 import World from './World'
+import Stats from './Utils/Stats'
 
 export default class Experience {
   static _instance
@@ -26,6 +27,7 @@ export default class Experience {
     this.config = {}
     this.sizes = null
     this.debug = null
+    this.stats = null
     this.scene = null
     this.camera = null
     this.renderer = null
@@ -67,6 +69,13 @@ export default class Experience {
   }
 
   /**
+   * Get stats
+   */
+  _getStats() {
+    return this.config.debug && new Stats(true)
+  }
+
+  /**
    * Get scene
    */
   _getScene() {
@@ -80,6 +89,7 @@ export default class Experience {
     this._setConfig()
 
     this.debug = this._getDebug()
+    this.stats = this._getStats()
     this.scene = this._getScene()
     this.sizes = new Sizes()
     this.camera = new Camera()
@@ -114,6 +124,7 @@ export default class Experience {
     this.renderer.update()
     this.camera.update()
     this.world.update()
+    this.stats?.update()
 
     window.requestAnimationFrame(() => {
       this._update()
