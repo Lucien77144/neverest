@@ -1,4 +1,4 @@
-import * as THREE from 'three'
+import { Color, LinearFilter, Mesh, NoToneMapping, PerspectiveCamera, PlaneGeometry, RGBAFormat, SRGBColorSpace, ShaderMaterial, Uniform, Vector2, WebGLRenderTarget, WebGLRenderer } from 'three'
 import Experience from './Experience'
 import vertexShader from './Shaders/vertexShader.vert?raw'
 import fragmentShader from './Shaders/fragmentShader.frag?raw'
@@ -46,7 +46,7 @@ export default class Renderer {
       .addBinding(this.clearColor, 'color', { view: 'color' })
       .on('change', () => {
         this.instance.setClearColor(
-          new THREE.Color(this.clearColor.color),
+          new Color(this.clearColor.color),
           this.clearColor.alpha
         )
       })
@@ -61,7 +61,7 @@ export default class Renderer {
    * Set the camera instance ONLY USED TO RENDER THE SCENE ON THE MESH
    */
   _setCamera() {
-    this.camera = new THREE.PerspectiveCamera(
+    this.camera = new PerspectiveCamera(
       75,
       this.config.width / this.config.height,
       0.1,
@@ -73,11 +73,11 @@ export default class Renderer {
    * Set render targets and mesh
    */
   _setRenderTargets() {
-    const size = this.instance.getDrawingBufferSize(new THREE.Vector2())
-    this.rt0 = new THREE.WebGLRenderTarget(size.width, size.height, {
-      minFilter: THREE.LinearFilter,
-      magFilter: THREE.LinearFilter,
-      format: THREE.RGBAFormat,
+    const size = this.instance.getDrawingBufferSize(new Vector2())
+    this.rt0 = new WebGLRenderTarget(size.width, size.height, {
+      minFilter: LinearFilter,
+      magFilter: LinearFilter,
+      format: RGBAFormat,
       stencilBuffer: false,
       samples: 4,
     })
@@ -89,15 +89,15 @@ export default class Renderer {
    * Set the render mesh
    */
   _setRenderMesh() {
-    this.renderMesh = new THREE.Mesh(
-      new THREE.PlaneGeometry(2, 2),
-      new THREE.ShaderMaterial({
+    this.renderMesh = new Mesh(
+      new PlaneGeometry(2, 2),
+      new ShaderMaterial({
         uniforms: {
-          uScene0: new THREE.Uniform(this.rt0.texture),
-          uScene1: new THREE.Uniform(this.rt1.texture),
-          uTransition: new THREE.Uniform(),
-          uTemplate: new THREE.Uniform(TRANSITIONS.FADE),
-          uTime: new THREE.Uniform(0),
+          uScene0: new Uniform(this.rt0.texture),
+          uScene1: new Uniform(this.rt1.texture),
+          uTransition: new Uniform(),
+          uTemplate: new Uniform(TRANSITIONS.FADE),
+          uTime: new Uniform(0),
         },
         vertexShader,
         fragmentShader,
@@ -110,7 +110,7 @@ export default class Renderer {
    */
   _setInstance(canvas) {
     // Renderer
-    this.instance = new THREE.WebGLRenderer({
+    this.instance = new WebGLRenderer({
       canvas,
       antialias: false,
       stencil: false,
@@ -126,8 +126,8 @@ export default class Renderer {
 
     // Options
     this.instance.physicallyCorrectLights = true
-    this.instance.outputColorSpace = THREE.SRGBColorSpace
-    this.instance.toneMapping = THREE.NoToneMapping
+    this.instance.outputColorSpace = SRGBColorSpace
+    this.instance.toneMapping = NoToneMapping
     this.instance.toneMappingExposure = 1
 
     // Context
@@ -194,7 +194,7 @@ export default class Renderer {
     this.instance.setSize(this.config.width, this.config.height)
     this.instance.setPixelRatio(this.config.pixelRatio)
 
-    const size = this.instance.getDrawingBufferSize(new THREE.Vector2())
+    const size = this.instance.getDrawingBufferSize(new Vector2())
     this.rt0.setSize(size.width, size.height)
     this.rt1.setSize(size.width, size.height)
   }

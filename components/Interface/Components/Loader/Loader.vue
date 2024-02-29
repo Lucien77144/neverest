@@ -5,6 +5,7 @@
 </template>
 
 <script lang="ts" setup>
+import { gsap } from 'gsap'
 // Ref
 const loadValue = ref<number>(0)
 

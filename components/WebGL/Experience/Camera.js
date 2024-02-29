@@ -1,4 +1,4 @@
-import * as THREE from 'three'
+import { PerspectiveCamera } from 'three'
 import Experience from './Experience'
 
 export default class Camera {
@@ -23,7 +23,7 @@ export default class Camera {
    * Init the camera
    */
   _init() {
-    this.instance = new THREE.PerspectiveCamera(
+    this.instance = new PerspectiveCamera(
       75,
       this.config.width / this.config.height,
       0.1,

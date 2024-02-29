@@ -1,7 +1,7 @@
 import EventEmitter from './EventEmitter.js'
 import Loader from './Loader.js'
 import sources from '../sources.json'
-import * as THREE from 'three'
+import { Texture }from 'three'
 
 export default class Resources extends EventEmitter {
   /**
@@ -107,8 +107,8 @@ export default class Resources extends EventEmitter {
 
       // Convert to texture
       if (_resource.type === 'texture') {
-        if (!(data instanceof THREE.Texture)) {
-          data = new THREE.Texture(_data)
+        if (!(data instanceof Texture)) {
+          data = new Texture(_data)
         }
         data.needsUpdate = true
       }
@@ -145,7 +145,7 @@ export default class Resources extends EventEmitter {
       .filter((s) => !_groups || _groups.includes(s.name))
       .flatMap((s) => s.items.map((i) => i.name))
       .forEach((item) => {
-        if (this.items[item] instanceof THREE.Texture) {
+        if (this.items[item] instanceof Texture) {
           this.items[item].dispose()
         }
         delete this.items[item]
