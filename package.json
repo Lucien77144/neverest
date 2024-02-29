@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "template-nuxt-three",
   "private": true,
   "type": "module",
   "scripts": {
@@ -16,6 +16,7 @@
     "vue-router": "^4.2.5"
   },
   "dependencies": {
+    "@nuxtjs/i18n": "^8.1.1",
     "@types/three": "^0.160.0",
     "gsap": "^3.12.5",
     "stats.js": "^0.17.0",

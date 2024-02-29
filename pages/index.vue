@@ -1,3 +1,4 @@
 <template>
+  <Interface />
   <WebGL />
 </template>

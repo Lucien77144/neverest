@@ -8,7 +8,6 @@ export default class Camera {
   constructor() {
     // Get elements from experience
     this.experience = new Experience()
-    this.scene = this.experience.scene
     this.config = this.experience.config
     this.debug = this.experience.debug
 
@@ -31,7 +30,6 @@ export default class Camera {
       100
     )
     this.instance.position.z = 10
-    this.scene.add(this.instance)
   }
 
   /**

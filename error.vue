@@ -25,8 +25,8 @@ if (props?.error?.url != '/' && props?.error?.statusCode == 404) {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: $dark;
-  color: $light;
+  background-color: $black;
+  color: $white;
   font-family: 'Lato', sans-serif;
   font-weight: light;
 

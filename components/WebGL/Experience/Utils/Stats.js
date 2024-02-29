@@ -24,7 +24,7 @@ export default class Stats {
     document.body.removeChild(this.instance.dom)
   }
 
-  setRenderPanel(_context) {
+  setRenderPanel(_context) { 
     this.render = {}
     this.render.context = _context
     this.render.extension = this.render.context.getExtension(
@@ -99,6 +99,9 @@ export default class Stats {
     }
   }
 
+  /**
+   * Update the stats
+   */
   update() {
     if (!this.active) {
       return
@@ -107,7 +110,10 @@ export default class Stats {
     this.instance.update()
   }
 
-  destroy() {
+  /**
+   * Dispose the stats
+   */
+  dispose() {
     this.deactivate()
   }
 }

@@ -1,0 +1,34 @@
+$darken-amount: 10%;
+$lighten-amount: 10%;
+
+$primary: #ff0000;
+$primary-dark: darken($primary, $darken-amount);
+$primary-light: lighten($primary, $lighten-amount);
+
+$secondary: #00ff00;
+$secondary-dark: darken($secondary, $darken-amount);
+$secondary-light: lighten($secondary, $lighten-amount);
+
+$black: #151515;
+$black-dark: darken($black, $darken-amount);
+$black-light: lighten($black, $lighten-amount);
+
+$white: #f4f4f4;
+$white-dark: darken($white, $darken-amount);
+$white-light: lighten($white, $lighten-amount);
+
+$success: #00ff00;
+$success-dark: darken($success, $darken-amount);
+$success-light: lighten($success, $lighten-amount);
+
+$info: #00ccff;
+$info-dark: darken($info, $darken-amount);
+$info-light: lighten($info, $lighten-amount);
+
+$warning: #ffcc00;
+$warning-dark: darken($warning, $darken-amount);
+$warning-light: lighten($warning, $lighten-amount);
+
+$danger: #ff0000;
+$danger-dark: darken($danger, $darken-amount);
+$danger-light: lighten($danger, $lighten-amount);
