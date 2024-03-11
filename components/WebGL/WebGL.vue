@@ -7,7 +7,7 @@ import Experience from './Experience/Experience.js'
 import gsap from 'gsap'
 
 // Shallow Refs
-// const exp = shallowRef<Experience | null>(null)
+export const exp = shallowRef<Experience | null>(null);
 
 // Refs
 const loadValue = ref<number>(0)
