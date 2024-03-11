@@ -1,8 +1,8 @@
 import Cube from '../Components/Cube/Cube'
 import Floor from '../Components/Floor/Floor'
-import Scene from '../Utils/Scene'
+import BaseScene from '../Utils/BaseScene'
 
-export default class Scene1 extends Scene {
+export default class Scene1 extends BaseScene {
   /**
    * Constructor
    */

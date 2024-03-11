@@ -1,12 +1,12 @@
+import { Scene } from 'three'
 import Camera from '../Camera'
-import * as THREE from 'three'
 
-export default class Scene {
+export default class BaseScene {
   /**
    * Constructor
    */
   constructor() {
-    this.scene = new THREE.Scene()
+    this.scene = new Scene()
     this.camera = new Camera()
   }
 
