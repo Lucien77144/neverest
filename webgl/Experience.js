@@ -123,6 +123,7 @@ export default class Experience {
     this.renderer.update()
     this.sceneManager.update()
     this.stats?.update()
+    this.scrollManager?.update()
 
     window.requestAnimationFrame(() => {
       this.update()

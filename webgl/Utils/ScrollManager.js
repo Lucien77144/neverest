@@ -15,32 +15,51 @@ export default class ScrollManager {
     this.factor = 0.005
     this.velocity = 0
 
-    this.scrollEvent()
+    // Store
+    const { setCurrent } = useScrollStore()
+    this.setCurrent = setCurrent
 
-    if (this.debug) {
-      this.debugFolder = this.debug.addFolder({
-        title: 'Scroll',
-        closed: false,
-      })
-
-      this.debugFolder.addBinding(this, 'factor', {
-        label: 'Scroll Factor',
-        min: 0,
-        max: 0.01,
-        step: 0.001,
-      })
-    }
+    // Init
+    this.init()
   }
 
-  scrollEvent() {
+  /**
+   * Init the scroll manager
+   */
+  init() {
     window.addEventListener('mousewheel', (e) => {
       this.target += e.deltaY * this.factor
-      console.log(this.factor)
+      this.target = this.target
+    })
+
+    // Debug
+    if (this.debug) this.setDebug()
+  }
+
+  /**
+   * Set debug
+   */
+  setDebug() {
+    this.debugFolder = this.debug.addFolder({
+      title: 'Scroll',
+      closed: false,
+    })
+
+    this.debugFolder.addBinding(this, 'factor', {
+      label: 'Scroll Factor',
+      min: 0,
+      max: 0.01,
+      step: 0.001,
     })
   }
 
+  /**
+   * Update values
+   */
   update() {
     this.velocity = this.current - this.target
     this.current = MathUtils.lerp(this.current, this.target, this.speed)
+
+    this.setCurrent(this.current)
   }
 }
