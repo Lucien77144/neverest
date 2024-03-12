@@ -24,11 +24,4 @@ const change = ({ target }: any) => {
 }
 </script>
 
-<style lang="scss" scoped>
-select {
-  border: solid $black 1px;
-  border-radius: 3px;
-  min-width: 300px;
-  height: 32px;
-}
-</style>
+<style src='./style.scss' lang="scss" scoped></style>

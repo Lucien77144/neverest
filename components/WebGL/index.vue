@@ -1,10 +1,10 @@
 <template>
-  <canvas ref="canvas" class="exp t-25" style="opacity: 0" />
+  <canvas ref="canvas" class="exp" />
 </template>
 
 <script setup lang="ts">
-import Experience from './Experience/Experience.js'
 import gsap from 'gsap'
+import Experience from '~/webgl/Experience'
 
 // Plugins
 const { $bus }: any = useNuxtApp()
@@ -15,22 +15,9 @@ const exp = shallowRef<Experience | null>(null)
 // Refs
 const loadValue = ref<number>(0)
 const canvas = ref<HTMLElement | null>(null)
-const loader = ref<HTMLElement | null>(null)
 
 // Route
 const route = useRoute()
-
-/**
- * Start the experience
- */
-const startExperience = () => {
-  canvas.value?.style.setProperty('opacity', '1')
-  loader.value?.style.setProperty('opacity', '0')
-  exp.value?.start()
-
-  // Remove the loader after transition
-  setTimeout(() => loader.value?.remove(), 250)
-}
 
 // On component mounted, create the experience
 onMounted(() => {
@@ -48,7 +35,9 @@ onMounted(() => {
       ease: 'power2.inOut',
       onUpdate: () => {
         $bus.emit('loading', loadValue.value)
-        if (loadValue.value === 100) startExperience()
+        if (loadValue.value === 100) {
+          exp.value?.start()
+        }
       },
     })
   })
@@ -60,12 +49,4 @@ onMounted(() => {
 })
 </script>
 
-<style lang="scss" scoped>
-.exp {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh !important;
-  width: 100vw !important;
-}
-</style>
+<style src="./style.scss" lang="scss" scoped></style>

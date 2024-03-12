@@ -1,4 +1,4 @@
-import Renderer from './Renderer'
+import Renderer from './Modules/Renderer/Renderer'
 import { Pane } from 'tweakpane'
 import Time from './Utils/Time'
 import Sizes from './Utils/Sizes'

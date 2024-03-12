@@ -1,5 +1,5 @@
 import { Scene } from 'three'
-import Camera from '../Camera'
+import Camera from '../Camera/Camera'
 
 export default class BaseScene {
   /**

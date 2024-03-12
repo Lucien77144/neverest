@@ -1,5 +1,5 @@
 import Floor2 from '../Components/Floor2/Floor2'
-import BaseScene from '../Utils/BaseScene'
+import BaseScene from '../Modules/Bases/BaseScene'
 
 export default class Scene2 extends BaseScene {
   /**

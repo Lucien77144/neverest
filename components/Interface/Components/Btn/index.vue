@@ -13,7 +13,7 @@ const $emit = defineEmits(['click'])
 // Props
 const $props = defineProps({
   type: {
-    type: String,
+    type: String as PropType<'button' | 'submit' | 'reset'>,
     default: 'button',
   },
   value: {
@@ -23,18 +23,4 @@ const $props = defineProps({
 })
 </script>
 
-<style lang="scss" scoped>
-button {
-  font-weight: bold;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: $white;
-  cursor: pointer;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: $white-dark;
-  }
-}
-</style>
+<style src="./style.scss" lang="scss" scoped></style>

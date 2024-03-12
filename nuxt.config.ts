@@ -27,7 +27,7 @@ export default defineNuxtConfig({
           },
         ],
         detectBrowserLanguage: true, // use default language of browser
-        langDir: 'lang/', // source of translations
+        langDir: './assets/data/lang/', // source of translations
         strategy: 'no_prefix', // don't add language to url
       },
     ],

@@ -1,6 +1,6 @@
 import EventEmitter from './EventEmitter.js'
 import Loader from './Loader.js'
-import sources from '../sources.json'
+import sources from './assets/data/sources.json'
 import { Texture }from 'three'
 
 export default class Resources extends EventEmitter {
