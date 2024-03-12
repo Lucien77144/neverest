@@ -1,6 +1,6 @@
 <template>
   <UILoader />
-  <div class="panel">
+  <div class="start-wrapper">
     <UIBtn @click="$emit('start')"> {{ $t('START') }} </UIBtn>
     <UILangPicker />
   </div>
