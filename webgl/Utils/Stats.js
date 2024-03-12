@@ -24,9 +24,9 @@ export default class Stats {
     document.body.removeChild(this.instance.dom)
   }
 
-  setRenderPanel(_context) { 
+  setRenderPanel(context) {
     this.render = {}
-    this.render.context = _context
+    this.render.context = context
     this.render.extension = this.render.context.getExtension(
       'EXT_disjoint_timer_query_webgl2'
     )
@@ -36,7 +36,7 @@ export default class Stats {
 
     const webGL2 =
       typeof WebGL2RenderingContext !== 'undefined' &&
-      _context instanceof WebGL2RenderingContext
+      context instanceof WebGL2RenderingContext
 
     if (!webGL2 || !this.render.extension) {
       this.deactivate()

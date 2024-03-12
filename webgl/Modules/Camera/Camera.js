@@ -16,13 +16,13 @@ export default class Camera {
     this.debugFolder = null
 
     // Init
-    this._init()
+    this.init()
   }
 
   /**
    * Init the camera
    */
-  _init() {
+  init() {
     this.instance = new PerspectiveCamera(
       75,
       this.config.width / this.config.height,

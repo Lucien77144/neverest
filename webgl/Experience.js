@@ -36,7 +36,7 @@ export default class Experience {
     this.resources = null
 
     // Init
-    this._init()
+    this.init()
   }
 
   /**
@@ -48,14 +48,14 @@ export default class Experience {
       this.resources.toLoad === this.resources.loaded
     ) {
       this.sceneManager.init(this.config.debug && this.baseScene)
-      this._update()
+      this.update()
     }
   }
 
   /**
    * Set config
    */
-  _setConfig() {
+  setConfig() {
     // Set if Debug is on
     this.config.debug = this.$router.currentRoute.value.href.includes('debug')
 
@@ -71,7 +71,7 @@ export default class Experience {
   /**
    * Get debug
    */
-  _getDebug() {
+  getDebug() {
     if (!this.config.debug) return
 
     return new Pane({
@@ -83,10 +83,10 @@ export default class Experience {
   /**
    * Init the experience
    */
-  _init() {
-    this._setConfig()
+  init() {
+    this.setConfig()
 
-    this.debug = this._getDebug()
+    this.debug = this.getDebug()
     this.time = new Time()
     this.sceneManager = new SceneManager()
     this.stats = new Stats(this.config.debug)
@@ -95,15 +95,15 @@ export default class Experience {
     this.resources = new Resources()
 
     this.sizes.on('resize', () => {
-      this._resize()
+      this.resize()
     })
   }
 
   /**
    * Resize the experience
    */
-  _resize() {
-    this._setConfig()
+  resize() {
+    this.setConfig()
 
     this.renderer.resize()
     this.sceneManager.resize()
@@ -112,13 +112,13 @@ export default class Experience {
   /**
    * Update the experience
    */
-  _update() {
+  update() {
     this.renderer.update()
     this.sceneManager.update()
     this.stats?.update()
 
     window.requestAnimationFrame(() => {
-      this._update()
+      this.update()
     })
   }
 

@@ -23,28 +23,28 @@ export default class Resources extends EventEmitter {
     this.loaders = []
 
     // Init
-    this._init()
+    this.init()
   }
 
   /**
    * Init loaders
    */
-  _init() {
+  init() {
     // Images
     this.loaders.push({
       extensions: ['jpg', 'png'],
-      action: (_resource) => {
+      action: (resource) => {
         const image = new Image()
 
         image.addEventListener('load', () => {
-          this._fileLoadEnd(_resource, image)
+          this.fileLoadEnd(resource, image)
         })
 
         image.addEventListener('error', () => {
-          this._fileLoadEnd(_resource, image)
+          this.fileLoadEnd(resource, image)
         })
 
-        image.src = _resource.source
+        image.src = resource.source
       },
     })
 
@@ -55,9 +55,9 @@ export default class Resources extends EventEmitter {
 
     this.loaders.push({
       extensions: ['drc'],
-      action: (_resource) => {
-        dracoLoader.load(_resource.source, (_data) => {
-          this._fileLoadEnd(_resource, _data)
+      action: (resource) => {
+        dracoLoader.load(resource.source, (data) => {
+          this.fileLoadEnd(resource, data)
 
           DRACOLoader.releaseDecoderModule()
         })
@@ -70,9 +70,9 @@ export default class Resources extends EventEmitter {
 
     this.loaders.push({
       extensions: ['glb', 'gltf'],
-      action: (_resource) => {
-        gltfLoader.load(_resource.source, (_data) => {
-          this._fileLoadEnd(_resource, _data)
+      action: (resource) => {
+        gltfLoader.load(resource.source, (data) => {
+          this.fileLoadEnd(resource, data)
         })
       },
     })
@@ -82,9 +82,9 @@ export default class Resources extends EventEmitter {
 
     this.loaders.push({
       extensions: ['fbx'],
-      action: (_resource) => {
-        fbxLoader.load(_resource.source, (_data) => {
-          this._fileLoadEnd(_resource, _data)
+      action: (resource) => {
+        fbxLoader.load(resource.source, (data) => {
+          this.fileLoadEnd(resource, data)
         })
       },
     })
@@ -94,9 +94,9 @@ export default class Resources extends EventEmitter {
 
     this.loaders.push({
       extensions: ['hdr'],
-      action: (_resource) => {
-        rgbeLoader.load(_resource.source, (_data) => {
-          this._fileLoadEnd(_resource, _data)
+      action: (resource) => {
+        rgbeLoader.load(resource.source, (data) => {
+          this.fileLoadEnd(resource, data)
         })
       },
     })
@@ -105,24 +105,24 @@ export default class Resources extends EventEmitter {
   /**
    * Load
    */
-  load(_resources = []) {
-    for (const _resource of _resources) {
+  load(resources = []) {
+    for (const resource of resources) {
       this.toLoad++
-      const extensionMatch = _resource.source.match(/\.([a-z]+)$/)
+      const extensionMatch = resource.source.match(/\.([a-z]+)$/)
 
       if (typeof extensionMatch[1] !== 'undefined') {
         const extension = extensionMatch[1]
-        const loader = this.loaders.find((_loader) =>
-          _loader.extensions.find((_extension) => _extension === extension)
+        const loader = this.loaders.find((loader) =>
+          loader.extensions.find((e) => e === extension)
         )
 
         if (loader) {
-          loader.action(_resource)
+          loader.action(resource)
         } else {
-          console.warn(`Cannot found loader for ${_resource}`)
+          console.warn(`Cannot found loader for ${resource}`)
         }
       } else {
-        console.warn(`Cannot found extension of ${_resource}`)
+        console.warn(`Cannot found extension of ${resource}`)
       }
     }
   }
@@ -130,11 +130,11 @@ export default class Resources extends EventEmitter {
   /**
    * File load end
    */
-  _fileLoadEnd(_resource, _data) {
+  fileLoadEnd(resource, data) {
     this.loaded++
-    this.items[_resource.name] = _data
+    this.items[resource.name] = data
 
-    this.trigger('fileEnd', [_resource, _data])
+    this.trigger('fileEnd', [resource, data])
 
     if (this.loaded === this.toLoad) {
       this.trigger('end')

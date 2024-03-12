@@ -13,24 +13,22 @@ export default class World {
     this.components = null
 
     // Init
-    this._init()
+    this.init()
   }
 
   /**
    * Init the world
    */
-  _init() {
-    this.components = {
-      floor: new Floor(),
-    }
+  init() {
+    this.components = {}
   }
 
   /**
    * Update the world
    */
   update() {
-    Object.keys(this.components).forEach((_key) => {
-      this.components[_key].update()
+    Object.keys(this.components).forEach((key) => {
+      this.components[key].update()
     })
   }
 
@@ -38,8 +36,8 @@ export default class World {
    * Destroy the world
    */
   destroy() {
-    Object.keys(this.components).forEach((_key) => {
-      this.components[_key].destroy()
+    Object.keys(this.components).forEach((key) => {
+      this.components[key].destroy()
     })
   }
 }

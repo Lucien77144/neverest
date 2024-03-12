@@ -67,7 +67,7 @@ export default class SceneManager {
   /**
    * Set debug
    */
-  _setDebug(value) {
+  setDebug(value) {
     this.debugFolder = this.debug.addFolder({
       title: 'Scenes',
     })
@@ -87,15 +87,15 @@ export default class SceneManager {
 
   /**
    * Init scene
-   * @param {string} _sceneName Scene name
+   * @param {string} sceneName Scene name
    */
-  init(_sceneName = 'default') {
-    const scene = this.sceneList[_sceneName] || this.sceneList.default
+  init(sceneName = 'default') {
+    const scene = this.sceneList[sceneName] || this.sceneList.default
     this.active = new scene()
 
     // Debug
     if (this.debug) {
-      this._setDebug(this.sceneList[_sceneName] ? _sceneName : 'default')
+      this.setDebug(this.sceneList[sceneName] ? sceneName : 'default')
     }
   }
 

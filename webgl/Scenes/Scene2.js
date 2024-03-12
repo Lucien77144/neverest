@@ -13,6 +13,6 @@ export default class Scene2 extends BaseScene {
       floor: new Floor2(),
     }
 
-    this._init()
+    this.init()
   }
 }

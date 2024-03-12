@@ -31,13 +31,13 @@ export default class Renderer {
     }
 
     // Init
-    this._init()
+    this.init()
   }
 
   /**
    * Set debug
    */
-  _setDebug() {
+  setDebug() {
     this.debugFolder = this.debug.addFolder({
       title: 'Renderer',
     })
@@ -60,7 +60,7 @@ export default class Renderer {
   /**
    * Set the camera instance ONLY USED TO RENDER THE SCENE ON THE MESH
    */
-  _setCamera() {
+  setCamera() {
     this.camera = new PerspectiveCamera(
       75,
       this.config.width / this.config.height,
@@ -72,7 +72,7 @@ export default class Renderer {
   /**
    * Set render targets and mesh
    */
-  _setRenderTargets() {
+  setRenderTargets() {
     const size = this.instance.getDrawingBufferSize(new Vector2())
     this.rt0 = new WebGLRenderTarget(size.width, size.height, {
       minFilter: LinearFilter,
@@ -88,7 +88,7 @@ export default class Renderer {
   /**
    * Set the render mesh
    */
-  _setRenderMesh() {
+  setRenderMesh() {
     this.renderMesh = new Mesh(
       new PlaneGeometry(2, 2),
       new ShaderMaterial({
@@ -108,7 +108,7 @@ export default class Renderer {
   /**
    * Set the renderer instance
    */
-  _setInstance(canvas) {
+  setInstance(canvas) {
     // Renderer
     this.instance = new WebGLRenderer({
       canvas,
@@ -137,7 +137,7 @@ export default class Renderer {
   /**
    * Render the targets and the mesh
    */
-  _renderTargets() {
+  renderTargets() {
     // Get elements from experience
     const active = this.sceneManager.active
     const next = this.sceneManager.next
@@ -160,14 +160,14 @@ export default class Renderer {
   /**
    * Init the renderer
    */
-  _init() {
-    this._setCamera()
-    this._setInstance(this.experience.canvas)
-    this._setRenderTargets()
-    this._setRenderMesh()
+  init() {
+    this.setCamera()
+    this.setInstance(this.experience.canvas)
+    this.setRenderTargets()
+    this.setRenderMesh()
 
     // Debug
-    if (this.debug) this._setDebug()
+    if (this.debug) this.setDebug()
   }
 
   /**
@@ -176,7 +176,7 @@ export default class Renderer {
   update() {
     this.stats?.beforeRender()
 
-    this._renderTargets()
+    this.renderTargets()
     if (this.renderMesh?.material.uniforms.uTime) {
       this.renderMesh.material.uniforms.uTime.value = this.time.elapsed
     }

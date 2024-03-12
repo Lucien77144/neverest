@@ -15,6 +15,6 @@ export default class Scene1 extends BaseScene {
       cube: new Cube(),
     }
 
-    this._init()
+    this.init()
   }
 }

@@ -1,7 +1,7 @@
 import EventEmitter from './EventEmitter.js'
 import Loader from './Loader.js'
 import sources from './assets/data/sources.json'
-import { Texture }from 'three'
+import { Texture } from 'three'
 
 export default class Resources extends EventEmitter {
   /**
@@ -19,14 +19,14 @@ export default class Resources extends EventEmitter {
     this.loader = null
 
     // Init
-    this._init()
+    this.init()
     this.load(_groups)
   }
 
   /**
    * Load next group
    */
-  _loadNextGroup() {
+  loadNextGroup() {
     this.groups.current = this.sources.shift()
     this.groups.current.toLoad = this.groups.current.items.length
     this.groups.current.loaded = 0
@@ -40,7 +40,7 @@ export default class Resources extends EventEmitter {
    * @param {*} _groups
    * @returns Instanced meshes
    */
-  _createInstancedMeshes(_children, _groups) {
+  createInstancedMeshes(_children, _groups) {
     // Groups
     const groups = []
 
@@ -66,7 +66,7 @@ export default class Resources extends EventEmitter {
   /**
    * Set groups
    */
-  _setGroups() {
+  setGroups() {
     this.groups.loaded = []
     this.groups.current = null
   }
@@ -91,15 +91,15 @@ export default class Resources extends EventEmitter {
         }),
       }))
 
-    this.toLoad ? this._loadNextGroup() : setTimeout(() => this.trigger('end'))
+    this.toLoad ? this.loadNextGroup() : setTimeout(() => this.trigger('end'))
   }
 
   /**
    * Init
    */
-  _init() {
+  init() {
     this.loader = new Loader()
-    this._setGroups()
+    this.setGroups()
 
     // Loader file end event
     this.loader.on('fileEnd', (_resource, _data) => {
@@ -129,7 +129,7 @@ export default class Resources extends EventEmitter {
       this.trigger('groupEnd', [this.groups.current])
 
       if (this.sources.length > 0) {
-        this._loadNextGroup()
+        this.loadNextGroup()
       } else {
         this.trigger('end')
       }

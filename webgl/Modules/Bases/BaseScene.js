@@ -13,7 +13,7 @@ export default class BaseScene {
   /**
    * Update the scene
    */
-  _init() {
+  init() {
     Object.keys(this.components).forEach((c) => {
       this.scene.add(this.components[c].item)
     })
@@ -24,8 +24,8 @@ export default class BaseScene {
    * Update the scene
    */
   update() {
-    Object.keys(this.components).forEach((_key) => {
-      this.components[_key].update()
+    Object.keys(this.components).forEach((key) => {
+      this.components[key].update()
     })
     this.camera.update()
   }
@@ -41,9 +41,9 @@ export default class BaseScene {
    * Dispose the scene
    */
   dispose() {
-    Object.keys(this.components).forEach((_key) => {
-      this.components[_key].dispose()
-      this.scene.remove(this.components[_key].item)
+    Object.keys(this.components).forEach((key) => {
+      this.components[key].dispose()
+      this.scene.remove(this.components[key].item)
     })
   }
 }

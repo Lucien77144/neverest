@@ -1,37 +1,40 @@
 import { Mesh, MeshBasicMaterial, PlaneGeometry } from 'three'
+import BaseItem from '~/webgl/Modules/Bases/BaseItem'
 
-export default class Floor2 {
+export default class Floor2 extends BaseItem {
   /**
    * Constructor
    */
   constructor() {
+    super()
+    
     // New elements
     this.geometry = null
     this.material = null
     this.item = null
 
     // Init
-    this._init()
+    this.init()
   }
 
   /**
    * Get geometry
    */
-  _setGeometry() {
+  setGeometry() {
     this.geometry = new PlaneGeometry(10, 10)
   }
 
   /**
    * Get material
    */
-  _setMaterial() {
+  setMaterial() {
     this.material = new MeshBasicMaterial({ color: 0x0000ff })
   }
 
   /**
    * Get mesh
    */
-  _setMesh() {
+  setMesh() {
     this.item = new Mesh(this.geometry, this.material)
 
     this.item.rotation.x = -Math.PI / 2
@@ -41,22 +44,9 @@ export default class Floor2 {
   /**
    * Init the floor
    */
-  _init() {
-    this._setGeometry()
-    this._setMaterial()
-    this._setMesh()
-  }
-
-  /**
-   * Update the floor
-   */
-  update() {}
-
-  /**
-   * Dispose the floor
-   */
-  dispose() {
-    this.geometry.dispose()
-    this.material.dispose()
+  init() {
+    this.setGeometry()
+    this.setMaterial()
+    this.setMesh()
   }
 }
