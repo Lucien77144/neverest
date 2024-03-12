@@ -35,11 +35,12 @@ onMounted(() => {
       ease: 'power2.inOut',
       onUpdate: () => {
         $bus.emit('loading', loadValue.value)
-        if (loadValue.value === 100) {
-          exp.value?.start()
-        }
       },
     })
+  })
+
+  $bus.on('start', () => {
+    exp.value?.start()
   })
 
   // On component unmounted, dispose the experience

@@ -4,4 +4,21 @@
   background-color: $black-light;
   height: 100vh;
   width: 100vw;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1.5rem;
+  transition: 0.5s ease-in-out;
+
+  &.disabled {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .content {
+    max-width: 50%;
+    color: $white;
+  }
 }
