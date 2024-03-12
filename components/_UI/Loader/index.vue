@@ -5,6 +5,9 @@
 </template>
 
 <script lang="ts" setup>
+// Router
+const $route = useRoute()
+
 // Refs
 const loader = ref<HTMLElement | null>(null)
 const loadValue = ref<number>(0)

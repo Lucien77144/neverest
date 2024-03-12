@@ -5,6 +5,7 @@ import Sizes from './Utils/Sizes'
 import Resources from './Utils/Resources'
 import Stats from './Utils/Stats'
 import SceneManager from './Utils/SceneManager'
+import ScrollManager from './Utils/ScrollManager'
 
 export default class Experience {
   static _instance
@@ -30,6 +31,7 @@ export default class Experience {
     this.sizes = null
     this.debug = null
     this.stats = null
+    this.scrollManager = null
     this.sceneManager = null
     this.renderer = null
     this.time = null
@@ -74,10 +76,14 @@ export default class Experience {
   getDebug() {
     if (!this.config.debug) return
 
-    return new Pane({
+    const { landing, toggleLanding } = useDebugStore()
+    const pane = new Pane({
       title: 'Debug',
       expanded: true,
     })
+    pane.addBinding({ landing }, 'landing').on('change', () => toggleLanding())
+
+    return pane
   }
 
   /**
@@ -88,6 +94,7 @@ export default class Experience {
 
     this.debug = this.getDebug()
     this.time = new Time()
+    this.scrollManager = new ScrollManager()
     this.sceneManager = new SceneManager()
     this.stats = new Stats(this.config.debug)
     this.renderer = new Renderer()

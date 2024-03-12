@@ -18,3 +18,10 @@ html {
 .t-25 {
   transition: 0.25s ease-in-out !important;
 }
+
+/**
+  * Position of the debugger 
+  */
+.tp-dfwv {
+  z-index: 9999 !important;
+}
