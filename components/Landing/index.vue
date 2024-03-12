@@ -1,6 +1,6 @@
 <template>
   <UILoader />
-  <div ref="landing" class="start-wrapper">
+  <div ref="land" class="start-wrapper">
     <div class="title">
       <img src="/assets/images/icons/countries/fr.png" alt="" />
     </div>
@@ -10,7 +10,7 @@
       </p>
     </div>
     <div class="footer">
-      <UIBtn @click="onClick()">
+      <UIBtn @click="$bus.emit('start')">
         {{ $t('START') }}
       </UIBtn>
     </div>
@@ -22,16 +22,28 @@
 const { $bus }: any = useNuxtApp()
 
 // Refs
-const landing = ref<HTMLElement | null>(null)
+const land = ref<HTMLElement | null>(null)
 
 /**
  * On click, emit start
  */
-function onClick() {
-  $bus.emit('start')
-  landing.value?.classList.add('disabled')
-  setTimeout(() => landing.value?.remove(), 500)
-}
+$bus.on('start', () => {
+  land.value?.classList.add('disabled')
+  setTimeout(() => land.value?.remove(), 500)
+})
+
+/**
+ * On loading end, remove the landing if not in debug mode
+ */
+$bus.on('loading', (value: number) => {
+  // Debug store
+  const { landing } = useDebugStore()
+
+  if (value === 100 && !landing) {
+    land.value?.remove()
+    $bus.emit('start')
+  }
+})
 </script>
 
 <style src="./style.scss" lang="scss" scoped></style>

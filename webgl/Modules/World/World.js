@@ -1,5 +1,4 @@
 import Experience from '../../Experience'
-import Floor from './Scenes/Floor'
 
 export default class World {
   /**

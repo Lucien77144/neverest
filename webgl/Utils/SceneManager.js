@@ -11,10 +11,9 @@ export default class SceneManager {
   /**
    * Constructor
    */
-  constructor() {
+  constructor(_baseScene = 'default') {
     // Get elements from experience
     this.experience = new Experience()
-    this.$router = this.experience.$router
     this.debug = this.experience.debug
     this.resources = this.experience.resources
     this.time = this.experience.time
@@ -55,7 +54,9 @@ export default class SceneManager {
       ease: 'power1.inOut',
       onComplete: () => {
         this.renderMesh.material.uniforms.uTransition.value = 0
-        this.$router.push(`/?scene=${destination}#debug`)
+
+        const { setScene } = useDebugStore()
+        setScene(destination)
 
         this.debugFolder.disabled = false
         this.active = this.next
@@ -87,16 +88,17 @@ export default class SceneManager {
 
   /**
    * Init scene
-   * @param {string} sceneName Scene name
    */
-  init(sceneName = 'default') {
-    const scene = this.sceneList[sceneName] || this.sceneList.default
-    this.active = new scene()
-
+  init() {
     // Debug
     if (this.debug) {
-      this.setDebug(this.sceneList[sceneName] ? sceneName : 'default')
+      const { scene } = useDebugStore()
+      this.baseScene = scene
+      this.setDebug(this.sceneList[this.baseScene] ? this.baseScene : 'default')
     }
+
+    const _scene = this.sceneList[this.baseScene] || this.sceneList.default
+    this.active = new _scene()
   }
 
   /**
