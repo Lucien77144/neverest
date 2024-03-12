@@ -112,7 +112,7 @@ export default class Renderer {
     // Renderer
     this.instance = new WebGLRenderer({
       canvas,
-      antialias: false,
+      antialias: true,
       stencil: false,
       alpha: false,
       depth: true,

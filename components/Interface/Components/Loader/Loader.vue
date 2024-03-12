@@ -1,51 +1,23 @@
 <template>
-  <div class="panel">
+  <div ref="panel" class="panel">
     <h1>{{ Math.floor(loadValue) }}</h1>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { gsap } from 'gsap'
-// Ref
+// Refs
+const panel = ref<HTMLElement | null>(null)
 const loadValue = ref<number>(0)
 
-// Emits
-const $emit = defineEmits(['start'])
-
-// Refs
-const counter = ref<HTMLElement | null>(null)
-const panel = ref<HTMLElement | null>(null)
-
-// On component mounted, get the experience
-onMounted(() => {
-  // On resources progress, update loadValue
-  const resources: any = exp.value.resources
-  resources.on('progress', () => {
-    gsap.timeline().to(loadValue, {
-      value: (resources.loaded / resources.toLoad) * 100,
-      duration: 1,
-      ease: 'power2.inOut',
-    })
-  })
-
-  // On component unmounted, dispose the experience
-  onUnmounted(() => {
-    exp.value?.dispose()
-  })
+// Plugins
+const { $bus }: any = useNuxtApp()
+$bus.on('loading', (value: number) => {
+  loadValue.value = value
+  if (value === 100) {
+    panel.value?.classList.add('disabled')
+    setTimeout(() => panel.value?.remove(), 500)
+  }
 })
-
-// Watch if loadValue ends
-// watch(
-//   () => props.loadValue == 100,
-//   () => {
-//     // Disable the counter and enable the actions panel
-//     counter.value?.classList.add('disabled')
-//     setTimeout(() => {
-//       counter.value?.remove()
-//       panel.value?.classList.remove('disabled')
-//     }, 500)
-//   }
-// )
 </script>
 
 <style lang="scss" scoped>

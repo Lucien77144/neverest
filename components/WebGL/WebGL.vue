@@ -6,8 +6,11 @@
 import Experience from './Experience/Experience.js'
 import gsap from 'gsap'
 
+// Plugins
+const { $bus }: any = useNuxtApp()
+
 // Shallow Refs
-export const exp = shallowRef<Experience | null>(null);
+const exp = shallowRef<Experience | null>(null)
 
 // Refs
 const loadValue = ref<number>(0)
@@ -43,6 +46,10 @@ onMounted(() => {
       value: (resources.loaded / resources.toLoad) * 100,
       duration: 1,
       ease: 'power2.inOut',
+      onUpdate: () => {
+        $bus.emit('loading', loadValue.value)
+        if (loadValue.value === 100) startExperience()
+      },
     })
   })
 
