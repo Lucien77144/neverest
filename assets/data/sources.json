@@ -1,0 +1,13 @@
+[
+  {
+    "name": "default",
+    "data": {},
+    "items": [
+      {
+        "name": "lennaTexture",
+        "source": "/img/dirt.jpg",
+        "type": "texture"
+      }
+    ]
+  }
+]

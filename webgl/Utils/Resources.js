@@ -1,7 +1,7 @@
-import * as THREE from 'three'
 import EventEmitter from './EventEmitter.js'
 import Loader from './Loader.js'
-import sources from '../sources.json'
+import sources from './assets/data/sources.json'
+import { Texture }from 'three'
 
 export default class Resources extends EventEmitter {
   /**
@@ -14,9 +14,9 @@ export default class Resources extends EventEmitter {
     this.sources = []
     this.items = {} // Will contain every resources
     this.groups = {}
-    this.loader = null
     this.toLoad = null
     this.loaded = null
+    this.loader = null
 
     // Init
     this._init()
@@ -44,10 +44,10 @@ export default class Resources extends EventEmitter {
     // Groups
     const groups = []
 
-    for (const _group of _groups) {
+    for (const { name, regex } of _groups) {
       groups.push({
-        name: _group.name,
-        regex: _group.regex,
+        name,
+        regex,
         meshesGroups: [],
         instancedMeshes: [],
       })
@@ -91,7 +91,7 @@ export default class Resources extends EventEmitter {
         }),
       }))
 
-    this._loadNextGroup()
+    this.toLoad ? this._loadNextGroup() : setTimeout(() => this.trigger('end'))
   }
 
   /**
@@ -107,8 +107,8 @@ export default class Resources extends EventEmitter {
 
       // Convert to texture
       if (_resource.type === 'texture') {
-        if (!(data instanceof THREE.Texture)) {
-          data = new THREE.Texture(_data)
+        if (!(data instanceof Texture)) {
+          data = new Texture(_data)
         }
         data.needsUpdate = true
       }
@@ -137,15 +137,15 @@ export default class Resources extends EventEmitter {
   }
 
   /**
-   * Destroy and dispose ressources (if unset, destroy all resources)
-   * @param {*} _groups Groups of resources to destroy
+   * Dispose and dispose ressources (if unset, dispose all resources)
+   * @param {*} _groups Groups of resources to dispose
    */
-  destroy(_groups) {
+  dispose(_groups) {
     sources
       .filter((s) => !_groups || _groups.includes(s.name))
       .flatMap((s) => s.items.map((i) => i.name))
       .forEach((item) => {
-        if (this.items[item] instanceof THREE.Texture) {
+        if (this.items[item] instanceof Texture) {
           this.items[item].dispose()
         }
         delete this.items[item]

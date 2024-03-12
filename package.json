@@ -1,10 +1,10 @@
 {
-  "name": "nuxt-app",
+  "name": "template-nuxt-three",
   "private": true,
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --host",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
@@ -16,8 +16,10 @@
     "vue-router": "^4.2.5"
   },
   "dependencies": {
+    "@nuxtjs/i18n": "^8.1.1",
     "@types/three": "^0.160.0",
     "gsap": "^3.12.5",
+    "mitt": "^3.0.1",
     "stats.js": "^0.17.0",
     "three": "^0.160.1",
     "tweakpane": "^4.0.3"

@@ -1,5 +1,5 @@
-import * as THREE from 'three'
-import Experience from './Experience'
+import { PerspectiveCamera } from 'three'
+import Experience from '../../Experience'
 
 export default class Camera {
   /**
@@ -8,7 +8,6 @@ export default class Camera {
   constructor() {
     // Get elements from experience
     this.experience = new Experience()
-    this.scene = this.experience.scene
     this.config = this.experience.config
     this.debug = this.experience.debug
 
@@ -24,14 +23,13 @@ export default class Camera {
    * Init the camera
    */
   _init() {
-    this.instance = new THREE.PerspectiveCamera(
+    this.instance = new PerspectiveCamera(
       75,
       this.config.width / this.config.height,
       0.1,
       100
     )
     this.instance.position.z = 10
-    this.scene.add(this.instance)
   }
 
   /**
