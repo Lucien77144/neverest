@@ -29,7 +29,7 @@ export default class ScrollManager {
   init() {
     window.addEventListener('mousewheel', (e) => {
       this.target += e.deltaY * this.factor
-      this.target = this.target
+      this.target = clamp(0, 100, this.target)
     })
 
     // Debug
@@ -49,6 +49,13 @@ export default class ScrollManager {
       label: 'Scroll Factor',
       min: 0,
       max: 0.01,
+      step: 0.001,
+    })
+
+    this.debugFolder.addBinding(this, 'speed', {
+      label: 'Speed',
+      min: 0,
+      max: 0.25,
       step: 0.001,
     })
   }

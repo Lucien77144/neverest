@@ -27,7 +27,7 @@
           class="progress__bar"
           d="M0 0h140v1039H0z"
           :style="{
-            transform: `translateY(${100 - clamp(progress, 0, 100)}%)`,
+            transform: `translateY(${100 - progress * 100}%)`,
           }"
         />
       </g>
@@ -36,17 +36,36 @@
 </template>
 
 <script lang="ts" setup>
-import { clamp } from 'three/src/math/MathUtils'
-
 // Props
-defineProps({
+const { preset } = defineProps({
   current: {
     type: Number,
+  },
+  preset: {
+    type: Object as PropType<TPreset[]>,
   },
 })
 
 // Composables
-const progress = computed(() => useScrollStore().current)
+const progress = computed(() => useScrollStore().getCurrent)
+
+// Get total duration
+// const totalDuration = preset.reduce((acc, curr) => acc + curr.duration, 0)
+// const mapedPreset = preset.map((item, index) => {
+//   const start = preset
+//     .slice(0, index)
+//     .reduce((acc, curr) => acc + curr.duration, 0)
+//   return { ...item, start }
+// })
+
+// Watchers
+// watch(
+//   () => progress.value * totalDuration,
+//   (value) => {
+//     console.log(value)
+//     console.log(mapedPreset)
+//   }
+// )
 </script>
 
 <style src="./style.scss" lang="scss" scoped></style>

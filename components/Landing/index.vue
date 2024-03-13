@@ -38,9 +38,9 @@ $bus.on('start', () => {
  */
 $bus.on('loading', (value: number) => {
   // Debug store
-  const { landing } = useDebugStore()
+  const { getLanding } = useDebugStore()
 
-  if (value === 100 && !landing) {
+  if (value === 100 && !getLanding) {
     land.value?.remove()
     $bus.emit('start')
   }
