@@ -10,6 +10,7 @@
       </p>
     </div>
     <div class="footer">
+      <UILangPicker />
       <UIBtn @click="$bus.emit('start')">
         {{ $t('START') }}
       </UIBtn>

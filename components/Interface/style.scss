@@ -5,7 +5,7 @@
   height: 100vh;
   pointer-events: none;
 
-  & > * {
+  * {
     pointer-events: all !important;
   }
 }
