@@ -1,5 +1,6 @@
-import { Scene } from 'three'
+import { Raycaster, Scene } from 'three'
 import Camera from '../Camera/Camera'
+import Cursor from '~/webgl/Utils/Cursor'
 
 export default class BaseScene {
   /**
@@ -8,16 +9,37 @@ export default class BaseScene {
   constructor() {
     this.scene = new Scene()
     this.camera = new Camera()
+    this.raycaster = new Raycaster()
+    this.cursor = new Cursor()
+    this.$bus = useNuxtApp().$bus
   }
 
   /**
-   * Update the scene
+   * Init the scene
    */
   init() {
     Object.keys(this.components).forEach((c) => {
       this.scene.add(this.components[c].item)
     })
     this.scene.add(this.camera.instance)
+    this.setEvents()
+  }
+
+  setEvents() {
+    this.$bus.on('click', e => this.onClick(e.centered))
+  }
+
+  /**
+   * Raycast On click
+   */
+  onClick (centered) {
+    this.raycaster.setFromCamera(centered, this.camera.instance)
+    Object.keys(this.components).forEach((c) => {
+      const intersects = this.raycaster.intersectObjects([this.components[c].item])
+      if (intersects.length) {
+        console.log('click on', c)
+      }
+    })
   }
 
   /**
@@ -28,6 +50,7 @@ export default class BaseScene {
       this.components[key].update()
     })
     this.camera.update()
+    
   }
 
   /**

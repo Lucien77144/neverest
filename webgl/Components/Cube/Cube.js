@@ -5,13 +5,13 @@ export default class Cube extends BaseItem {
   /**
    * Constructor
    */
-  constructor() {
+  constructor({ scene }) {
     super()
-
     // New elements
     this.geometry = null
     this.material = null
     this.item = null
+    this.scene = scene
 
     // Init
     this.init()

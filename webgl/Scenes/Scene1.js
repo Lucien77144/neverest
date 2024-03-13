@@ -12,7 +12,7 @@ export default class Scene1 extends BaseScene {
     // New elements
     this.components = {
       floor: new Floor(),
-      cube: new Cube(),
+      cube: new Cube(this.scene),
     }
 
     this.init()
