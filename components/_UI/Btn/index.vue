@@ -21,8 +21,6 @@ const $props = defineProps({
     default: true,
   },
 })
-
-console.log(colors())
 </script>
 
 <style src="./style.scss" lang="scss" scoped></style>

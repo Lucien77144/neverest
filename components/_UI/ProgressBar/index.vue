@@ -24,8 +24,8 @@
       </mask>
       <g mask="url(#mask)">
         <path
+          class="progress__bar"
           d="M0 0h140v1039H0z"
-          fill="var(--primary)"
           :style="{
             transform: `translateY(${100 - clamp(progress, 0, 100)}%)`,
           }"
