@@ -30,6 +30,10 @@ export default class Experience {
     this.canvas = _options.canvas
     this.baseScene = _options.baseScene
 
+    // Utils
+    this.viewport = new Viewport()
+    this.cursor = new Cursor()
+
     // New elements
     this.config = {}
     this.sizes = null
@@ -148,6 +152,7 @@ export default class Experience {
     this.renderer = new Renderer()
     this.sizes = new Sizes()
     this.resources = new Resources()
+    this?.cursor?.setup(window, !!this.debug)
 
     this.sizes.on('resize', () => {
       this.resize()
@@ -187,5 +192,7 @@ export default class Experience {
     this.renderer.dispose()
     this.resources.dispose()
     this.sceneManager.dispose()
+    this?.cursor?.destroy()
+    SingletonManager.destroy()
   }
 }
