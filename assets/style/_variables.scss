@@ -1,72 +1,34 @@
-html,
-body {
-  --darken-amount: 10%;
-  --lighten-amount: 10%;
+$darken-amount: 10%;
+$lighten-amount: 10%;
 
-  --primary: #ff0000;
-  --primary-dark: darken(var(--primary), --darken-amount);
-  --primary-light: darken(var(--primary), --lighten-amount);
+$primary: #ff0000;
+$primary-dark: darken($primary, $darken-amount);
+$primary-light: lighten($primary, $lighten-amount);
 
-  --secondary: #00ff00;
-  --secondary-dark: darken(var(--secondary), --darken-amount);
-  --secondary-light: darken(var(--secondary), --lighten-amount);
+$secondary: #00ff00;
+$secondary-dark: darken($secondary, $darken-amount);
+$secondary-light: lighten($secondary, $lighten-amount);
 
-  --black: #151515;
-  --black-dark: darken(var(--black), --darken-amount);
-  --black-light: darken(var(--black), --lighten-amount);
+$black: #151515;
+$black-dark: darken($black, $darken-amount);
+$black-light: lighten($black, $lighten-amount);
 
-  --white: #f4f4f4;
-  --white-dark: darken(var(--white), --darken-amount);
-  --white-light: darken(var(--white), --lighten-amount);
+$white: #f4f4f4;
+$white-dark: darken($white, $darken-amount);
+$white-light: lighten($white, $lighten-amount);
 
-  --success: #00ff00;
-  --success-dark: darken(var(--success), --darken-amount);
-  --success-light: darken(var(--success), --lighten-amount);
+$success: #00ff00;
+$success-dark: darken($success, $darken-amount);
+$success-light: lighten($success, $lighten-amount);
 
-  --info: #00ccff;
-  --info-dark: darken(var(--info), --darken-amount);
-  --info-light: darken(var(--info), --lighten-amount);
+$info: #00ccff;
+$info-dark: darken($info, $darken-amount);
+$info-light: lighten($info, $lighten-amount);
 
-  --warning: #ffcc00;
-  --warning-dark: darken(var(--warning), --darken-amount);
-  --warning-light: darken(var(--warning), --lighten-amount);
+$warning: #ffcc00;
+$warning-dark: darken($warning, $darken-amount);
+$warning-light: lighten($warning, $lighten-amount);
 
-  --danger: #ff0000;
-  --danger-dark: darken(var(--danger), --darken-amount);
-  --danger-light: darken(var(--danger), --lighten-amount);
-}
-
-$darken-amount: var(--darken-amount);
-$lighten-amount: var(--lighten-amount);
-
-$primary: var(--primary);
-$primary-dark: var(--primary-dark);
-$primary-light: var(--primary-light);
-
-$secondary: var(--secondary);
-$secondary-dark: var(--secondary-dark);
-$secondary-light: var(--secondary-light);
-
-$black: var(--black);
-$black-dark: var(--black-dark);
-$black-light: var(--black-light);
-
-$white: var(--white);
-$white-dark: var(--white-dark);
-$white-light: var(--white-light);
-
-$success: var(--success);
-$success-dark: var(--success-dark);
-$success-light: var(--success-light);
-
-$info: var(--info);
-$info-dark: var(--info-dark);
-$info-light: var(--info-light);
-
-$warning: var(--warning);
-$warning-dark: var(--warning-dark);
-$warning-light: var(--warning-light);
-
-$danger: var(--danger);
-$danger-dark: var(--danger-dark);
-$danger-light: var(--danger-light);
+$danger: #ff0000;
+$danger-dark: darken($danger, $darken-amount);
+$danger-light: lighten($danger, $lighten-amount);
