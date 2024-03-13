@@ -21,7 +21,7 @@ export default class Floor extends BaseItem {
    * Get geometry
    */
   setGeometry() {
-    this.geometry = new PlaneGeometry(10, 10)
+    this.geometry = new PlaneGeometry(20, 20)
   }
 
   /**
@@ -37,8 +37,8 @@ export default class Floor extends BaseItem {
   setMesh() {
     this.item = new Mesh(this.geometry, this.material)
 
-    this.item.rotation.x = -Math.PI / 2
-    this.item.position.y = -3
+    this.item.rotation.x = (-Math.PI / 2) *0
+    this.item.position.y = (-3)*0
   }
 
   /**
