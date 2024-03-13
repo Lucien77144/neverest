@@ -1,9 +1,7 @@
 import Experience from '../Experience'
-import Scene1 from '../Scenes/Scene1'
-import Scene2 from '../Scenes/Scene2'
 import gsap from 'gsap'
-import scenes from './assets/data/scenes.json'
 import TRANSITIONS from '~/const/transitions.const'
+import scenesList from '~/const/scenes.const'
 
 export default class SceneManager {
   /**
@@ -17,10 +15,7 @@ export default class SceneManager {
     this.time = this.experience.time
 
     // New elements
-    this.sceneList = {
-      default: Scene1,
-      world2: Scene2,
-    }
+    this.sceneList = null
     this.debugFolder = null
     this.renderMesh = null
     this.active = null
@@ -31,6 +26,8 @@ export default class SceneManager {
     // Store
     const { setScene } = useDebugStore()
     this.setScene = setScene
+    const { setScroll } = useScrollStore()
+    this.setScroll = setScroll
   }
 
   /**
@@ -48,15 +45,15 @@ export default class SceneManager {
     this.debugFolder.disabled = true // Disable the debug folder during the transition
 
     // Init next scene
-    this.sceneName = destination
-    this.next = new this.sceneList[destination]()
+    const next = this.getSceneFromList(destination)
+    this.sceneName = next.name
+    this.next = new next.Scene()
 
     // Update the store (and localstorage) with the new scene :
-    this.setScene(destination)
+    this.setScene(next.name)
 
-    // Add render mesh if unset :
+    // Add render mesh if unset and set template :
     this.renderMesh ??= this.experience.renderer.renderMesh
-    // Set the transition template :
     this.renderMesh.material.uniforms.uTemplate = template
 
     // Smooth transition with gsap
@@ -88,9 +85,9 @@ export default class SceneManager {
       .addBlade({
         view: 'list',
         label: 'scene',
-        options: Object.keys(this.sceneList).map((text) => ({
-          text,
-          value: text,
+        options: this.sceneList.map(({ name }) => ({
+          text: name,
+          value: name,
         })),
         value,
       })
@@ -98,49 +95,65 @@ export default class SceneManager {
   }
 
   /**
-   * Init scene
+   * Format the scene
    */
-  init() {
-    // Debug
-    if (this.debug) {
-      const { getScene } = useDebugStore()
-      this.sceneName = getScene // Get the base scene name from the debug store
-      this.setDebug(this.sceneList[this.sceneName] ? this.sceneName : 'default')
-    }
+  setSceneList() {
+    this.sceneList = scenesList.map((s, i) => ({
+      ...s,
+      start: total(scenesList.slice(0, i), 'duration'),
+      end: total(scenesList.slice(0, i + 1), 'duration'),
+    }))
+  }
 
-    // Init active scene
-    const _scene = this.sceneList[this.sceneName] || this.sceneList.default
-    this.active = new _scene()
-
-    this.setNavigation()
+  /**
+   * Get scene from list
+   * @param {*} name Scene name
+   */
+  getSceneFromList(name) {
+    return (
+      this.sceneList.find((s) => s.name === name) ||
+      this.sceneList.find((s) => s.name === 'default') ||
+      this.sceneList[0]
+    )
   }
 
   /**
    * Set navigation in the experience of the scenes and depending of the scroll
    */
   setNavigation() {
-    // Format presets
-    const getTotal = (arr) => arr.reduce((acc, curr) => acc + curr.duration, 0) // Get the total duration of the array
-    const preset = scenes.map((scene, i) => ({
-      ...scene,
-      transition: TRANSITIONS[scene.transition.toUpperCase()],
-      start: getTotal(scenes.slice(0, i)),
-      end: getTotal(scenes.slice(0, i + 1)),
-    }))
-
     // Composables
-    const progress = computed(() => useScrollStore().getCurrent) // Progress of the scroll from 0 to 1
-    const totalDuration = getTotal(preset) // Total duration of the presets
+    const progress = computed(() => useScrollStore().getScroll) // Progress of the scroll from 0 to 1
+    const totalDuration = total(this.sceneList, 'duration') // Total duration of the presets
 
     watch(
       () => progress.value * totalDuration,
-      (value) => {
-        const curr = preset.find((p) => value >= p.start && value < p.end) // current scene to set
-        if (curr && curr.scene != this.sceneName) {
-          this.destination = curr.scene
+      (val) => {
+        const curr = this.sceneList.find((p) => val >= p.start && val < p.end) // current scene to set
+        if (curr && curr.name != this.sceneName) {
+          this.destination = curr.name
         }
       }
     )
+  }
+
+  /**
+   * Init scene
+   */
+  init() {
+    this.setSceneList()
+
+    // Debug
+    if (this.debug) {
+      const { getScene } = useDebugStore()
+      this.sceneName = getScene // Get the base scene name from the debug store
+      this.setDebug(this.getSceneFromList(this.sceneName).name)
+    }
+
+    // Init active scene
+    const active = this.getSceneFromList(this.sceneName)
+    this.active = new active.Scene()
+
+    this.setNavigation()
   }
 
   /**

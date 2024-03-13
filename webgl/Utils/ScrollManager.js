@@ -16,8 +16,8 @@ export default class ScrollManager {
     this.velocity = 0
 
     // Store
-    const { setCurrent } = useScrollStore()
-    this.setCurrent = setCurrent
+    const { setScroll } = useScrollStore()
+    this.setScroll = setScroll
 
     // Init
     this.init()
@@ -67,6 +67,6 @@ export default class ScrollManager {
     this.velocity = this.current - this.target
     this.current = MathUtils.lerp(this.current, this.target, this.speed)
 
-    this.setCurrent(this.current)
+    this.setScroll(this.current)
   }
 }

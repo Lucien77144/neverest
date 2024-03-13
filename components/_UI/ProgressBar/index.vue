@@ -31,23 +31,23 @@
           }"
         />
       </g>
+      <g mask="url(#mask)">
+        <path class="progress__bg" d="M0 0h140v1039H0z" />
+      </g>
     </svg>
   </div>
 </template>
 
 <script lang="ts" setup>
 // Props
-const { preset } = defineProps({
+defineProps({
   current: {
     type: Number,
-  },
-  preset: {
-    type: Object as PropType<TPreset[]>,
   },
 })
 
 // Composables
-const progress = computed(() => useScrollStore().getCurrent)
+const progress = computed(() => useScrollStore().getScroll)
 
 // Get total duration
 // const totalDuration = preset.reduce((acc, curr) => acc + curr.duration, 0)
