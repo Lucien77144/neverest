@@ -9,15 +9,15 @@ export default class ScrollManager {
 
     // New elements
     this.debugFolder = null
-    this.target = 0
-    this.current = 0
     this.speed = 0.05
     this.factor = 0.005
     this.velocity = 0
 
     // Store
-    const { setScroll } = useScrollStore()
-    this.setScroll = setScroll
+    this.setScroll = useScrollStore().setCurrent
+    this.setTarget = useScrollStore().setTarget
+    this.current = computed(() => useScrollStore().getCurrent)
+    this.target = computed(() => useScrollStore().getTarget)
 
     // Init
     this.init()
@@ -28,8 +28,7 @@ export default class ScrollManager {
    */
   init() {
     window.addEventListener('mousewheel', (e) => {
-      this.target += e.deltaY * this.factor
-      this.target = clamp(0, 100, this.target)
+      this.setTarget(this.target.value + e.deltaY * this.factor)
     })
 
     // Debug
@@ -64,9 +63,9 @@ export default class ScrollManager {
    * Update values
    */
   update() {
-    this.velocity = this.current - this.target
-    this.current = MathUtils.lerp(this.current, this.target, this.speed)
-
-    this.setScroll(this.current)
+    this.velocity = this.current.value - this.target.value
+    this.setScroll(
+      MathUtils.lerp(this.current.value, this.target.value, this.speed)
+    )
   }
 }

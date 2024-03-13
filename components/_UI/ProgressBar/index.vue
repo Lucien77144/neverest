@@ -27,7 +27,7 @@
           class="progress__bar"
           d="M0 0h140v1039H0z"
           :style="{
-            transform: `translateY(${100 - progress * 100}%)`,
+            transform: `translateY(${100 - position * 100}%)`,
           }"
         />
       </g>
@@ -39,6 +39,8 @@
 </template>
 
 <script lang="ts" setup>
+import scenes from '~/const/scenes.const'
+
 // Props
 defineProps({
   current: {
@@ -46,26 +48,19 @@ defineProps({
   },
 })
 
-// Composables
-const progress = computed(() => useScrollStore().getScroll)
-
-// Get total duration
-// const totalDuration = preset.reduce((acc, curr) => acc + curr.duration, 0)
-// const mapedPreset = preset.map((item, index) => {
-//   const start = preset
-//     .slice(0, index)
-//     .reduce((acc, curr) => acc + curr.duration, 0)
-//   return { ...item, start }
-// })
+// Position of the scroll from 0 to 100
+const position = computed(
+  () => Math.round(useScrollStore().getCurrent * 1000) / 100000
+)
 
 // Watchers
-// watch(
-//   () => progress.value * totalDuration,
-//   (value) => {
-//     console.log(value)
-//     console.log(mapedPreset)
-//   }
-// )
+watch(
+  () => position.value * scenes.total,
+  (value) => {
+    // console.log(value)
+    // console.log(scroll.value)
+  }
+)
 </script>
 
 <style src="./style.scss" lang="scss" scoped></style>

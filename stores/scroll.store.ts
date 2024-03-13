@@ -1,19 +1,27 @@
 type TScroll = {
-  scroll: number
+  current: number
+  target: number
 }
 
 export const useScrollStore = defineStore('scroll', {
   state: (): TScroll => ({
-    scroll: 0 as TScroll['scroll'],
+    current: 0 as TScroll['current'], // 0-100
+    target: 0 as TScroll['target'], // 0-100
   }),
   getters: {
-    getScroll(): TScroll['scroll'] {
-      return this.scroll
+    getCurrent(): TScroll['current'] {
+      return this.current
+    },
+    getTarget(): TScroll['target'] {
+      return clamp(0, 100, this.target)
     },
   },
   actions: {
-    setScroll(val: TScroll['scroll']) {
-      this.scroll = Math.round(val * 1000) / 100000
+    setCurrent(val: TScroll['current']) {
+      this.current = val
+    },
+    setTarget(val: TScroll['target']) {
+      this.target = val
     },
   },
 })
