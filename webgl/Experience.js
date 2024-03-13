@@ -76,12 +76,14 @@ export default class Experience {
   getDebug() {
     if (!this.config.debug) return
 
-    const { landing, toggleLanding } = useDebugStore()
+    const { getLanding, toggleLanding } = useDebugStore()
     const pane = new Pane({
       title: 'Debug',
       expanded: true,
     })
-    pane.addBinding({ landing }, 'landing').on('change', () => toggleLanding())
+    pane
+      .addBinding({ landing: getLanding }, 'landing')
+      .on('change', () => toggleLanding())
 
     return pane
   }
@@ -123,6 +125,7 @@ export default class Experience {
     this.renderer.update()
     this.sceneManager.update()
     this.stats?.update()
+    this.scrollManager?.update()
 
     window.requestAnimationFrame(() => {
       this.update()

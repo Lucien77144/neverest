@@ -2,6 +2,7 @@
   <UILoader />
   <div class="panel">
     <UILangPicker />
+    <UIProgressBar />
   </div>
 </template>
 

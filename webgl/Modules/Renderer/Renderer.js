@@ -1,8 +1,22 @@
-import { Color, LinearFilter, Mesh, NoToneMapping, PerspectiveCamera, PlaneGeometry, RGBAFormat, SRGBColorSpace, ShaderMaterial, Uniform, Vector2, WebGLRenderTarget, WebGLRenderer } from 'three'
+import {
+  Color,
+  LinearFilter,
+  Mesh,
+  NoToneMapping,
+  PerspectiveCamera,
+  PlaneGeometry,
+  RGBAFormat,
+  SRGBColorSpace,
+  ShaderMaterial,
+  Uniform,
+  Vector2,
+  WebGLRenderTarget,
+  WebGLRenderer,
+} from 'three'
 import Experience from '../../Experience'
 import vertexShader from './Shaders/vertexShader.vert?raw'
 import fragmentShader from './Shaders/fragmentShader.frag?raw'
-import { TRANSITIONS } from '../../Utils/SceneManager'
+import TRANSITIONS from '~/const/transitions.const'
 
 export default class Renderer {
   /**

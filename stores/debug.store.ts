@@ -20,6 +20,14 @@ export const useDebugStore = defineStore('debug', {
       scene: local?.scene || 'default',
     }
   },
+  getters: {
+    getLanding(): TDebug['landing'] {
+      return this.landing
+    },
+    getScene(): TDebug['scene'] {
+      return this.scene
+    },
+  },
   actions: {
     toggleLanding() {
       this.landing = !this.landing

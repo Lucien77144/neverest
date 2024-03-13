@@ -1,0 +1,12 @@
+.progress {
+  position: absolute;
+  right: 0;
+  height: 80vh;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  &__bar {
+    fill: $primary;
+  }
+}
