@@ -1,6 +1,9 @@
+import scenes from '~/const/scenes.const'
+
 type TDebug = {
   landing: boolean
   scene: string
+  persistScene: boolean
 }
 
 /**
@@ -16,8 +19,9 @@ export const useDebugStore = defineStore('debug', {
     const local = JSON.parse(localStorage.getItem('debug') || '{}')
 
     return {
-      landing: !!local?.landing as TDebug['landing'],
-      scene: local?.scene || 'default',
+      landing: !!local?.landing,
+      scene: local?.scene || scenes.default.name,
+      persistScene: !!local?.persistScene,
     }
   },
   getters: {
@@ -25,7 +29,10 @@ export const useDebugStore = defineStore('debug', {
       return this.landing
     },
     getScene(): TDebug['scene'] {
-      return this.scene
+      return this.persistScene ? this.scene : scenes.default.name
+    },
+    getPersistScene(): TDebug['persistScene'] {
+      return !!this.persistScene
     },
   },
   actions: {
@@ -35,6 +42,10 @@ export const useDebugStore = defineStore('debug', {
     },
     setScene(scene: string) {
       this.scene = scene
+      setLocalStorage(this.$state)
+    },
+    togglePersistScene() {
+      this.persistScene = !this.persistScene
       setLocalStorage(this.$state)
     },
   },

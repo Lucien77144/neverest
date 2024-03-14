@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="t-25" :class="{ disabled: !scene?.nav }">
     <svg
       class="progress"
       fill="none"
@@ -52,10 +52,11 @@ defineProps({
 const position = computed(
   () => Math.round(useScrollStore().getCurrent * 1000) / 100000
 )
+const scene = computed(() => useNavigationStore().getScene)
 
 // Watchers
 watch(
-  () => position.value * scenes.scale,
+  () => position.value * scenes.nav.total,
   (value) => {
     // console.log(value)
     // console.log(scroll.value)

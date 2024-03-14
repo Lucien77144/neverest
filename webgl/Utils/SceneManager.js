@@ -26,14 +26,30 @@ export default class SceneManager {
     this.redirect = false
 
     // Store
-    this.setScene = useDebugStore().setScene
-    this.setCurrent = useScrollStore().setCurrent
-    this.setTarget = useScrollStore().setTarget
 
-    // Position of the scroll from 0 to 100
-    this.position = computed(
+    // Actions
+    this.togglePersistScene = useDebugStore().togglePersistScene
+    this.setSceneStorage = useDebugStore().setScene
+    this.setSceneNavigation = useNavigationStore().setScene
+    this.setProgressNavigation = useNavigationStore().setProgress
+    this.setCurrentScroll = useScrollStore().setCurrent
+    this.setTargetScroll = useScrollStore().setTarget
+
+    // Getters
+    this.positionScroll = computed(
       () => Math.round(useScrollStore().getCurrent * 1000) / 100000
     )
+    this.sceneNavigation = computed(() => useNavigationStore().getScene)
+    this.persistScene = computed(() => useDebugStore().getPersistScene)
+  }
+
+  /**
+   * Set scene in storage and navigation stores
+   * @param {*} scene Scene
+   */
+  setScene(scene) {
+    this.setSceneStorage(scene.name)
+    this.setSceneNavigation(scene)
   }
 
   /**
@@ -53,7 +69,7 @@ export default class SceneManager {
     this.next = new next.Scene()
 
     // Update the store (and localstorage) with the new scene :
-    this.setScene(next.name)
+    this.setScene(next)
 
     // Add render mesh if unset and set template :
     const transition = next.transition
@@ -62,8 +78,10 @@ export default class SceneManager {
 
     // Update scroll position :
     this.redirect = scroll
-    const scrollDest = Math.ceil((next.nav?.start / this.nav.total) * 100)
-    const scrollStart = this.position.value * 100
+    const scrollDest = Math.ceil(
+      ((next.nav?.start || 0) / this.nav.total) * 100
+    )
+    const scrollStart = this.positionScroll.value * 100
 
     // Smooth transition with gsap
     gsap.to(this.renderMesh.material.uniforms.uTransition, {
@@ -97,10 +115,10 @@ export default class SceneManager {
    * Update scroll
    * @param {number} val Scroll value, from 0 to 100
    */
-  instantScroll(val) {
+  instantScroll(val = 0) {
     val = Math.ceil(val * 10000) / 10000
-    this.setCurrent(val)
-    this.setTarget(val)
+    this.setCurrentScroll(val)
+    this.setTargetScroll(val)
   }
 
   /**
@@ -110,6 +128,12 @@ export default class SceneManager {
     this.debugFolder = this.debug.addFolder({
       title: 'Scenes',
     })
+
+    this.debugFolder
+      .addBinding({ value: this.persistScene.value }, 'value', {
+        label: 'Persist scene',
+      })
+      .on('change', () => this.togglePersistScene())
 
     this.debugScene = this.debugFolder
       .addBlade({
@@ -139,15 +163,23 @@ export default class SceneManager {
    */
   startNavigation() {
     watch(
-      () => this.position.value * this.nav.total,
+      () =>
+        this.sceneNavigation.value.nav
+          ? this.positionScroll.value * this.nav.total
+          : 0,
       (v) => {
         const curr = this.nav.list.find(
           ({ nav }) => v >= nav?.start && v < nav.end
         )
-
         if (curr && curr.name != this.sceneName && !this.redirect) {
           this.destination = curr.name
         }
+
+        // Update the navigation progress
+        const activeNav = this.sceneNavigation.value.nav
+        this.setProgressNavigation(
+          ((v - activeNav.start) / activeNav.scale) * 100
+        )
       }
     )
   }
@@ -161,13 +193,14 @@ export default class SceneManager {
       ? useDebugStore().getScene
       : this.scenes.default.name
     const active = this.getSceneFromList(this.sceneName)
+    this.setScene(active)
 
     // Debug
     if (this.debug) this.setDebug(this.sceneName)
 
     // Init active scene
     this.active = new active.Scene()
-    this.instantScroll((active.nav?.start / this.nav.total) * 100)
+    this.instantScroll(((active.nav?.start || 0) / this.nav.total) * 100)
 
     // Start navigation
     this.startNavigation()
