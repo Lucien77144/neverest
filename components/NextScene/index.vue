@@ -9,9 +9,7 @@
           (sceneNavigation.nav.end || scenes.nav.total),
       }"
     >
-      <UIBtn @click="navigate(true)">
-        {{ $t('NEXT') }}
-      </UIBtn>
+      <UIDragBtn />
     </div>
     <div
       ref="action"
