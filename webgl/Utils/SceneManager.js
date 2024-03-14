@@ -30,16 +30,22 @@ export default class SceneManager {
     // Actions
     this.togglePersistScene = useDebugStore().togglePersistScene
     this.setSceneStorage = useDebugStore().setScene
-    this.setSceneNavigation = useNavigationStore().setScene
+
     this.setCurrentScroll = useScrollStore().setCurrent
     this.setTargetScroll = useScrollStore().setTarget
 
+    this.setSceneNavigation = useNavigationStore().setScene
+    this.setStartPosition = useNavigationStore().setStartPosition
+    this.setScale = useNavigationStore().setScale
+
     // Getters
-    this.positionScroll = computed(
+    this.currentScroll = computed(
       () => Math.round(useScrollStore().getCurrent * 1000) / 100000
     )
-    this.sceneNavigation = computed(() => useNavigationStore().getScene)
+    this.currentScale = computed(() => useNavigationStore().getScale)
     this.persistScene = computed(() => useDebugStore().getPersistScene)
+    this.sceneNavigation = computed(() => useNavigationStore().getScene)
+    this.startPosition = computed(() => useNavigationStore().getStartPosition)
   }
 
   /**
@@ -74,14 +80,33 @@ export default class SceneManager {
     this.renderMesh ??= this.experience.renderer.renderMesh
     this.renderMesh.material.uniforms.uTemplate = transition.template
 
-    this.setTargetScroll(0)
+    // Get current values :
+    const currStart = this.startPosition.value
+    const currScale = this.currentScale.value
+    const currScroll = this.currentScroll.value * 100
 
     // Smooth transition with gsap
     gsap.to(this.renderMesh.material.uniforms.uTransition, {
       value: 1,
       duration: transition.duration / 1000,
       ease: 'power1.inOut',
-      onUpdate: () => {},
+      onUpdate: () => {
+        // Progression of the transition :
+        const progress = this.renderMesh.material.uniforms.uTransition.value
+
+        // Interpolate values :
+        const interpolate = (newPos = 0, start = -1, dir) => {
+          dir ??= Math.sign(newPos - start)
+          return start + (newPos + start * dir) * progress
+        }
+
+        // Transition of values of progressBar
+        this.instantNavigate({
+          start: interpolate(next.nav?.start, currStart),
+          scale: interpolate(next.nav?.scale, currScale, -1),
+          scroll: currScroll * (1 - progress),
+        })
+      },
       onComplete: () => {
         // Reset transition uniform value :
         this.renderMesh.material.uniforms.uTransition.value = 0
@@ -101,10 +126,12 @@ export default class SceneManager {
    * Update scroll
    * @param {number} val Scroll value, from 0 to 100
    */
-  instantScroll(val = 0) {
-    val = Math.ceil(val * 10000) / 10000
-    this.setCurrentScroll(val)
-    this.setTargetScroll(val)
+  instantNavigate({ scroll, scale, start, scene }) {
+    scroll && this.setCurrentScroll(scroll)
+    scroll && this.setTargetScroll(scroll)
+    scale && this.setScale(scale || 0)
+    start && this.setStartPosition(start || 0)
+    scene && this.setScene(scene)
   }
 
   /**
@@ -150,15 +177,21 @@ export default class SceneManager {
     this.sceneName = this.debug
       ? useDebugStore().getScene
       : this.scenes.default.name
-    const active = this.getSceneFromList(this.sceneName)
-    this.setScene(active)
+    const scene = this.getSceneFromList(this.sceneName)
+
+    // Set navigation
+    this.instantNavigate({
+      scroll: scene.nav?.scroll,
+      scale: scene.nav?.scale,
+      start: scene.nav?.start,
+      scene,
+    })
 
     // Debug
     if (this.debug) this.setDebug(this.sceneName)
 
     // Init active scene
-    this.active = new active.Scene()
-    this.instantScroll(0)
+    this.active = new scene.Scene()
 
     // Start navigation
     this.$bus.on('scene:switch', (scene) => this.switch(scene))
