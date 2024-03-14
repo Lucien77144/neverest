@@ -175,7 +175,7 @@ export default class SceneManager {
   init() {
     // Get the scene from the store or the default one
     this.sceneName = this.debug
-      ? this.sceneNavigation.value
+      ? useDebugStore().getScene
       : this.scenes.default.name
     const scene = this.getSceneFromList(this.sceneName)
 
