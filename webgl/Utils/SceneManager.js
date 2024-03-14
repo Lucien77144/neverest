@@ -25,6 +25,10 @@ export default class SceneManager {
     this.destination = null
     this.redirect = false
 
+    // Plugins
+    const { $bus } = useNuxtApp()
+    this.$bus = $bus
+
     // Actions
     this.togglePersistScene = useDebugStore().togglePersistScene
     this.setSceneStorage = useDebugStore().setScene
@@ -160,7 +164,9 @@ export default class SceneManager {
    * Start the navigation system using scroll position
    */
   startNavigation() {
-    $bus.on('scene:switch', ({ scene, scroll }) => this.switch(scene, scroll))
+    this.$bus.on('scene:switch', ({ scene, scroll }) =>
+      this.switch(scene, scroll)
+    )
 
     watch(
       () =>
