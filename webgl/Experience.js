@@ -5,10 +5,9 @@ import Sizes from './Utils/Sizes'
 import Resources from './Utils/Resources'
 import Stats from './Utils/Stats'
 import SceneManager from './Utils/SceneManager'
-import { SingletonManager } from '~/vendor/singleton'
 import Cursor from './Utils/Cursor'
 import Viewport from '~/utils/Viewport'
-import DragManager from '~/Utils/DragManager'
+import DragManager from '~/utils/DragManager'
 import ScrollManager from './Utils/ScrollManager'
 
 export default class Experience {
@@ -48,6 +47,9 @@ export default class Experience {
     this.pane = null
     this.offset = { x: 0, y: 0 }
 
+    // plugin
+    this.$bus = useNuxtApp().$bus
+
     // Init
     this.init()
   }
@@ -81,7 +83,6 @@ export default class Experience {
     this.config.height = boundings.height || window.innerHeight
   }
 
-
   /**
    * Drag Events
    */
@@ -99,22 +100,27 @@ export default class Experience {
     this.pane.addBlade({ view: 'separator' })
   }
 
-  onDrag (e) {
-    this.handlePosChange({ x: this.offset.x - e.delta.x, y: this.offset.y - e.delta.y })
+  onDrag(e) {
+    console.log(e)
+    this.handlePosChange({
+      x: this.offset.x - e.delta.x,
+      y: this.offset.y - e.delta.y,
+    })
   }
 
-  handlePosChange ({ x, y }) {
+  handlePosChange({ x, y }) {
     this.offset.x = x
     this.offset.y = y
-    // this.pane.style.transform = `translate(${this.offset.x}px, ${this.offset.y}px)`
-    document.querySelector('.tp-dfwv').style.transform = `translate(${this.offset.x}px, ${this.offset.y}px)`
+    document.querySelector(
+      '.tp-dfwv'
+    ).style.transform = `translate(${this.offset.x}px, ${this.offset.y}px)`
   }
 
   setEvents() {
     this.handleDrag = this.onDrag.bind(this)
 
     this.dragManager = new DragManager({ el: this.pane.dragButton.element })
-    this.dragManager.addEventListener('drag', this.handleDrag)
+    this.$bus.on('drag', this.handleDrag)
   }
 
   /**
@@ -193,6 +199,5 @@ export default class Experience {
     this.resources.dispose()
     this.sceneManager.dispose()
     this?.cursor?.destroy()
-    SingletonManager.destroy()
   }
 }

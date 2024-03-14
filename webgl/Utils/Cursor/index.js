@@ -1,10 +1,7 @@
 import { Vector2 } from 'three'
-
-import { Singleton } from '~/vendor/singleton'
-
 import Viewport from '~/utils/Viewport'
 
-class Cursor extends Singleton('Cursor') {
+class Cursor {
   viewport = new Viewport()
 
   mouse = new Vector2()
@@ -95,7 +92,6 @@ class Cursor extends Singleton('Cursor') {
       centered: this.centered
     }
 
-    // bidello.trigger({ name: event, init: false }, e)
     this.$bus.emit(event, e)
   }
 }
