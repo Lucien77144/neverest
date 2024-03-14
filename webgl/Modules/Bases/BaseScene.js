@@ -26,12 +26,14 @@ export default class BaseScene {
   }
 
   setEvents() {
-    this.$bus.on('click', e => this.onClick(e.centered))
+    this.$bus.on('click', (e) => this.onClick(e.centered))
   }
 
   setRaycast() {
     Object.keys(this.components).forEach((c) => {
-      const intersects = this.raycaster.intersectObjects([this.components[c].item])
+      const intersects = this.raycaster.intersectObjects([
+        this.components[c].item,
+      ])
       if (intersects.length) {
         this.$bus.emit('openModal', c)
       }
@@ -41,7 +43,7 @@ export default class BaseScene {
   /**
    * Raycast On click
    */
-  onClick (centered) {
+  onClick(centered) {
     this.raycaster.setFromCamera(centered, this.camera.instance)
     this.setRaycast()
   }
@@ -54,7 +56,6 @@ export default class BaseScene {
       this.components[key].update()
     })
     this.camera.update()
-    
   }
 
   /**

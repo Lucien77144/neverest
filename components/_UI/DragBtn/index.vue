@@ -1,7 +1,9 @@
 <template>
-  <div class="DragBtn">
+  <div ref="drag" class="DragBtn">
     <div class="DragBtn__bar"></div>
-    <div class="DragBtn__button">Drag</div>
+    <div class="DragBtn__button">
+      <slot />
+    </div>
   </div>
 </template>
 
@@ -9,8 +11,23 @@
 import gsap from 'gsap'
 import Draggable from 'gsap/Draggable'
 
+// Refs
+const drag = ref<HTMLElement | null>()
+
+// Emits
 const $emit = defineEmits(['navigate'])
 
+// Props
+const { value } = defineProps({
+  value: {
+    type: [String, Number, Boolean],
+    default: true,
+  },
+})
+
+/**
+ * On mounted
+ */
 onMounted(() => {
   gsap.registerPlugin(Draggable)
 
@@ -19,11 +36,17 @@ onMounted(() => {
     bounds: '.DragBtn',
     onDragEnd: function () {
       if (this.y > 110) {
-        // Suppose que 110 est la position de fin souhaitée
-        console.log("Bouton glissé jusqu'au bout !")
-      } else {
-        console.log("Le bouton n'a pas été glissé jusqu'au bout.")
-        $emit('navigate')
+        $emit('navigate', value)
+
+        gsap.to('.DragBtn', {
+          top: -100,
+          opacity: 0,
+          duration: 1,
+          onComplete: () => {
+            gsap.set('.DragBtn', { opacity: 1, top: 0 })
+            gsap.set('.DragBtn__button', { y: 0 })
+          },
+        })
       }
     },
   })

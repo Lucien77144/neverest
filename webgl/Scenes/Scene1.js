@@ -15,6 +15,16 @@ export default class Scene1 extends BaseScene {
       cube: new Cube(),
     }
 
+    // Computed
+    this.targetScroll = useScrollStore().getTarget
+    watch(
+      () => useScrollStore().getTarget,
+      (value) => {
+        this.camera.instance.rotation.y += value / 1000
+      }
+    )
+
+    // Init the scene
     this.init()
   }
 }

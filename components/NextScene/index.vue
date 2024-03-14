@@ -1,27 +1,16 @@
 <template>
-  <div v-if="sceneNavigation?.nav">
-    <div
-      ref="action"
-      class="action next"
-      :class="{
-        active:
-          currentScroll > 100 - GAP &&
-          (sceneNavigation.nav.end || scenes.nav.total),
-      }"
-    >
-      <UIDragBtn />
-    </div>
-    <div
-      ref="action"
-      class="action prev"
-      :class="{
-        active: currentScroll < GAP && sceneNavigation.nav.start !== 0,
-      }"
-    >
-      <UIBtn @click="navigate(false)">
-        {{ $t('PREV') }}
-      </UIBtn>
-    </div>
+  <div
+    v-if="sceneNavigation?.nav"
+    class="next"
+    :class="{
+      active:
+        currentScroll > 100 - GAP &&
+        (sceneNavigation.nav.end || scenes.nav.total),
+    }"
+  >
+    <UIDragBtn @navigate="navigate">
+      {{ $t('NEXT') }}
+    </UIDragBtn>
   </div>
 </template>
 
@@ -34,22 +23,18 @@ const GAP = 10
 // Plugins
 const { $bus }: any = useNuxtApp()
 
-// Refs
-const action = ref<HTMLElement | null>(null)
-
 // Getters
 const currentScroll = computed(() => useScrollStore().getCurrent)
 const sceneNavigation = computed(() => useNavigationStore().getScene)
 
 /**
  * Switch scene
- * @param next is next scene or previus
  */
-const navigate = (next: boolean) => {
-  const index = scenes.nav.list.findIndex(
+function navigate() {
+  const curr = scenes.nav.list.findIndex(
     ({ id }) => id === sceneNavigation.value?.id
   )
-  const scene = next ? scenes.nav.list[index + 1] : scenes.nav.list[index - 1]
+  const scene = scenes.nav.list[curr + 1]
 
   scene && $bus.emit('scene:switch', scene)
 }

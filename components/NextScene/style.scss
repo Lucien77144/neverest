@@ -1,18 +1,13 @@
-.action {
+.next {
   position: fixed;
   left: 50%;
-  transition: 0.5s cubic-bezier(0.4, -1, 0.4, 2);
+  transition: 1s cubic-bezier(0.4, -1, 0.4, 2);
   cursor: pointer;
   pointer-events: all;
 
   &.next {
     top: 0;
     transform: translate(-50%, -100%);
-    opacity: 0;
-  }
-  &.prev {
-    bottom: 0;
-    transform: translate(-50%, 100%);
     opacity: 0;
   }
 
