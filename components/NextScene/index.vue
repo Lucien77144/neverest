@@ -1,33 +1,37 @@
 <template>
-  <div
-    ref="action"
-    class="action next"
-    :class="{
-      active:
-        progressNavigation > 99 &&
-        (sceneNavigation?.nav?.end || scenes.nav.total),
-    }"
-  >
-    <UIBtn @click="switchScene(true)">
-      {{ $t('NEXT') }}
-    </UIBtn>
-  </div>
-
-  <div
-    ref="action"
-    class="action prev"
-    :class="{
-      active: progressNavigation < 1 && sceneNavigation?.nav?.start !== 0,
-    }"
-  >
-    <UIBtn @click="switchScene(false)">
-      {{ $t('PREV') }}
-    </UIBtn>
+  <div v-if="sceneNavigation?.nav">
+    <div
+      ref="action"
+      class="action next"
+      :class="{
+        active:
+          currentScroll > 100 - GAP &&
+          (sceneNavigation.nav.end || scenes.nav.total),
+      }"
+    >
+      <UIBtn @click="switchScene(true)">
+        {{ $t('NEXT') }}
+      </UIBtn>
+    </div>
+    <div
+      ref="action"
+      class="action prev"
+      :class="{
+        active: currentScroll < GAP && sceneNavigation.nav.start !== 0,
+      }"
+    >
+      <UIBtn @click="switchScene(false)">
+        {{ $t('PREV') }}
+      </UIBtn>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import scenes from '~/const/scenes.const'
+
+// Const
+const GAP = 10
 
 // Plugins
 const { $bus }: any = useNuxtApp()
@@ -35,8 +39,8 @@ const { $bus }: any = useNuxtApp()
 // Refs
 const action = ref<HTMLElement | null>(null)
 
-// Computed
-const progressNavigation = computed(() => useNavigationStore().getProgress)
+// Getters
+const currentScroll = computed(() => useScrollStore().getCurrent)
 const sceneNavigation = computed(() => useNavigationStore().getScene)
 
 /**
@@ -48,9 +52,7 @@ const switchScene = (next: boolean) => {
   )
   const scene = next ? scenes.nav.list[index + 1] : scenes.nav.list[index - 1]
 
-  if (scene) {
-    $bus.emit('scene:switch', { scene, scroll: false })
-  }
+  scene && $bus.emit('scene:switch', scene)
 }
 </script>
 

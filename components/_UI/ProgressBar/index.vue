@@ -27,7 +27,7 @@
           class="progress__bar"
           d="M0 0h140v1039H0z"
           :style="{
-            transform: `translateY(${100 - position * 100}%)`,
+            transform: `translateY(${100 - formatScroll(scroll) * 100}%)`,
           }"
         />
       </g>
@@ -48,20 +48,22 @@ defineProps({
   },
 })
 
-// Position of the scroll from 0 to 100
-const position = computed(
+// Getters
+const scroll = computed(
   () => Math.round(useScrollStore().getCurrent * 1000) / 100000
 )
 const scene = computed(() => useNavigationStore().getScene)
 
-// Watchers
-watch(
-  () => position.value * scenes.nav.total,
-  (value) => {
-    // console.log(value)
-    // console.log(scroll.value)
-  }
-)
+/**
+ * Format scroll values
+ */
+function formatScroll(value: number): number {
+  const nav = scene.value?.nav
+  const total = scenes.nav.total
+  const prev = (nav?.start || 0) / total
+
+  return (value / total) * (nav?.scale || 0) + prev
+}
 </script>
 
 <style src="./style.scss" lang="scss" scoped></style>

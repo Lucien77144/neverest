@@ -23,13 +23,14 @@ export default class SceneManager {
     this.active = null
     this.next = null
     this.destination = null
-    this.redirect = false
+
+    // Plugins
+    this.$bus = useNuxtApp().$bus
 
     // Actions
     this.togglePersistScene = useDebugStore().togglePersistScene
     this.setSceneStorage = useDebugStore().setScene
     this.setSceneNavigation = useNavigationStore().setScene
-    this.setProgressNavigation = useNavigationStore().setProgress
     this.setCurrentScroll = useScrollStore().setCurrent
     this.setTargetScroll = useScrollStore().setTarget
 
@@ -52,10 +53,9 @@ export default class SceneManager {
 
   /**
    * Switch scene
-   * @param {string} next Destination scene
-   * @param {boolean} scroll If set, update the scroll position
+   * @param {TSceneInfos} next Destination scene
    */
-  switch(next, scroll = false) {
+  switch(next) {
     if (this.next) return
 
     if (this.debug) {
@@ -74,25 +74,14 @@ export default class SceneManager {
     this.renderMesh ??= this.experience.renderer.renderMesh
     this.renderMesh.material.uniforms.uTemplate = transition.template
 
-    // Update scroll position :
-    this.redirect = scroll
-    const scrollDest = Math.ceil(
-      ((next.nav?.start || 0) / this.nav.total) * 100
-    )
-    const scrollStart = this.positionScroll.value * 100
+    this.setTargetScroll(0)
 
     // Smooth transition with gsap
     gsap.to(this.renderMesh.material.uniforms.uTransition, {
       value: 1,
       duration: transition.duration / 1000,
       ease: 'power1.inOut',
-      onUpdate: () => {
-        // If redirecting, update the scroll position depending of the transition state
-        if (this.redirect) {
-          const value = this.renderMesh.material.uniforms.uTransition.value
-          this.instantScroll(scrollStart + (scrollDest - scrollStart) * value)
-        }
-      },
+      onUpdate: () => {},
       onComplete: () => {
         // Reset transition uniform value :
         this.renderMesh.material.uniforms.uTransition.value = 0
@@ -102,7 +91,6 @@ export default class SceneManager {
           this.debugScene.value = next.name
           this.debugFolder.disabled = false
         }
-        this.redirect = false
         this.active = this.next
         this.next = null
       },
@@ -143,9 +131,7 @@ export default class SceneManager {
         })),
         value,
       })
-      .on('change', ({ value }) =>
-        this.switch(this.getSceneFromList(value), true)
-      )
+      .on('change', ({ value }) => this.switch(this.getSceneFromList(value)))
   }
 
   /**
@@ -154,27 +140,6 @@ export default class SceneManager {
    */
   getSceneFromList(name) {
     return this.scenes.list.find((s) => s.name === name) || this.scenes.default
-  }
-
-  /**
-   * Start the navigation system using scroll position
-   */
-  startNavigation() {
-    $bus.on('scene:switch', ({ scene, scroll }) => this.switch(scene, scroll))
-
-    watch(
-      () =>
-        this.sceneNavigation.value.nav
-          ? this.positionScroll.value * this.nav.total
-          : 0,
-      (v) => {
-        // Update the navigation progress
-        const activeNav = this.sceneNavigation.value.nav
-        this.setProgressNavigation(
-          ((v - activeNav.start) / activeNav.scale) * 100
-        )
-      }
-    )
   }
 
   /**
@@ -193,10 +158,10 @@ export default class SceneManager {
 
     // Init active scene
     this.active = new active.Scene()
-    this.instantScroll(((active.nav?.start || 0) / this.nav.total) * 100)
+    this.instantScroll(0)
 
     // Start navigation
-    this.startNavigation()
+    this.$bus.on('scene:switch', (scene) => this.switch(scene))
   }
 
   /**
