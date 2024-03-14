@@ -3,6 +3,7 @@ import Scene2 from '~/webgl/Scenes/Scene2'
 import TRANSITIONS from './transitions.const'
 
 export type TSceneInfos = {
+  id?: number
   isDefault?: boolean
   name: string
   Scene: any
@@ -66,6 +67,11 @@ const SCENES: TSceneInfos[] = [
 const total = (arr: any[]): number => {
   return arr.reduce((acc, s) => acc + s.nav?.scale, 0)
 }
+
+// Set ids :
+SCENES.forEach((s: TSceneInfos, i: number) => {
+  s.id ??= i
+})
 
 // Init the nav start and end
 const NAV_SCENE = SCENES.filter((s) => s.nav)

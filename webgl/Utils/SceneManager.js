@@ -25,8 +25,6 @@ export default class SceneManager {
     this.destination = null
     this.redirect = false
 
-    // Store
-
     // Actions
     this.togglePersistScene = useDebugStore().togglePersistScene
     this.setSceneStorage = useDebugStore().setScene
@@ -162,19 +160,14 @@ export default class SceneManager {
    * Start the navigation system using scroll position
    */
   startNavigation() {
+    $bus.on('scene:switch', ({ scene, scroll }) => this.switch(scene, scroll))
+
     watch(
       () =>
         this.sceneNavigation.value.nav
           ? this.positionScroll.value * this.nav.total
           : 0,
       (v) => {
-        const curr = this.nav.list.find(
-          ({ nav }) => v >= nav?.start && v < nav.end
-        )
-        if (curr && curr.name != this.sceneName && !this.redirect) {
-          this.destination = curr.name
-        }
-
         // Update the navigation progress
         const activeNav = this.sceneNavigation.value.nav
         this.setProgressNavigation(
@@ -212,11 +205,6 @@ export default class SceneManager {
   update() {
     this.active?.update()
     this.next?.update()
-
-    if (!this.next && this.destination && !this.redirect) {
-      this.switch(this.getSceneFromList(this.destination))
-      this.destination = null
-    }
   }
 
   /**

@@ -1,6 +1,7 @@
 <template>
   <UILoader />
   <div class="panel">
+    <NextScene />
     <UILangPicker />
     <UIProgressBar />
   </div>
