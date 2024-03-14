@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="t-25" :class="{ disabled: !scene?.nav }">
     <svg
       class="progress"
       fill="none"
@@ -27,45 +27,41 @@
           class="progress__bar"
           d="M0 0h140v1039H0z"
           :style="{
-            transform: `translateY(${100 - progress * 100}%)`,
+            transform: `translateY(${100 - position * 100}%)`,
           }"
         />
+      </g>
+      <g mask="url(#mask)">
+        <path class="progress__bg" d="M0 0h140v1039H0z" />
       </g>
     </svg>
   </div>
 </template>
 
 <script lang="ts" setup>
+import scenes from '~/const/scenes.const'
+
 // Props
-const { preset } = defineProps({
+defineProps({
   current: {
     type: Number,
   },
-  preset: {
-    type: Object as PropType<TPreset[]>,
-  },
 })
 
-// Composables
-const progress = computed(() => useScrollStore().getCurrent)
-
-// Get total duration
-// const totalDuration = preset.reduce((acc, curr) => acc + curr.duration, 0)
-// const mapedPreset = preset.map((item, index) => {
-//   const start = preset
-//     .slice(0, index)
-//     .reduce((acc, curr) => acc + curr.duration, 0)
-//   return { ...item, start }
-// })
+// Position of the scroll from 0 to 100
+const position = computed(
+  () => Math.round(useScrollStore().getCurrent * 1000) / 100000
+)
+const scene = computed(() => useNavigationStore().getScene)
 
 // Watchers
-// watch(
-//   () => progress.value * totalDuration,
-//   (value) => {
-//     console.log(value)
-//     console.log(mapedPreset)
-//   }
-// )
+watch(
+  () => position.value * scenes.nav.total,
+  (value) => {
+    // console.log(value)
+    // console.log(scroll.value)
+  }
+)
 </script>
 
 <style src="./style.scss" lang="scss" scoped></style>

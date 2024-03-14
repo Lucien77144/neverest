@@ -1,15 +1,29 @@
+import type { TSceneInfos } from '~/const/scenes.const'
+
+type TNavigation = {
+  scene?: TSceneInfos
+  progress: number
+}
+
 export const useNavigationStore = defineStore('navigation', {
-  state: () => ({
-    preset: [] as TPreset[],
+  state: (): TNavigation => ({
+    scene: undefined,
+    progress: 0,
   }),
   getters: {
-    getPreset(): TPreset[] {
-      return this.preset
+    getScene(): TNavigation['scene'] {
+      return this.scene
+    },
+    getProgress(): TNavigation['progress'] {
+      return this.progress
     },
   },
   actions: {
-    setPreset(d: TPreset[]) {
-      this.preset = d
+    setScene(scene: TNavigation['scene']) {
+      this.scene = scene
+    },
+    setProgress(progress: TNavigation['progress']) {
+      this.progress = progress
     },
   },
 })

@@ -7,7 +7,6 @@ export default class Cube extends BaseItem {
    */
   constructor() {
     super()
-
     // New elements
     this.geometry = null
     this.material = null

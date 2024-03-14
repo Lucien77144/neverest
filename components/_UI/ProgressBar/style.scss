@@ -7,6 +7,15 @@
   align-items: center;
 
   &__bar {
-    fill: $primary;
+    fill: $white;
   }
+
+  &__bg {
+    fill: rgba($black, 0.1);
+  }
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0;
 }
