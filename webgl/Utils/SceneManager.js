@@ -23,26 +23,29 @@ export default class SceneManager {
     this.active = null
     this.next = null
     this.destination = null
-    this.redirect = false
 
     // Plugins
-    const { $bus } = useNuxtApp()
-    this.$bus = $bus
+    this.$bus = useNuxtApp().$bus
 
     // Actions
     this.togglePersistScene = useDebugStore().togglePersistScene
     this.setSceneStorage = useDebugStore().setScene
-    this.setSceneNavigation = useNavigationStore().setScene
-    this.setProgressNavigation = useNavigationStore().setProgress
+
     this.setCurrentScroll = useScrollStore().setCurrent
     this.setTargetScroll = useScrollStore().setTarget
 
+    this.setSceneNavigation = useNavigationStore().setScene
+    this.setStartPosition = useNavigationStore().setStart
+    this.setScale = useNavigationStore().setScale
+
     // Getters
-    this.positionScroll = computed(
+    this.currentScroll = computed(
       () => Math.round(useScrollStore().getCurrent * 1000) / 100000
     )
-    this.sceneNavigation = computed(() => useNavigationStore().getScene)
     this.persistScene = computed(() => useDebugStore().getPersistScene)
+    this.currentScale = computed(() => useNavigationStore().getScale)
+    this.sceneNavigation = computed(() => useNavigationStore().getScene)
+    this.startPosition = computed(() => useNavigationStore().getStart)
   }
 
   /**
@@ -55,11 +58,22 @@ export default class SceneManager {
   }
 
   /**
-   * Switch scene
-   * @param {string} next Destination scene
-   * @param {boolean} scroll If set, update the scroll position
+   * Update scroll
+   * @param {number} val Scroll value, from 0 to 100
    */
-  switch(next, scroll = false) {
+  instantNavigate({ scroll, scale, start, scene }) {
+    scroll && this.setCurrentScroll(scroll)
+    scroll && this.setTargetScroll(scroll)
+    scale && this.setScale(scale || 0)
+    start && this.setStartPosition(start || 0)
+    scene && this.setScene(scene)
+  }
+
+  /**
+   * Switch scene
+   * @param {TSceneInfos} next Destination scene
+   */
+  switch(next) {
     if (this.next) return
 
     if (this.debug) {
@@ -78,12 +92,10 @@ export default class SceneManager {
     this.renderMesh ??= this.experience.renderer.renderMesh
     this.renderMesh.material.uniforms.uTemplate = transition.template
 
-    // Update scroll position :
-    this.redirect = scroll
-    const scrollDest = Math.ceil(
-      ((next.nav?.start || 0) / this.nav.total) * 100
-    )
-    const scrollStart = this.positionScroll.value * 100
+    // Get current values :
+    const currStart = this.startPosition.value
+    const currScale = this.currentScale.value
+    const currScroll = this.currentScroll.value * 100
 
     // Smooth transition with gsap
     gsap.to(this.renderMesh.material.uniforms.uTransition, {
@@ -91,11 +103,21 @@ export default class SceneManager {
       duration: transition.duration / 1000,
       ease: 'power1.inOut',
       onUpdate: () => {
-        // If redirecting, update the scroll position depending of the transition state
-        if (this.redirect) {
-          const value = this.renderMesh.material.uniforms.uTransition.value
-          this.instantScroll(scrollStart + (scrollDest - scrollStart) * value)
+        // Progression of the transition :
+        const progress = this.renderMesh.material.uniforms.uTransition.value
+
+        // Interpolate values :
+        const interpolate = (newPos = 0, start = -1, dir) => {
+          dir ??= Math.sign(newPos - start)
+          return start + (newPos + start * dir) * progress
         }
+
+        // Transition of values of progressBar
+        this.instantNavigate({
+          start: interpolate(next.nav?.start, currStart),
+          scale: interpolate(next.nav?.scale, currScale, -1),
+          scroll: currScroll * (1 - progress),
+        })
       },
       onComplete: () => {
         // Reset transition uniform value :
@@ -106,21 +128,10 @@ export default class SceneManager {
           this.debugScene.value = next.name
           this.debugFolder.disabled = false
         }
-        this.redirect = false
         this.active = this.next
         this.next = null
       },
     })
-  }
-
-  /**
-   * Update scroll
-   * @param {number} val Scroll value, from 0 to 100
-   */
-  instantScroll(val = 0) {
-    val = Math.ceil(val * 10000) / 10000
-    this.setCurrentScroll(val)
-    this.setTargetScroll(val)
   }
 
   /**
@@ -147,9 +158,7 @@ export default class SceneManager {
         })),
         value,
       })
-      .on('change', ({ value }) =>
-        this.switch(this.getSceneFromList(value), true)
-      )
+      .on('change', ({ value }) => this.switch(this.getSceneFromList(value)))
   }
 
   /**
@@ -161,48 +170,31 @@ export default class SceneManager {
   }
 
   /**
-   * Start the navigation system using scroll position
-   */
-  startNavigation() {
-    this.$bus.on('scene:switch', ({ scene, scroll }) =>
-      this.switch(scene, scroll)
-    )
-
-    watch(
-      () =>
-        this.sceneNavigation.value.nav
-          ? this.positionScroll.value * this.nav.total
-          : 0,
-      (v) => {
-        // Update the navigation progress
-        const activeNav = this.sceneNavigation.value.nav
-        this.setProgressNavigation(
-          ((v - activeNav.start) / activeNav.scale) * 100
-        )
-      }
-    )
-  }
-
-  /**
    * Init scene
    */
   init() {
     // Get the scene from the store or the default one
     this.sceneName = this.debug
-      ? useDebugStore().getScene
+      ? this.sceneNavigation.value
       : this.scenes.default.name
-    const active = this.getSceneFromList(this.sceneName)
-    this.setScene(active)
+    const scene = this.getSceneFromList(this.sceneName)
+
+    // Set navigation
+    this.instantNavigate({
+      scroll: scene.nav?.scroll,
+      scale: scene.nav?.scale,
+      start: scene.nav?.start,
+      scene,
+    })
 
     // Debug
     if (this.debug) this.setDebug(this.sceneName)
 
     // Init active scene
-    this.active = new active.Scene()
-    this.instantScroll(((active.nav?.start || 0) / this.nav.total) * 100)
+    this.active = new scene.Scene()
 
     // Start navigation
-    this.startNavigation()
+    this.$bus.on('scene:switch', (scene) => this.switch(scene))
   }
 
   /**
