@@ -1,4 +1,4 @@
-import { BoxGeometry, Mesh, MeshBasicMaterial } from 'three'
+import { BoxGeometry, Mesh, MeshBasicMaterial, MeshNormalMaterial } from 'three'
 import BaseItem from '~/webgl/Modules/Bases/BaseItem'
 
 export default class Cube2 extends BaseItem {
@@ -21,14 +21,14 @@ export default class Cube2 extends BaseItem {
    * Get geometry
    */
   setGeometry() {
-    this.geometry = new BoxGeometry(4, 4, 17)
+    this.geometry = new BoxGeometry(4, 4, 4)
   }
 
   /**
    * Get material
    */
   setMaterial() {
-    this.material = new MeshBasicMaterial({ color: 0xff0000 })
+    this.material = new MeshNormalMaterial()
   }
 
   /**
@@ -37,8 +37,8 @@ export default class Cube2 extends BaseItem {
   setMesh() {
     this.item = new Mesh(this.geometry, this.material)
 
-    this.item.rotation.x = -Math.PI / 2
-    this.item.position.y = -3
+    this.item.rotation.x = 0.5
+    this.item.rotation.y = Math.PI*0.25
   }
 
   /**
