@@ -4,6 +4,7 @@ import Scene2 from '../Scenes/Scene2'
 import gsap from 'gsap'
 import scenes from './assets/data/scenes.json'
 import TRANSITIONS from '~/const/transitions.const'
+import SceneClouds from '../Scenes/SceneClouds/SceneClouds'
 
 export default class SceneManager {
   /**
@@ -20,6 +21,7 @@ export default class SceneManager {
     this.sceneList = {
       default: Scene1,
       world2: Scene2,
+      cloudsScene:SceneClouds
     }
     this.debugFolder = null
     this.renderMesh = null
