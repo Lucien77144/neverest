@@ -2,28 +2,36 @@ import type { TSceneInfos } from '~/const/scenes.const'
 
 type TNavigation = {
   scene?: TSceneInfos
-  progress: number
+  start: number // Position of the current scene in %
+  scale: number // Scale of the current scene
 }
 
 export const useNavigationStore = defineStore('navigation', {
   state: (): TNavigation => ({
     scene: undefined,
-    progress: 0,
+    start: 0,
+    scale: 0,
   }),
   getters: {
     getScene(): TNavigation['scene'] {
       return this.scene
     },
-    getProgress(): TNavigation['progress'] {
-      return this.progress
+    getStart(): TNavigation['start'] {
+      return this.start
+    },
+    getScale(): TNavigation['scale'] {
+      return this.scale
     },
   },
   actions: {
     setScene(scene: TNavigation['scene']) {
       this.scene = scene
     },
-    setProgress(progress: TNavigation['progress']) {
-      this.progress = progress
+    setStart(start: TNavigation['start']) {
+      this.start = start
+    },
+    setScale(scale: TNavigation['scale']) {
+      this.scale = scale
     },
   },
 })

@@ -1,36 +1,46 @@
-import EventManager from '@/utils/EventManager'
-
 const TAP_TRESHOLD = 2
 
-class DragManager extends EventManager {
-  el
-  start = { x: 0, y: 0 }
-  move = { x: 0, y: 0 }
-  delta = { x: 0, y: 0 }
+class DragManager {
+  public el: HTMLElement
+  public start: { x: number; y: number }
+  public move: { x: number; y: number }
+  public delta: { x: number; y: number }
 
-  enabled = true
-  drag = false
+  public enabled: boolean
+  public drag: boolean
 
-  constructor(options) {
-    super()
+  private $bus: any
+  public handleStart: any
+  public handleMove: any
+  public handleEnd: any
+
+  constructor(options: { el: HTMLElement }) {
+    // super()
 
     this.el = options.el
+    this.start = { x: 0, y: 0 }
+    this.move = { x: 0, y: 0 }
+    this.delta = { x: 0, y: 0 }
+
+    this.enabled = true
+    this.drag = false
+    this.$bus = useNuxtApp().$bus
 
     this.setup()
   }
 
-  setup() {
+  setup(): void {
     this.setupBinds()
     this.setupEvents()
   }
 
-  setupBinds() {
+  setupBinds(): void {
     this.handleStart = this.onStart.bind(this)
     this.handleMove = this.onMove.bind(this)
     this.handleEnd = this.onEnd.bind(this)
   }
 
-  setupEvents() {
+  setupEvents(): void {
     this.el.addEventListener('touchstart', this.handleStart)
     window.addEventListener('touchmove', this.handleMove)
     window.addEventListener('touchend', this.handleEnd)
@@ -40,7 +50,7 @@ class DragManager extends EventManager {
     window.addEventListener('mouseup', this.handleEnd)
   }
 
-  onStart(e) {
+  onStart(e: MouseEvent | TouchEvent): void {
     this.drag = true
 
     const position = this.getPosition(e)
@@ -57,7 +67,7 @@ class DragManager extends EventManager {
     this.trigger('dragstart', { position, delta })
   }
 
-  onMove(e) {
+  onMove(e: MouseEvent | TouchEvent) {
     if (!this.drag) return
 
     const position = this.getPosition(e)
@@ -76,7 +86,7 @@ class DragManager extends EventManager {
     this.trigger('drag', { position, delta })
   }
 
-  onEnd() {
+  onEnd(): void {
     const position = this.move
     const delta = this.delta
 
@@ -95,13 +105,17 @@ class DragManager extends EventManager {
     this.trigger('touchup', { position, delta })
   }
 
-  trigger(name, e) {
+  trigger(
+    name: string,
+    e: { position: { x: number; y: number }; delta: { x: number; y: number } }
+  ): void {
     if (!this.isEnabled()) return
 
-    this.dispatchEvent(name, e)
+    // this.dispatchEvent(name, e)
+    this.$bus.emit(name, e)
   }
 
-  getPosition(e) {
+  getPosition(e: MouseEvent | TouchEvent): { x: number; y: number } {
     const position = { x: 0, y: 0 }
 
     if ('touches' in e) {
@@ -115,7 +129,7 @@ class DragManager extends EventManager {
     return position
   }
 
-  destroy() {
+  destroy(): void{
     this.el.removeEventListener('touchstart', this.handleStart)
     window.removeEventListener('touchmove', this.handleMove)
     window.removeEventListener('touchend', this.handleEnd)
@@ -125,21 +139,22 @@ class DragManager extends EventManager {
     window.removeEventListener('mouseup', this.handleEnd)
   }
 
-  isEnabled() {
+  isEnabled(): boolean{
     return this.enabled
   }
 
-  isDragging() {
+  isDragging(): boolean{
     return this.drag
   }
 
-  disable() {
+  disable(): void{
     this.enabled = false
   }
 
-  enable() {
+  enable(): void{
     this.enabled = true
   }
 }
 
 export default DragManager
+
