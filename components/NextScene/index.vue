@@ -9,7 +9,7 @@
           (sceneNavigation.nav.end || scenes.nav.total),
       }"
     >
-      <UIBtn @click="switchScene(true)">
+      <UIBtn @click="navigate(true)">
         {{ $t('NEXT') }}
       </UIBtn>
     </div>
@@ -20,7 +20,7 @@
         active: currentScroll < GAP && sceneNavigation.nav.start !== 0,
       }"
     >
-      <UIBtn @click="switchScene(false)">
+      <UIBtn @click="navigate(false)">
         {{ $t('PREV') }}
       </UIBtn>
     </div>
@@ -45,8 +45,9 @@ const sceneNavigation = computed(() => useNavigationStore().getScene)
 
 /**
  * Switch scene
+ * @param next is next scene or previus
  */
-const switchScene = (next: boolean) => {
+const navigate = (next: boolean) => {
   const index = scenes.nav.list.findIndex(
     ({ id }) => id === sceneNavigation.value?.id
   )
