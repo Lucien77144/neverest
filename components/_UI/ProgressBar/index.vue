@@ -55,7 +55,7 @@ const position = computed(
 
 // Watchers
 watch(
-  () => position.value * scenes.total,
+  () => position.value * scenes.scale,
   (value) => {
     // console.log(value)
     // console.log(scroll.value)

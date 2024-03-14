@@ -2,11 +2,30 @@ import Scene1 from '~/webgl/Scenes/Scene1'
 import Scene2 from '~/webgl/Scenes/Scene2'
 import TRANSITIONS from './transitions.const'
 
-const SCENES = [
+type TScene = {
+  isDefault?: boolean
+  name: string
+  Scene: any
+  nav?: {
+    scale: number
+    start?: number
+    end?: number
+  }
+  transition?: {
+    template: number
+    duration: number
+  }
+}
+
+// Scene list
+const SCENES: TScene[] = [
   {
-    name: 'scene1',
+    isDefault: true,
+    name: 'start',
     Scene: Scene1,
-    scale: 50,
+    nav: {
+      scale: 50,
+    },
     transition: {
       template: TRANSITIONS.FADE,
       duration: 2000,
@@ -15,7 +34,9 @@ const SCENES = [
   {
     name: 'scene2',
     Scene: Scene2,
-    scale: 100,
+    nav: {
+      scale: 100,
+    },
     transition: {
       template: TRANSITIONS.FADE,
       duration: 2000,
@@ -24,7 +45,17 @@ const SCENES = [
   {
     name: 'scene3',
     Scene: Scene1,
-    scale: 200,
+    transition: {
+      template: TRANSITIONS.FADE,
+      duration: 2000,
+    },
+  },
+  {
+    name: 'scene4',
+    Scene: Scene2,
+    nav: {
+      scale: 100,
+    },
     transition: {
       template: TRANSITIONS.FADE,
       duration: 2000,
@@ -32,14 +63,25 @@ const SCENES = [
   },
 ]
 
-const total = (arr: any[]): number =>
-  arr.reduce((acc, curr) => acc + curr.scale, 0)
+const total = (arr: any[]): number => {
+  return arr.reduce((acc, s) => acc + s.nav?.scale, 0)
+}
+
+// Init the nav start and end
+const NAV_SCENE = SCENES.filter((s) => s.nav)
+NAV_SCENE.forEach((s: TScene, i: number) => {
+  s.nav = {
+    scale: s.nav?.scale || 0,
+    start: total(NAV_SCENE.slice(0, i)),
+    end: total(NAV_SCENE.slice(0, i + 1)),
+  }
+})
 
 export default {
-  total: total(SCENES),
-  list: SCENES.map((s, i) => ({
-    ...s,
-    start: total(SCENES.slice(0, i)),
-    end: total(SCENES.slice(0, i + 1)),
-  })),
+  default: SCENES.find((s) => s.isDefault) || SCENES[0],
+  list: SCENES,
+  nav: {
+    list: NAV_SCENE,
+    total: total(NAV_SCENE),
+  },
 }

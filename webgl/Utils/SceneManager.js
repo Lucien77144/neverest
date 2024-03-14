@@ -15,7 +15,8 @@ export default class SceneManager {
 
     // New elements
     this.scenes = scenes
-    this.sceneName = 'default' // Default scene name
+    this.nav = this.scenes.nav // Navigation data
+    this.sceneName = null // Default scene name
     this.debugFolder = null
     this.debugScene = null
     this.renderMesh = null
@@ -42,7 +43,10 @@ export default class SceneManager {
    */
   switch(next, scroll = false) {
     if (this.next) return
-    this.debugFolder.disabled = true // Disable the debug folder during the transition
+
+    if (this.debug) {
+      this.debugFolder.disabled = true // Disable the debug folder during the transition
+    }
 
     // Init next scene
     this.sceneName = next.name
@@ -58,7 +62,7 @@ export default class SceneManager {
 
     // Update scroll position :
     this.redirect = scroll
-    const scrollDest = Math.ceil((next.start / this.scenes.total) * 100)
+    const scrollDest = Math.ceil((next.nav?.start / this.nav.total) * 100)
     const scrollStart = this.position.value * 100
 
     // Smooth transition with gsap
@@ -78,9 +82,11 @@ export default class SceneManager {
         this.renderMesh.material.uniforms.uTransition.value = 0
 
         // Reset params :
-        this.debugScene.value = next.name
+        if (this.debug) {
+          this.debugScene.value = next.name
+          this.debugFolder.disabled = false
+        }
         this.redirect = false
-        this.debugFolder.disabled = false
         this.active = this.next
         this.next = null
       },
@@ -125,20 +131,19 @@ export default class SceneManager {
    * @param {*} name Scene name
    */
   getSceneFromList(name) {
-    return (
-      this.scenes.list.find((s) => s.name === name || s.name === 'default') ||
-      this.scenes.list[0]
-    )
+    return this.scenes.list.find((s) => s.name === name) || this.scenes.default
   }
 
   /**
-   * Set navigation in the experience of the scenes and depending of the scroll
+   * Start the navigation system using scroll position
    */
-  setNavigation() {
+  startNavigation() {
     watch(
-      () => this.position.value * this.scenes.total,
+      () => this.position.value * this.nav.total,
       (v) => {
-        const curr = this.scenes.list.find((p) => v >= p.start && v < p.end)
+        const curr = this.nav.list.find(
+          ({ nav }) => v >= nav?.start && v < nav.end
+        )
 
         if (curr && curr.name != this.sceneName && !this.redirect) {
           this.destination = curr.name
@@ -151,18 +156,21 @@ export default class SceneManager {
    * Init scene
    */
   init() {
+    // Get the scene from the store or the default one
+    this.sceneName = this.debug
+      ? useDebugStore().getScene
+      : this.scenes.default.name
+    const active = this.getSceneFromList(this.sceneName)
+
     // Debug
-    if (this.debug) {
-      this.sceneName = useDebugStore().getScene // Get the base scene name from the debug store
-      this.setDebug(this.getSceneFromList(this.sceneName).name)
-    }
+    if (this.debug) this.setDebug(this.sceneName)
 
     // Init active scene
-    const active = this.getSceneFromList(this.sceneName)
     this.active = new active.Scene()
-    this.instantScroll((active.start / this.scenes.total) * 100)
+    this.instantScroll((active.nav?.start / this.nav.total) * 100)
 
-    this.setNavigation()
+    // Start navigation
+    this.startNavigation()
   }
 
   /**
