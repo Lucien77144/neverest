@@ -1,7 +1,7 @@
 <template>
   <Landing />
   <Interface />
-  <!-- <Modal /> -->
+  <Modal />
   <WebGL />
 </template>
 
