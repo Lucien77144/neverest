@@ -8,7 +8,7 @@ export const breakpoints = {
   xxxl: 1920
 }
 
-export function breakpoint (width) {
+export function breakpoint (width: number): string {
   if (width <= 450)
     return 'xs'
   else if (width <= 540)

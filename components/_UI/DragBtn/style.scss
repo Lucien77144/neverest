@@ -1,0 +1,30 @@
+.DragBtn {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 150px;
+  z-index: 100;
+  pointer-events: all;
+
+  &__bar {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 5px;
+    height: 100%;
+    background-color: #ff0000;
+    border-radius: 2px;
+  }
+
+  &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: 70px;
+    height: 30px;
+    background-color: #ffffff;
+  }
+}

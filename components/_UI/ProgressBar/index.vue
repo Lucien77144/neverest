@@ -52,7 +52,7 @@ defineProps({
 const scroll = computed(
   () => Math.round(useScrollStore().getCurrent * 1000) / 100000
 )
-const startPosition = computed(() => useNavigationStore().getStartPosition)
+const setStart = computed(() => useNavigationStore().getStart)
 const scale = computed(() => useNavigationStore().getScale)
 const scene = computed(() => useNavigationStore().getScene)
 
@@ -62,7 +62,7 @@ const scene = computed(() => useNavigationStore().getScene)
 function formatScroll(value: number): number {
   const nav = scene.value?.nav
   const total = scenes.nav.total
-  const prev = startPosition.value / total
+  const prev = setStart.value / total
 
   return (value / total) * scale.value + prev
 }

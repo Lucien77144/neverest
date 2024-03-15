@@ -35,17 +35,17 @@ export default class SceneManager {
     this.setTargetScroll = useScrollStore().setTarget
 
     this.setSceneNavigation = useNavigationStore().setScene
-    this.setStartPosition = useNavigationStore().setStartPosition
+    this.setStartPosition = useNavigationStore().setStart
     this.setScale = useNavigationStore().setScale
 
     // Getters
     this.currentScroll = computed(
       () => Math.round(useScrollStore().getCurrent * 1000) / 100000
     )
-    this.currentScale = computed(() => useNavigationStore().getScale)
     this.persistScene = computed(() => useDebugStore().getPersistScene)
+    this.currentScale = computed(() => useNavigationStore().getScale)
     this.sceneNavigation = computed(() => useNavigationStore().getScene)
-    this.startPosition = computed(() => useNavigationStore().getStartPosition)
+    this.startPosition = computed(() => useNavigationStore().getStart)
   }
 
   /**
@@ -55,6 +55,18 @@ export default class SceneManager {
   setScene(scene) {
     this.setSceneStorage(scene.name)
     this.setSceneNavigation(scene)
+  }
+
+  /**
+   * Update scroll
+   * @param {number} val Scroll value, from 0 to 100
+   */
+  instantNavigate({ scroll, scale, start, scene }) {
+    scroll && this.setCurrentScroll(scroll)
+    scroll && this.setTargetScroll(scroll)
+    scale && this.setScale(scale || 0)
+    start && this.setStartPosition(start || 0)
+    scene && this.setScene(scene)
   }
 
   /**
@@ -120,18 +132,6 @@ export default class SceneManager {
         this.next = null
       },
     })
-  }
-
-  /**
-   * Update scroll
-   * @param {number} val Scroll value, from 0 to 100
-   */
-  instantNavigate({ scroll, scale, start, scene }) {
-    scroll && this.setCurrentScroll(scroll)
-    scroll && this.setTargetScroll(scroll)
-    scale && this.setScale(scale || 0)
-    start && this.setStartPosition(start || 0)
-    scene && this.setScene(scene)
   }
 
   /**
