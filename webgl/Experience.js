@@ -157,7 +157,7 @@ export default class Experience {
     this.renderer = new Renderer()
     this.sizes = new Sizes()
     this.resources = new Resources()
-    this?.cursor?.setup(window, !!this.debug)
+    this?.cursor?.setup(this.canvas, !!this.debug)
 
     this.sizes.on('resize', () => {
       this.resize()
