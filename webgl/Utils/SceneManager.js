@@ -107,15 +107,14 @@ export default class SceneManager {
         const progress = this.renderMesh.material.uniforms.uTransition.value
 
         // Interpolate values :
-        const interpolate = (newPos = 0, start = -1, dir) => {
-          dir ??= Math.sign(newPos - start)
-          return start + (newPos + start * dir) * progress
+        const interpolate = (from = -1, to = 0) => {
+          return from + (to - from) * progress
         }
 
         // Transition of values of progressBar
         this.instantNavigate({
-          start: interpolate(next.nav?.start, currStart),
-          scale: interpolate(next.nav?.scale, currScale, -1),
+          start: interpolate(currStart, next.nav?.start),
+          scale: interpolate(currScale, next.nav?.scale),
           scroll: currScroll * (1 - progress),
         })
       },

@@ -101,7 +101,6 @@ export default class Experience {
   }
 
   onDrag(e) {
-    console.log(e)
     this.handlePosChange({
       x: this.offset.x - e.delta.x,
       y: this.offset.y - e.delta.y,

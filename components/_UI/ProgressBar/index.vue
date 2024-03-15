@@ -39,6 +39,7 @@
 </template>
 
 <script lang="ts" setup>
+import scenesConst from '~/const/scenes.const'
 import scenes from '~/const/scenes.const'
 
 // Props
@@ -52,7 +53,7 @@ defineProps({
 const scroll = computed(
   () => Math.round(useScrollStore().getCurrent * 1000) / 100000
 )
-const setStart = computed(() => useNavigationStore().getStart)
+const start = computed(() => useNavigationStore().getStart)
 const scale = computed(() => useNavigationStore().getScale)
 const scene = computed(() => useNavigationStore().getScene)
 
@@ -60,9 +61,8 @@ const scene = computed(() => useNavigationStore().getScene)
  * Format scroll values
  */
 function formatScroll(value: number): number {
-  const nav = scene.value?.nav
   const total = scenes.nav.total
-  const prev = setStart.value / total
+  const prev = start.value / total
 
   return (value / total) * scale.value + prev
 }
