@@ -11,7 +11,6 @@ export default class ScrollManager {
     this.debugFolder = null
     this.speed = 0.1
     this.factor = 0.005
-    this.velocity = 0
 
     // Actions
     this.setScroll = useScrollStore().setCurrent
@@ -29,14 +28,19 @@ export default class ScrollManager {
    * Init the scroll manager
    */
   init() {
-    window.addEventListener(
-      'wheel',
-      (e) => {
-        console.log(e)
-        this.setTarget(this.targetScroll.value + e.deltaY * this.factor)
-      },
-      { passive: true }
-    )
+    let prev = -1
+    const firefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1
+    window.addEventListener(firefox ? 'DOMMouseScroll' : 'wheel', (e) => {
+      let delta
+      if (!firefox) {
+        delta = e.deltaY
+      } else {
+        delta = Math.sign(e.detail * 15) == Math.sign(prev) ? e.detail * 15 : 0
+        prev = e.detail
+      }
+
+      this.setTarget(this.targetScroll.value + delta * this.factor)
+    })
 
     // Debug
     if (this.debug) this.setDebug()
@@ -70,8 +74,6 @@ export default class ScrollManager {
    * Update values
    */
   update() {
-    this.velocity = this.currentScroll.value - this.targetScroll.value
-
     this.setScroll(
       MathUtils.lerp(
         this.currentScroll.value,
