@@ -29,10 +29,14 @@ export default class ScrollManager {
    * Init the scroll manager
    */
   init() {
-    window.addEventListener('wheel', (e) => {
-      console.log(e)
-      this.setTarget(this.targetScroll.value + e.deltaY * this.factor)
-    })
+    window.addEventListener(
+      'wheel',
+      (e) => {
+        console.log(e)
+        this.setTarget(this.targetScroll.value + e.deltaY * this.factor)
+      },
+      { passive: true }
+    )
 
     // Debug
     if (this.debug) this.setDebug()
