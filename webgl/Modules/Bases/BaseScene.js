@@ -26,7 +26,7 @@ export default class BaseScene {
   }
 
   setEvents() {
-    this.$bus.on('click', (e) => this.onClick(e.centered))
+    this.$bus.on('mousedown', (e) => this.onClick(e.centered))
   }
 
   setRaycast() {
