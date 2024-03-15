@@ -40,6 +40,9 @@ export default class Cube extends BaseItem {
     this.item.rotation.y = Math.PI * 0.5
   }
 
+  /**
+   * Set scroll animation
+   */
   setScrollAnimation() {
     // Computed
     this.targetScroll = useScrollStore().getTarget
