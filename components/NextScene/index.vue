@@ -5,7 +5,7 @@
     :class="{
       active:
         currentScroll > 100 - GAP &&
-        (sceneNavigation.nav.end || scenes.nav.total),
+        sceneNavigation.nav.end !== scenes.nav.total,
     }"
   >
     <UIDragBtn @navigate="navigate">

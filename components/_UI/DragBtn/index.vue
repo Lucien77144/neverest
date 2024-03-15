@@ -47,6 +47,8 @@ onMounted(() => {
             gsap.set('.DragBtn__button', { y: 0 })
           },
         })
+      } else {
+        gsap.to('.DragBtn__button', { y: 0, duration: 0.5 })
       }
     },
   })

@@ -29,9 +29,9 @@ export default class ScrollManager {
    * Init the scroll manager
    */
   init() {
-    window.addEventListener('mousewheel', (e) =>
+    window.addEventListener('wheel', (e) => {
       this.setTarget(this.targetScroll.value + e.deltaY * this.factor)
-    )
+    })
 
     // Debug
     if (this.debug) this.setDebug()
