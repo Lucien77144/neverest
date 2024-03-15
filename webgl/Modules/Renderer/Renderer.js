@@ -14,8 +14,8 @@ import {
   WebGLRenderer,
 } from 'three'
 import Experience from '../../Experience'
-import vertexShader from './Shaders/vertexShader.vert?raw'
-import fragmentShader from './Shaders/fragmentShader.frag?raw'
+import vertexShader from './shaders/vertexShader.vert?raw'
+import fragmentShader from './shaders/fragmentShader.frag?raw'
 import TRANSITIONS from '~/const/transitions.const'
 
 export default class Renderer {
