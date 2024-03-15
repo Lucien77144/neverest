@@ -29,26 +29,9 @@ export default class ScrollManager {
    * Init the scroll manager
    */
   init() {
-    window.addEventListener('wheel DOMMouseScroll', (e) => {
-      var delta
-      if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
-        if (e.originalEvent.detail > 0) {
-          //scroll down
-          delta = 0.2
-        } else {
-          //scroll up
-          delta = 0
-        }
-      } else {
-        if (e.originalEvent.wheelDelta < 0) {
-          //scroll down
-          delta = 0.2
-        } else {
-          //scroll up
-          delta = 0
-        }
-      }
-      this.setTarget(this.targetScroll.value + delta * this.factor)
+    window.addEventListener('wheel', (e) => {
+      console.log(e)
+      this.setTarget(this.targetScroll.value + e.deltaY * this.factor)
     })
 
     // Debug
