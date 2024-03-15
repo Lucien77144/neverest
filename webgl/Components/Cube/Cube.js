@@ -37,7 +37,18 @@ export default class Cube extends BaseItem {
     this.item = new Mesh(this.geometry, this.material)
 
     this.item.rotation.x = -0.5
-    this.item.rotation.y = Math.PI*0.5
+    this.item.rotation.y = Math.PI * 0.5
+  }
+
+  setScrollAnimation() {
+    // Computed
+    this.targetScroll = useScrollStore().getTarget
+    watch(
+      () => useScrollStore().getTarget,
+      (value) => {
+        this.item.rotation.y += value / 1000
+      }
+    )
   }
 
   /**
@@ -47,5 +58,6 @@ export default class Cube extends BaseItem {
     this.setGeometry()
     this.setMaterial()
     this.setMesh()
+    this.setScrollAnimation()
   }
 }
