@@ -36,6 +36,9 @@ class Viewport {
     window.addEventListener('resize', this.handleResize)
   }
 
+  /**
+   * setData is used to set the data
+   */
   public setData (): void{
     this.width = document.documentElement.clientWidth
     this.height = document.documentElement.clientHeight
@@ -50,6 +53,9 @@ class Viewport {
     this.rem = window.innerWidth / breakpoints[this.breakpoint] * 10
   }
 
+  /**
+   * getData is used to get the data
+   */
   public getData (): { width: number; height: number; ratio: number; dpr: number; isTouch: boolean; isMobile: boolean; isTablet: boolean; isDesktop: boolean; breakpoint: string; interval: number; rem: number }{
     return {
       width: this.width,

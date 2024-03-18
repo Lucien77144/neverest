@@ -1,17 +1,20 @@
 import { Raycaster, Scene } from 'three'
 import Camera from '../Camera/Camera'
 import Cursor from '~/webgl/Utils/Cursor'
+import Experience from '~/webgl/Experience'
 
 export default class BaseScene {
   /**
    * Constructor
    */
   constructor() {
+    this.experience = new Experience()
+    this.raycaster = this.experience.raycaster
     this.scene = new Scene()
     this.camera = new Camera()
-    this.raycaster = new Raycaster()
     this.cursor = new Cursor()
     this.$bus = useNuxtApp().$bus
+    this.hovering = false
   }
 
   /**
@@ -25,18 +28,22 @@ export default class BaseScene {
     this.setEvents()
   }
 
+  /**
+   * Set events
+   */
   setEvents() {
     this.$bus.on('mousedown', (e) => this.onClick(e.centered))
+    this.$bus.on('mousemove', (e) => this.onHover(e.centered))
   }
 
-  setRaycast() {
-    Object.keys(this.components).forEach((c) => {
-      const intersects = this.raycaster.intersectObjects([
-        this.components[c].item,
-      ])
-      if (intersects.length) {
-        this.$bus.emit('openModal', c)
-      }
+  /**
+   * Set raycast
+   */
+  setRaycast(fn = 'onClick') {
+    const interact = Object.values(this.components).filter((c) => c[fn])
+    interact.forEach((c) => {
+      const intersects = this.raycaster.intersectObjects([c.item])
+      intersects.length && c[fn]()
     })
   }
 
@@ -45,7 +52,12 @@ export default class BaseScene {
    */
   onClick(centered) {
     this.raycaster.setFromCamera(centered, this.camera.instance)
-    this.setRaycast()
+    this.setRaycast('onClick')
+  }
+
+  onHover(centered) {
+    this.raycaster.setFromCamera(centered, this.camera.instance)
+    this.setRaycast('onHover')
   }
 
   /**
@@ -53,7 +65,7 @@ export default class BaseScene {
    */
   update() {
     Object.keys(this.components).forEach((key) => {
-      this.components[key].update()
+      this.components[key].update?.()
     })
     this.camera.update()
   }

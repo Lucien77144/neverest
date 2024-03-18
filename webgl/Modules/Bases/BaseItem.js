@@ -4,6 +4,7 @@ export default class BaseItem {
    */
   constructor() {
     // New elements
+    this.clickable = false
     this.material = null
     this.geometry = null
     this.item = null

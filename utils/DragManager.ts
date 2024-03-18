@@ -34,12 +34,18 @@ class DragManager {
     this.setupEvents()
   }
 
+  /**
+   * setupBinds is used to setup the binds
+   */
   setupBinds(): void {
     this.handleStart = this.onStart.bind(this)
     this.handleMove = this.onMove.bind(this)
     this.handleEnd = this.onEnd.bind(this)
   }
 
+  /**
+   * setupEvents is used to setup the events
+   */
   setupEvents(): void {
     this.el.addEventListener('touchstart', this.handleStart)
     window.addEventListener('touchmove', this.handleMove)
@@ -50,6 +56,9 @@ class DragManager {
     window.addEventListener('mouseup', this.handleEnd)
   }
 
+  /**
+   * onStart is called when the user starts dragging
+   */
   onStart(e: MouseEvent | TouchEvent): void {
     this.drag = true
 
@@ -67,6 +76,9 @@ class DragManager {
     this.trigger('dragstart', { position, delta })
   }
 
+  /**
+   * onMove is called when the user is dragging
+   */
   onMove(e: MouseEvent | TouchEvent) {
     if (!this.drag) return
 
@@ -86,6 +98,9 @@ class DragManager {
     this.trigger('drag', { position, delta })
   }
 
+  /**
+   * onEnd is called when the user stops dragging
+   */
   onEnd(): void {
     const position = this.move
     const delta = this.delta
@@ -105,6 +120,11 @@ class DragManager {
     this.trigger('touchup', { position, delta })
   }
 
+  /**
+   * trigger is used to trigger an event
+   * @param name 
+   * @param e 
+   */
   trigger(
     name: string,
     e: { position: { x: number; y: number }; delta: { x: number; y: number } }
@@ -115,6 +135,11 @@ class DragManager {
     this.$bus.emit(name, e)
   }
 
+  /**
+   * getPosition is used to get the position of the event
+   * @param e 
+   * @returns 
+   */
   getPosition(e: MouseEvent | TouchEvent): { x: number; y: number } {
     const position = { x: 0, y: 0 }
 
@@ -129,6 +154,9 @@ class DragManager {
     return position
   }
 
+  /**
+   * destroy is used to destroy the events
+   */
   destroy(): void{
     this.el.removeEventListener('touchstart', this.handleStart)
     window.removeEventListener('touchmove', this.handleMove)
