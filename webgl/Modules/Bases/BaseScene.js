@@ -41,7 +41,7 @@ export default class BaseScene {
   }
 
   /**
-   * Raycast On click
+   * Raycast on click
    */
   onClick(centered) {
     this.raycaster.setFromCamera(centered, this.camera.instance)

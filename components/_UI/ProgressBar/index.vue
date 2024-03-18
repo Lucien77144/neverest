@@ -39,7 +39,6 @@
 </template>
 
 <script lang="ts" setup>
-import scenesConst from '~/const/scenes.const'
 import scenes from '~/const/scenes.const'
 
 // Props
