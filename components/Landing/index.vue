@@ -1,15 +1,15 @@
 <template>
   <UILoader />
-  <div ref="land" class="start-wrapper">
-    <div class="title">
+  <div ref="land" class="start">
+    <div class="start__title">
       <img src="/assets/images/icons/countries/fr.png" alt="" />
     </div>
-    <div class="content">
+    <div class="start__content">
       <p>
         {{ $t('INTRO') }}
       </p>
     </div>
-    <div class="footer">
+    <div class="start__footer">
       <UILangPicker />
       <UIBtn @click="$bus.emit('start')">
         {{ $t('START') }}

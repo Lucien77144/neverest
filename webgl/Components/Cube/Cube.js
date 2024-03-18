@@ -1,4 +1,5 @@
-import { BoxGeometry, Mesh, MeshBasicMaterial, MeshNormalMaterial } from 'three'
+import { BoxGeometry, Mesh, MeshNormalMaterial } from 'three'
+import { lerp } from 'three/src/math/MathUtils'
 import BaseItem from '~/webgl/Modules/Bases/BaseItem'
 
 export default class Cube extends BaseItem {
@@ -11,6 +12,7 @@ export default class Cube extends BaseItem {
     this.geometry = null
     this.material = null
     this.item = null
+    this.currentScroll = computed(() => useScrollStore().getCurrent)
 
     // Init
     this.init()
@@ -35,22 +37,16 @@ export default class Cube extends BaseItem {
    */
   setMesh() {
     this.item = new Mesh(this.geometry, this.material)
-
-    this.item.rotation.x = -0.5
-    this.item.rotation.y = Math.PI * 0.5
   }
 
   /**
-   * Set scroll animation
+   * Update the cube
    */
-  setScrollAnimation() {
-    // Computed
-    this.targetScroll = useScrollStore().getTarget
-    watch(
-      () => useScrollStore().getTarget,
-      (value) => {
-        this.item.rotation.y += value / 1000
-      }
+  update() {
+    this.item.rotation.y = lerp(
+      this.item.rotation.y,
+      this.currentScroll.value * 0.1,
+      0.1
     )
   }
 
@@ -61,6 +57,5 @@ export default class Cube extends BaseItem {
     this.setGeometry()
     this.setMaterial()
     this.setMesh()
-    this.setScrollAnimation()
   }
 }
