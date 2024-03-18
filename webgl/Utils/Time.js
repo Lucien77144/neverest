@@ -1,9 +1,5 @@
-import EventEmitter from './EventEmitter.js'
-
-export default class Time extends EventEmitter {
+export default class Time {
   constructor() {
-    super()
-
     // New elements
     this.start = Date.now()
     this.current = this.start
@@ -12,6 +8,9 @@ export default class Time extends EventEmitter {
     this.playing = true
     this.ticker = null
     this.tick = this.tick.bind(this)
+
+    // Plugin
+    this.$bus = useNuxtApp().$bus
 
     // Tick
     this.tick()
@@ -47,7 +46,7 @@ export default class Time extends EventEmitter {
       this.delta = 60
     }
 
-    this.playing && this.trigger('tick')
+    this.playing && this.$bus.emit('tick')
   }
 
   /**

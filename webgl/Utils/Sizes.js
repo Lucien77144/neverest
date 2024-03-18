@@ -1,12 +1,8 @@
-import EventEmitter from './EventEmitter.js'
-
-export default class Sizes extends EventEmitter {
+export default class Sizes {
   /**
    * Constructor
    */
   constructor() {
-    super()
-
     // Viewport size
     this.viewport = {}
     this.$sizeViewport = document.createElement('div')
@@ -16,6 +12,9 @@ export default class Sizes extends EventEmitter {
     this.$sizeViewport.style.top = 0
     this.$sizeViewport.style.left = 0
     this.$sizeViewport.style.pointerEvents = 'none'
+
+    // Plugin
+    this.$bus = useNuxtApp().$bus
 
     // Resize event
     this.resize = this.resize.bind(this)
@@ -36,6 +35,6 @@ export default class Sizes extends EventEmitter {
     this.width = window.innerWidth
     this.height = window.innerHeight
 
-    this.trigger('resize')
+    this.$bus.emit('resize')
   }
 }

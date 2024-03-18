@@ -1,17 +1,14 @@
-import EventEmitter from './EventEmitter.js'
 import Experience from '../Experience.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
 
-export default class Resources extends EventEmitter {
+export default class Loader {
   /**
    * Constructor
    */
   constructor() {
-    super()
-
     // Get elements from experience
     this.experience = new Experience()
     this.renderer = this.experience.renderer.instance
@@ -21,6 +18,9 @@ export default class Resources extends EventEmitter {
     this.loaded = 0
     this.items = {}
     this.loaders = []
+
+    // Plugin
+    this.$bus = this.experience.$bus
 
     // Init
     this.init()
@@ -134,10 +134,12 @@ export default class Resources extends EventEmitter {
     this.loaded++
     this.items[resource.name] = data
 
-    this.trigger('fileEnd', [resource, data])
+    // this.trigger('fileEnd', [resource, data])
+    this.$bus.emit('fileEnd', [resource, data])
 
     if (this.loaded === this.toLoad) {
-      this.trigger('end')
+      // this.trigger('end')
+      this.$bus.emit('end')
     }
   }
 }

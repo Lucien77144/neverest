@@ -173,7 +173,7 @@ export default class Experience {
     this.resources = new Resources()
     this?.cursor?.setup(this.canvas, !!this.debug)
 
-    this.sizes.on('resize', () => {
+    this.$bus.on('resize', () => {
       this.resize()
     })
   }
@@ -206,7 +206,7 @@ export default class Experience {
    * Dispose the experience
    */
   dispose() {
-    this.sizes.off('resize')
+    this.$bus.off('resize')
     this.time.stop()
     this.renderer.dispose()
     this.resources.dispose()

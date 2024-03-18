@@ -1,14 +1,12 @@
-import EventEmitter from './EventEmitter.js'
 import Loader from './Loader.js'
 import sources from './assets/data/sources.json'
 import { Texture } from 'three'
 
-export default class Resources extends EventEmitter {
+export default class Resources{
   /**
    * Constructor
    */
   constructor(_groups) {
-    super()
 
     // New elements
     this.sources = []
@@ -17,6 +15,9 @@ export default class Resources extends EventEmitter {
     this.toLoad = null
     this.loaded = null
     this.loader = null
+
+    // Plugins
+    this.$bus = useNuxtApp().$bus
 
     // Init
     this.init()
@@ -102,7 +103,7 @@ export default class Resources extends EventEmitter {
     this.setGroups()
 
     // Loader file end event
-    this.loader.on('fileEnd', (_resource, _data) => {
+    this.$bus.on('fileEnd', (_resource, _data) => {
       let data = _data
 
       // Convert to texture
@@ -118,20 +119,20 @@ export default class Resources extends EventEmitter {
       // Progress and event
       this.groups.current.loaded++
       this.loaded++
-      this.trigger('progress', [this.groups.current, _resource, data])
+      this.$bus.emit('progress', [this.groups.current, _resource, data])
     })
 
     // Loader all end event
-    this.loader.on('end', () => {
+    this.$bus.on('end', () => {
       this.groups.loaded.push(this.groups.current)
 
       // Trigger
-      this.trigger('groupEnd', [this.groups.current])
+      this.$bus.emit('groupEnd', [this.groups.current])
 
       if (this.sources.length > 0) {
         this.loadNextGroup()
-      } else {
-        this.trigger('end')
+      } else if (this.sources.length) {
+        this.$bus.emit('end')
       }
     })
   }

@@ -28,7 +28,7 @@ onMounted(() => {
 
   // On resources progress, update loadValue
   const resources: any = exp.value.resources
-  resources.on('progress', () => {
+  $bus.on('progress', () => {
     gsap.timeline().to(loadValue, {
       value: (resources.loaded / resources.toLoad) * 100,
       duration: 1,
