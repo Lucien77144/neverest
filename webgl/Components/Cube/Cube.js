@@ -1,5 +1,5 @@
 import { BoxGeometry, Mesh, MeshNormalMaterial } from 'three'
-import { lerp } from 'three/src/math/MathUtils'
+import { MathUtils } from 'three'
 import BaseItem from '~/webgl/Modules/Bases/BaseItem'
 
 export default class Cube extends BaseItem {
@@ -43,7 +43,7 @@ export default class Cube extends BaseItem {
    * Update the cube
    */
   update() {
-    this.item.rotation.y = lerp(
+    this.item.rotation.y = MathUtils.lerp(
       this.item.rotation.y,
       this.currentScroll.value * 0.1,
       0.1
