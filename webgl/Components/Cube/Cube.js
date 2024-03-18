@@ -12,7 +12,12 @@ export default class Cube extends BaseItem {
     this.geometry = null
     this.material = null
     this.item = null
+
+    // Store
     this.currentScroll = computed(() => useScrollStore().getCurrent)
+
+    // Plugin
+    this.$bus = useNuxtApp().$bus
 
     // Init
     this.init()
@@ -37,6 +42,18 @@ export default class Cube extends BaseItem {
    */
   setMesh() {
     this.item = new Mesh(this.geometry, this.material)
+  }
+
+  /**
+   * On click
+   */
+  onClick() {
+    console.log('click');
+    this.$bus.emit('openModal', this)
+  }
+
+  onHover() {
+    console.log('hover');
   }
 
   /**

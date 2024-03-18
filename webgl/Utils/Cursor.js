@@ -24,6 +24,8 @@ class Cursor {
     this.handleMouseDown = this.onMouseDown.bind(this)
     this.handleMouseMove = this.onMouseMove.bind(this)
     this.handleMouseUp = this.onMouseUp.bind(this)
+    this.handleMouseEnter = this.onMouseEnter.bind(this)
+    this.handleMouseLeave = this.onMouseLeave.bind(this)
 
     this.handleTouchStart = this.onTouchStart.bind(this)
     this.handleTouchMove = this.onTouchMove.bind(this)
@@ -34,6 +36,8 @@ class Cursor {
     this.el.addEventListener('mousedown', this.handleMouseDown)
     this.el.addEventListener('mousemove', this.handleMouseMove)
     this.el.addEventListener('mouseup', this.handleMouseUp)
+    this.el.addEventListener('mouseenter', this.handleMouseEnter)
+    this.el.addEventListener('mouseleave', this.handleMouseLeave)
 
     this.el.addEventListener('touchstart', this.handleTouchStart)
     this.el.addEventListener('touchmove', this.handleTouchMove)
@@ -44,6 +48,8 @@ class Cursor {
     this.el.removeEventListener('mousedown', this.handleMouseDown)
     this.el.removeEventListener('mousemove', this.handleMouseMove)
     this.el.removeEventListener('mouseup', this.handleMouseUp)
+    this.el.removeEventListener('mouseenter', this.handleMouseEnter)
+    this.el.removeEventListener('mouseleave', this.handleMouseLeave)
 
     this.el.removeEventListener('touchstart', this.handleTouchStart)
     this.el.removeEventListener('touchmove', this.handleTouchMove)
@@ -60,6 +66,14 @@ class Cursor {
 
   onMouseUp (e) {
     this.handleEvent(e.clientX, e.clientY, 'click')
+  }
+
+  onMouseEnter (e) {
+    this.handleEvent(e.clientX, e.clientY, 'mouseenter')
+  }
+
+  onMouseLeave (e) {
+    this.handleEvent(e.clientX, e.clientY, 'mouseleave')
   }
 
   onTouchStart (e) {

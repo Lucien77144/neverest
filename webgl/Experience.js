@@ -9,6 +9,7 @@ import Cursor from './Utils/Cursor'
 import Viewport from '~/utils/Viewport'
 import DragManager from '~/utils/DragManager'
 import ScrollManager from './Utils/ScrollManager'
+import { Raycaster } from 'three'
 
 export default class Experience {
   static _instance
@@ -41,6 +42,7 @@ export default class Experience {
     this.scrollManager = null
     this.dragManager = null
     this.sceneManager = null
+    this.raycaster = null
     this.renderer = null
     this.time = null
     this.resources = null
@@ -100,6 +102,10 @@ export default class Experience {
     this.pane.addBlade({ view: 'separator' })
   }
 
+  /**
+   * On drag
+   * @param {*} e 
+   */
   onDrag(e) {
     this.handlePosChange({
       x: this.offset.x - e.delta.x,
@@ -107,6 +113,10 @@ export default class Experience {
     })
   }
 
+  /**
+   * Handle position change
+   * @param {*} param0 
+   */
   handlePosChange({ x, y }) {
     this.offset.x = x
     this.offset.y = y
@@ -115,6 +125,9 @@ export default class Experience {
     ).style.transform = `translate(${this.offset.x}px, ${this.offset.y}px)`
   }
 
+  /**
+   * Set events
+   */
   setEvents() {
     this.handleDrag = this.onDrag.bind(this)
 
@@ -153,6 +166,7 @@ export default class Experience {
     this.time = new Time()
     this.scrollManager = new ScrollManager()
     this.sceneManager = new SceneManager()
+    this.raycaster = new Raycaster()
     this.stats = new Stats(this.config.debug)
     this.renderer = new Renderer()
     this.sizes = new Sizes()
