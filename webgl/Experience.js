@@ -110,10 +110,8 @@ export default class Experience {
    * Set events
    */
   setEvents() {
-    this.handleDrag = this.onDrag.bind(this)
-
     this.dragManager = new DragManager({ el: this.pane.dragButton.element })
-    this.$bus.on('drag', this.handleDrag)
+    this.dragManager.on('drag', this.onDrag.bind(this))
   }
 
   /**
@@ -161,7 +159,6 @@ export default class Experience {
     this.renderer = new Renderer()
     this.sizes = new Sizes()
     this.resources = new Resources()
-    this.cursor?.init()
 
     this.$bus.on('resize', () => {
       this.resize()

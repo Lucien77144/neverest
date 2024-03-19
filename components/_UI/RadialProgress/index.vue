@@ -49,8 +49,8 @@ watch(progress, () => {
 })
 
 // $bus
-$bus.on('mousemove', ({ mouse }: { mouse: TVec2 }) => {
-  cursor.value = mouse
+$bus.on('mousemove', ({ position }: { position: TVec2 }) => {
+  cursor.value = position
 })
 </script>
 

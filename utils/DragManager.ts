@@ -1,190 +1,250 @@
-const TAP_TRESHOLD = 2
+import Viewport from './Viewport'
 
-export default class DragManager {
-  public el: HTMLElement
-  public start: { x: number; y: number }
-  public move: { x: number; y: number }
-  public delta: { x: number; y: number }
+export type TVec2 = {
+  x: number
+  y: number
+}
 
+type TEvents = 'dragstart' | 'drag' | 'dragend' | 'tap'
+
+const TAP_TRESHOLD: number = 2
+
+export default class CursorManager extends EventEmitter {
+  // Public
+  public el: HTMLElement | Window
   public enabled: boolean
   public drag: boolean
+  public viewport: Viewport
+  public position: TVec2
+  public normalized: TVec2
+  public centered: TVec2
+  public start: TVec2
+  public delta: TVec2
 
+  // Private
+  private _handleMouseDown: any
+  private _handleMouseMove: any
+  private _handleMouseUp: any
+  private _handleTouchStart: any
+  private _handleTouchMove: any
+  private _handleTouchUp: any
+
+  // Plugins
   private $bus: any
-  public handleStart: any
-  public handleMove: any
-  public handleEnd: any
 
-  constructor(options: { el: HTMLElement }) {
-    // super()
+  /**
+   * Constructor
+   */
+  constructor(_options?: { el?: HTMLElement | Window }) {
+    super()
 
-    this.el = options.el
-    this.start = { x: 0, y: 0 }
-    this.move = { x: 0, y: 0 }
-    this.delta = { x: 0, y: 0 }
-
+    // Public
+    this.el = _options?.el || window
     this.enabled = true
     this.drag = false
+    this.viewport = new Viewport()
+    this.position = { x: 0, y: 0 }
+    this.normalized = { x: 0, y: 0 }
+    this.centered = { x: 0, y: 0 }
+    this.start = { x: 0, y: 0 }
+    this.delta = { x: 0, y: 0 }
+
+    // Plugins
     this.$bus = useNuxtApp().$bus
 
-    this.setup()
-  }
-
-  setup(): void {
-    this.setupBinds()
-    this.setupEvents()
+    this._initBinds()
+    this._initEvents()
   }
 
   /**
-   * setupBinds is used to setup the binds
+   * Get mobile events
+   * @param e Touch event
+   * @returns ClientX and ClientY
    */
-  setupBinds(): void {
-    this.handleStart = this.onStart.bind(this)
-    this.handleMove = this.onMove.bind(this)
-    this.handleEnd = this.onEnd.bind(this)
+  private _getMobileEvent(e: TouchEvent): TVec2 {
+    return {
+      x:
+        (e.touches && e.touches.length && e.touches[0].clientX) ||
+        (e.changedTouches &&
+          e.changedTouches.length &&
+          e.changedTouches[0].clientX),
+      y:
+        (e.touches && e.touches.length && e.touches[0].clientY) ||
+        (e.changedTouches &&
+          e.changedTouches.length &&
+          e.changedTouches[0].clientY),
+    }
   }
 
   /**
-   * setupEvents is used to setup the events
+   * Setup binds for the cursor
    */
-  setupEvents(): void {
-    this.el.addEventListener('touchstart', this.handleStart, {
-      passive: true,
-    })
-    this.el.addEventListener('touchmove', this.handleMove, {
-      passive: true,
-    })
-    this.el.addEventListener('touchend', this.handleEnd, {
-      passive: true,
+  private _initBinds(): void {
+    const getVec2Values = (e: MouseEvent): TVec2 => ({
+      x: e.clientX,
+      y: e.clientY,
     })
 
-    this.el.addEventListener('mousedown', this.handleStart)
-    this.el.addEventListener('mousemove', this.handleMove)
-    this.el.addEventListener('mouseup', this.handleEnd)
+    // Desktop
+    this._handleMouseDown = (e: MouseEvent) =>
+      this._onStart.bind(this)(getVec2Values(e))
+    this._handleMouseMove = (e: MouseEvent) =>
+      this._onMove.bind(this)(getVec2Values(e))
+    this._handleMouseUp = (e: MouseEvent) =>
+      this._onEnd.bind(this)(getVec2Values(e))
+
+    // Mobile
+    this._handleTouchStart = (e: TouchEvent) =>
+      this._onStart.bind(this)(this._getMobileEvent(e))
+    this._handleTouchMove = (e: TouchEvent) =>
+      this._onMove.bind(this)(this._getMobileEvent(e))
+    this._handleTouchUp = (e: TouchEvent) =>
+      this._onEnd.bind(this)(this._getMobileEvent(e))
   }
 
   /**
-   * onStart is called when the user starts dragging
+   * Setup events for the cursor
    */
-  onStart(e: MouseEvent | TouchEvent): void {
+  private _initEvents(): void {
+    // Desktop
+    this.el.addEventListener('mousedown', this._handleMouseDown)
+    window.addEventListener('mousemove', this._handleMouseMove)
+    window.addEventListener('mouseup', this._handleMouseUp)
+
+    // Mobile
+    this.el.addEventListener('touchstart', this._handleTouchStart, {
+      passive: true,
+    })
+    window.addEventListener('touchmove', this._handleTouchMove, {
+      passive: true,
+    })
+    window.addEventListener('touchend', this._handleTouchUp, {
+      passive: true,
+    })
+  }
+
+  /**
+   * On start
+   * @param position Mouse position (x, y)
+   */
+  private _onStart(position: TVec2): void {
     this.drag = true
 
-    const position = this.getPosition(e)
-
-    const delta = { x: 0, y: 0 }
-
-    this.move.x = position.x
-    this.move.y = position.y
-
-    this.start.x = position.x
-    this.start.y = position.y
-
-    this.trigger('touchdown', { position, delta })
-    this.trigger('dragstart', { position, delta })
+    this.start = position
+    this._handleEvent('dragstart', {
+      position,
+      delta: {
+        x: 0,
+        y: 0,
+      },
+    })
   }
 
   /**
-   * onMove is called when the user is dragging
+   * On move
+   * @param position Mouse position (x, y)
    */
-  onMove(e: MouseEvent | TouchEvent) {
-    if (!this.drag) return
-
-    const position = this.getPosition(e)
-
+  private _onMove(position: TVec2): void {
     const delta = {
-      x: this.move.x - position.x,
-      y: this.move.y - position.y,
+      x: this.position.x - position.x,
+      y: this.position.y - position.y,
     }
+    this.position = position
+    this.delta = delta
 
-    this.move.x = position.x
-    this.move.y = position.y
-
-    this.delta.x = delta.x
-    this.delta.y = delta.y
-
-    this.trigger('drag', { position, delta })
+    this.drag && this._handleEvent('drag', { position, delta })
   }
 
   /**
-   * onEnd is called when the user stops dragging
+   * On up
+   * @param position Mouse position (x, y)
    */
-  onEnd(): void {
-    const position = this.move
+  private _onEnd(position: TVec2): void {
     const delta = this.delta
-
-    if (
-      this.drag &&
+    const tap =
       Math.abs(position.x - this.start.x) < TAP_TRESHOLD &&
       Math.abs(position.y - this.start.y) < TAP_TRESHOLD
-    ) {
-      this.trigger('tap', { position, delta })
+
+    if (this.drag && tap) {
+      this._handleEvent('tap', { position, delta })
     } else {
-      this.trigger('dragend', { position, delta })
+      this._handleEvent('dragend', { position, delta })
     }
 
     this.drag = false
-
-    this.trigger('touchup', { position, delta })
   }
 
   /**
-   * trigger is used to trigger an event
-   * @param name
-   * @param e
+   * Handle the event
+   * @param x X position
+   * @param y Y position
+   * @param event Event type
    */
-  trigger(
-    name: string,
-    e: { position: { x: number; y: number }; delta: { x: number; y: number } }
-  ): void {
-    if (!this.isEnabled()) return
-
-    this.$bus.emit(name, e)
-  }
-
-  /**
-   * getPosition is used to get the position of the event
-   * @param e
-   * @returns
-   */
-  getPosition(e: MouseEvent | TouchEvent): { x: number; y: number } {
-    const position = { x: 0, y: 0 }
-
-    if ('touches' in e) {
-      position.x = e.touches[0].clientX
-      position.y = e.touches[0].clientY
-    } else {
-      position.x = e.clientX
-      position.y = e.clientY
+  private _handleEvent(
+    event: TEvents,
+    params: {
+      position: TVec2
+      delta?: TVec2
     }
+  ): void {
+    if (!this.enabled) return
 
-    return position
+    // Set the position position
+    this.position = params.position
+
+    // Normalized
+    this.normalized.x = this.position.x / this.viewport.width
+    this.normalized.y = 1.0 - this.position.y / this.viewport.height
+
+    // Centered
+    this.centered.x = (this.position.x / this.viewport.width) * 2 - 1
+    this.centered.y = -(this.position.y / this.viewport.height) * 2 + 1
+
+    // Emit event and pass the position, normalized and centered values
+    this.trigger(event, [
+      {
+        normalized: this.normalized,
+        centered: this.centered,
+        ...params,
+      },
+    ])
   }
 
   /**
-   * destroy is used to destroy the events
+   * Destroy the cursor and remove all events
    */
-  destroy(): void {
-    this.el.removeEventListener('touchstart', this.handleStart)
-    this.el.removeEventListener('touchmove', this.handleMove)
-    this.el.removeEventListener('touchend', this.handleEnd)
+  public destroy(): void {
+    // Desktop
+    this.el.removeEventListener('mousedown', this._handleMouseDown)
+    window.removeEventListener('mousemove', this._handleMouseMove)
+    window.removeEventListener('mouseup', this._handleMouseUp)
 
-    this.el.removeEventListener('mousedown', this.handleStart)
-    this.el.removeEventListener('mousemove', this.handleMove)
-    this.el.removeEventListener('mouseup', this.handleEnd)
+    // Mobile
+    this.el.removeEventListener('touchstart', this._handleTouchStart)
+    window.removeEventListener('touchmove', this._handleTouchMove)
+    window.removeEventListener('touchend', this._handleTouchUp)
   }
 
-  isEnabled(): boolean {
+  // Getters and setters
+
+  /**
+   * Check if the cursor is enabled
+   */
+  get isEnabled(): boolean {
     return this.enabled
   }
 
-  isDragging(): boolean {
+  /**
+   * Check if the cursor is dragging
+   */
+  get isDragging(): boolean {
     return this.drag
   }
 
-  disable(): void {
-    this.enabled = false
-  }
-
-  enable(): void {
-    this.enabled = true
+  /**
+   * Disable the cursor
+   */
+  set setEnabled(state: boolean) {
+    this.enabled = state
   }
 }
