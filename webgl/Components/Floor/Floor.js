@@ -11,7 +11,6 @@ export default class Floor extends BaseItem {
     // New elements
     this.geometry = null
     this.material = null
-    this.item = null
 
     // Init
     this.init()
@@ -37,6 +36,20 @@ export default class Floor extends BaseItem {
   setMesh() {
     this.item = new Mesh(this.geometry, this.material)
     this.item.position.z = -3
+  }
+
+  /**
+   * On hover
+   */
+  onMouseEnter() {
+    console.log('enter')
+  }
+
+  /**
+   * On leave
+   */
+  onMouseLeave() {
+    console.log('leave')
   }
 
   /**

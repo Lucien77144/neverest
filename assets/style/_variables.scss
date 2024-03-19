@@ -1,3 +1,15 @@
+body,
+html {
+  --primary: #ff0000;
+  --secondary: #00ff00;
+  --black: #151515;
+  --white: #f4f4f4;
+  --success: #00ff00;
+  --info: #00ccff;
+  --warning: #ffcc00;
+  --danger: #ff0000;
+}
+
 $darken-amount: 10%;
 $lighten-amount: 10%;
 

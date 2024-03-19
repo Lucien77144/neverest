@@ -5,7 +5,7 @@ import Sizes from './Utils/Sizes'
 import Resources from './Utils/Resources'
 import Stats from './Utils/Stats'
 import SceneManager from './Utils/SceneManager'
-import Cursor from './Utils/Cursor'
+import Cursor from './Utils/CursorManager'
 import Viewport from '~/utils/Viewport'
 import DragManager from '~/utils/DragManager'
 import ScrollManager from './Utils/ScrollManager'
@@ -86,25 +86,8 @@ export default class Experience {
   }
 
   /**
-   * Drag Events
-   */
-  setDrag() {
-    this.pane.addBlade({ view: 'separator' })
-
-    const folder = this.pane.addFolder({ title: 'Position', expanded: false })
-
-    this.pane.dragButton = folder.addButton({ title: 'Drag Position' })
-
-    folder.addButton({ title: 'Reset Position' }).on('click', () => {
-      this.handlePosChange({ x: 0, y: 0 })
-    })
-
-    this.pane.addBlade({ view: 'separator' })
-  }
-
-  /**
    * On drag
-   * @param {*} e 
+   * @param {*} e
    */
   onDrag(e) {
     this.handlePosChange({
@@ -115,7 +98,7 @@ export default class Experience {
 
   /**
    * Handle position change
-   * @param {*} param0 
+   * @param {*} param0
    */
   handlePosChange({ x, y }) {
     this.offset.x = x
@@ -146,11 +129,20 @@ export default class Experience {
       title: 'Debug',
       expanded: true,
     })
+
+    // Toggle landing
     this.pane
       .addBinding({ landing: getLanding }, 'landing')
       .on('change', () => toggleLanding())
 
-    this.setDrag()
+    // Drag :
+    const folder = this.pane.addFolder({ title: 'Position', expanded: true })
+    this.pane.dragButton = folder.addButton({ title: 'Drag Position' })
+    folder
+      .addButton({ title: 'Reset Position' })
+      .on('click', () => this.handlePosChange({ x: 0, y: 0 }))
+
+    // Set events
     this.setEvents()
 
     return this.pane

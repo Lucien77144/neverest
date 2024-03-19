@@ -1,6 +1,6 @@
 const TAP_TRESHOLD = 2
 
-class DragManager {
+export default class DragManager {
   public el: HTMLElement
   public start: { x: number; y: number }
   public move: { x: number; y: number }
@@ -48,12 +48,12 @@ class DragManager {
    */
   setupEvents(): void {
     this.el.addEventListener('touchstart', this.handleStart)
-    window.addEventListener('touchmove', this.handleMove)
-    window.addEventListener('touchend', this.handleEnd)
+    this.el.addEventListener('touchmove', this.handleMove)
+    this.el.addEventListener('touchend', this.handleEnd)
 
     this.el.addEventListener('mousedown', this.handleStart)
-    window.addEventListener('mousemove', this.handleMove)
-    window.addEventListener('mouseup', this.handleEnd)
+    this.el.addEventListener('mousemove', this.handleMove)
+    this.el.addEventListener('mouseup', this.handleEnd)
   }
 
   /**
@@ -122,8 +122,8 @@ class DragManager {
 
   /**
    * trigger is used to trigger an event
-   * @param name 
-   * @param e 
+   * @param name
+   * @param e
    */
   trigger(
     name: string,
@@ -131,14 +131,13 @@ class DragManager {
   ): void {
     if (!this.isEnabled()) return
 
-    // this.dispatchEvent(name, e)
     this.$bus.emit(name, e)
   }
 
   /**
    * getPosition is used to get the position of the event
-   * @param e 
-   * @returns 
+   * @param e
+   * @returns
    */
   getPosition(e: MouseEvent | TouchEvent): { x: number; y: number } {
     const position = { x: 0, y: 0 }
@@ -157,7 +156,7 @@ class DragManager {
   /**
    * destroy is used to destroy the events
    */
-  destroy(): void{
+  destroy(): void {
     this.el.removeEventListener('touchstart', this.handleStart)
     window.removeEventListener('touchmove', this.handleMove)
     window.removeEventListener('touchend', this.handleEnd)
@@ -167,22 +166,19 @@ class DragManager {
     window.removeEventListener('mouseup', this.handleEnd)
   }
 
-  isEnabled(): boolean{
+  isEnabled(): boolean {
     return this.enabled
   }
 
-  isDragging(): boolean{
+  isDragging(): boolean {
     return this.drag
   }
 
-  disable(): void{
+  disable(): void {
     this.enabled = false
   }
 
-  enable(): void{
+  enable(): void {
     this.enabled = true
   }
 }
-
-export default DragManager
-

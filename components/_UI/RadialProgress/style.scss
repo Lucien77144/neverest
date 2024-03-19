@@ -1,0 +1,25 @@
+.radial-progress {
+  pointer-events: none !important;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  z-index: 9999;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+  circle {
+    transition: stroke 0.3s ease-in-out;
+    stroke: $primary;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+  }
+
+  &--complete {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.25);
+
+    circle {
+      stroke: $success !important;
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import { BoxGeometry, Mesh, MeshNormalMaterial } from 'three'
 import { MathUtils } from 'three'
+import Experience from '~/webgl/Experience'
 import BaseItem from '~/webgl/Modules/Bases/BaseItem'
 
 export default class Cube extends BaseItem {
@@ -8,16 +9,17 @@ export default class Cube extends BaseItem {
    */
   constructor() {
     super()
+    // Get elements from experience
+    this.experience = new Experience()
+    this.$bus = this.experience.$bus
+
     // New elements
     this.geometry = null
     this.material = null
-    this.item = null
+    this.holdDuration = 2000
 
     // Store
     this.currentScroll = computed(() => useScrollStore().getCurrent)
-
-    // Plugin
-    this.$bus = useNuxtApp().$bus
 
     // Init
     this.init()
@@ -45,15 +47,10 @@ export default class Cube extends BaseItem {
   }
 
   /**
-   * On click
+   * On hold item
    */
-  onClick() {
-    console.log('click');
-    this.$bus.emit('openModal', this)
-  }
-
-  onHover() {
-    console.log('hover');
+  onHold() {
+    console.log('holded after : ', this.holdDuration, 'ms')
   }
 
   /**

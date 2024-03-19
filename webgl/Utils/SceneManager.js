@@ -12,6 +12,7 @@ export default class SceneManager {
     this.debug = this.experience.debug
     this.resources = this.experience.resources
     this.time = this.experience.time
+    this.$bus = this.experience.$bus
 
     // New elements
     this.scenes = scenes
@@ -23,9 +24,6 @@ export default class SceneManager {
     this.active = null
     this.next = null
     this.destination = null
-
-    // Plugins
-    this.$bus = useNuxtApp().$bus
 
     // Actions
     this.togglePersistScene = useDebugStore().togglePersistScene

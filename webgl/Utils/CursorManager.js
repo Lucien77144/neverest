@@ -1,7 +1,7 @@
 import { Vector2 } from 'three'
 import Viewport from '~/utils/Viewport'
 
-class Cursor {
+export default class Cursor {
   viewport = new Viewport()
 
   mouse = new Vector2()
@@ -13,14 +13,14 @@ class Cursor {
 
   enable = true
 
-  setup (el = window, debug) {
+  setup(el = window, debug) {
     this.el = el
 
     this.setupBinds()
     this.setupEvents()
   }
 
-  setupBinds () {
+  setupBinds() {
     this.handleMouseDown = this.onMouseDown.bind(this)
     this.handleMouseMove = this.onMouseMove.bind(this)
     this.handleMouseUp = this.onMouseUp.bind(this)
@@ -32,7 +32,7 @@ class Cursor {
     this.handleTouchUp = this.onTouchUp.bind(this)
   }
 
-  setupEvents () {
+  setupEvents() {
     this.el.addEventListener('mousedown', this.handleMouseDown)
     this.el.addEventListener('mousemove', this.handleMouseMove)
     this.el.addEventListener('mouseup', this.handleMouseUp)
@@ -44,7 +44,7 @@ class Cursor {
     this.el.addEventListener('touchend', this.handleTouchUp)
   }
 
-  destroy () {
+  destroy() {
     this.el.removeEventListener('mousedown', this.handleMouseDown)
     this.el.removeEventListener('mousemove', this.handleMouseMove)
     this.el.removeEventListener('mouseup', this.handleMouseUp)
@@ -56,39 +56,69 @@ class Cursor {
     this.el.removeEventListener('touchend', this.handleTouchUp)
   }
 
-  onMouseDown (e) {
+  onMouseDown(e) {
     this.handleEvent(e.clientX, e.clientY, 'mousedown')
   }
 
-  onMouseMove (e) {
+  onMouseMove(e) {
     this.handleEvent(e.clientX, e.clientY, 'mousemove')
   }
 
-  onMouseUp (e) {
-    this.handleEvent(e.clientX, e.clientY, 'click')
+  onMouseUp(e) {
+    this.handleEvent(e.clientX, e.clientY, 'mouseup')
   }
 
-  onMouseEnter (e) {
+  onMouseEnter(e) {
     this.handleEvent(e.clientX, e.clientY, 'mouseenter')
   }
 
-  onMouseLeave (e) {
+  onMouseLeave(e) {
     this.handleEvent(e.clientX, e.clientY, 'mouseleave')
   }
 
-  onTouchStart (e) {
-    this.handleEvent(((e.touches && e.touches.length) && e.touches[0].clientX) || ((e.changedTouches && e.changedTouches.length) && e.changedTouches[0].clientX), ((e.touches && e.touches.length) && e.touches[0].clientY) || ((e.changedTouches && e.changedTouches.length) && e.changedTouches[0].clientY), 'touchstart')
+  onTouchStart(e) {
+    this.handleEvent(
+      (e.touches && e.touches.length && e.touches[0].clientX) ||
+        (e.changedTouches &&
+          e.changedTouches.length &&
+          e.changedTouches[0].clientX),
+      (e.touches && e.touches.length && e.touches[0].clientY) ||
+        (e.changedTouches &&
+          e.changedTouches.length &&
+          e.changedTouches[0].clientY),
+      'touchstart'
+    )
   }
 
-  onTouchMove (e) {
-    this.handleEvent(((e.touches && e.touches.length) && e.touches[0].clientX) || ((e.changedTouches && e.changedTouches.length) && e.changedTouches[0].clientX), ((e.touches && e.touches.length) && e.touches[0].clientY) || ((e.changedTouches && e.changedTouches.length) && e.changedTouches[0].clientY), 'touchmove')
+  onTouchMove(e) {
+    this.handleEvent(
+      (e.touches && e.touches.length && e.touches[0].clientX) ||
+        (e.changedTouches &&
+          e.changedTouches.length &&
+          e.changedTouches[0].clientX),
+      (e.touches && e.touches.length && e.touches[0].clientY) ||
+        (e.changedTouches &&
+          e.changedTouches.length &&
+          e.changedTouches[0].clientY),
+      'touchmove'
+    )
   }
 
-  onTouchUp (e) {
-    this.handleEvent(((e.touches && e.touches.length) && e.touches[0].clientX) || ((e.changedTouches && e.changedTouches.length) && e.changedTouches[0].clientX), ((e.touches && e.touches.length) && e.touches[0].clientY) || ((e.changedTouches && e.changedTouches.length) && e.changedTouches[0].clientY), 'click')
+  onTouchUp(e) {
+    this.handleEvent(
+      (e.touches && e.touches.length && e.touches[0].clientX) ||
+        (e.changedTouches &&
+          e.changedTouches.length &&
+          e.changedTouches[0].clientX),
+      (e.touches && e.touches.length && e.touches[0].clientY) ||
+        (e.changedTouches &&
+          e.changedTouches.length &&
+          e.changedTouches[0].clientY),
+      'mouseup'
+    )
   }
 
-  handleEvent (x, y, event) {
+  handleEvent(x, y, event) {
     if (!this.enable) return
 
     this.mouse.x = x
@@ -103,11 +133,9 @@ class Cursor {
     const e = {
       mouse: this.mouse,
       normalized: this.normalized,
-      centered: this.centered
+      centered: this.centered,
     }
 
     this.$bus.emit(event, e)
   }
 }
-
-export default Cursor

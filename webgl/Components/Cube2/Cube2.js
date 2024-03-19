@@ -1,4 +1,4 @@
-import { BoxGeometry, Mesh, MeshBasicMaterial, MeshNormalMaterial } from 'three'
+import { BoxGeometry, Mesh, MeshNormalMaterial } from 'three'
 import BaseItem from '~/webgl/Modules/Bases/BaseItem'
 
 export default class Cube2 extends BaseItem {
@@ -11,7 +11,6 @@ export default class Cube2 extends BaseItem {
     // New elements
     this.geometry = null
     this.material = null
-    this.item = null
 
     // Init
     this.init()

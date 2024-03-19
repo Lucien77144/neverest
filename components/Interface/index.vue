@@ -1,5 +1,6 @@
 <template>
   <UILoader />
+  <UIRadialProgress />
   <div class="panel">
     <NextScene />
     <UILangPicker />
