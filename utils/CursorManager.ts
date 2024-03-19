@@ -1,6 +1,6 @@
 import Viewport from './Viewport'
 
-type TPositions = {
+export type TVec2 = {
   x: number
   y: number
 }
@@ -15,14 +15,14 @@ type TEvents =
   | 'touchmove'
   | 'touchend'
 
-export default class Cursor {
+export default class CursorManager {
   // Public
   public el: HTMLElement | Window
   public enable: boolean
   public viewport: Viewport
-  public mouse: TPositions
-  public normalized: TPositions
-  public centered: TPositions
+  public mouse: TVec2
+  public normalized: TVec2
+  public centered: TVec2
 
   // Private
   private _handleMouseDown: any
@@ -58,7 +58,7 @@ export default class Cursor {
    * @param e Touch event
    * @returns ClientX and ClientY
    */
-  private _getMobileEvent(e: TouchEvent): TPositions {
+  private _getMobileEvent(e: TouchEvent): TVec2 {
     return {
       x:
         (e.touches && e.touches.length && e.touches[0].clientX) ||
@@ -102,8 +102,12 @@ export default class Cursor {
     this.el.addEventListener('mouseleave', this._handleMouseLeave)
 
     // Mobile
-    this.el.addEventListener('touchstart', this._handleTouchStart)
-    this.el.addEventListener('touchmove', this._handleTouchMove)
+    this.el.addEventListener('touchstart', this._handleTouchStart, {
+      passive: true,
+    })
+    this.el.addEventListener('touchmove', this._handleTouchMove, {
+      passive: true,
+    })
     this.el.addEventListener('touchend', this._handleTouchUp)
   }
 
@@ -207,7 +211,7 @@ export default class Cursor {
    * Setup cursor
    * @param el Element to attach the cursor events to
    */
-  public init(el: HTMLElement | Window): void {
+  public init(el?: HTMLElement | Window): void {
     if (el) {
       this.el = el
     }

@@ -5,8 +5,7 @@ import Sizes from './Utils/Sizes'
 import Resources from './Utils/Resources'
 import Stats from './Utils/Stats'
 import SceneManager from './Utils/SceneManager'
-import Cursor from '../utils/CursorManager'
-import Viewport from '~/utils/Viewport'
+import CursorManager from '../utils/CursorManager'
 import DragManager from '~/utils/DragManager'
 import ScrollManager from './Utils/ScrollManager'
 import { Raycaster } from 'three'
@@ -31,8 +30,7 @@ export default class Experience {
     this.baseScene = _options.baseScene
 
     // Utils
-    this.viewport = new Viewport()
-    this.cursor = new Cursor()
+    this.cursor = new CursorManager()
 
     // New elements
     this.config = {}
@@ -77,7 +75,7 @@ export default class Experience {
     this.config.debug = this.$router.currentRoute.value.href.includes('debug')
 
     // Pixel ratio
-    this.config.pixelRatio = Math.min(Math.max(window.devicePixelRatio, 1), 2)
+    this.config.pixelRatio = dpr(2)
 
     // Width and height
     const boundings = this.canvas.getBoundingClientRect()
@@ -163,7 +161,7 @@ export default class Experience {
     this.renderer = new Renderer()
     this.sizes = new Sizes()
     this.resources = new Resources()
-    this?.cursor?.init(this.canvas)
+    this.cursor?.init()
 
     this.$bus.on('resize', () => {
       this.resize()
@@ -203,6 +201,6 @@ export default class Experience {
     this.renderer.dispose()
     this.resources.dispose()
     this.sceneManager.dispose()
-    this?.cursor?.destroy()
+    this.cursor?.destroy()
   }
 }

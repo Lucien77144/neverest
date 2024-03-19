@@ -9,10 +9,12 @@ const REGEX_MOBILE2 =
 /**
  * isDeviceMobile is used to detect mobile devices
  */
-export function isDeviceMobile (): boolean {
+export function isDeviceMobile(): boolean {
   const userAgent = navigator.userAgent.toLowerCase()
 
-  return REGEX_MOBILE1.test(userAgent) || REGEX_MOBILE2.test(userAgent.substr(0, 4))
+  return (
+    REGEX_MOBILE1.test(userAgent) || REGEX_MOBILE2.test(userAgent.substr(0, 4))
+  )
 }
 
 /**
@@ -26,7 +28,7 @@ const REGEX_MOBILE_OR_TABLET2 =
 /**
  * isDeviceMobileOrTablet is used to detect mobile or tablet devices
  */
-export function isDeviceMobileOrTablet () {
+export function isDeviceMobileOrTablet() {
   const userAgent = navigator.userAgent.toLowerCase()
 
   return (

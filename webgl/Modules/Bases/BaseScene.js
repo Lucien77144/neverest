@@ -114,7 +114,7 @@ export default class BaseScene {
     const progress = { value: this.progressHold.value }
     this.holdProgress = gsap.to(progress, {
       value: 0,
-      duration: 0.5 * (progress.value / 100),
+      duration: 1 * (progress.value / 100),
       ease: 'easeInOut',
       onUpdate: () => this.setProgressHold(progress.value),
       onComplete: () => {

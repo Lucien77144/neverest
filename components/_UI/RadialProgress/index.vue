@@ -4,6 +4,10 @@
     :class="{
       'radial-progress--complete': !!complete,
     }"
+    :style="{
+      top: `${cursor.y}px`,
+      left: `${cursor.x}px`,
+    }"
   >
     <svg class="radial-progress__svg" :height="radius * 2" :width="radius * 2">
       <circle
@@ -20,22 +24,33 @@
 </template>
 
 <script lang="ts" setup>
+import type { TVec2 } from '~/utils/CursorManager'
+
+// Bus
+const { $bus }: any = useNuxtApp()
+
+// Refs
+const offset = ref<number>(0)
+const cursor = ref<TVec2>({ x: 0, y: 0 })
+
+// Progression
+const progress = computed(() => useHoldStore().getProgress)
+const complete = computed(() => useHoldStore().getComplete)
+
 // Params of the progress
 const stroke = 8
 const radius = 40
 const normalizedRadius = radius - stroke * 2
 const circumference = 2 * Math.PI * normalizedRadius
 
-// Refs
-const offset = ref<number>(0)
-
-// Progression
-const progress = computed(() => useHoldStore().getProgress)
-const complete = computed(() => useHoldStore().getComplete)
-
-// Watcher
+// Watchers
 watch(progress, () => {
   offset.value = circumference - (progress.value / 100) * circumference
+})
+
+// $bus
+$bus.on('mousemove', ({ mouse }: { mouse: TVec2 }) => {
+  cursor.value = mouse
 })
 </script>
 

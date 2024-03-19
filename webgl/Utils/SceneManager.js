@@ -123,6 +123,7 @@ export default class SceneManager {
           this.debugScene.value = next.name
           this.debugFolder.disabled = false
         }
+        this.active?.dispose()
         this.active = this.next
         this.next = null
       },

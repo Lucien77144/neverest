@@ -47,9 +47,15 @@ export default class DragManager {
    * setupEvents is used to setup the events
    */
   setupEvents(): void {
-    this.el.addEventListener('touchstart', this.handleStart)
-    this.el.addEventListener('touchmove', this.handleMove)
-    this.el.addEventListener('touchend', this.handleEnd)
+    this.el.addEventListener('touchstart', this.handleStart, {
+      passive: true,
+    })
+    this.el.addEventListener('touchmove', this.handleMove, {
+      passive: true,
+    })
+    this.el.addEventListener('touchend', this.handleEnd, {
+      passive: true,
+    })
 
     this.el.addEventListener('mousedown', this.handleStart)
     this.el.addEventListener('mousemove', this.handleMove)
@@ -158,12 +164,12 @@ export default class DragManager {
    */
   destroy(): void {
     this.el.removeEventListener('touchstart', this.handleStart)
-    window.removeEventListener('touchmove', this.handleMove)
-    window.removeEventListener('touchend', this.handleEnd)
+    this.el.removeEventListener('touchmove', this.handleMove)
+    this.el.removeEventListener('touchend', this.handleEnd)
 
     this.el.removeEventListener('mousedown', this.handleStart)
-    window.removeEventListener('mousemove', this.handleMove)
-    window.removeEventListener('mouseup', this.handleEnd)
+    this.el.removeEventListener('mousemove', this.handleMove)
+    this.el.removeEventListener('mouseup', this.handleEnd)
   }
 
   isEnabled(): boolean {
