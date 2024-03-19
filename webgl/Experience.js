@@ -1,7 +1,6 @@
 import Renderer from './Modules/Renderer/Renderer'
 import { Pane } from 'tweakpane'
 import Time from './Utils/Time'
-import Sizes from './Utils/Sizes'
 import Resources from './Utils/Resources'
 import Stats from './Utils/Stats'
 import SceneManager from './Utils/SceneManager'
@@ -33,8 +32,7 @@ export default class Experience {
     this.cursor = new CursorManager()
 
     // New elements
-    this.config = {}
-    this.sizes = null
+    this.viewport = null
     this.debug = null
     this.stats = null
     this.scrollManager = null
@@ -62,25 +60,9 @@ export default class Experience {
       !this.sceneManager?.active &&
       this.resources.toLoad === this.resources.loaded
     ) {
-      this.sceneManager.init(this.config.debug && this.baseScene)
+      this.sceneManager.init(this.viewport.debug && this.baseScene)
       this.update()
     }
-  }
-
-  /**
-   * Set config
-   */
-  setConfig() {
-    // Set if Debug is on
-    this.config.debug = this.$router.currentRoute.value.href.includes('debug')
-
-    // Pixel ratio
-    this.config.pixelRatio = dpr(2)
-
-    // Width and height
-    const boundings = this.canvas.getBoundingClientRect()
-    this.config.width = boundings.width
-    this.config.height = boundings.height || window.innerHeight
   }
 
   /**
@@ -118,7 +100,7 @@ export default class Experience {
    * Get debug
    */
   getDebug() {
-    if (!this.config.debug) return
+    if (!this.viewport.debug) return
 
     const { getLanding, toggleLanding } = useDebugStore()
     this.pane = new Pane({
@@ -148,29 +130,23 @@ export default class Experience {
    * Init the experience
    */
   init() {
-    this.setConfig()
-
+    this.viewport = new Viewport()
     this.debug = this.getDebug()
     this.time = new Time()
     this.scrollManager = new ScrollManager()
     this.sceneManager = new SceneManager()
     this.raycaster = new Raycaster()
-    this.stats = new Stats(this.config.debug)
+    this.stats = new Stats(this.viewport.debug)
     this.renderer = new Renderer()
-    this.sizes = new Sizes()
     this.resources = new Resources()
 
-    this.$bus.on('resize', () => {
-      this.resize()
-    })
+    this.$bus.on('resize', () => this.resize())
   }
 
   /**
    * Resize the experience
    */
   resize() {
-    this.setConfig()
-
     this.renderer.resize()
     this.sceneManager.resize()
   }

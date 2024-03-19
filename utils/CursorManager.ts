@@ -34,7 +34,7 @@ export default class CursorManager {
   private _handleTouchMove: any
   private _handleTouchUp: any
 
-  // Plugins
+  // Nuxt
   private $bus: any
 
   /**
@@ -50,9 +50,10 @@ export default class CursorManager {
     this.normalized = { x: 0, y: 0 }
     this.centered = { x: 0, y: 0 }
 
-    // Plugins
+    // Nuxt
     this.$bus = useNuxtApp().$bus
 
+    // Init
     this._initBinds()
     this._initEvents()
   }

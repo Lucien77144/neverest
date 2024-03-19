@@ -25,7 +25,7 @@ export default class Renderer {
   constructor() {
     // Get elements from experience
     this.experience = new Experience()
-    this.config = this.experience.config
+    this.viewport = this.experience.viewport
     this.debug = this.experience.debug
     this.time = this.experience.time
     this.sceneManager = this.experience.sceneManager
@@ -77,7 +77,7 @@ export default class Renderer {
   setCamera() {
     this.camera = new PerspectiveCamera(
       75,
-      this.config.width / this.config.height,
+      this.viewport.width / this.viewport.height,
       0.1,
       100
     )
@@ -135,8 +135,8 @@ export default class Renderer {
 
     // Setters
     this.instance.setClearColor(this.clearColor.color, this.clearColor.alpha)
-    this.instance.setSize(this.config.width, this.config.height)
-    this.instance.setPixelRatio(this.config.pixelRatio)
+    this.instance.setSize(this.viewport.width, this.viewport.height)
+    this.instance.setPixelRatio(this.viewport.pixelRatio)
 
     // Options
     this.instance.physicallyCorrectLights = true
@@ -202,11 +202,11 @@ export default class Renderer {
    * Resize the renderer
    */
   resize() {
-    this.camera.aspect = this.config.width / this.config.height
+    this.camera.aspect = this.viewport.width / this.viewport.height
     this.camera.updateProjectionMatrix()
 
-    this.instance.setSize(this.config.width, this.config.height)
-    this.instance.setPixelRatio(this.config.pixelRatio)
+    this.instance.setSize(this.viewport.width, this.viewport.height)
+    this.instance.setPixelRatio(this.viewport.pixelRatio)
 
     const size = this.instance.getDrawingBufferSize(new Vector2())
     this.rt0.setSize(size.width, size.height)

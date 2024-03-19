@@ -29,9 +29,6 @@ export default class CursorManager extends EventEmitter {
   private _handleTouchMove: any
   private _handleTouchUp: any
 
-  // Plugins
-  private $bus: any
-
   /**
    * Constructor
    */
@@ -48,9 +45,6 @@ export default class CursorManager extends EventEmitter {
     this.centered = { x: 0, y: 0 }
     this.start = { x: 0, y: 0 }
     this.delta = { x: 0, y: 0 }
-
-    // Plugins
-    this.$bus = useNuxtApp().$bus
 
     this._initBinds()
     this._initEvents()

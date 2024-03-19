@@ -8,7 +8,7 @@ export default class Camera {
   constructor() {
     // Get elements from experience
     this.experience = new Experience()
-    this.config = this.experience.config
+    this.viewport = this.experience.viewport
     this.debug = this.experience.debug
 
     // New elements
@@ -25,7 +25,7 @@ export default class Camera {
   init() {
     this.instance = new PerspectiveCamera(
       75,
-      this.config.width / this.config.height,
+      this.viewport.width / this.viewport.height,
       0.1,
       100
     )
@@ -47,7 +47,7 @@ export default class Camera {
   resize() {
     if (!this.instance) return
 
-    this.instance.aspect = this.config.width / this.config.height
+    this.instance.aspect = this.viewport.width / this.viewport.height
     this.instance.updateProjectionMatrix()
   }
 }
