@@ -169,7 +169,7 @@ export default class Experience {
    * Dispose the experience
    */
   dispose() {
-    this.$bus.off('resize')
+    this.viewport?.destroy()
     this.time.stop()
     this.renderer.dispose()
     this.resources.dispose()

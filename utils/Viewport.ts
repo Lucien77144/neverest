@@ -50,7 +50,7 @@ export default class Viewport {
   }
 
   /**
-   * setData is used to set the data
+   * Set data of the viewport
    */
   public setData(): void {
     this.debug = this.$router.currentRoute.value.href.includes('debug')
@@ -76,6 +76,9 @@ export default class Viewport {
     this.$bus.emit('resize')
   }
 
+  /**
+   * Destroy viewport
+   */
   public destroy(): void {
     this.$bus.off('resize', this.resize)
     window.removeEventListener('resize', this._handleResize, false)
