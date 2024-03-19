@@ -3,7 +3,7 @@ import { breakpoint, breakpoints } from '@/utils/breakpoints'
 import dpr from '@/utils/dpr'
 import isTouch from '@/utils/isTouch'
 
-class Viewport {
+export default class Viewport {
   public isTouch: boolean
   public isMobile: boolean
   public isTablet: boolean
@@ -18,7 +18,7 @@ class Viewport {
   public handleResize: any
   public $bus: any
 
-  constructor (){
+  constructor() {
     this.width = document.documentElement.clientWidth
     this.height = document.documentElement.clientHeight
     this.ratio = this.width / this.height
@@ -29,7 +29,7 @@ class Viewport {
     this.isDesktop = !isDeviceMobile() && !isDeviceMobileOrTablet()
     this.breakpoint = breakpoint(this.width)
     this.interval = breakpoints[this.breakpoint]
-    this.rem = window.innerWidth / breakpoints[this.breakpoint] * 10
+    this.rem = (window.innerWidth / breakpoints[this.breakpoint]) * 10
     this.$bus = useNuxtApp().$bus
 
     this.handleResize = this.resize.bind(this)
@@ -39,7 +39,7 @@ class Viewport {
   /**
    * setData is used to set the data
    */
-  public setData (): void{
+  public setData(): void {
     this.width = document.documentElement.clientWidth
     this.height = document.documentElement.clientHeight
     this.ratio = this.width / this.height
@@ -50,13 +50,25 @@ class Viewport {
     this.isDesktop = !isDeviceMobile() && !isDeviceMobileOrTablet()
     this.breakpoint = breakpoint(this.width)
     this.interval = breakpoints[this.breakpoint]
-    this.rem = window.innerWidth / breakpoints[this.breakpoint] * 10
+    this.rem = (window.innerWidth / breakpoints[this.breakpoint]) * 10
   }
 
   /**
    * getData is used to get the data
    */
-  public getData (): { width: number; height: number; ratio: number; dpr: number; isTouch: boolean; isMobile: boolean; isTablet: boolean; isDesktop: boolean; breakpoint: string; interval: number; rem: number }{
+  public getData(): {
+    width: number
+    height: number
+    ratio: number
+    dpr: number
+    isTouch: boolean
+    isMobile: boolean
+    isTablet: boolean
+    isDesktop: boolean
+    breakpoint: string
+    interval: number
+    rem: number
+  } {
     return {
       width: this.width,
       height: this.height,
@@ -68,19 +80,17 @@ class Viewport {
       isDesktop: this.isDesktop,
       breakpoint: this.breakpoint,
       interval: breakpoints[this.breakpoint],
-      rem: window.innerWidth / breakpoints[this.breakpoint] * 10
+      rem: (window.innerWidth / breakpoints[this.breakpoint]) * 10,
     }
   }
 
-  public resize (): void{
+  public resize(): void {
     this.setData()
 
     this.$bus.emit('resize', this.getData())
   }
 
-  public destroy (): void{
+  public destroy(): void {
     window.removeEventListener('resize', this.handleResize)
   }
 }
-
-export default Viewport

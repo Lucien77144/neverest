@@ -5,7 +5,7 @@ import Sizes from './Utils/Sizes'
 import Resources from './Utils/Resources'
 import Stats from './Utils/Stats'
 import SceneManager from './Utils/SceneManager'
-import Cursor from './Utils/CursorManager'
+import Cursor from '../utils/CursorManager'
 import Viewport from '~/utils/Viewport'
 import DragManager from '~/utils/DragManager'
 import ScrollManager from './Utils/ScrollManager'
@@ -163,7 +163,7 @@ export default class Experience {
     this.renderer = new Renderer()
     this.sizes = new Sizes()
     this.resources = new Resources()
-    this?.cursor?.setup(this.canvas, !!this.debug)
+    this?.cursor?.init(this.canvas)
 
     this.$bus.on('resize', () => {
       this.resize()
