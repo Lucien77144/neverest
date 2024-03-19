@@ -1,11 +1,11 @@
 import Viewport from './Viewport'
 
-export type TVec2 = {
+export type TCursor = {
   x: number
   y: number
 }
 
-type TEvents =
+type TCursorEvents =
   | 'mousedown'
   | 'mousemove'
   | 'mouseup'
@@ -20,9 +20,9 @@ export default class CursorManager {
   public el: HTMLElement | Window
   public enabled: boolean
   public viewport: Viewport
-  public position: TVec2
-  public normalized: TVec2
-  public centered: TVec2
+  public position: TCursor
+  public normalized: TCursor
+  public centered: TCursor
 
   // Private
   private _handleMouseDown: any
@@ -63,7 +63,7 @@ export default class CursorManager {
    * @param e Touch event
    * @returns ClientX and ClientY
    */
-  private _getMobileEvent(e: TouchEvent): TVec2 {
+  private _getMobileEvent(e: TouchEvent): TCursor {
     return {
       x:
         (e.touches && e.touches.length && e.touches[0].clientX) ||
@@ -82,7 +82,7 @@ export default class CursorManager {
    * Setup binds for the cursor
    */
   private _initBinds(): void {
-    const getVec2Values = (e: MouseEvent): TVec2 => ({
+    const getVec2Values = (e: MouseEvent): TCursor => ({
       x: e.clientX,
       y: e.clientY,
     })
@@ -135,7 +135,7 @@ export default class CursorManager {
    * On start
    * @param position Mouse position (x, y)
    */
-  private _onStart(position: TVec2): void {
+  private _onStart(position: TCursor): void {
     this.position = position
 
     this._handleEvent('mousedown', { position })
@@ -146,7 +146,7 @@ export default class CursorManager {
    * On move
    * @param position Mouse position (x, y)
    */
-  private _onMove(position: TVec2): void {
+  private _onMove(position: TCursor): void {
     const delta = {
       x: this.position.x - position.x,
       y: this.position.y - position.y,
@@ -161,7 +161,7 @@ export default class CursorManager {
    * On up
    * @param position Mouse position (x, y)
    */
-  private _onEnd(position: TVec2): void {
+  private _onEnd(position: TCursor): void {
     this._handleEvent('mouseup', { position })
     this._handleEvent('touchend', { position })
   }
@@ -170,7 +170,7 @@ export default class CursorManager {
    * On position enter
    * @param e Mouse event
    */
-  private _onMouseEnter(position: TVec2): void {
+  private _onMouseEnter(position: TCursor): void {
     this._handleEvent('mouseenter', { position })
   }
 
@@ -178,7 +178,7 @@ export default class CursorManager {
    * On position leave
    * @param e  Mouse event
    */
-  private _onMouseLeave(position: TVec2): void {
+  private _onMouseLeave(position: TCursor): void {
     this._handleEvent('mouseleave', { position })
   }
 
@@ -189,10 +189,10 @@ export default class CursorManager {
    * @param event Event type
    */
   private _handleEvent(
-    event: TEvents,
+    event: TCursorEvents,
     params: {
-      position: TVec2
-      delta?: TVec2
+      position: TCursor
+      delta?: TCursor
     }
   ): void {
     if (!this.enabled) return

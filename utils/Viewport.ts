@@ -1,7 +1,7 @@
-import { isDeviceMobile, isDeviceMobileOrTablet } from '@/utils/device'
-import { breakpoint, breakpoints } from '@/utils/breakpoints'
-import dpr from '@/utils/dpr'
-import isTouch from '@/utils/isTouch'
+import { isDeviceMobile, isDeviceMobileOrTablet } from '~/utils/functions/device'
+import { breakpoint, breakpoints } from '~/utils/functions/breakpoints'
+import dpr from '~/utils/functions/dpr'
+import isTouch from '~/utils/functions/isTouch'
 
 export default class Viewport {
   // Singleton

@@ -160,9 +160,7 @@ export default class Experience {
     this.stats?.update()
     this.scrollManager?.update()
 
-    window.requestAnimationFrame(() => {
-      this.update()
-    })
+    window.requestAnimationFrame(() => this.update())
   }
 
   /**

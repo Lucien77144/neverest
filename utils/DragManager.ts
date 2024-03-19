@@ -1,25 +1,21 @@
+import type { TCursor } from './CursorManager'
 import Viewport from './Viewport'
 
-export type TVec2 = {
-  x: number
-  y: number
-}
-
-type TEvents = 'dragstart' | 'drag' | 'dragend' | 'tap'
+type TDragEvents = 'dragstart' | 'drag' | 'dragend' | 'tap'
 
 const TAP_TRESHOLD: number = 2
 
-export default class CursorManager extends EventEmitter {
+export default class DragManager extends EventEmitter {
   // Public
   public el: HTMLElement | Window
   public enabled: boolean
   public drag: boolean
   public viewport: Viewport
-  public position: TVec2
-  public normalized: TVec2
-  public centered: TVec2
-  public start: TVec2
-  public delta: TVec2
+  public position: TCursor
+  public normalized: TCursor
+  public centered: TCursor
+  public start: TCursor
+  public delta: TCursor
 
   // Private
   private _handleMouseDown: any
@@ -55,7 +51,7 @@ export default class CursorManager extends EventEmitter {
    * @param e Touch event
    * @returns ClientX and ClientY
    */
-  private _getMobileEvent(e: TouchEvent): TVec2 {
+  private _getMobileEvent(e: TouchEvent): TCursor {
     return {
       x:
         (e.touches && e.touches.length && e.touches[0].clientX) ||
@@ -74,7 +70,7 @@ export default class CursorManager extends EventEmitter {
    * Setup binds for the cursor
    */
   private _initBinds(): void {
-    const getVec2Values = (e: MouseEvent): TVec2 => ({
+    const getVec2Values = (e: MouseEvent): TCursor => ({
       x: e.clientX,
       y: e.clientY,
     })
@@ -121,7 +117,7 @@ export default class CursorManager extends EventEmitter {
    * On start
    * @param position Mouse position (x, y)
    */
-  private _onStart(position: TVec2): void {
+  private _onStart(position: TCursor): void {
     this.drag = true
 
     this.start = position
@@ -138,7 +134,7 @@ export default class CursorManager extends EventEmitter {
    * On move
    * @param position Mouse position (x, y)
    */
-  private _onMove(position: TVec2): void {
+  private _onMove(position: TCursor): void {
     const delta = {
       x: this.position.x - position.x,
       y: this.position.y - position.y,
@@ -153,7 +149,7 @@ export default class CursorManager extends EventEmitter {
    * On up
    * @param position Mouse position (x, y)
    */
-  private _onEnd(position: TVec2): void {
+  private _onEnd(position: TCursor): void {
     const delta = this.delta
     const tap =
       Math.abs(position.x - this.start.x) < TAP_TRESHOLD &&
@@ -175,10 +171,10 @@ export default class CursorManager extends EventEmitter {
    * @param event Event type
    */
   private _handleEvent(
-    event: TEvents,
+    event: TDragEvents,
     params: {
-      position: TVec2
-      delta?: TVec2
+      position: TCursor
+      delta?: TCursor
     }
   ): void {
     if (!this.enabled) return

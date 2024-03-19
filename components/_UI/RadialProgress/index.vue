@@ -24,14 +24,14 @@
 </template>
 
 <script lang="ts" setup>
-import type { TVec2 } from '~/utils/CursorManager'
+import type { TCursor } from '~/utils/CursorManager'
 
 // Bus
 const { $bus }: any = useNuxtApp()
 
 // Refs
 const offset = ref<number>(0)
-const cursor = ref<TVec2>({ x: 0, y: 0 })
+const cursor = ref<TCursor>({ x: 0, y: 0 })
 
 // Progression
 const progress = computed(() => useHoldStore().getProgress)
@@ -49,7 +49,7 @@ watch(progress, () => {
 })
 
 // $bus
-$bus.on('mousemove', ({ position }: { position: TVec2 }) => {
+$bus.on('mousemove', ({ position }: { position: TCursor }) => {
   cursor.value = position
 })
 </script>

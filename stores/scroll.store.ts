@@ -1,3 +1,5 @@
+import clamp from '~/utils/functions/clamp'
+
 type TScroll = {
   current: number
   target: number
