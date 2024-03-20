@@ -77,7 +77,7 @@ export default class BaseScene {
     const holded = this.getRaycastedItem(centered, ['onHold'])
 
     // If user leave the hold item, reset the holded item
-    if (this.holded?.id !== holded?.id) {
+    if (this.holded?.item?.id !== holded?.item?.id) {
       this.resetHolded()
     }
   }

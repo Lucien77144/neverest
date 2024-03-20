@@ -1,7 +1,11 @@
 <template>
   <div ref="drag" class="DragBtn">
     <div class="DragBtn__bar"></div>
-    <div class="DragBtn__button">
+    <div
+      ref="dragger"
+      :style="`margin-top: ${position}px`"
+      class="DragBtn__button"
+    >
       <slot />
     </div>
   </div>
@@ -9,48 +13,39 @@
 
 <script lang="ts" setup>
 import gsap from 'gsap'
-import Draggable from 'gsap/Draggable'
+import clamp from '~/utils/functions/clamp'
 
 // Refs
-const drag = ref<HTMLElement | null>()
+const dragger = ref<HTMLElement>()
+const drag = ref<HTMLElement>()
+const position = ref<number>(0)
 
 // Emits
 const $emit = defineEmits(['navigate'])
-
-// Props
-const { value } = defineProps({
-  value: {
-    type: [String, Number, Boolean],
-    default: true,
-  },
-})
 
 /**
  * On mounted
  */
 onMounted(() => {
-  gsap.registerPlugin(Draggable)
+  const dragManager = new DragManager({ el: dragger.value })
 
-  Draggable.create('.DragBtn__button', {
-    type: 'y',
-    bounds: '.DragBtn',
-    onDragEnd: function () {
-      if (this.y > 110) {
-        $emit('navigate', value)
+  let reset: gsap.core.Tween | undefined
+  dragManager.on('drag', (e: any) => {
+    reset?.kill()
+    const max =
+      (drag.value?.clientHeight || 0) - (dragger.value?.clientHeight || 0) / 2
+    position.value = clamp(0, max, position.value + e.delta.y * -1)
 
-        gsap.to('.DragBtn', {
-          top: -100,
-          opacity: 0,
-          duration: 1,
-          onComplete: () => {
-            gsap.set('.DragBtn', { opacity: 1, top: 0 })
-            gsap.set('.DragBtn__button', { y: 0 })
-          },
-        })
-      } else {
-        gsap.to('.DragBtn__button', { y: 0, duration: 0.5 })
-      }
-    },
+    if (position.value === max) {
+      $emit('navigate')
+    }
+  })
+
+  dragManager.on('dragend', (e: any) => {
+    reset = gsap.to(position, {
+      value: 0,
+      duration: 5,
+    })
   })
 })
 </script>

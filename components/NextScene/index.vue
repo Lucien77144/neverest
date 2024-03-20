@@ -1,6 +1,7 @@
 <template>
   <div
     v-if="sceneNavigation?.nav"
+    ref="next"
     class="next"
     :class="{
       active:
@@ -16,6 +17,9 @@
 
 <script lang="ts" setup>
 import scenes from '~/const/scenes.const'
+
+// Ref
+const next = ref<HTMLElement>()
 
 // Const
 const GAP = 10
@@ -36,6 +40,7 @@ function navigate() {
   )
   const scene = scenes.nav.list[curr + 1]
 
+  next.value?.classList.remove('active')
   scene && $bus.emit('scene:switch', scene)
 }
 </script>

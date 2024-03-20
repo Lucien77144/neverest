@@ -6,6 +6,7 @@
   height: 150px;
   z-index: 100;
   pointer-events: all;
+  user-select: none;
 
   &__bar {
     position: absolute;
@@ -19,6 +20,7 @@
   }
 
   &__button {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;

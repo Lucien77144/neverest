@@ -1,4 +1,7 @@
-import { isDeviceMobile, isDeviceMobileOrTablet } from '~/utils/functions/device'
+import {
+  isDeviceMobile,
+  isDeviceMobileOrTablet,
+} from '~/utils/functions/device'
 import { breakpoint, breakpoints } from '~/utils/functions/breakpoints'
 import dpr from '~/utils/functions/dpr'
 import isTouch from '~/utils/functions/isTouch'
