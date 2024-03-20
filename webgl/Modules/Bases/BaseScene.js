@@ -86,7 +86,7 @@ export default class BaseScene {
    * Handle hold event
    */
   handleHold() {
-    if (this.progressHold.value) return
+    if (this.progressHold.value > 0) return
 
     // Manage progression with store
     const progress = { value: this.progressHold.value }
@@ -110,6 +110,7 @@ export default class BaseScene {
    */
   resetHolded() {
     this.holdProgress?.kill()
+    this.holded = null
 
     const progress = { value: this.progressHold.value }
     this.holdProgress = gsap.to(progress, {
@@ -117,9 +118,7 @@ export default class BaseScene {
       duration: 1 * (progress.value / 100),
       ease: 'easeInOut',
       onUpdate: () => this.setProgressHold(progress.value),
-      onComplete: () => {
-        this.holded = null
-      },
+      onComplete: () => this.setProgressHold(0),
     })
   }
 
