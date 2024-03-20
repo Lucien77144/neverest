@@ -11,7 +11,6 @@ export default class Loader {
   constructor() {
     // Get elements from experience
     this.experience = new Experience()
-    this.renderer = this.experience.renderer.instance
 
     // New elements
     this.toLoad = 0
