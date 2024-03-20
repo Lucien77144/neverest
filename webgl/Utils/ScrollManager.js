@@ -1,4 +1,5 @@
 import { MathUtils } from 'three'
+import { isDeviceMobile } from '~/utils/functions/device'
 import Experience from '../Experience.js'
 
 export default class ScrollManager {
@@ -6,6 +7,9 @@ export default class ScrollManager {
     // Get elements from experience
     this.experience = new Experience()
     this.debug = this.experience.debug
+
+    // DragManager
+    this.dragManager = new DragManager()
 
     // New elements
     this.debugFolder = null
@@ -30,17 +34,25 @@ export default class ScrollManager {
   init() {
     let prev = -1
     const firefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1
-    window.addEventListener(firefox ? 'DOMMouseScroll' : 'wheel', (e) => {
-      let delta
-      if (!firefox) {
-        delta = e.deltaY
-      } else {
-        delta = Math.sign(e.detail * 15) == Math.sign(prev) ? e.detail * 15 : 0
-        prev = e.detail
-      }
+    const isMobile = isDeviceMobile()
 
-      this.setTarget(this.targetScroll.value + delta * this.factor)
-    })
+    if (isMobile) {
+      this.dragManager.on('drag', (e) => {
+        this.setTarget(this.targetScroll.value + e.delta.y * this.factor * 10)
+      })
+    } else {
+      window.addEventListener(firefox ? 'DOMMouseScroll' : 'wheel', (e) => {
+        let delta
+        if (!firefox) {
+          delta = e.deltaY
+        } else {
+          delta = Math.sign(e.detail * 15) == Math.sign(prev) ? e.detail * 15 : 0
+          prev = e.detail
+        }
+  
+        this.setTarget(this.targetScroll.value + delta * this.factor)
+      })
+    }
 
     // Debug
     if (this.debug) this.setDebug()
