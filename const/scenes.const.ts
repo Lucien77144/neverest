@@ -1,6 +1,7 @@
-import Scene1 from '~/webgl/Scenes/Scene1'
 import Scene2 from '~/webgl/Scenes/Scene2'
 import TRANSITIONS from './transitions.const'
+import Intro from '~/webgl/Scenes/Intro'
+import BaseCamp from '~/webgl/Scenes/BaseCamp'
 
 export type TSceneInfos = {
   id?: number
@@ -22,19 +23,16 @@ export type TSceneInfos = {
 const SCENES: TSceneInfos[] = [
   {
     isDefault: true,
-    name: 'start',
-    Scene: Scene1,
-    nav: {
-      scale: 50,
-    },
+    name: 'intro',
+    Scene: Intro,
     transition: {
       template: TRANSITIONS.FADE,
       duration: 2000,
     },
   },
   {
-    name: 'scene2',
-    Scene: Scene2,
+    name: 'basecamp',
+    Scene: BaseCamp,
     nav: {
       scale: 100,
     },
@@ -45,7 +43,7 @@ const SCENES: TSceneInfos[] = [
   },
   {
     name: 'scene3',
-    Scene: Scene1,
+    Scene: Scene2,
     transition: {
       template: TRANSITIONS.FADE,
       duration: 2000,
@@ -53,6 +51,17 @@ const SCENES: TSceneInfos[] = [
   },
   {
     name: 'scene4',
+    Scene: BaseCamp,
+    nav: {
+      scale: 100,
+    },
+    transition: {
+      template: TRANSITIONS.FADE,
+      duration: 2000,
+    },
+  },
+  {
+    name: 'scene5',
     Scene: Scene2,
     nav: {
       scale: 100,

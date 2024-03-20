@@ -7,6 +7,7 @@ export default class ScrollManager {
     // Get elements from experience
     this.experience = new Experience()
     this.debug = this.experience.debug
+    this.$bus = this.experience.$bus
 
     // DragManager
     this.dragManager = new DragManager()
@@ -15,6 +16,7 @@ export default class ScrollManager {
     this.debugFolder = null
     this.speed = 0.1
     this.factor = 0.005
+    this.delta = 0
 
     // Actions
     this.setScroll = useScrollStore().setCurrent
@@ -26,36 +28,6 @@ export default class ScrollManager {
 
     // Init
     this.init()
-  }
-
-  /**
-   * Init the scroll manager
-   */
-  init() {
-    let prev = -1
-    const firefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1
-    const isMobile = isDeviceMobile()
-
-    if (isMobile) {
-      this.dragManager.on('drag', (e) => {
-        this.setTarget(this.targetScroll.value + e.delta.y * this.factor * 10)
-      })
-    } else {
-      window.addEventListener(firefox ? 'DOMMouseScroll' : 'wheel', (e) => {
-        let delta
-        if (!firefox) {
-          delta = e.deltaY
-        } else {
-          delta = Math.sign(e.detail * 15) == Math.sign(prev) ? e.detail * 15 : 0
-          prev = e.detail
-        }
-  
-        this.setTarget(this.targetScroll.value + delta * this.factor)
-      })
-    }
-
-    // Debug
-    if (this.debug) this.setDebug()
   }
 
   /**
@@ -80,6 +52,42 @@ export default class ScrollManager {
       max: 0.25,
       step: 0.001,
     })
+  }
+
+  /**
+   * Init the scroll manager
+   */
+  init() {
+    let prev = -1
+    const firefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1
+    const isMobile = isDeviceMobile()
+
+    const setScroll = (e) => {
+      this.setTarget(this.targetScroll.value + this.delta * this.factor)
+      this.$bus.emit('scroll', this.delta)
+    }
+
+    if (isMobile) {
+      this.dragManager.on('drag', (e) => {
+        this.delta = e.delta.y * 10
+        setScroll()
+      })
+    } else if (firefox) {
+      window.addEventListener('DOMMouseScroll', (e) => {
+        this.delta =
+          Math.sign(e.detail * 15) == Math.sign(prev) ? e.detail * 15 : 0
+        prev = e.detail
+        setScroll()
+      })
+    } else {
+      window.addEventListener('wheel', (e) => {
+        this.delta = e.deltaY
+        setScroll()
+      })
+    }
+
+    // Debug
+    if (this.debug) this.setDebug()
   }
 
   /**

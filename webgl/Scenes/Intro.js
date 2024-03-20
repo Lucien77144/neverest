@@ -1,8 +1,7 @@
-import Cube from '../Components/Cube/Cube'
-import Floor from '../Components/Floor/Floor'
+import Mountain from '../Components/Mountain/Mountain'
 import BaseScene from '../Modules/Bases/BaseScene'
 
-export default class Scene1 extends BaseScene {
+export default class Intro extends BaseScene {
   /**
    * Constructor
    */
@@ -11,8 +10,7 @@ export default class Scene1 extends BaseScene {
 
     // New elements
     this.components = {
-      floor: new Floor(),
-      cube: new Cube(),
+      mountain: new Mountain(),
     }
 
     // Init the scene

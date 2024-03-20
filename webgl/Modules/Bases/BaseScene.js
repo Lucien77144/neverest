@@ -177,5 +177,7 @@ export default class BaseScene {
       c.dispose?.()
       this.scene.remove(c.item)
     })
+    this.scene.remove(this.camera.instance)
+    this.components = {}
   }
 }

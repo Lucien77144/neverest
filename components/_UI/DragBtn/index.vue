@@ -4,6 +4,7 @@
     <div
       ref="dragger"
       :style="`margin-top: ${position}px`"
+      :data-position="position"
       class="DragBtn__button"
     >
       <slot />
@@ -44,7 +45,7 @@ onMounted(() => {
   dragManager.on('dragend', (e: any) => {
     reset = gsap.to(position, {
       value: 0,
-      duration: 5,
+      duration: 0.5,
     })
   })
 })

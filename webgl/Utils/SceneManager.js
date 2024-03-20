@@ -47,6 +47,33 @@ export default class SceneManager {
   }
 
   /**
+   * Set debug
+   */
+  setDebug(value) {
+    this.debugFolder = this.debug.addFolder({
+      title: 'Scenes',
+    })
+
+    this.debugFolder
+      .addBinding({ value: this.persistScene.value }, 'value', {
+        label: 'Persist scene',
+      })
+      .on('change', () => this.togglePersistScene())
+
+    this.debugScene = this.debugFolder
+      .addBlade({
+        view: 'list',
+        label: 'scene',
+        options: this.scenes.list.map(({ name }) => ({
+          text: name,
+          value: name,
+        })),
+        value,
+      })
+      .on('change', ({ value }) => this.switch(this.getSceneFromList(value)))
+  }
+
+  /**
    * Set scene in storage and navigation stores
    * @param {*} scene Scene
    */
@@ -81,6 +108,7 @@ export default class SceneManager {
     // Init next scene
     this.sceneName = next.name
     this.next = new next.Scene()
+    this.next.init()
 
     // Update the store (and localstorage) with the new scene :
     this.setScene(next)
@@ -128,33 +156,6 @@ export default class SceneManager {
         this.next = null
       },
     })
-  }
-
-  /**
-   * Set debug
-   */
-  setDebug(value) {
-    this.debugFolder = this.debug.addFolder({
-      title: 'Scenes',
-    })
-
-    this.debugFolder
-      .addBinding({ value: this.persistScene.value }, 'value', {
-        label: 'Persist scene',
-      })
-      .on('change', () => this.togglePersistScene())
-
-    this.debugScene = this.debugFolder
-      .addBlade({
-        view: 'list',
-        label: 'scene',
-        options: this.scenes.list.map(({ name }) => ({
-          text: name,
-          value: name,
-        })),
-        value,
-      })
-      .on('change', ({ value }) => this.switch(this.getSceneFromList(value)))
   }
 
   /**
