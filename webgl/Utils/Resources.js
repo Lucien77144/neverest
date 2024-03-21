@@ -2,12 +2,11 @@ import Loader from './Loader.js'
 import sources from './assets/data/sources.json'
 import { Texture } from 'three'
 
-export default class Resources{
+export default class Resources {
   /**
    * Constructor
    */
   constructor(_groups) {
-
     // New elements
     this.sources = []
     this.items = {} // Will contain every resources
@@ -92,7 +91,9 @@ export default class Resources{
         }),
       }))
 
-    this.toLoad ? this.loadNextGroup() : setTimeout(() => this.trigger('end'))
+    this.toLoad
+      ? this.loadNextGroup()
+      : setTimeout(() => this.$bus.emit('loadingEng'))
   }
 
   /**
@@ -103,27 +104,27 @@ export default class Resources{
     this.setGroups()
 
     // Loader file end event
-    this.$bus.on('fileEnd', (_resource, _data) => {
-      let data = _data
+    this.$bus.on('fileEnd', (file) => {
+      let data = file.data
 
       // Convert to texture
-      if (_resource.type === 'texture') {
+      if (file.resource.type === 'texture') {
         if (!(data instanceof Texture)) {
-          data = new Texture(_data)
+          data = new Texture(file.data)
         }
         data.needsUpdate = true
       }
 
-      this.items[_resource.name] = data
+      this.items[file.resource.name] = data
 
       // Progress and event
       this.groups.current.loaded++
       this.loaded++
-      this.$bus.emit('progress', [this.groups.current, _resource, data])
+      this.$bus.emit('progress', [this.groups.current, file.resource, data])
     })
 
     // Loader all end event
-    this.$bus.on('end', () => {
+    this.$bus.on('loadingEnd', () => {
       this.groups.loaded.push(this.groups.current)
 
       // Trigger
@@ -132,7 +133,7 @@ export default class Resources{
       if (this.sources.length > 0) {
         this.loadNextGroup()
       } else if (this.sources.length) {
-        this.$bus.emit('end')
+        this.$bus.emit('loadingEnd')
       }
     })
   }

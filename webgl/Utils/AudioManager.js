@@ -1,21 +1,26 @@
 import { Audio, AudioListener } from 'three'
 import Experience from '../Experience'
-import InputManager from './InputManager'
 
 export default class AudioManager {
   constructor() {
     // Get elements from experience
     this.experience = new Experience()
-    this.camera = this.experience.camera.instance
+    this.camera = this.experience.renderer.camera
     this.resources = this.experience.resources
+    console.log(this.resources)
 
     // New elements
-    this.play = null
+    this.listener = null
+    this.play = true
+    this.volume = 0
+    this.audios = {}
   }
 
-  buildSound() {
-    this.initListener()
-
+  /**
+   * Add an audio
+   * @param {*} param0
+   */
+  add({}) {
     this.audio = this.resources.items[this.path]
 
     this.sound = new Audio(this.listener)
@@ -26,16 +31,50 @@ export default class AudioManager {
     this.status && this.sound.play()
   }
 
-  initListener() {
-    this.listener = new AudioListener()
-    this.camera.add(this.listener)
+  /**
+   * Remove an audio
+   */
+  remove() {
+    this.sound.stop()
+    this.sound = null
   }
 
-  set play(value) {
+  /**
+   * Init the audio manager
+   */
+  init() {
+    this.listener = new AudioListener()
+    this.camera.add(this.listener)
+
+    console.log(this.resources.items)
+  }
+
+  /**
+   * Dispose the audio manager
+   */
+  dispose() {
+    this.listener = null
+    this.audios = {}
+  }
+
+  /**
+   * Set the audio volume
+   */
+  set setVolume(value) {
+    this.volume = value
+  }
+
+  /**
+   * Set the play status
+   */
+  set setPlay(value) {
     this.play = value
   }
 
-  get play() {
+  /**
+   * Get the audio volume
+   */
+  get getPlay() {
     return this.play
   }
 }

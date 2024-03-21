@@ -1,5 +1,23 @@
 [
   {
+    "name": "audios",
+    "data": {},
+    "items": [
+      {
+        "name": "babyshark",
+        "source": "/sounds/babyshark.mp3"
+      },
+      {
+        "name": "onichan",
+        "source": "/sounds/onichan.mp3"
+      },
+      {
+        "name": "yameteAh",
+        "source": "/sounds/yamete_ah.mp3"
+      }
+    ]
+  },
+  {
     "name": "default",
     "data": {},
     "items": [

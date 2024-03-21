@@ -3,6 +3,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
+import { AudioLoader } from 'three'
 
 export default class Loader {
   /**
@@ -99,6 +100,32 @@ export default class Loader {
         })
       },
     })
+
+    // Video
+    this.loaders.push({
+      extensions: ['mp4'],
+      action: (resource) => {
+        const video = document.createElement('video')
+        video.src = resource.source
+        video.load()
+
+        video.addEventListener('loadeddata', () => {
+          this.fileLoadEnd(resource, video)
+        })
+      },
+    })
+
+    // Audio
+    const audioLoader = new AudioLoader()
+
+    this.loaders.push({
+      extensions: ['mp3', 'ogg', 'wav'],
+      action: (resource) => {
+        audioLoader.load(resource.source, (buffer) => {
+          this.fileLoadEnd(resource, buffer)
+        })
+      },
+    })
   }
 
   /**
@@ -107,7 +134,7 @@ export default class Loader {
   load(resources = []) {
     for (const resource of resources) {
       this.toLoad++
-      const extensionMatch = resource.source.match(/\.([a-z]+)$/)
+      const extensionMatch = resource.source.match(/\.([a-z0-9]+)$/i)
 
       if (typeof extensionMatch[1] !== 'undefined') {
         const extension = extensionMatch[1]
@@ -133,12 +160,10 @@ export default class Loader {
     this.loaded++
     this.items[resource.name] = data
 
-    // this.trigger('fileEnd', [resource, data])
-    this.$bus.emit('fileEnd', [resource, data])
+    this.$bus.emit('fileEnd', { resource, data })
 
     if (this.loaded === this.toLoad) {
-      // this.trigger('end')
-      this.$bus.emit('end')
+      this.$bus.emit('loadingEnd')
     }
   }
 }

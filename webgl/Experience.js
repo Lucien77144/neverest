@@ -8,6 +8,7 @@ import CursorManager from '../utils/CursorManager'
 import DragManager from '~/utils/DragManager'
 import ScrollManager from './Utils/ScrollManager'
 import { Raycaster } from 'three'
+import AudioManager from './Utils/AudioManager'
 
 export default class Experience {
   static _instance
@@ -35,6 +36,7 @@ export default class Experience {
     this.viewport = null
     this.debug = null
     this.stats = null
+    this.audioManager = null
     this.scrollManager = null
     this.dragManager = null
     this.sceneManager = null
@@ -61,6 +63,8 @@ export default class Experience {
       this.resources.toLoad === this.resources.loaded
     ) {
       this.sceneManager.init(this.viewport.debug && this.baseScene)
+      this.audioManager.init()
+
       this.update()
     }
   }
@@ -139,6 +143,7 @@ export default class Experience {
     this.stats = new Stats(this.viewport.debug)
     this.renderer = new Renderer()
     this.resources = new Resources()
+    this.audioManager = new AudioManager()
 
     this.$bus.on('resize', () => this.resize())
   }

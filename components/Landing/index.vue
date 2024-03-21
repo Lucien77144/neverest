@@ -2,7 +2,7 @@
   <UILoader />
   <div ref="land" class="start">
     <div class="start__title">
-      <img src="/assets/images/icons/countries/fr.png" alt="" />
+      <img src="/assets/img/icons/countries/fr.png" alt="" />
     </div>
     <div class="start__content">
       <p>
