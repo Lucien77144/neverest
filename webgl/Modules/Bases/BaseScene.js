@@ -1,4 +1,4 @@
-import { Scene } from 'three'
+import { Raycaster, Scene } from 'three'
 import Camera from '../Camera/Camera'
 import Experience from '~/webgl/Experience'
 import gsap from 'gsap'
@@ -10,7 +10,7 @@ export default class BaseScene {
   constructor() {
     // Get elements from experience
     this.experience = new Experience()
-    this.raycaster = this.experience.raycaster
+    this.raycaster = new Raycaster()
     this.$bus = this.experience.$bus
 
     // New elements
@@ -19,6 +19,9 @@ export default class BaseScene {
     this.hovered = null
     this.holded = null
     this.holdProgress = null
+    this.handleMouseDown = null
+    this.handleMouseUp = null
+    this.handleMouseMove = null
 
     // Actions
     this.setProgressHold = useHoldStore().setProgress
@@ -31,15 +34,20 @@ export default class BaseScene {
    * Set events
    */
   setEvents() {
-    this.$bus.on('mousedown', (e) => this.onMouseDown(e.centered))
-    this.$bus.on('mouseup', () => this.onMouseUp())
-    this.$bus.on('mousemove', (e) => this.onMouseMove(e.centered))
+    this.handleMouseDown = this.onMouseDown.bind(this)
+    this.handleMouseUp = this.onMouseUp.bind(this)
+    this.handleMouseMove = this.onMouseMove.bind(this)
+
+    this.$bus.on('mousedown', this.handleMouseDown)
+    this.$bus.on('mouseup', this.handleMouseUp)
+    this.$bus.on('mousemove', this.handleMouseMove)
   }
 
   /**
    * Raycast on mouse down
    */
-  onMouseDown(centered) {
+  onMouseDown({ centered }) {
+    console.log(this)
     // Clicked item
     const clicked = this.getRaycastedItem(centered, ['onClick'])
     clicked?.onClick?.()
@@ -59,7 +67,7 @@ export default class BaseScene {
   /**
    * Raycast on mouse move
    */
-  onMouseMove(centered) {
+  onMouseMove({ centered }) {
     // Get hovered item
     const hovered = this.getRaycastedItem(centered, [
       'onMouseEnter',
@@ -118,7 +126,13 @@ export default class BaseScene {
       duration: 1 * (progress.value / 100),
       ease: 'easeInOut',
       onUpdate: () => this.setProgressHold(progress.value),
-      onComplete: () => this.setProgressHold(0),
+      onComplete: () => {
+        setTimeout(() => {
+          this.setProgressHold(0)
+          this.holdProgress?.kill()
+          this.holded = null
+        })
+      },
     })
   }
 
@@ -129,6 +143,8 @@ export default class BaseScene {
    * @returns Item triggered
    */
   getRaycastedItem(centered, fn = []) {
+    if (!this.raycaster) return
+
     this.raycaster.setFromCamera(centered, this.camera.instance)
 
     // Filter the components to only get the ones that have the functions in the fn array
@@ -177,6 +193,10 @@ export default class BaseScene {
       this.scene.remove(c.item)
     })
     this.scene.remove(this.camera.instance)
+
     this.components = {}
+    this.$bus.off('mousedown', this.handleMouseDown)
+    this.$bus.off('mouseup', this.handleMouseUp)
+    this.$bus.off('mousemove', this.handleMouseMove)
   }
 }

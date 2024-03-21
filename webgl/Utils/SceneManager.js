@@ -108,7 +108,6 @@ export default class SceneManager {
     // Init next scene
     this.sceneName = next.name
     this.next = new next.Scene()
-    this.next.init()
 
     // Update the store (and localstorage) with the new scene :
     this.setScene(next)

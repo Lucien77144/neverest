@@ -50,4 +50,13 @@ export default class Camera {
     this.instance.aspect = this.viewport.width / this.viewport.height
     this.instance.updateProjectionMatrix()
   }
+
+  /**
+   * Dispose the camera
+   */
+  dispose() {
+    if (!this.instance) return
+
+    this.instance = null
+  }
 }
