@@ -3,32 +3,14 @@ import Experience from '../Experience'
 import InputManager from './InputManager'
 
 export default class AudioManager {
-  constructor({
-    _path = null,
-    _loop = false,
-    _volume = 1,
-    _status = true,
-  } = {}) {
+  constructor() {
+    // Get elements from experience
     this.experience = new Experience()
     this.camera = this.experience.camera.instance
     this.resources = this.experience.resources
 
-    this.path = _path
-    this.isAudioLoaded = false
-    this.isPlaying = false
-    this.loop = _loop
-    this.volume = _volume
-    this.status = _status
-
-    // Wait for resources & event
-    // this.ressources.on("ready", () => { // FOR SERVER SETUP
-    InputManager.on('startAudio', () => {
-      // comment this line for server setup
-      if (this.resources.loadedAudios == this.resources.toLoadAudios) {
-        InputManager.audioLoaded = true // comment this line for server setup
-        this.buildSound()
-      }
-    })
+    // New elements
+    this.play = null
   }
 
   buildSound() {
@@ -49,23 +31,11 @@ export default class AudioManager {
     this.camera.add(this.listener)
   }
 
-  play() {
-    if (!this.sound) return
-    this.sound.play()
-    this.isPlaying = true
+  set play(value) {
+    this.play = value
   }
 
-  stop() {
-    if (!this.sound) return
-    this.sound.stop()
-    this.isPlaying = false
-  }
-
-  toggle() {
-    if (this.isPlaying) {
-      this.stop()
-    } else {
-      this.play()
-    }
+  get play() {
+    return this.play
   }
 }
