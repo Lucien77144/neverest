@@ -40,20 +40,6 @@ export default class Floor2 extends BaseItem {
   }
 
   /**
-   * On hover
-   */
-  onMouseEnter() {
-    console.log('enter')
-  }
-
-  /**
-   * On leave
-   */
-  onMouseLeave() {
-    console.log('leave')
-  }
-
-  /**
    * Init the floor
    */
   init() {

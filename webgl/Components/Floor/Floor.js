@@ -7,7 +7,7 @@ export default class Floor extends BaseItem {
    */
   constructor() {
     super()
-    
+
     // New elements
     this.geometry = null
     this.material = null
@@ -27,7 +27,7 @@ export default class Floor extends BaseItem {
    * Get material
    */
   setMaterial() {
-    this.material = new MeshBasicMaterial({ color: 0x99C1FF })
+    this.material = new MeshBasicMaterial({ color: 0x99c1ff })
   }
 
   /**
@@ -36,20 +36,6 @@ export default class Floor extends BaseItem {
   setMesh() {
     this.item = new Mesh(this.geometry, this.material)
     this.item.position.z = -3
-  }
-
-  /**
-   * On hover
-   */
-  onMouseEnter() {
-    console.log('enter')
-  }
-
-  /**
-   * On leave
-   */
-  onMouseLeave() {
-    console.log('leave')
   }
 
   /**

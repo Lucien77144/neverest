@@ -47,7 +47,6 @@ export default class BaseScene {
    * Raycast on mouse down
    */
   onMouseDown({ centered }) {
-    console.log(this)
     // Clicked item
     const clicked = this.getRaycastedItem(centered, ['onClick'])
     clicked?.onClick?.()
