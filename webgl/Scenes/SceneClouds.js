@@ -1,4 +1,4 @@
-import BaseScene from "~/webgl/Modules/Bases/BaseScene"
+import BaseScene from '~/webgl/Modules/Bases/BaseScene'
 
 export default class SceneClouds extends BaseScene {
   /**
@@ -8,9 +8,7 @@ export default class SceneClouds extends BaseScene {
     super()
 
     // New elements
-    this.components = {
-      
-    }
+    this.components = {}
 
     this.init()
   }
