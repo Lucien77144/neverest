@@ -1,4 +1,4 @@
-export default class BaseItem {
+export default class BasicItem {
   /**
    * Constructor
    */

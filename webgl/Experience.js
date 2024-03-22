@@ -16,7 +16,7 @@ export default class Experience {
   /**
    * Constructor
    */
-  constructor(_options = {}) {
+  constructor({ canvas, baseScene } = {}) {
     if (Experience._instance) {
       return Experience._instance
     }
@@ -26,8 +26,8 @@ export default class Experience {
     this.$router = useRouter()
 
     // Set container
-    this.canvas = _options.canvas
-    this.baseScene = _options.baseScene
+    canvas && (this.canvas = canvas)
+    baseScene && (this.baseScene = baseScene)
 
     // Utils
     this.cursor = new CursorManager()
@@ -63,7 +63,17 @@ export default class Experience {
       this.resources.toLoad === this.resources.loaded
     ) {
       this.sceneManager.init(this.viewport.debug && this.baseScene)
-      this.audioManager.init()
+      this.audioManager.init([
+        {
+          name: 'onichan',
+          group: 'Cringe',
+          parent: 'cube',
+          loop: true,
+          volume: 0.5,
+        },
+        { name: 'yameteAh', group: 'Cringe', loop: true, volume: 0.25 },
+        { name: 'babyshark', group: 'Enfants', loop: true, volume: 0.3 },
+      ])
 
       this.update()
     }

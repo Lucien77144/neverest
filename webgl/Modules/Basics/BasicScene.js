@@ -1,21 +1,21 @@
-import { Raycaster, Scene } from 'three'
-import Camera from '../Camera/Camera'
+import { Scene } from 'three'
+import BaseCamera from './BasicCamera'
 import Experience from '~/webgl/Experience'
 import gsap from 'gsap'
 
-export default class BaseScene {
+export default class BasicScene {
   /**
    * Constructor
    */
   constructor() {
     // Get elements from experience
     this.experience = new Experience()
-    this.raycaster = new Raycaster()
+    this.raycaster = this.experience.raycaster
     this.$bus = this.experience.$bus
 
     // New elements
     this.scene = new Scene()
-    this.camera = new Camera()
+    this.camera = new BaseCamera()
     this.hovered = null
     this.holded = null
     this.holdProgress = null

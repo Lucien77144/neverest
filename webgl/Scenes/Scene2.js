@@ -1,6 +1,6 @@
 import Cube2 from '../Components/Cube2/Cube2'
 import Floor2 from '../Components/Floor2/Floor2'
-import BaseScene from '../Modules/Bases/BaseScene'
+import BaseScene from '../Modules/Basics/BasicScene'
 
 export default class Scene2 extends BaseScene {
   /**

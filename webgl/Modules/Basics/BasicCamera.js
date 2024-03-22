@@ -1,7 +1,7 @@
 import { PerspectiveCamera } from 'three'
 import Experience from '../../Experience'
 
-export default class Camera {
+export default class BasicCamera {
   /**
    * Constructor
    */
@@ -20,6 +20,37 @@ export default class Camera {
   }
 
   /**
+   * Set debug
+   */
+  setDebug() {
+    this.debugFolder = this.debug.addFolder({
+      title: 'Camera',
+    })
+
+    const position = this.instance.position
+    this.debugFolder
+      .addBinding(
+        {
+          camera: {
+            x: position.x,
+            y: position.y,
+            z: position.z,
+          },
+        },
+        'camera',
+        { label: 'Position' },
+        {
+          x: { min: -20, max: 20, step: 0.01, value: position.x },
+          y: { min: -20, max: 20, step: 0.01, value: position.y },
+          z: { min: -20, max: 20, step: 0.01, value: position.z },
+        }
+      )
+      .on('change', ({ value }) => {
+        this.instance.position.set(value.x, value.y, value.z)
+      })
+  }
+
+  /**
    * Init the camera
    */
   init() {
@@ -30,6 +61,8 @@ export default class Camera {
       100
     )
     this.instance.position.z = 10
+
+    this.debug && this.setDebug()
   }
 
   /**

@@ -1,5 +1,5 @@
-import { Mesh, MeshBasicMaterial, MeshNormalMaterial, PlaneGeometry } from 'three'
-import BaseItem from '~/webgl/Modules/Bases/BaseItem'
+import { Mesh, MeshNormalMaterial, PlaneGeometry } from 'three'
+import BaseItem from '~/webgl/Modules/Basics/BasicItem'
 
 export default class Floor2 extends BaseItem {
   /**

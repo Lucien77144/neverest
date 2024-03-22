@@ -1,6 +1,6 @@
 import Cube from '../Components/Cube/Cube'
 import Floor from '../Components/Floor/Floor'
-import BaseScene from '../Modules/Bases/BaseScene'
+import BaseScene from '../Modules/Basics/BasicScene'
 
 export default class BaseCamp extends BaseScene {
   /**

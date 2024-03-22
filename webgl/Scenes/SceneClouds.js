@@ -1,4 +1,4 @@
-import BaseScene from '~/webgl/Modules/Bases/BaseScene'
+import BaseScene from '~/webgl/Modules/Basics/BasicScene'
 
 export default class SceneClouds extends BaseScene {
   /**
