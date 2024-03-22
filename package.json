@@ -24,6 +24,7 @@
     "pinia": "^2.1.7",
     "stats.js": "^0.17.0",
     "three": "^0.160.1",
-    "tweakpane": "^4.0.3"
+    "tweakpane": "^4.0.3",
+    "vue3-lottie": "^3.3.0"
   }
 }
