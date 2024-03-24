@@ -18,6 +18,16 @@
     ]
   },
   {
+    "name": "animations",
+    "data": {},
+    "items": [
+      {
+        "name": "robotAnimation",
+        "source": "/animations/animRobot.json"
+      }
+    ]
+  },
+  {
     "name": "default",
     "data": {},
     "items": [

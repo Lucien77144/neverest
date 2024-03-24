@@ -3,6 +3,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
+import { LottieLoader } from 'three/examples/jsm/loaders/LottieLoader.js'
 import { AudioLoader } from 'three'
 
 export default class Loader {
@@ -123,6 +124,18 @@ export default class Loader {
       action: (resource) => {
         audioLoader.load(resource.source, (buffer) => {
           this.fileLoadEnd(resource, buffer)
+        })
+      },
+    })
+
+    // Lottie
+    const lottieLoader = new LottieLoader()
+
+    this.loaders.push({
+      extensions: ['json'],
+      action: (resource) => {
+        lottieLoader.load(resource.source, (animation) => {
+          this.fileLoadEnd(resource, animation)
         })
       },
     })

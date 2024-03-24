@@ -6,7 +6,6 @@
         :animationData="robotJSON"
         :height="200"
         :width="200"
-        :progress="loadValue"
       />
     </client-only>
     <h1>{{ Math.floor(loadValue) }}</h1>
