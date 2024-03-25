@@ -13,6 +13,12 @@ export default class Intro extends BaseScene {
       mountain: new Mountain(),
     }
 
+    this.audios = {
+      // onichan: { group: 'Cringe', loop: true, volume: 0.5 },
+      // yameteAh: { group: 'Cringe', loop: true, volume: 0.25 },
+      babyshark: { group: 'Enfants', loop: true, volume: 0.3 },
+    }
+
     // Init the scene
     this.init()
   }

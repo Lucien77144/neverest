@@ -11,9 +11,22 @@ export default class BasicScene {
     // Get elements from experience
     this.experience = new Experience()
     this.raycaster = this.experience.raycaster
+    this.audioManager = this.experience.audioManager
     this.$bus = this.experience.$bus
 
     // New elements
+    /**
+     * Components of the scene (Mesh of Groups)
+     */
+    this.components = {}
+    /**
+     * Array of audios to add to the scene
+     * @param {string} group - Group of the audio
+     * @param {boolean} play - If audio is playing
+     * @param {boolean} loop - If audio is looping
+     * @param {number} volume - Volume of the audio
+     */
+    this.audios = []
     this.scene = new Scene()
     this.camera = new BaseCamera()
     this.hovered = null
@@ -158,10 +171,27 @@ export default class BasicScene {
   }
 
   /**
+   * Add a audio to the scene
+   * @param {*} audios Object of audios
+   * @param {*} parent Parent of the audio (if set)
+   */
+  addAudios(audios = {}, parent = null) {
+    Object.keys(audios)?.forEach((name) => {
+      const audio = audios[name]
+      this.audioManager.add({ name, ...audio, ...(parent && { parent }) })
+    })
+  }
+
+  /**
    * Init the scene
    */
   init() {
-    Object.values(this.components).forEach((c) => this.scene.add(c.item))
+    Object.values(this.components).forEach((c) => {
+      this.scene.add(c.item)
+      this.addAudios(c.audios, c.item)
+    })
+    this.addAudios(this.audios)
+
     this.scene.add(this.camera.instance)
 
     this.setEvents()

@@ -1,4 +1,4 @@
-import { Audio, AudioListener } from 'three'
+import { Audio, AudioListener, PositionalAudio } from 'three'
 import Experience from '../Experience'
 
 export default class AudioManager {
@@ -13,18 +13,21 @@ export default class AudioManager {
     this.debugFolder = null
     this.listener = null
     this.audios = {}
-    this.components = null
+
+    this.init()
   }
 
   /**
    * Set debug
    */
-  setDebug(name, audio) {
+  setDebug(title, audio) {
     this.debugFolder ??= this.debug.addFolder({ title: 'Audio' })
 
     // Subfolder
-    const title = `${name}${audio.group ? ` - ${audio.group}` : ''}`
-    const sub = this.debugFolder.addFolder({ title, expanded: false })
+    const sub = this.debugFolder.addFolder({
+      title: `${audio.parent ? 'O - ' : ''}${title}`,
+      expanded: false,
+    })
 
     // Play state
     const isPlaying = { value: audio.isPlaying }
@@ -48,44 +51,22 @@ export default class AudioManager {
         step: 0.01,
       })
       .on('change', () => audio.setVolume(volume.value))
-
-    // Parent element
-    sub
-      .addBlade({
-        view: 'list',
-        label: 'Parent',
-        options: [
-          ...Object.keys(this.components).map((name) => ({
-            text: name,
-            value: name,
-          })),
-          { text: '[none]', value: null },
-        ],
-        value: audio.parent,
-      })
-      .on('change', (value) => {
-        audio.parent = value
-      })
   }
 
   /**
    * Add an audio
    */
-  add({ name, group, parent, loop = false, volume = 1, play = false } = {}) {
+  add({ name, parent, distance, loop = false, volume = 1, play = false } = {}) {
     const source = this.resources.items[name]
-    const sound = new Audio(this.listener)
+    const sound = new (parent ? PositionalAudio : Audio)(this.listener)
+
     sound.setBuffer(source)
     sound.setLoop(loop)
     sound.setVolume(volume)
+    distance && sound.setRefDistance(distance)
     play && sound.play()
 
-    // console.log(this.components)
-    // console.log(this.components[parent]?.item)
-    // console.log(sound)
-    // this.components[parent]?.item?.add(sound)
-
     sound.name = name
-    sound.group = group
     sound.parent = parent || null
     sound.volume = volume
 
@@ -94,29 +75,16 @@ export default class AudioManager {
   }
 
   /**
-   * Get the components of the current scene
-   */
-  setComponents() {
-    this.components = this.experience.sceneManager.active.components
-  }
-
-  /**
    * Remove an audio
    */
-  remove({ names, group } = {}) {}
+  remove(name) {}
 
   /**
    * Init the audio manager
-   * @param {Array} _audios - Default audios
    */
-  init(_audios = []) {
-    this.setComponents()
-    // this.$bus.on('scene:switch', () => this.setComponents())
-
+  init() {
     this.listener = new AudioListener()
     this.camera.add(this.listener)
-
-    _audios.forEach((audio) => this.add(audio))
   }
 
   /**

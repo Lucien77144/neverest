@@ -44,7 +44,6 @@ export default class Experience {
     this.renderer = null
     this.time = null
     this.resources = null
-    this.pane = null
     this.offset = { x: 0, y: 0 }
 
     // plugin
@@ -52,6 +51,34 @@ export default class Experience {
 
     // Init
     this.init()
+  }
+
+  /**
+   * Get debug
+   */
+  setDebug() {
+    if (!this.viewport.debug) return
+
+    const { getLanding, toggleLanding } = useDebugStore()
+    this.debug = new Pane({
+      title: 'Debug',
+      expanded: true,
+    })
+
+    // Toggle landing
+    this.debug
+      .addBinding({ landing: getLanding }, 'landing')
+      .on('change', () => toggleLanding())
+
+    // Drag :
+    const folder = this.debug.addFolder({ title: 'Position', expanded: true })
+    this.debug.dragButton = folder.addButton({ title: 'Drag Position' })
+    folder
+      .addButton({ title: 'Reset Position' })
+      .on('click', () => this.handlePosChange({ x: 0, y: 0 }))
+
+    // Set events
+    this.setEvents()
   }
 
   /**
@@ -63,17 +90,6 @@ export default class Experience {
       this.resources.toLoad === this.resources.loaded
     ) {
       this.sceneManager.init(this.viewport.debug && this.baseScene)
-      this.audioManager.init([
-        {
-          name: 'onichan',
-          group: 'Cringe',
-          parent: 'cube',
-          loop: true,
-          volume: 0.5,
-        },
-        { name: 'yameteAh', group: 'Cringe', loop: true, volume: 0.25 },
-        { name: 'babyshark', group: 'Enfants', loop: true, volume: 0.3 },
-      ])
 
       this.update()
     }
@@ -106,38 +122,8 @@ export default class Experience {
    * Set events
    */
   setEvents() {
-    this.dragManager = new DragManager({ el: this.pane.dragButton.element })
+    this.dragManager = new DragManager({ el: this.debug.dragButton.element })
     this.dragManager.on('drag', this.onDrag.bind(this))
-  }
-
-  /**
-   * Get debug
-   */
-  getDebug() {
-    if (!this.viewport.debug) return
-
-    const { getLanding, toggleLanding } = useDebugStore()
-    this.pane = new Pane({
-      title: 'Debug',
-      expanded: true,
-    })
-
-    // Toggle landing
-    this.pane
-      .addBinding({ landing: getLanding }, 'landing')
-      .on('change', () => toggleLanding())
-
-    // Drag :
-    const folder = this.pane.addFolder({ title: 'Position', expanded: true })
-    this.pane.dragButton = folder.addButton({ title: 'Drag Position' })
-    folder
-      .addButton({ title: 'Reset Position' })
-      .on('click', () => this.handlePosChange({ x: 0, y: 0 }))
-
-    // Set events
-    this.setEvents()
-
-    return this.pane
   }
 
   /**
@@ -145,7 +131,7 @@ export default class Experience {
    */
   init() {
     this.viewport = new Viewport()
-    this.debug = this.getDebug()
+    this.setDebug()
     this.time = new Time()
     this.scrollManager = new ScrollManager()
     this.sceneManager = new SceneManager()

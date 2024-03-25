@@ -48,6 +48,17 @@ export default class Mountain extends BaseItem {
   }
 
   /**
+   * Set audio of the scene
+   */
+  setAudio() {
+    this.audios = {
+      onichan: { group: 'Cringe', loop: true, volume: 0.5 },
+      yameteAh: { group: 'Cringe', loop: true, volume: 0.25 },
+      // babyshark: { group: 'Enfants', loop: true, volume: 0.3 },
+    }
+  }
+
+  /**
    * On hold item
    */
   onHold() {
@@ -61,6 +72,8 @@ export default class Mountain extends BaseItem {
     this.setGeometry()
     this.setMaterial()
     this.setMesh()
+
+    this.setAudio()
 
     this.$bus.on('scroll', (delta) => {
       this.item.rotation.y += MathUtils.degToRad(delta / 25)

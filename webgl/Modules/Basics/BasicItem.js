@@ -13,6 +13,16 @@ export default class BasicItem {
     this.item
 
     /**
+     * Array of audios
+     * @param {string} group - Group of the audio
+     * @param {Object} distance - Parent of the audio
+     * @param {boolean} play - If audio is playing
+     * @param {boolean} loop - If audio is looping
+     * @param {number} volume - Volume of the audio
+     */
+    this.audios = []
+
+    /**
      * Duration after hold event is triggered
      */
     this.holdDuration = 1000
