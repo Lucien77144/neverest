@@ -90,6 +90,7 @@ export default class BasicCamera {
   dispose() {
     if (!this.instance) return
 
+    this.debugFolder && this.debug.remove(this.debugFolder)
     this.instance = null
   }
 }

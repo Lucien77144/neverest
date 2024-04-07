@@ -13,14 +13,20 @@ export default class BasicItem {
     this.item
 
     /**
-     * Array of audios
+     * Object of audios
      * @param {string} group - Group of the audio
      * @param {Object} distance - Parent of the audio
      * @param {boolean} play - If audio is playing
      * @param {boolean} loop - If audio is looping
+     * @param {boolean} persist - If true, the audio will not be removed on scene change
      * @param {number} volume - Volume of the audio
      */
-    this.audios = []
+    this.audios = {}
+
+    /**
+     * Debug folder of the item (faculative)
+     */
+    this.debugFolder
 
     /**
      * Duration after hold event is triggered
@@ -55,6 +61,12 @@ export default class BasicItem {
      * If set, this function will be called on hold item
      */
     this.onHold
+
+    /**
+     * On scroll function
+     * @param {number} delta - Delta of the scroll
+     */
+    this.onScroll
   }
 
   /**
@@ -63,5 +75,7 @@ export default class BasicItem {
   dispose() {
     this.geometry?.dispose()
     this.material?.dispose()
+
+    this.debugFolder && this.debug?.remove(this.debugFolder)
   }
 }

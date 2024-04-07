@@ -15,51 +15,71 @@ export default class BasicScene {
     this.$bus = this.experience.$bus
 
     // New elements
-    /**
-     * Components of the scene (Mesh of Groups)
-     */
-    this.components = {}
-    /**
-     * Array of audios to add to the scene
-     * @param {string} group - Group of the audio
-     * @param {boolean} play - If audio is playing
-     * @param {boolean} loop - If audio is looping
-     * @param {number} volume - Volume of the audio
-     */
-    this.audios = []
     this.scene = new Scene()
     this.camera = new BaseCamera()
     this.hovered = null
     this.holded = null
     this.holdProgress = null
-    this.handleMouseDown = null
-    this.handleMouseUp = null
-    this.handleMouseMove = null
+    this.handleMouseDownEvt = null
+    this.handleMouseUpEvt = null
+    this.handleMouseMoveEvt = null
+    this.handleScrollEvt = null
 
     // Actions
     this.setProgressHold = useHoldStore().setProgress
 
     // Getters
     this.progressHold = computed(() => useHoldStore().getProgress)
+
+    // --------------------------------
+    // Elements
+    // --------------------------------
+
+    /**
+     * Components of the scene (Mesh of Groups)
+     */
+    this.components = {}
+
+    /**
+     * Object of audios to add to the scene
+     * @param {string} group - Group of the audio
+     * @param {boolean} play - If audio is playing
+     * @param {boolean} loop - If audio is looping
+     * @param {boolean} persist - If true, the audio will not be removed on scene change
+     * @param {number} volume - Volume of the audio
+     */
+    this.audios = {}
+
+    // --------------------------------
+    // Functions
+    // --------------------------------
+
+    /**
+     * On scroll function
+     * @param {number} delta - Delta of the scroll
+     */
+    this.onScroll
   }
 
   /**
    * Set events
    */
   setEvents() {
-    this.handleMouseDown = this.onMouseDown.bind(this)
-    this.handleMouseUp = this.onMouseUp.bind(this)
-    this.handleMouseMove = this.onMouseMove.bind(this)
+    this.handleMouseDownEvt = this.onMouseDownEvt.bind(this)
+    this.handleMouseUpEvt = this.onMouseUpEvt.bind(this)
+    this.handleMouseMoveEvt = this.onMouseMoveEvt.bind(this)
+    this.handleScrollEvt = this.onScrollEvt.bind(this)
 
-    this.$bus.on('mousedown', this.handleMouseDown)
-    this.$bus.on('mouseup', this.handleMouseUp)
-    this.$bus.on('mousemove', this.handleMouseMove)
+    this.$bus.on('mousedown', this.handleMouseDownEvt)
+    this.$bus.on('mouseup', this.handleMouseUpEvt)
+    this.$bus.on('mousemove', this.handleMouseMoveEvt)
+    this.$bus.on('scroll', this.handleScrollEvt)
   }
 
   /**
    * Raycast on mouse down
    */
-  onMouseDown({ centered }) {
+  onMouseDownEvt({ centered }) {
     // Clicked item
     const clicked = this.getRaycastedItem(centered, ['onClick'])
     clicked?.onClick?.()
@@ -72,14 +92,14 @@ export default class BasicScene {
   /**
    * Raycast on mouse up
    */
-  onMouseUp() {
+  onMouseUpEvt() {
     this.resetHolded()
   }
 
   /**
    * Raycast on mouse move
    */
-  onMouseMove({ centered }) {
+  onMouseMoveEvt({ centered }) {
     // Get hovered item
     const hovered = this.getRaycastedItem(centered, [
       'onMouseEnter',
@@ -100,6 +120,14 @@ export default class BasicScene {
     if (this.holded?.item?.id !== holded?.item?.id) {
       this.resetHolded()
     }
+  }
+
+  /**
+   * On scroll event
+   */
+  onScrollEvt(delta) {
+    this.onScroll?.(delta)
+    Object.values(this.components).forEach((c) => c.onScroll?.(delta))
   }
 
   /**
@@ -183,15 +211,29 @@ export default class BasicScene {
   }
 
   /**
+   * Remove audios from the scene
+   * @param {*} audios Object of audios
+   */
+  removeAudios(audios = {}) {
+    // filter by persist :
+    const toRemove = Object.keys(audios).filter((name) => !audios[name].persist)
+
+    toRemove?.forEach((name) => {
+      this.audioManager.remove(name)
+    })
+  }
+
+  /**
    * Init the scene
    */
   init() {
     Object.values(this.components).forEach((c) => {
       this.scene.add(c.item)
+      c.audios && console.log(c.item)
       this.addAudios(c.audios, c.item)
     })
-    this.addAudios(this.audios)
 
+    this.audios && this.addAudios(this.audios)
     this.scene.add(this.camera.instance)
 
     this.setEvents()
@@ -217,15 +259,27 @@ export default class BasicScene {
    * Dispose the scene
    */
   dispose() {
+    // Items
     Object.values(this.components).forEach((c) => {
       c.dispose?.()
       this.scene.remove(c.item)
+      this.removeAudios(c.audios)
     })
+
+    // Audios
+    this.audios && this.removeAudios(this.audios)
+
+    // Camera
+    this.camera.dispose()
     this.scene.remove(this.camera.instance)
 
-    this.components = {}
-    this.$bus.off('mousedown', this.handleMouseDown)
-    this.$bus.off('mouseup', this.handleMouseUp)
-    this.$bus.off('mousemove', this.handleMouseMove)
+    // Debug
+    this.debugFolder && this.debug?.remove(this.debugFolder)
+
+    // Events
+    this.$bus.off('mousedown', this.handleMouseDownEvt)
+    this.$bus.off('mouseup', this.handleMouseUpEvt)
+    this.$bus.off('mousemove', this.handleMouseMoveEvt)
+    this.$bus.off('scroll', this.handleScrollEvt)
   }
 }

@@ -19,9 +19,6 @@ export default class Mountain extends BaseItem {
     this.material = null
     this.holdDuration = 2000
 
-    // Store
-    this.currentScroll = computed(() => useScrollStore().getCurrent)
-
     // Init
     this.init()
   }
@@ -53,7 +50,7 @@ export default class Mountain extends BaseItem {
   setAudio() {
     this.audios = {
       onichan: { group: 'Cringe', loop: true, volume: 0.5 },
-      yameteAh: { group: 'Cringe', loop: true, volume: 0.25 },
+      yameteAh: { group: 'Cringe', loop: true, volume: 0.25, persist: true },
       // babyshark: { group: 'Enfants', loop: true, volume: 0.3 },
     }
   }
@@ -65,6 +62,15 @@ export default class Mountain extends BaseItem {
     const scene = scenes.list.find((scene) => scene.name === 'basecamp')
     this.$bus.emit('scene:switch', scene)
   }
+
+  /**
+   * On scroll
+   * @param {*} delta
+   */
+  onScroll(delta) {
+    this.item.rotation.y += MathUtils.degToRad(delta / 25)
+  }
+
   /**
    * Init the floor
    */
@@ -74,10 +80,6 @@ export default class Mountain extends BaseItem {
     this.setMesh()
 
     this.setAudio()
-
-    this.$bus.on('scroll', (delta) => {
-      this.item.rotation.y += MathUtils.degToRad(delta / 25)
-    })
   }
 
   /**

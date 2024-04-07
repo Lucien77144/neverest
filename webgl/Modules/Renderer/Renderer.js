@@ -157,11 +157,13 @@ export default class Renderer {
     const next = this.sceneManager.next
 
     // Scene1
-    this.instance.setRenderTarget(this.rt0)
-    this.instance.render(active.scene, active.camera.instance)
+    if (active?.camera?.instance) {
+      this.instance.setRenderTarget(this.rt0)
+      this.instance.render(active.scene, active.camera.instance)
+    }
 
     // Transition
-    if (next) {
+    if (next?.camera?.instance) {
       this.instance.setRenderTarget(this.rt1)
       this.instance.render(next.scene, next.camera.instance)
     }

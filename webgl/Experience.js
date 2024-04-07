@@ -113,6 +113,7 @@ export default class Experience {
   handlePosChange({ x, y }) {
     this.offset.x = x
     this.offset.y = y
+
     document.querySelector(
       '.tp-dfwv'
     ).style.transform = `translate(${this.offset.x}px, ${this.offset.y}px)`
@@ -173,6 +174,8 @@ export default class Experience {
     this.renderer.dispose()
     this.resources.dispose()
     this.sceneManager.dispose()
+    this.audioManager.dispose()
+    this.debug?.dispose() 
     this.cursor?.destroy()
   }
 }
