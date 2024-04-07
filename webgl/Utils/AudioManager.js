@@ -1,20 +1,16 @@
-import { Audio, AudioListener, PositionalAudio } from 'three'
+import { Audio, PositionalAudio } from 'three'
 import Experience from '../Experience'
 
 export default class AudioManager {
   constructor() {
     // Get elements from experience
     this.experience = new Experience()
-    this.camera = this.experience.renderer.camera
     this.resources = this.experience.resources
     this.debug = this.experience.debug
 
     // New elements
     this.debugFolder = null
-    this.listener = null
     this.audios = {}
-
-    this.init()
   }
 
   /**
@@ -26,7 +22,7 @@ export default class AudioManager {
 
     // Subfolder
     const sub = this.debugFolder.addFolder({
-      title: `${audio.parent ? 'O - ' : ''}${title}`,
+      title: `${audio.parent ? '🔗 - ' : ''}${title}`,
       expanded: false,
     })
 
@@ -59,23 +55,30 @@ export default class AudioManager {
   /**
    * Add an audio
    */
-  add({ name, parent, distance, loop = false, volume = 1, play = false } = {}) {
+  add({
+    name,
+    parent,
+    distance,
+    loop = false,
+    volume = 1,
+    play = false,
+    listener = this.camera.listener,
+  } = {}) {
     if (this.audios[name]) return
 
     const source = this.resources.items[name]
-    const sound = new (parent ? PositionalAudio : Audio)(this.listener)
+    const sound = new (parent ? PositionalAudio : Audio)(listener)
 
     sound.setBuffer(source)
     sound.setLoop(loop)
     sound.setVolume(volume)
-
-    distance && sound.setRefDistance(distance)
     play && sound.play()
 
+    parent && sound.setRefDistance(distance || 1)
     parent?.add(sound)
 
     sound.name = name
-    sound.parent = parent || null
+    sound.parent = parent
     sound.volume = volume
 
     this.audios[name] = sound
@@ -97,20 +100,11 @@ export default class AudioManager {
   }
 
   /**
-   * Init the audio manager
-   */
-  init() {
-    this.listener = new AudioListener()
-    this.camera.add(this.listener)
-  }
-
-  /**
    * Dispose the audio manager
    */
   dispose() {
     this.debugFolder && this.debug?.remove(this.debugFolder)
 
-    this.listener = null
     Object.keys(this.audios).forEach((name) => this.remove(name))
   }
 }

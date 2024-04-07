@@ -78,7 +78,6 @@ export default class Mountain extends BaseItem {
     this.setGeometry()
     this.setMaterial()
     this.setMesh()
-
     this.setAudio()
   }
 

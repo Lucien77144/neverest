@@ -1,4 +1,4 @@
-import { PerspectiveCamera } from 'three'
+import { AudioListener, PerspectiveCamera } from 'three'
 import Experience from '../../Experience'
 
 export default class BasicCamera {
@@ -13,10 +13,32 @@ export default class BasicCamera {
 
     // New elements
     this.instance = null
+    this.listener = null
     this.debugFolder = null
 
     // Init
     this.init()
+  }
+
+  /**
+   * Set listener
+   */
+  setInstance() {
+    this.instance = new PerspectiveCamera(
+      75,
+      this.viewport.width / this.viewport.height,
+      0.1,
+      100
+    )
+    this.instance.position.z = 10
+  }
+
+  /**
+   * Set listener
+   */
+  setListener() {
+    this.listener = new AudioListener()
+    this.instance.add(this.listener)
   }
 
   /**
@@ -54,14 +76,8 @@ export default class BasicCamera {
    * Init the camera
    */
   init() {
-    this.instance = new PerspectiveCamera(
-      75,
-      this.viewport.width / this.viewport.height,
-      0.1,
-      100
-    )
-    this.instance.position.z = 10
-
+    this.setInstance()
+    this.setListener()
     this.debug && this.setDebug()
   }
 
@@ -92,5 +108,6 @@ export default class BasicCamera {
 
     this.debugFolder && this.debug.remove(this.debugFolder)
     this.instance = null
+    this.listener = null
   }
 }
