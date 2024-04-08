@@ -1,6 +1,6 @@
-import BaseScene from '~/webgl/Modules/Basics/BasicScene'
+import BasicScene from '~/webgl/Modules/Basics/BasicScene'
 
-export default class SceneClouds extends BaseScene {
+export default class SceneClouds extends BasicScene {
   /**
    * Constructor
    */

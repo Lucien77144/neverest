@@ -23,7 +23,7 @@ const route = useRoute()
 onMounted(() => {
   exp.value = new Experience({
     canvas: canvas.value,
-    baseScene: route.query.scene,
+    BasicScene: route.query.scene,
   })
 
   // On resources progress, update loadValue

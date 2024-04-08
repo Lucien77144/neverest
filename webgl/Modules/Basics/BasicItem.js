@@ -76,6 +76,8 @@ export default class BasicItem {
     this.geometry?.dispose()
     this.material?.dispose()
 
+    console.log(this.audios)
+
     this.debugFolder && this.debug?.remove(this.debugFolder)
   }
 }

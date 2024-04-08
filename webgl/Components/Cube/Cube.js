@@ -1,9 +1,9 @@
 import { BoxGeometry, Mesh, MeshNormalMaterial } from 'three'
 import { MathUtils } from 'three'
 import Experience from '~/webgl/Experience'
-import BaseItem from '~/webgl/Modules/Basics/BasicItem'
+import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
-export default class Cube extends BaseItem {
+export default class Cube extends BasicItem {
   /**
    * Constructor
    */

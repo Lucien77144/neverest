@@ -1,7 +1,7 @@
 import Mountain from '../Components/Mountain/Mountain'
-import BaseScene from '../Modules/Basics/BasicScene'
+import BasicScene from '../Modules/Basics/BasicScene'
 
-export default class Intro extends BaseScene {
+export default class Intro extends BasicScene {
   /**
    * Constructor
    */

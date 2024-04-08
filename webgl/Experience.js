@@ -16,7 +16,7 @@ export default class Experience {
   /**
    * Constructor
    */
-  constructor({ canvas, baseScene } = {}) {
+  constructor({ canvas, BasicScene } = {}) {
     if (Experience._instance) {
       return Experience._instance
     }
@@ -27,7 +27,7 @@ export default class Experience {
 
     // Set container
     canvas && (this.canvas = canvas)
-    baseScene && (this.baseScene = baseScene)
+    BasicScene && (this.BasicScene = BasicScene)
 
     // Utils
     this.cursor = new CursorManager()
@@ -89,7 +89,7 @@ export default class Experience {
       !this.sceneManager?.active &&
       this.resources.toLoad === this.resources.loaded
     ) {
-      this.sceneManager.init(this.viewport.debug && this.baseScene)
+      this.sceneManager.init(this.viewport.debug && this.BasicScene)
 
       this.update()
     }

@@ -1,5 +1,5 @@
 import { Scene } from 'three'
-import BaseCamera from './BasicCamera'
+import BasicCamera from './BasicCamera'
 import Experience from '~/webgl/Experience'
 import gsap from 'gsap'
 
@@ -16,7 +16,7 @@ export default class BasicScene {
 
     // New elements
     this.scene = new Scene()
-    this.camera = new BaseCamera()
+    this.camera = new BasicCamera()
     this.hovered = null
     this.holded = null
     this.holdProgress = null

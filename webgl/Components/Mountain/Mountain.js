@@ -2,9 +2,9 @@ import { ConeGeometry, Mesh, MeshNormalMaterial } from 'three'
 import { MathUtils } from 'three'
 import scenes from '~/const/scenes.const'
 import Experience from '~/webgl/Experience'
-import BaseItem from '~/webgl/Modules/Basics/BasicItem'
+import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
-export default class Mountain extends BaseItem {
+export default class Mountain extends BasicItem {
   /**
    * Constructor
    */
