@@ -11,7 +11,6 @@ export default class Mountain extends BasicItem {
   constructor() {
     super()
     // Get elements from experience
-    this.experience = new Experience()
     this.$bus = this.experience.$bus
 
     // New elements

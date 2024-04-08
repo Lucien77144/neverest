@@ -219,13 +219,13 @@ export default class BasicScene {
    * Remove audios from the scene
    * @param {*} audios Object of audios
    */
-  removeAudios(audios = {}) {
-    // filter by persist :
-    const toRemove = Object.keys(audios).filter((name) => !audios[name].persist)
+  removeAudios(audios = {}, force = false) {
+    // Filter by persist and no parents
+    const toRemove = Object.keys(audios).filter(
+      (name) => !audios[name].persist || force
+    )
 
-    toRemove?.forEach((name) => {
-      this.audioManager.remove(name)
-    })
+    toRemove?.forEach((name) => this.audioManager.remove(name))
   }
 
   /**
@@ -267,7 +267,7 @@ export default class BasicScene {
     Object.values(this.components).forEach((c) => {
       c.dispose?.()
       this.scene.remove(c.item)
-      this.removeAudios(c.audios)
+      this.removeAudios(c.audios, true)
     })
 
     // Audios

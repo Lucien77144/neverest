@@ -1,3 +1,5 @@
+import Experience from '~/webgl/Experience'
+
 export default class BasicItem {
   /**
    * Constructor
@@ -6,6 +8,11 @@ export default class BasicItem {
     // --------------------------------
     // Elements
     // --------------------------------
+
+    /**
+     * Experience ref
+     */
+    this.experience = new Experience()
 
     /**
      * Item that will be add to the scene (Group or Mesh)
@@ -75,8 +82,6 @@ export default class BasicItem {
   dispose() {
     this.geometry?.dispose()
     this.material?.dispose()
-
-    console.log(this.audios)
 
     this.debugFolder && this.debug?.remove(this.debugFolder)
   }
