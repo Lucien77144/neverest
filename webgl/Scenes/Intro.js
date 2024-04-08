@@ -1,3 +1,5 @@
+import { Vector3 } from 'three'
+import InfoLine from '../Components/Intro/InfoLine/InfoLine'
 import Mountain from '../Components/Intro/Mountain/Mountain'
 import BasicScene from '../Modules/Basics/BasicScene'
 
@@ -11,6 +13,7 @@ export default class Intro extends BasicScene {
     // New elements
     this.components = {
       mountain: new Mountain(),
+      line1:new InfoLine([new Vector3(5,0,0),new Vector3(5,5,0),new Vector3(7,7,0)],'AAAAA')
     }
 
     this.audios = {
