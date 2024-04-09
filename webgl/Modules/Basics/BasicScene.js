@@ -1,6 +1,7 @@
-import { Scene } from 'three'
+import { Group, Scene } from 'three'
 import BasicCamera from './BasicCamera'
 import Experience from '~/webgl/Experience'
+import Player from '~/webgl/Components/Shared/Player/Player'
 import gsap from 'gsap'
 
 export default class BasicScene {
@@ -188,14 +189,36 @@ export default class BasicScene {
     this.raycaster.setFromCamera(centered, this.camera.instance)
 
     // Filter the components to only get the ones that have the functions in the fn array
-    const list = Object.values(this.components).filter(
+    const list = Object.values(this.getRecursiveComponents()).filter(
       (c) => fn.filter((f) => c[f]).length > 0
     )
-    // Get the first object that the raycaster intersects
-    const target = this.raycaster.intersectObjects(list.map((c) => c.item))?.[0]
+
+    // Get the target object
+    const target = this.raycaster.intersectObjects(
+      list.map((c) => c.item),
+      true
+    )?.[0]
+
+    // Get scene's ids of items recursively
+    list.forEach((c) => {
+      c.ids = []
+      c.item.traverse((item) => {
+        c.ids.push(item.id)
+      })
+    })
 
     // Return the item that has the object id that matches the target object id
-    return list.find((i) => i.item.id === target?.object?.id)
+    const match = list.find((i) => i.item.id === target?.object?.id)
+    const childMatch = list.find((i) => i.ids.includes(target?.object?.id))
+
+    return match || childMatch
+  }
+
+  /**
+   * 
+   */
+  addItemsToScene() {
+
   }
 
   /**
@@ -229,11 +252,38 @@ export default class BasicScene {
   }
 
   /**
+   * Get recursive components
+   * @returns Object of components flatten
+   */
+  getRecursiveComponents() {
+    const res = {}
+
+    const flatComponents = (c) => {
+      Object.keys(c).forEach((key) => {
+        const value = c[key]
+
+        res[key] = value
+        value?.components && flatComponents(value.components)
+      })
+    }
+    flatComponents(this.components)
+
+    return res
+  }
+
+  /**
    * Init the scene
    */
   init() {
     Object.values(this.components).forEach((c) => {
       this.scene.add(c.item)
+
+      if (c.components) {
+        const group = new Group()
+        group.add(c.item)
+
+      }
+
       this.addAudios(c.audios, c.item)
     })
 

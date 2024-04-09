@@ -1,7 +1,7 @@
-import { BoxGeometry, Mesh, MeshNormalMaterial } from 'three'
-import { MathUtils } from 'three'
-import Experience from '~/webgl/Experience'
+import { BoxGeometry, Group, Mesh, MeshNormalMaterial } from 'three'
+import Player from '~/webgl/Components/Shared/Player/Player'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
+import players from '~/assets/data/players.json'
 
 export default class Cube extends BasicItem {
   /**
@@ -12,6 +12,7 @@ export default class Cube extends BasicItem {
     // New elements
     this.geometry = null
     this.material = null
+    this.mesh = null
     this.holdDuration = 2000
 
     // Store
@@ -22,24 +23,44 @@ export default class Cube extends BasicItem {
   }
 
   /**
-   * Get geometry
+   * Set geometry
    */
   setGeometry() {
     this.geometry = new BoxGeometry(4, 4, 4)
   }
 
   /**
-   * Get material
+   * Set material
    */
   setMaterial() {
     this.material = new MeshNormalMaterial()
   }
 
   /**
-   * Get mesh
+   * Set mesh
    */
   setMesh() {
-    this.item = new Mesh(this.geometry, this.material)
+    this.mesh = new Mesh(this.geometry, this.material)
+  }
+
+  /**
+   * Set item
+   */
+  setItem() {
+    // this.item = new Mesh(this.geometry, this.material)
+    this.item = new Group()
+    this.item.add(this.mesh)
+  }
+
+  /**
+   * Set the player
+   */
+  setPlayer() {
+    this.components = {
+      player: new Player(players.cube),
+    }
+
+    this.item.add(this.components.player.item)
   }
 
   /**
@@ -50,14 +71,21 @@ export default class Cube extends BasicItem {
   }
 
   /**
+   * On click item
+   */
+  onClick() {
+    console.log('clicked')
+  }
+
+  /**
    * Update the cube
    */
   update() {
-    this.item.rotation.y = MathUtils.lerp(
-      this.item.rotation.y,
-      this.currentScroll.value * 0.1,
-      0.1
-    )
+    // this.item.rotation.y = MathUtils.lerp(
+    //   this.item.rotation.y,
+    //   this.currentScroll.value * 0.1,
+    //   0.1
+    // )
   }
 
   /**
@@ -67,5 +95,7 @@ export default class Cube extends BasicItem {
     this.setGeometry()
     this.setMaterial()
     this.setMesh()
+    this.setItem()
+    this.setPlayer()
   }
 }

@@ -20,6 +20,11 @@ export default class BasicItem {
     this.item
 
     /**
+     * Components included in the item (facultative)
+     */
+    this.components = {}
+
+    /**
      * Object of audios
      * @param {string} group - Group of the audio
      * @param {Object} distance - Parent of the audio
@@ -46,31 +51,37 @@ export default class BasicItem {
 
     /**
      * If set, this function will be called on each tick to update
+     * If false, the event will be ignored, even if parent is triggering it
      */
     this.update
 
     /**
      * If set, this function will be called on click item
+     * If false, the event will be ignored, even if parent is triggering it
      */
     this.onClick
 
     /**
      * If set, this function will be called on mouse enter item
+     * If false, the event will be ignored, even if parent is triggering it
      */
     this.onMouseEnter
 
     /**
      * If set, this function will be called on mouse leave item
+     * If false, the event will be ignored, even if parent is triggering it
      */
     this.onMouseLeave
 
     /**
      * If set, this function will be called on hold item
+     * If false, the event will be ignored, even if parent is triggering it
      */
     this.onHold
 
     /**
      * On scroll function
+     * If false, the event will be ignored, even if parent is triggering it
      * @param {number} delta - Delta of the scroll
      */
     this.onScroll
