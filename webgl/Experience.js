@@ -70,6 +70,8 @@ export default class Experience {
       .addBinding({ landing: getLanding }, 'landing')
       .on('change', () => toggleLanding())
 
+    
+
     // Drag :
     const folder = this.debug.addFolder({ title: 'Position', expanded: true })
     this.debug.dragButton = folder.addButton({ title: 'Drag Position' })
@@ -94,6 +96,7 @@ export default class Experience {
       this.update()
     }
   }
+  
 
   /**
    * On drag

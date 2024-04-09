@@ -23,7 +23,7 @@
     "items": [
       {
         "name": "robotAnimation",
-        "source": "/animations/animRobot.json"
+        "source": "/lottie/animRobot.json"
       }
     ]
   },
@@ -35,6 +35,17 @@
         "name": "lennaTexture",
         "source": "/img/dirt.jpg",
         "type": "texture"
+      }
+    ]
+  },
+  {
+    "name": "font",
+    "data": {},
+    "items": [
+      {
+        "name": "roboto",
+        "source": "/font/Roboto.json",
+        "type": "font"
       }
     ]
   }

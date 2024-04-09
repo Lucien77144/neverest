@@ -4,6 +4,7 @@ type TDebug = {
   landing: boolean
   scene: string
   persistScene: boolean
+  wireframe:boolean
 }
 
 /**
@@ -20,6 +21,7 @@ export const useDebugStore = defineStore('debug', {
 
     return {
       landing: !!local?.landing,
+      wireframe: !!local?.wireframe,
       scene: local?.scene || scenes.default.name,
       persistScene: !!local?.persistScene,
     }

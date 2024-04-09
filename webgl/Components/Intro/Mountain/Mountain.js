@@ -1,4 +1,4 @@
-import { ConeGeometry, Mesh, MeshNormalMaterial } from 'three'
+import { ConeGeometry, Mesh, MeshNormalMaterial, Vector3 } from 'three'
 import { MathUtils } from 'three'
 import scenes from '~/const/scenes.const'
 import Experience from '~/webgl/Experience'
@@ -16,6 +16,7 @@ export default class Mountain extends BasicItem {
     // New elements
     this.geometry = null
     this.material = null
+    this.test = null
     this.holdDuration = 2000
 
     // Init
@@ -63,14 +64,6 @@ export default class Mountain extends BasicItem {
   }
 
   /**
-   * On scroll
-   * @param {*} delta
-   */
-  onScroll(delta) {
-    this.item.rotation.y += MathUtils.degToRad(delta / 25)
-  }
-
-  /**
    * Init the floor
    */
   init() {
@@ -84,6 +77,6 @@ export default class Mountain extends BasicItem {
    * Update the floor
    */
   update() {
-    this.item.rotation.y += 0.005
+    
   }
 }
