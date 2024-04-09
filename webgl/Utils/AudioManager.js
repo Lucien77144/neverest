@@ -29,13 +29,17 @@ export default class AudioManager {
     // Play state
     const isPlaying = { value: audio.isPlaying }
     sub.addBinding(isPlaying, 'value', { label: 'Play' }).on('change', () => {
-      audio.isPlaying ? audio.pause() : audio.play()
+      audio.isPlaying = !isPlaying.value
+
+      audio.isPlaying
+        ? audio.source?.mediaElement?.pause()
+        : audio.source?.mediaElement?.play()
     })
 
     // Loop
-    const loop = { value: audio.loop }
+    const loop = { value: !!audio.source?.mediaElement?.loop }
     sub.addBinding(loop, 'value', { label: 'Loop' }).on('change', () => {
-      audio.setLoop(loop.value)
+      sound.source.mediaElement.loop = loop
     })
 
     // Volume
@@ -47,7 +51,9 @@ export default class AudioManager {
         max: 1,
         step: 0.01,
       })
-      .on('change', () => audio.setVolume(volume.value))
+      .on('change', () => {
+        sound.source.mediaElement.volume = volume
+      })
 
     return sub
   }
@@ -69,13 +75,16 @@ export default class AudioManager {
     const source = this.resources.items[name]
     const sound = new (parent ? PositionalAudio : Audio)(listener)
 
-    sound.setBuffer(source)
-    sound.setLoop(loop)
-    sound.setVolume(volume)
-    play && sound.play()
+    sound.setMediaElementSource(source)
+    sound.source.mediaElement.loop = loop
+    sound.source.mediaElement.volume = volume
 
-    parent && sound.setRefDistance(distance || 1)
-    parent?.add(sound)
+    play && sound.source?.mediaElement?.play()
+
+    if (parent) {
+      sound.setRefDistance(distance || 1)
+      parent.add(sound)
+    }
 
     sound.name = name
     sound.parent = parent

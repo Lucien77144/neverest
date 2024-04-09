@@ -8,6 +8,12 @@
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const audioRef = ref<HTMLAudioElement>()
+
+onMounted(() => {
+  console.log(audioRef.value)
+})
+</script>
 
 <style src="./style.scss" lang="scss" scoped></style>

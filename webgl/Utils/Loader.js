@@ -4,7 +4,6 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
 import { LottieLoader } from 'three/examples/jsm/loaders/LottieLoader.js'
-import { AudioLoader } from 'three'
 
 export default class Loader {
   /**
@@ -19,6 +18,7 @@ export default class Loader {
     this.loaded = 0
     this.items = {}
     this.loaders = []
+    this.i18n = useI18n()
 
     // Plugin
     this.$bus = this.experience.$bus
@@ -117,13 +117,49 @@ export default class Loader {
     })
 
     // Audio
-    const audioLoader = new AudioLoader()
-
     this.loaders.push({
       extensions: ['mp3', 'ogg', 'wav'],
       action: (resource) => {
-        audioLoader.load(resource.source, (buffer) => {
-          this.fileLoadEnd(resource, buffer)
+        // Audio
+        const audio = document.createElement('audio')
+        audio.preload = 'auto'
+        audio.src = resource.source
+
+        // Subtitles
+        if (resource.subtitles) {
+          Object.keys(resource.subtitles).forEach((key) => {
+            const track = document.createElement('track')
+            track.src = resource.subtitles[key]
+            track.kind = 'subtitles'
+            track.label = this.i18n.t('LANG.' + key.toUpperCase())
+            track.srclang = key
+
+            if (this.i18n.locale.value == key) {
+              track.default = true
+            }
+
+            audio.appendChild(track)
+          })
+          console.log(audio)
+
+          console.log(audio.querySelector('track'))
+          audio
+            .querySelector('track')
+            ?.addEventListener('cuechange', (event) => {
+              // if (audio.paused) return
+              // const track = audio.querySelector(
+              //   'track[srclang="' + this.i18n.locale + '"]'
+              // )
+              const selector = 'track[srclang="' + this.i18n.locale.value + '"]'
+              const trackEl = audio.querySelector(selector)
+
+              console.log(trackEl.track.activeCues?.[0]?.text)
+            })
+        }
+
+        audio.load()
+        audio.addEventListener('loadeddata', () => {
+          this.fileLoadEnd(resource, audio)
         })
       },
     })

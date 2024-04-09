@@ -21,7 +21,6 @@ export default class BasicItem {
 
     /**
      * Object of audios
-     * @param {string} group - Group of the audio
      * @param {Object} distance - Parent of the audio
      * @param {boolean} play - If audio is playing
      * @param {boolean} loop - If audio is looping

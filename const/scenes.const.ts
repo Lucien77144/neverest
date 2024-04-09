@@ -2,6 +2,7 @@ import Scene2 from '~/webgl/Scenes/Scene2'
 import TRANSITIONS from './transitions.const'
 import Intro from '~/webgl/Scenes/Intro'
 import BaseCamp from '~/webgl/Scenes/BaseCamp'
+import IceFall from '~/webgl/Scenes/IceFall'
 
 export type TSceneInfos = {
   id?: number
@@ -42,8 +43,8 @@ const SCENES: TSceneInfos[] = [
     },
   },
   {
-    name: 'scene3',
-    Scene: Scene2,
+    name: 'icefall',
+    Scene: IceFall,
     transition: {
       template: TRANSITIONS.FADE,
       duration: 2000,

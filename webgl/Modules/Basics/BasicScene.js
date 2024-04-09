@@ -42,7 +42,6 @@ export default class BasicScene {
 
     /**
      * Object of audios to add to the scene
-     * @param {string} group - Group of the audio
      * @param {boolean} play - If audio is playing
      * @param {boolean} loop - If audio is looping
      * @param {boolean} persist - If true, the audio will not be removed on scene change
@@ -209,7 +208,7 @@ export default class BasicScene {
       this.audioManager.add({
         name,
         ...audio,
-        ...(parent && { parent }),
+        ...(parent && audios[name].parent !== false && { parent }),
         listener: this.camera.listener,
       })
     })

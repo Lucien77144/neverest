@@ -2,6 +2,7 @@ export default {
   LANG: {
     FR: 'French',
     EN: 'English',
+    ES: 'Spanish',
   },
   START: 'Start',
   NEXT: 'Next',
