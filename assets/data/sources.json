@@ -41,8 +41,13 @@
     "data": {},
     "items": [
       {
-        "name": "lennaTexture",
+        "name": "dirt",
         "source": "/img/dirt.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "lennaTexture",
+        "source": "/img/lenna.png",
         "type": "texture"
       }
     ]

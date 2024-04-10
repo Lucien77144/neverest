@@ -11,9 +11,6 @@ export default class Floor extends BasicItem {
     // New elements
     this.geometry = null
     this.material = null
-
-    // Init
-    this.init()
   }
 
   /**
