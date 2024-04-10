@@ -63,11 +63,6 @@ export default class BasicScene {
      * @param {number} delta - Delta of the scroll
      */
     this.onScroll
-
-    /**
-     * Init the scene
-     */
-    setTimeout(() => this.init())
   }
 
   /**

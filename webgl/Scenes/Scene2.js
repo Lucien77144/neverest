@@ -14,5 +14,8 @@ export default class Scene2 extends BasicScene {
       floor: new Floor2(),
       cube: new Cube2(),
     }
+
+    // Init the scene
+    this.init()
   }
 }
