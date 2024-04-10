@@ -1,7 +1,6 @@
 import { ConeGeometry, Mesh, MeshNormalMaterial } from 'three'
 import { MathUtils } from 'three'
 import scenes from '~/const/scenes.const'
-import Experience from '~/webgl/Experience'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
 export default class Mountain extends BasicItem {
@@ -17,9 +16,6 @@ export default class Mountain extends BasicItem {
     this.geometry = null
     this.material = null
     this.holdDuration = 2000
-
-    // Init
-    this.init()
   }
 
   /**
