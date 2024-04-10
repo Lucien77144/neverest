@@ -1,4 +1,4 @@
-import { BoxGeometry, Group, Mesh, MeshNormalMaterial } from 'three'
+import { BoxGeometry, Mesh, MeshNormalMaterial } from 'three'
 import Player from '~/webgl/Components/Shared/Player/Player'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import players from '~/assets/data/players.json'
@@ -17,9 +17,6 @@ export default class Cube extends BasicItem {
 
     // Store
     this.currentScroll = computed(() => useScrollStore().getCurrent)
-
-    // Init
-    this.init()
   }
 
   /**

@@ -37,7 +37,10 @@ export default class BasicScene {
     // --------------------------------
 
     /**
-     * Components of the scene (Mesh of Groups)
+     * Components included in the item (optional)
+     *  Will replace @item by a group (including @item) and add components to it
+     *  Components can have children components and items
+     * @param {Object} [component] - BasicItems
      */
     this.components = {}
 
@@ -60,6 +63,11 @@ export default class BasicScene {
      * @param {number} delta - Delta of the scroll
      */
     this.onScroll
+
+    /**
+     * Init the scene
+     */
+    setTimeout(() => this.init())
   }
 
   /**
@@ -102,34 +110,37 @@ export default class BasicScene {
    */
   onMouseMoveEvt({ centered }) {
     // Get hovered item
-    // const hovered = this.getRaycastedItem(centered, [
-    //   'onMouseEnter',
-    //   'onMouseLeave',
-    // ])
-    // // If mouse leave the hovered item, refresh the hovered item
-    // if (this.hovered?.id !== hovered?.id) {
-    //   this.triggerFn(this.hovered, 'onMouseLeave')
-    //   this.hovered = hovered
-    //   this.triggerFn(this.hovered, 'onMouseEnter')
-    // }
-    // // Get holded item hovered
-    // const holded = this.getRaycastedItem(centered, ['onHold'])
-    // // If user leave the hold item, reset the holded item
-    // if (this.holded?.item?.id !== holded?.item?.id) {
-    //   this.resetHolded()
-    // }
+    const hovered = this.getRaycastedItem(centered, [
+      'onMouseEnter',
+      'onMouseLeave',
+    ])
+
+    // If mouse leave the hovered item, refresh the hovered item
+    if (this.hovered?.id !== hovered?.id) {
+      this.triggerFn(this.hovered, 'onMouseLeave')
+      this.hovered = hovered
+      this.triggerFn(this.hovered, 'onMouseEnter')
+    }
+    // Get holded item hovered
+    const holded = this.getRaycastedItem(centered, ['onHold'])
+    // If user leave the hold item, reset the holded item
+    if (this.holded?.item?.id !== holded?.item?.id) {
+      this.resetHolded()
+    }
   }
 
   /**
    * On scroll event
    */
   onScrollEvt(delta) {
-    this.onScroll?.(delta)
-    Object.values(this.allComponents).forEach((c) => c.onScroll?.(delta))
+    this.triggerFn(this, 'onScroll', delta)
+    Object.values(this.allComponents).forEach((c) =>
+      this.triggerFn(c, 'onScroll', delta)
+    )
   }
 
   /**
-   * Trigger item function
+   * Trigger item function (if not false)
    * @param {*} item Item to trigger
    * @param {*} fn Function to trigger
    * @param {*} arg Argument to pass to the function
@@ -152,10 +163,8 @@ export default class BasicScene {
       ease: 'easeInOut',
       onUpdate: () => this.setProgressHold(progress.value),
       onComplete: () => {
-        if (this.holded && this.holded?.item.id === this.holded?.item.id) {
-          this.triggerFn(this.holded, 'onHold')
-          this.resetHolded(true)
-        }
+        this.triggerFn(this.holded, 'onHold')
+        this.resetHolded(true)
       },
     })
   }
@@ -206,13 +215,20 @@ export default class BasicScene {
       true
     )?.[0]
 
-    // Return the item that has the object id that matches the target object id
-    const match = list.find((i) => i.item.id === target?.object?.id)
-    const childMatch = list.find((i) => i.ids.includes(target?.object?.id))
+    // Return the triggered item
+    // - If fn not set, use the first parent function available
+    // - If fn is set or false, return the item (the function will not be triggered if false)
+    const match = list.filter((l) => {
+      const ids = []
+      l.item?.traverse((i) => {
+        ids.push(i.id)
+      })
 
-    console.log(list)
-    console.log(match)
-    return match || childMatch
+      const isSet = fn.find((f) => l?.[f] != null || l?.[f] !== undefined)
+      return ids.includes(target?.object?.id) && isSet
+    })
+
+    return match[match.length - 1]
   }
 
   /**
@@ -233,6 +249,7 @@ export default class BasicScene {
           res = value.item
         }
 
+        value.item = res
         this.addAudios(value.audios, value.item)
       })
 
@@ -284,12 +301,9 @@ export default class BasicScene {
         const value = c[key]
         value.parentScene = this
 
-        value.ids = []
-        value.item?.traverse((i) => {
-          value.ids.push(i.id)
-        })
-
         res[key] = value
+        value.init?.()
+
         value?.components && flatComponents(value.components)
       })
     }
@@ -300,6 +314,7 @@ export default class BasicScene {
 
   /**
    * Init the scene
+   * Automatically called after the constructor
    */
   init() {
     this.allComponents = this.getRecursiveComponents()
@@ -344,8 +359,8 @@ export default class BasicScene {
     this.audios && this.removeAudios(this.audios)
 
     // Camera
-    this.camera.dispose()
     this.scene.remove(this.camera.instance)
+    this.camera.dispose()
 
     // Debug
     this.debugFolder && this.debug?.remove(this.debugFolder)

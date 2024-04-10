@@ -12,18 +12,13 @@ export default class Player extends BasicItem {
     // Options
     this.players = _options
     this.items = {}
-
     // this.onClick = false
-
-    // Init
-    this.init()
   }
 
   /**
    * Init the player
    */
   init() {
-    console.log('Player initialized')
     this.addPlanes()
 
     this.components = {

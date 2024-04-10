@@ -18,9 +18,6 @@ export default class Intro extends BasicScene {
       // yameteAh: { group: 'Cringe', loop: true, volume: 0.25 },
       babyshark: { group: 'Enfants', loop: true, volume: 0.3, persist: true },
     }
-
-    // Init the scene
-    this.init()
   }
 
   /**

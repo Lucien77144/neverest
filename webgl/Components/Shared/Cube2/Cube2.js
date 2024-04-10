@@ -11,9 +11,6 @@ export default class Cube2 extends BasicItem {
     // New elements
     this.geometry = null
     this.material = null
-
-    // Init
-    this.init()
   }
 
   /**

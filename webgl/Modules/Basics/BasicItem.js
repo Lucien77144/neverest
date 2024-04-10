@@ -15,12 +15,15 @@ export default class BasicItem {
     this.experience = new Experience()
 
     /**
-     * Item that will be add to the scene (Group or Mesh)
+     * Item that will be added to the scene (@Group or @Mesh)
      */
     this.item
 
     /**
-     * Components included in the item (facultative)
+     * Components included in the item (optional)
+     *  Will replace @item by a group (including @item) and add components to it
+     *  Components can have children components and items
+     * @param {Object} [component] - BasicItems
      */
     this.components = {}
 
@@ -41,6 +44,12 @@ export default class BasicItem {
     this.debugFolder
 
     /**
+     * Parent scene of the item
+     * /!/ - Null in the constructor
+     */
+    this.parentScene
+
+    /**
      * Duration after hold event is triggered
      */
     this.holdDuration = 1000
@@ -48,6 +57,12 @@ export default class BasicItem {
     // --------------------------------
     // Functions
     // --------------------------------
+
+    /**
+     * Init function
+     * Automatically called after the constructor
+     */
+    this.init
 
     /**
      * If set, this function will be called on each tick to update

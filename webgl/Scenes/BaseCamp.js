@@ -1,8 +1,5 @@
 import Cube from '../Components/Shared/Cube/Cube'
-import Player from '../Components/Shared/Player/Player'
 import BasicScene from '../Modules/Basics/BasicScene'
-import players from '~/assets/data/players.json'
-
 
 export default class BaseCamp extends BasicScene {
   /**
@@ -27,9 +24,6 @@ export default class BaseCamp extends BasicScene {
       this.currentScroll,
       () => this.camera?.instance && this.rotateCamera()
     )
-
-    // Init the scene
-    this.init()
   }
 
   /**
