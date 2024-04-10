@@ -29,17 +29,17 @@ export default class AudioManager {
     // Play state
     const isPlaying = { value: audio.isPlaying }
     sub.addBinding(isPlaying, 'value', { label: 'Play' }).on('change', () => {
-      audio.isPlaying = !isPlaying.value
-
-      audio.isPlaying
+      isPlaying.value
         ? audio.source?.mediaElement?.pause()
         : audio.source?.mediaElement?.play()
+
+      isPlaying.value = !isPlaying.value
     })
 
     // Loop
     const loop = { value: !!audio.source?.mediaElement?.loop }
     sub.addBinding(loop, 'value', { label: 'Loop' }).on('change', () => {
-      sound.source.mediaElement.loop = loop
+      audio.source.mediaElement.loop = loop.value
     })
 
     // Volume
@@ -52,7 +52,7 @@ export default class AudioManager {
         step: 0.01,
       })
       .on('change', () => {
-        sound.source.mediaElement.volume = volume
+        audio.source.mediaElement.volume = volume.value
       })
 
     return sub
@@ -89,6 +89,7 @@ export default class AudioManager {
     sound.name = name
     sound.parent = parent
     sound.volume = volume
+    sound.isPlaying = play
 
     this.audios[name] = sound
     this.audios[name].debug = this.debug && this.setDebug(name, sound)
@@ -98,7 +99,9 @@ export default class AudioManager {
    * Remove an audio
    */
   remove(name) {
-    this.audios[name]?.debug && this.debugFolder?.remove(this.audios[name].debug)
+    const debug = this.audios[name]?.debug
+    debug && this.debugFolder?.remove(debug)
+
     this.audios[name]?.stop()
     delete this.audios[name]
 

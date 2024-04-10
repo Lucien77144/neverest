@@ -15,9 +15,6 @@ export default class RockyCube extends BasicItem {
 
     // Store
     this.currentScroll = computed(() => useScrollStore().getCurrent)
-
-    // Init
-    this.init()
   }
 
   /**
@@ -46,7 +43,13 @@ export default class RockyCube extends BasicItem {
    */
   setAudio() {
     this.audios = {
-      tedTalk: { loop: true, volume: 1, persist: true, parent: false },
+      tedTalk: {
+        loop: true,
+        play: true,
+        volume: 1,
+        persist: true,
+        parent: false,
+      },
     }
   }
 

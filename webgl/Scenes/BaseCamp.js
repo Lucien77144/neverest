@@ -24,6 +24,9 @@ export default class BaseCamp extends BasicScene {
       this.currentScroll,
       () => this.camera?.instance && this.rotateCamera()
     )
+
+    // Init the scene
+    this.init()
   }
 
   /**
