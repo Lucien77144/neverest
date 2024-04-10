@@ -52,9 +52,7 @@ export default class Cube extends BasicItem {
    * Set the player
    */
   setPlayer() {
-    this.components = {
-      player: new Player(players.cube),
-    }
+    // this.components = {}
 
     // this.item.add(this.components.player.item)
   }
@@ -71,6 +69,8 @@ export default class Cube extends BasicItem {
    */
   onClick() {
     console.log('clicked')
+
+    // this.components.player.item.visible = !this.components.player.item.visible
   }
 
   /**
