@@ -45,7 +45,6 @@ export default class RockyCube extends BasicItem {
     this.audios = {
       tedTalk: {
         loop: true,
-        play: true,
         volume: 1,
         persist: true,
         parent: false,

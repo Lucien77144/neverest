@@ -102,7 +102,7 @@ export default class AudioManager {
     const debug = this.audios[name]?.debug
     debug && this.debugFolder?.remove(debug)
 
-    this.audios[name]?.stop()
+    this.audios[name]?.mediaElement?.stop() 
     delete this.audios[name]
 
     if (Object.keys(this.audios).length == 0) {
