@@ -13,6 +13,8 @@ export default class Player extends BasicItem {
     this.players = _options
     this.items = {}
 
+    // this.onClick = false
+
     // Init
     this.init()
   }
@@ -54,7 +56,7 @@ export default class Player extends BasicItem {
     // this.addPlane(this.players[0], 0)
   }
 
-  onClick() {
-    console.log('Player clicked')
-  }
+  // onClick() {
+  //   console.log('Player clicked')
+  // }
 }

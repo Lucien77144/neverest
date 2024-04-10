@@ -89,7 +89,7 @@ export default class AudioManager {
    * Remove an audio
    */
   remove(name) {
-    this.audios[name].debug && this.debugFolder?.remove(this.audios[name].debug)
+    this.audios[name]?.debug && this.debugFolder?.remove(this.audios[name].debug)
     this.audios[name]?.stop()
     delete this.audios[name]
 

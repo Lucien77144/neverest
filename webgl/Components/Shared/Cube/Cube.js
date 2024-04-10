@@ -48,8 +48,7 @@ export default class Cube extends BasicItem {
    */
   setItem() {
     // this.item = new Mesh(this.geometry, this.material)
-    this.item = new Group()
-    this.item.add(this.mesh)
+    this.item = this.mesh
   }
 
   /**
@@ -60,7 +59,7 @@ export default class Cube extends BasicItem {
       player: new Player(players.cube),
     }
 
-    this.item.add(this.components.player.item)
+    // this.item.add(this.components.player.item)
   }
 
   /**
