@@ -60,6 +60,7 @@ export default class AudioManager {
 
   /**
    * Add an audio
+   * @return {Audio|PositionalAudio}
    */
   add({
     name,
@@ -93,6 +94,8 @@ export default class AudioManager {
 
     this.audios[name] = sound
     this.audios[name].debug = this.debug && this.setDebug(name, sound)
+
+    return sound
   }
 
   /**

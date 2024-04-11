@@ -261,10 +261,10 @@ export default class BasicScene {
   addAudios(audios = {}, parent = null) {
     Object.keys(audios)?.forEach((name) => {
       const audio = audios[name]
-      this.audioManager.add({
+      audio.player = this.audioManager.add({
         name,
         ...audio,
-        ...(parent && audios[name].parent !== false && { parent }),
+        ...(parent && audio.parent !== false && { parent }),
         listener: this.camera.listener,
       })
     })

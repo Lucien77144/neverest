@@ -78,5 +78,7 @@ export default class RockyCube extends BasicItem {
     this.setMaterial()
     this.setMesh()
     this.setAudio()
+
+    console.log(this.audios);
   }
 }
