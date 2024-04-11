@@ -23,19 +23,23 @@ export default class AudioManager {
     // Subfolder
     const sub = this.debugFolder.addFolder({
       title: `${audio.parent ? '🔗 - ' : ''}${title}`,
-      expanded: false,
+      expanded: audio.isPlaying,
     })
 
     // Play state
     const isPlaying = { value: audio.isPlaying }
     sub.addBinding(isPlaying, 'value', { label: 'Play' }).on('change', () => {
-      audio.isPlaying ? audio.pause() : audio.play()
+      isPlaying.value
+        ? audio.source?.mediaElement?.pause()
+        : audio.source?.mediaElement?.play()
+
+      isPlaying.value = !isPlaying.value
     })
 
     // Loop
-    const loop = { value: audio.loop }
+    const loop = { value: !!audio.source?.mediaElement?.loop }
     sub.addBinding(loop, 'value', { label: 'Loop' }).on('change', () => {
-      audio.setLoop(loop.value)
+      audio.source.mediaElement.loop = loop.value
     })
 
     // Volume
@@ -47,13 +51,16 @@ export default class AudioManager {
         max: 1,
         step: 0.01,
       })
-      .on('change', () => audio.setVolume(volume.value))
+      .on('change', () => {
+        audio.source.mediaElement.volume = volume.value
+      })
 
     return sub
   }
 
   /**
    * Add an audio
+   * @return {Audio|PositionalAudio}
    */
   add({
     name,
@@ -69,28 +76,36 @@ export default class AudioManager {
     const source = this.resources.items[name]
     const sound = new (parent ? PositionalAudio : Audio)(listener)
 
-    sound.setBuffer(source)
-    sound.setLoop(loop)
-    sound.setVolume(volume)
-    play && sound.play()
+    sound.setMediaElementSource(source)
+    sound.source.mediaElement.loop = loop
+    sound.source.mediaElement.volume = volume
 
-    parent && sound.setRefDistance(distance || 1)
-    parent?.add(sound)
+    play && sound.source?.mediaElement?.play()
+
+    if (parent) {
+      sound.setRefDistance(distance || 1)
+      parent.add(sound)
+    }
 
     sound.name = name
     sound.parent = parent
     sound.volume = volume
+    sound.isPlaying = play
 
     this.audios[name] = sound
     this.audios[name].debug = this.debug && this.setDebug(name, sound)
+
+    return sound
   }
 
   /**
    * Remove an audio
    */
   remove(name) {
-    this.audios[name]?.debug && this.debugFolder?.remove(this.audios[name].debug)
-    this.audios[name]?.stop()
+    const debug = this.audios[name]?.debug
+    debug && this.debugFolder?.remove(debug)
+
+    this.audios[name]?.mediaElement?.stop()
     delete this.audios[name]
 
     if (Object.keys(this.audios).length == 0) {

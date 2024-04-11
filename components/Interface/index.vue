@@ -2,6 +2,7 @@
   <UILoader />
   <UIRadialProgress />
   <div class="panel">
+    <UISubtitle />
     <NextScene />
     <UILangPicker />
     <UIProgressBar />

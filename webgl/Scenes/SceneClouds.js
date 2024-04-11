@@ -10,7 +10,7 @@ export default class SceneClouds extends BasicScene {
     // New elements
     this.components = {}
 
-    // Init the scene
+    // Init the scene 
     this.init()
   }
 }

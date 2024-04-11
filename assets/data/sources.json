@@ -14,6 +14,15 @@
       {
         "name": "yameteAh",
         "source": "/sounds/yamete_ah.mp3"
+      },
+      {
+        "name": "tedTalk",
+        "source": "/sounds/ted_talk.mp3",
+        "subtitles": {
+          "fr": "/subtitles/ted_talk/fr.vtt",
+          "en": "/subtitles/ted_talk/en.vtt",
+          "es": "/subtitles/ted_talk/es.vtt"
+        }
       }
     ]
   },

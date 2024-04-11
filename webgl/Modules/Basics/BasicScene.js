@@ -46,7 +46,6 @@ export default class BasicScene {
 
     /**
      * Object of audios to add to the scene
-     * @param {string} group - Group of the audio
      * @param {boolean} play - If audio is playing
      * @param {boolean} loop - If audio is looping
      * @param {boolean} persist - If true, the audio will not be removed on scene change
@@ -262,10 +261,10 @@ export default class BasicScene {
   addAudios(audios = {}, parent = null) {
     Object.keys(audios)?.forEach((name) => {
       const audio = audios[name]
-      this.audioManager.add({
+      audio.player = this.audioManager.add({
         name,
         ...audio,
-        ...(parent && { parent }),
+        ...(parent && audio.parent !== false && { parent }),
         listener: this.camera.listener,
       })
     })

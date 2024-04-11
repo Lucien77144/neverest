@@ -44,9 +44,9 @@ export default class Mountain extends BasicItem {
    */
   setAudio() {
     this.audios = {
-      onichan: { group: 'Cringe', loop: true, volume: 0.5 },
-      yameteAh: { group: 'Cringe', loop: true, volume: 0.25, persist: true },
-      // babyshark: { group: 'Enfants', loop: true, volume: 0.3 },
+      onichan: { loop: true, volume: 0.5 },
+      yameteAh: { loop: true, volume: 0.25, persist: true },
+      // babyshark: { loop: true, volume: 0.3 },
     }
   }
 
