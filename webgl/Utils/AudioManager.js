@@ -74,11 +74,11 @@ export default class AudioManager {
 
     sound.setMediaElementSource(source)
     sound.play = () => {
-      sound.source?.mediaElement?.play()
+      sound.source.mediaElement.play()
       sound.isPlaying = true
     }
     sound.pause = () => {
-      sound.source?.mediaElement?.pause()
+      sound.source.mediaElement.pause()
       sound.isPlaying = false
     }
     sound.setVolume = (volume) => {
