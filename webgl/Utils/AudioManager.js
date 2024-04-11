@@ -7,6 +7,7 @@ export default class AudioManager {
     this.experience = new Experience()
     this.resources = this.experience.resources
     this.debug = this.experience.debug
+    this.sources = {}
 
     // New elements
     this.debugFolder = null
@@ -67,12 +68,16 @@ export default class AudioManager {
     play = false,
     listener = this.camera.listener,
   } = {}) {
-    if (this.audios[name]) return
+    if (this.audios[name]) return this.audios[name]
 
     const source = this.resources.items[name]
     const sound = new (parent ? PositionalAudio : Audio)(listener)
 
-    sound.setMediaElementSource(source)
+    if (!this.sources[name]) {
+      this.sources[name] = sound.setMediaElementSource(source).source
+    }
+    sound.source = this.sources[name]
+
     sound.play = () => {
       sound.source.mediaElement.play()
       sound.isPlaying = true
@@ -95,6 +100,7 @@ export default class AudioManager {
     play && sound.play()
     parent && sound.setRefDistance(distance || 1)
     parent && parent.add(sound)
+    parent && (sound.parent = parent)
 
     this.audios[name] = sound
     this.audios[name].debug = this.debug && this.setDebug(name, sound)
@@ -109,7 +115,8 @@ export default class AudioManager {
     const debug = this.audios[name]?.debug
     debug && this.debugFolder?.remove(debug)
 
-    this.audios[name]?.mediaElement?.stop()
+    this.audios[name]?.stop()
+    this.audios[name]?.parent?.remove(this.audios[name])
     delete this.audios[name]
 
     if (Object.keys(this.audios).length == 0) {
