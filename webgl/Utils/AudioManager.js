@@ -27,19 +27,15 @@ export default class AudioManager {
     })
 
     // Play state
-    const isPlaying = { value: audio.isPlaying }
+    const isPlaying = { value: !!audio.isPlaying }
     sub.addBinding(isPlaying, 'value', { label: 'Play' }).on('change', () => {
-      isPlaying.value
-        ? audio.source?.mediaElement?.pause()
-        : audio.source?.mediaElement?.play()
-
-      isPlaying.value = !isPlaying.value
+      isPlaying.value ? audio?.play() : audio?.pause()
     })
 
     // Loop
-    const loop = { value: !!audio.source?.mediaElement?.loop }
+    const loop = { value: !!audio.loop }
     sub.addBinding(loop, 'value', { label: 'Loop' }).on('change', () => {
-      audio.source.mediaElement.loop = loop.value
+      audio.setLoop(loop.value)
     })
 
     // Volume
@@ -52,7 +48,7 @@ export default class AudioManager {
         step: 0.01,
       })
       .on('change', () => {
-        audio.source.mediaElement.volume = volume.value
+        audio.setVolume(volume.value)
       })
 
     return sub
@@ -77,20 +73,28 @@ export default class AudioManager {
     const sound = new (parent ? PositionalAudio : Audio)(listener)
 
     sound.setMediaElementSource(source)
-    sound.source.mediaElement.loop = loop
-    sound.source.mediaElement.volume = volume
-
-    play && sound.source?.mediaElement?.play()
-
-    if (parent) {
-      sound.setRefDistance(distance || 1)
-      parent.add(sound)
+    sound.play = () => {
+      sound.source?.mediaElement?.play()
+      sound.isPlaying = true
+    }
+    sound.pause = () => {
+      sound.source?.mediaElement?.pause()
+      sound.isPlaying = false
+    }
+    sound.setVolume = (volume) => {
+      sound.source.mediaElement.volume = volume
+      sound.volume = volume
+    }
+    sound.setLoop = (loop) => {
+      sound.source.mediaElement.loop = loop
+      sound.loop = loop
     }
 
-    sound.name = name
-    sound.parent = parent
-    sound.volume = volume
-    sound.isPlaying = play
+    loop && sound.setLoop(loop)
+    volume && sound.setVolume(volume)
+    play && sound.play()
+    parent && sound.setRefDistance(distance || 1)
+    parent && parent.add(sound)
 
     this.audios[name] = sound
     this.audios[name].debug = this.debug && this.setDebug(name, sound)
