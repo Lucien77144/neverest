@@ -1,5 +1,4 @@
 import Scene2 from '~/webgl/Scenes/Scene2'
-import TRANSITIONS from './transitions.const'
 import Intro from '~/webgl/Scenes/Intro'
 import BaseCamp from '~/webgl/Scenes/BaseCamp'
 import IceFall from '~/webgl/Scenes/IceFall'
@@ -15,7 +14,6 @@ export type TSceneInfos = {
     end?: number
   }
   transition?: {
-    template: number
     duration: number
   }
 }
@@ -27,7 +25,6 @@ const SCENES: TSceneInfos[] = [
     name: 'intro',
     Scene: Intro,
     transition: {
-      template: TRANSITIONS.FADE,
       duration: 2000,
     },
   },
@@ -38,7 +35,6 @@ const SCENES: TSceneInfos[] = [
       scale: 100,
     },
     transition: {
-      template: TRANSITIONS.FADE,
       duration: 2000,
     },
   },
@@ -46,7 +42,6 @@ const SCENES: TSceneInfos[] = [
     name: 'icefall',
     Scene: IceFall,
     transition: {
-      template: TRANSITIONS.FADE,
       duration: 2000,
     },
   },
@@ -57,7 +52,6 @@ const SCENES: TSceneInfos[] = [
       scale: 100,
     },
     transition: {
-      template: TRANSITIONS.FADE,
       duration: 2000,
     },
   },
@@ -68,7 +62,6 @@ const SCENES: TSceneInfos[] = [
       scale: 100,
     },
     transition: {
-      template: TRANSITIONS.FADE,
       duration: 2000,
     },
   },

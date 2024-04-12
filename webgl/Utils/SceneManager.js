@@ -108,14 +108,16 @@ export default class SceneManager {
     // Init next scene
     this.sceneName = next.name
     this.next = new next.Scene()
+    this.next.shaders?.forEach((s) => {
+      this.experience.shaderManager.add({ ...s, scene: 'scene1' })
+    })
 
     // Update the store (and localstorage) with the new scene :
     this.setScene(next)
 
-    // Add render mesh if unset and set template :
+    // Add render mesh if unset :
     const transition = next.transition
     this.renderMesh ??= this.experience.renderer.renderMesh
-    this.renderMesh.material.uniforms.uTemplate = transition.template
 
     // Get current values :
     const currStart = this.startPosition.value
@@ -151,6 +153,7 @@ export default class SceneManager {
           this.debugFolder.disabled = false
         }
         this.active?.dispose()
+        this.experience.shaderManager.shift()
         this.active = this.next
         this.next = null
       },
@@ -188,6 +191,9 @@ export default class SceneManager {
 
     // Init active scene
     this.active = new scene.Scene()
+    this.active.shaders?.forEach((s) => {
+      this.experience.shaderManager.add({ ...s, scene: 'scene0' })
+    })
 
     // Start navigation
     this.$bus.on('scene:switch', (scene) => this.switch(scene))
