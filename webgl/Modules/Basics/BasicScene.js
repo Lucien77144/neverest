@@ -230,26 +230,23 @@ export default class BasicScene {
    */
   addItemsToScene() {
     const getItems = (c) => {
-      let res = new Group()
+      const childs = Object.values(c.components || {})
 
-      Object.keys(c).forEach((key) => {
-        const value = c[key]
+      if (childs.length > 0) {
+        let res = new Group()
+        c.item && res.add(c.item)
+        childs.forEach((c) => res.add(getItems(c)))
 
-        if (value.components?.length > 0) {
-          value.item && res.add(value.item)
-          res.add(getItems(value.components))
-        } else {
-          res = value.item
-        }
-
-        value.item = res
-        this.addAudios(value.audios, value.item)
-      })
-
-      return res
+        this.addAudios(c.audios, res)
+        c.item = res
+        return c.item
+      } else if (c.item) {
+        this.addAudios(c.audios, c.item)
+        return c.item
+      }
     }
 
-    this.scene.add(getItems(this.components))
+    this.scene.add(getItems({ components: this.components }))
   }
 
   /**
