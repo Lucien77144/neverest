@@ -51,5 +51,19 @@
         "type": "texture"
       }
     ]
+  },
+  {
+    "name": "models",
+    "data": {},
+    "items": [
+      {
+        "name": "tent",
+        "source": "/models/tent.glb"
+      },
+      {
+        "name": "house",
+        "source": "/models/wood_house1.glb"
+      }
+    ]
   }
 ]
