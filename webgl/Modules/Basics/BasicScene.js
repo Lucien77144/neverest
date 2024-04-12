@@ -1,4 +1,4 @@
-import { Scene } from 'three'
+import { Group, Scene } from 'three'
 import BasicCamera from './BasicCamera'
 import Experience from '~/webgl/Experience'
 import gsap from 'gsap'
@@ -17,6 +17,7 @@ export default class BasicScene {
     // New elements
     this.scene = new Scene()
     this.camera = new BasicCamera()
+    this.allComponents = {}
     this.hovered = null
     this.holded = null
     this.holdProgress = null
@@ -36,13 +37,15 @@ export default class BasicScene {
     // --------------------------------
 
     /**
-     * Components of the scene (Mesh of Groups)
+     * Components included in the item (optional)
+     *  Will replace @item by a group (including @item) and add components to it
+     *  Components can have children components and items
+     * @param {Object} [component] - BasicItems
      */
     this.components = {}
 
     /**
      * Object of audios to add to the scene
-     * @param {string} group - Group of the audio
      * @param {boolean} play - If audio is playing
      * @param {boolean} loop - If audio is looping
      * @param {boolean} persist - If true, the audio will not be removed on scene change
@@ -82,7 +85,7 @@ export default class BasicScene {
   onMouseDownEvt({ centered }) {
     // Clicked item
     const clicked = this.getRaycastedItem(centered, ['onClick'])
-    clicked?.onClick?.()
+    this.triggerFn(clicked, 'onClick')
 
     // Holded item
     this.holded = this.getRaycastedItem(centered, ['onHold'])
@@ -108,14 +111,12 @@ export default class BasicScene {
 
     // If mouse leave the hovered item, refresh the hovered item
     if (this.hovered?.id !== hovered?.id) {
-      this.hovered?.onMouseLeave?.()
+      this.triggerFn(this.hovered, 'onMouseLeave')
       this.hovered = hovered
-      this.hovered?.onMouseEnter?.()
+      this.triggerFn(this.hovered, 'onMouseEnter')
     }
-
     // Get holded item hovered
     const holded = this.getRaycastedItem(centered, ['onHold'])
-
     // If user leave the hold item, reset the holded item
     if (this.holded?.item?.id !== holded?.item?.id) {
       this.resetHolded()
@@ -126,8 +127,20 @@ export default class BasicScene {
    * On scroll event
    */
   onScrollEvt(delta) {
-    this.onScroll?.(delta)
-    Object.values(this.components).forEach((c) => c.onScroll?.(delta))
+    this.triggerFn(this, 'onScroll', delta)
+    Object.values(this.allComponents).forEach((c) =>
+      this.triggerFn(c, 'onScroll', delta)
+    )
+  }
+
+  /**
+   * Trigger item function (if not false)
+   * @param {*} item Item to trigger
+   * @param {*} fn Function to trigger
+   * @param {*} arg Argument to pass to the function
+   */
+  triggerFn(item, fn, arg) {
+    item?.[fn] && item[fn](arg)
   }
 
   /**
@@ -144,10 +157,8 @@ export default class BasicScene {
       ease: 'easeInOut',
       onUpdate: () => this.setProgressHold(progress.value),
       onComplete: () => {
-        if (this.holded && this.holded?.item.id === this.holded?.item.id) {
-          this.holded?.onHold?.()
-          this.resetHolded(true)
-        }
+        this.triggerFn(this.holded, 'onHold')
+        this.resetHolded(true)
       },
     })
   }
@@ -188,14 +199,58 @@ export default class BasicScene {
     this.raycaster.setFromCamera(centered, this.camera.instance)
 
     // Filter the components to only get the ones that have the functions in the fn array
-    const list = Object.values(this.components).filter(
-      (c) => fn.filter((f) => c[f]).length > 0
+    const list = Object.values(this.allComponents).filter(
+      (c) => fn.filter((f) => c[f] || c[f] == false).length > 0
     )
-    // Get the first object that the raycaster intersects
-    const target = this.raycaster.intersectObjects(list.map((c) => c.item))?.[0]
 
-    // Return the item that has the object id that matches the target object id
-    return list.find((i) => i.item.id === target?.object?.id)
+    // Get the target object
+    const target = this.raycaster.intersectObjects(
+      list.map((c) => c.item),
+      true
+    )?.[0]
+
+    // Return the triggered item
+    // - If fn not set, use the first parent function available
+    // - If fn is set or false, return the item (the function will not be triggered if false)
+    const match = list.filter((l) => {
+      const ids = []
+      l.item?.traverse((i) => {
+        ids.push(i.id)
+      })
+
+      const isSet = fn.find((f) => l?.[f] != null || l?.[f] !== undefined)
+      return ids.includes(target?.object?.id) && isSet
+    })
+
+    return match[match.length - 1]
+  }
+
+  /**
+   * Add items to the scene
+   */
+  addItemsToScene() {
+    const getItems = (c) => {
+      let res = new Group()
+
+      Object.keys(c).forEach((key) => {
+        const value = c[key]
+        const items = value.components && getItems(value.components)
+
+        if (items?.children?.length > 0) {
+          value.item && res.add(value.item)
+          res.add(items)
+        } else {
+          res = value.item
+        }
+
+        value.item = res
+        this.addAudios(value.audios, value.item)
+      })
+
+      return res
+    }
+
+    this.scene.add(getItems(this.components))
   }
 
   /**
@@ -205,11 +260,10 @@ export default class BasicScene {
    */
   addAudios(audios = {}, parent = null) {
     Object.keys(audios)?.forEach((name) => {
-      const audio = audios[name]
-      this.audioManager.add({
+      audios[name] = this.audioManager.add({
         name,
-        ...audio,
-        ...(parent && { parent }),
+        ...audios[name],
+        ...(parent && audios[name].parent !== false && { parent }),
         listener: this.camera.listener,
       })
     })
@@ -229,13 +283,35 @@ export default class BasicScene {
   }
 
   /**
+   * Get recursive components
+   * @returns Object of components flatten
+   */
+  getRecursiveComponents(components = this.components) {
+    const res = {}
+
+    const flatComponents = (c) => {
+      Object.keys(c).forEach((key) => {
+        const value = c[key]
+        value.parentScene = this
+
+        res[key] = value
+        value.init?.()
+
+        value?.components && flatComponents(value.components)
+      })
+    }
+    flatComponents(components)
+
+    return res
+  }
+
+  /**
    * Init the scene
+   * Automatically called after the constructor
    */
   init() {
-    Object.values(this.components).forEach((c) => {
-      this.scene.add(c.item)
-      this.addAudios(c.audios, c.item)
-    })
+    this.allComponents = this.getRecursiveComponents()
+    this.addItemsToScene()
 
     this.audios && this.addAudios(this.audios)
     this.scene.add(this.camera.instance)
@@ -247,7 +323,9 @@ export default class BasicScene {
    * Update the scene
    */
   update() {
-    Object.values(this.components).forEach((c) => c.update?.())
+    Object.values(this.allComponents).forEach((c) =>
+      this.triggerFn(c, 'update')
+    )
 
     this.camera.update()
   }
@@ -264,8 +342,8 @@ export default class BasicScene {
    */
   dispose() {
     // Items
-    Object.values(this.components).forEach((c) => {
-      c.dispose?.()
+    Object.values(this.allComponents).forEach((c) => {
+      this.triggerFn(c, 'dispose')
       this.scene.remove(c.item)
       this.removeAudios(c.audios, true)
     })
@@ -274,8 +352,8 @@ export default class BasicScene {
     this.audios && this.removeAudios(this.audios)
 
     // Camera
-    this.camera.dispose()
     this.scene.remove(this.camera.instance)
+    this.camera.dispose()
 
     // Debug
     this.debugFolder && this.debug?.remove(this.debugFolder)

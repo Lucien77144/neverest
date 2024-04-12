@@ -1,7 +1,7 @@
 import { BoxGeometry, Mesh, MeshNormalMaterial } from 'three'
-import { MathUtils } from 'three'
-import Experience from '~/webgl/Experience'
+import Player from '~/webgl/Components/Shared/Player/Player'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
+import players from '~/assets/data/players.json'
 
 export default class Cube extends BasicItem {
   /**
@@ -12,34 +12,49 @@ export default class Cube extends BasicItem {
     // New elements
     this.geometry = null
     this.material = null
+    this.mesh = null
     this.holdDuration = 2000
 
     // Store
     this.currentScroll = computed(() => useScrollStore().getCurrent)
-
-    // Init
-    this.init()
   }
 
   /**
-   * Get geometry
+   * Set geometry
    */
   setGeometry() {
     this.geometry = new BoxGeometry(4, 4, 4)
   }
 
   /**
-   * Get material
+   * Set material
    */
   setMaterial() {
     this.material = new MeshNormalMaterial()
   }
 
   /**
-   * Get mesh
+   * Set mesh
    */
   setMesh() {
-    this.item = new Mesh(this.geometry, this.material)
+    this.mesh = new Mesh(this.geometry, this.material)
+  }
+
+  /**
+   * Set item
+   */
+  setItem() {
+    // this.item = new Mesh(this.geometry, this.material)
+    this.item = this.mesh
+  }
+
+  /**
+   * Set the player
+   */
+  setPlayer() {
+    // this.components = {}
+
+    // this.item.add(this.components.player.item)
   }
 
   /**
@@ -50,14 +65,23 @@ export default class Cube extends BasicItem {
   }
 
   /**
+   * On click item
+   */
+  onClick() {
+    console.log('clicked')
+
+    // this.components.player.item.visible = !this.components.player.item.visible
+  }
+
+  /**
    * Update the cube
    */
   update() {
-    this.item.rotation.y = MathUtils.lerp(
-      this.item.rotation.y,
-      this.currentScroll.value * 0.1,
-      0.1
-    )
+    // this.item.rotation.y = MathUtils.lerp(
+    //   this.item.rotation.y,
+    //   this.currentScroll.value * 0.1,
+    //   0.1
+    // )
   }
 
   /**
@@ -67,5 +91,7 @@ export default class Cube extends BasicItem {
     this.setGeometry()
     this.setMaterial()
     this.setMesh()
+    this.setItem()
+    this.setPlayer()
   }
 }

@@ -7,6 +7,9 @@
 </template>
 
 <script lang="ts" setup>
+// Bus
+const { $bus }: any = useNuxtApp()
+
 // Translations
 const I18n = useI18n()
 
@@ -21,6 +24,7 @@ const options = ref<string[]>(
  */
 const change = ({ target }: any) => {
   I18n.setLocale(target.value)
+  $bus.emit('lang:change', target.value)
 }
 </script>
 

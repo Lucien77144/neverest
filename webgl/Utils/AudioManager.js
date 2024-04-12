@@ -7,6 +7,7 @@ export default class AudioManager {
     this.experience = new Experience()
     this.resources = this.experience.resources
     this.debug = this.experience.debug
+    this.sources = {}
 
     // New elements
     this.debugFolder = null
@@ -23,17 +24,17 @@ export default class AudioManager {
     // Subfolder
     const sub = this.debugFolder.addFolder({
       title: `${audio.parent ? '🔗 - ' : ''}${title}`,
-      expanded: false,
+      expanded: audio.isPlaying,
     })
 
     // Play state
-    const isPlaying = { value: audio.isPlaying }
+    const isPlaying = { value: !!audio.isPlaying }
     sub.addBinding(isPlaying, 'value', { label: 'Play' }).on('change', () => {
-      audio.isPlaying ? audio.pause() : audio.play()
+      isPlaying.value ? audio?.play() : audio?.pause()
     })
 
     // Loop
-    const loop = { value: audio.loop }
+    const loop = { value: !!audio.loop }
     sub.addBinding(loop, 'value', { label: 'Loop' }).on('change', () => {
       audio.setLoop(loop.value)
     })
@@ -47,13 +48,16 @@ export default class AudioManager {
         max: 1,
         step: 0.01,
       })
-      .on('change', () => audio.setVolume(volume.value))
+      .on('change', () => {
+        audio.setVolume(volume.value)
+      })
 
     return sub
   }
 
   /**
    * Add an audio
+   * @return {Audio|PositionalAudio}
    */
   add({
     name,
@@ -64,33 +68,55 @@ export default class AudioManager {
     play = false,
     listener = this.camera.listener,
   } = {}) {
-    if (this.audios[name]) return
+    if (this.audios[name]) return this.audios[name]
 
     const source = this.resources.items[name]
     const sound = new (parent ? PositionalAudio : Audio)(listener)
 
-    sound.setBuffer(source)
-    sound.setLoop(loop)
-    sound.setVolume(volume)
+    if (!this.sources[name]) {
+      this.sources[name] = sound.setMediaElementSource(source).source
+    }
+    sound.source = this.sources[name]
+
+    sound.play = () => {
+      sound.source.mediaElement.play()
+      sound.isPlaying = true
+    }
+    sound.pause = () => {
+      sound.source.mediaElement.pause()
+      sound.isPlaying = false
+    }
+    sound.setVolume = (volume) => {
+      sound.source.mediaElement.volume = volume
+      sound.volume = volume
+    }
+    sound.setLoop = (loop) => {
+      sound.source.mediaElement.loop = loop
+      sound.loop = loop
+    }
+
+    loop && sound.setLoop(loop)
+    volume && sound.setVolume(volume)
     play && sound.play()
-
     parent && sound.setRefDistance(distance || 1)
-    parent?.add(sound)
-
-    sound.name = name
-    sound.parent = parent
-    sound.volume = volume
+    parent && parent.add(sound)
+    parent && (sound.parent = parent)
 
     this.audios[name] = sound
     this.audios[name].debug = this.debug && this.setDebug(name, sound)
+
+    return sound
   }
 
   /**
    * Remove an audio
    */
   remove(name) {
-    this.audios[name].debug && this.debugFolder?.remove(this.audios[name].debug)
+    const debug = this.audios[name]?.debug
+    debug && this.debugFolder?.remove(debug)
+
     this.audios[name]?.stop()
+    this.audios[name]?.parent?.remove(this.audios[name])
     delete this.audios[name]
 
     if (Object.keys(this.audios).length == 0) {

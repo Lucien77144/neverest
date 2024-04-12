@@ -1,0 +1,12 @@
+{
+    "cube": [
+        {
+            "source": "dirt",
+            "duration": "1000"
+        },
+        {
+            "source": "lennaTexture",
+            "duration": "2000" 
+        }
+    ]
+}

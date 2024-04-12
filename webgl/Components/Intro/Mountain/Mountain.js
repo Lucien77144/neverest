@@ -1,7 +1,6 @@
 import { ConeGeometry, Mesh, MeshNormalMaterial, Vector3 } from 'three'
 import { MathUtils } from 'three'
 import scenes from '~/const/scenes.const'
-import Experience from '~/webgl/Experience'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
 export default class Mountain extends BasicItem {
@@ -18,9 +17,6 @@ export default class Mountain extends BasicItem {
     this.material = null
     this.test = null
     this.holdDuration = 2000
-
-    // Init
-    this.init()
   }
 
   /**
@@ -49,9 +45,9 @@ export default class Mountain extends BasicItem {
    */
   setAudio() {
     this.audios = {
-      onichan: { group: 'Cringe', loop: true, volume: 0.5 },
-      yameteAh: { group: 'Cringe', loop: true, volume: 0.25, persist: true },
-      // babyshark: { group: 'Enfants', loop: true, volume: 0.3 },
+      onichan: { loop: true, volume: 0.5 },
+      yameteAh: { loop: true, volume: 0.25, persist: true },
+      // babyshark: { loop: true, volume: 0.3 },
     }
   }
 

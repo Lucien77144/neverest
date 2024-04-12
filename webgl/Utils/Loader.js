@@ -4,8 +4,6 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
 import { LottieLoader } from 'three/examples/jsm/loaders/LottieLoader.js'
-import { AudioLoader } from 'three'
-import { FontLoader } from 'three/addons/loaders/FontLoader.js'
 
 export default class Loader {
   /**
@@ -20,9 +18,13 @@ export default class Loader {
     this.loaded = 0
     this.items = {}
     this.loaders = []
+    this.i18n = useI18n()
 
     // Plugin
     this.$bus = this.experience.$bus
+
+    // Store
+    this.setSubtitlesCues = useSubtitlesStore().setCues
 
     // Init
     this.init()
@@ -118,13 +120,20 @@ export default class Loader {
     })
 
     // Audio
-    const audioLoader = new AudioLoader()
-
     this.loaders.push({
       extensions: ['mp3', 'ogg', 'wav'],
       action: (resource) => {
-        audioLoader.load(resource.source, (buffer) => {
-          this.fileLoadEnd(resource, buffer)
+        // Audio
+        const audio = document.createElement('audio')
+        audio.preload = 'auto'
+        audio.src = resource.source
+
+        // Subtitles
+        resource.subtitles && this.setSubtitles(audio, resource.subtitles)
+
+        audio.load()
+        audio.addEventListener('loadeddata', () => {
+          this.fileLoadEnd(resource, audio)
         })
       },
     })
@@ -173,6 +182,53 @@ export default class Loader {
     }
 
     return res
+  }
+
+  /**
+   * Set subtitles for an audio
+   * @param {*} audio Audio element
+   * @param {*} subtitles Subtitles object
+   */
+  setSubtitles(audio, subtitles) {
+    const handleCueChange = (event) => {
+      const cues = event.currentTarget.track.activeCues
+      this.setSubtitlesCues(cues)
+    }
+
+    // Init tracks of the audio
+    Object.keys(subtitles).forEach((key) => {
+      const trackEl = document.createElement('track')
+      trackEl.src = subtitles[key]
+      trackEl.kind = 'subtitles'
+      trackEl.label = this.i18n.t('LANG.' + key.toUpperCase())
+      trackEl.srclang = key
+      trackEl.default = this.i18n.locale.value == key
+
+      trackEl.addEventListener('cuechange', handleCueChange)
+      audio.appendChild(trackEl)
+    })
+
+    // Update the track on locale change
+    this.$bus.on('lang:change', (locale) => this.onLangChange(audio, locale))
+  }
+
+  /**
+   * On lang change, set the language of the subtitles
+   * @param {*} audio Audio element
+   * @param {*} locale New locale to use
+   */
+  onLangChange(audio, locale) {
+    // Disable all text tracks that are currently active
+    Object.values(audio.textTracks)
+      .filter((x) => x.mode !== 'disabled')
+      .forEach((x) => {
+        x.mode = 'disabled'
+      })
+
+    // Enable the text track for a specific language
+    Object.values(audio.textTracks).filter(
+      (x) => x.language == locale
+    )[0].mode = 'showing'
   }
 
   /**
