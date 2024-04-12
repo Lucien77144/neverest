@@ -234,11 +234,10 @@ export default class BasicScene {
 
       Object.keys(c).forEach((key) => {
         const value = c[key]
-        const items = value.components && getItems(value.components)
 
-        if (items?.children?.length > 0) {
+        if (value.components?.length > 0) {
           value.item && res.add(value.item)
-          res.add(items)
+          res.add(getItems(value.components))
         } else {
           res = value.item
         }
