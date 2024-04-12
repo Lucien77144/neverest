@@ -9,6 +9,7 @@ import DragManager from '~/utils/DragManager'
 import ScrollManager from './Utils/ScrollManager'
 import { Raycaster } from 'three'
 import AudioManager from './Utils/AudioManager'
+import FragmentShaderManager from './Utils/FragmentShaderManager'
 
 export default class Experience {
   static _instance
@@ -40,6 +41,7 @@ export default class Experience {
     this.scrollManager = null
     this.dragManager = null
     this.sceneManager = null
+    this.shaderManager = null
     this.raycaster = null
     this.renderer = null
     this.time = null
@@ -141,6 +143,10 @@ export default class Experience {
     this.renderer = new Renderer()
     this.resources = new Resources()
     this.audioManager = new AudioManager()
+    this.shaderManager = new FragmentShaderManager([
+      { name: 'test', force: true },
+      // { name: 'testAmbient', force: true, scene: 'scene0' },
+    ])
 
     this.$bus.on('resize', () => this.resize())
   }
@@ -175,7 +181,7 @@ export default class Experience {
     this.resources.dispose()
     this.sceneManager.dispose()
     this.audioManager.dispose()
-    this.debug?.dispose() 
+    this.debug?.dispose()
     this.cursor?.destroy()
   }
 }
