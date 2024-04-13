@@ -37,7 +37,7 @@
     ]
   },
   {
-    "name": "default",
+    "name": "textures",
     "data": {},
     "items": [
       {
@@ -49,6 +49,11 @@
         "name": "lennaTexture",
         "source": "/img/lenna.png",
         "type": "texture"
+      },
+      {
+        "name": "ground1953",
+        "source": "/img/ground_Texture_1953.exr",
+        "type": "texture"
       }
     ]
   },
@@ -58,11 +63,31 @@
     "items": [
       {
         "name": "tent",
-        "source": "/models/tent.glb"
+        "source": "/models/BaseCamp/tent.glb"
       },
       {
-        "name": "house",
-        "source": "/models/wood_house1.glb"
+        "name": "bloc",
+        "source": "/models/BaseCamp/bloc.glb"
+      },
+      {
+        "name": "backgroundMountain",
+        "source": "/models/BaseCamp/mountain.glb"
+      },
+      {
+        "name": "backgroundMountainL",
+        "source": "/models/BaseCamp/mountainL.glb"
+      },
+      {
+        "name": "backgroundMountainLS",
+        "source": "/models/BaseCamp/mountainLS.glb"
+      },
+      {
+        "name": "backgroundMountainR",
+        "source": "/models/BaseCamp/mountainR.glb"
+      },
+      {
+        "name": "backgroundMountainRS",
+        "source": "/models/BaseCamp/mountainRS.glb"
       }
     ]
   }

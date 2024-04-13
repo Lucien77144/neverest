@@ -82,8 +82,10 @@ export default class BaseCampItem extends BasicItem {
     this.item = this.model
     this.item.children[0].material = new MeshNormalMaterial()
     this.item.name = this.name
-    this.position && this.item.position.set(this.position.x, this.position.y, this.position.z)
-    this.rotation && this.item.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
+    this.position &&
+      this.item.position.set(this.position.x, this.position.y, this.position.z)
+    this.rotation &&
+      this.item.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
     this.scale && this.item.scale.copy(this.scale)
   }
 
@@ -93,6 +95,5 @@ export default class BaseCampItem extends BasicItem {
   init() {
     // Set item
     this.setItem()
-    console.log(this.parentScene);
   }
 }
