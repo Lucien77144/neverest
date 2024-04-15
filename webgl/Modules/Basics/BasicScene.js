@@ -53,6 +53,13 @@ export default class BasicScene {
      */
     this.audios = {}
 
+    /**
+     * Array of shaders to add to the scene
+     * @param {string} name - Fragment shader name (from the shader const)
+     * @param {boolean} force - If set remove the doubled lines from the frag
+     */
+    this.shaders = []
+
     // --------------------------------
     // Functions
     // --------------------------------
