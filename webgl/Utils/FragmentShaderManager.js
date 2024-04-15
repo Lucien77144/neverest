@@ -13,7 +13,7 @@ export default class FragmentShaderManager {
     this.renderMesh = this.experience.renderer.renderMesh
     this.frag = fragmentShader
 
-    _baseShaders.forEach((shader) => this.add(shader))
+    _baseShaders?.forEach((shader) => this.add(shader))
   }
 
   /**
