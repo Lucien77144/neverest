@@ -134,7 +134,7 @@ export default class Renderer {
     // Setters
     this.instance.setClearColor(this.clearColor.color, this.clearColor.alpha)
     this.instance.setSize(this.viewport.width, this.viewport.height)
-    this.instance.setPixelRatio(this.viewport.pixelRatio)
+    this.instance.setPixelRatio(this.viewport.dpr)
 
     // Options
     this.instance.physicallyCorrectLights = true
@@ -206,7 +206,7 @@ export default class Renderer {
     this.camera.updateProjectionMatrix()
 
     this.instance.setSize(this.viewport.width, this.viewport.height)
-    this.instance.setPixelRatio(this.viewport.pixelRatio)
+    this.instance.setPixelRatio(this.viewport.dpr)
 
     const size = this.instance.getDrawingBufferSize(new Vector2())
     this.rt0.setSize(size.width, size.height)

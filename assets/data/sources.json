@@ -58,7 +58,7 @@
     ]
   },
   {
-    "name": "models",
+    "name": "BaseCamp",
     "data": {},
     "items": [
       {
@@ -103,6 +103,20 @@
         "name": "roboto",
         "source": "/font/Roboto.json",
         "type": "font"
+      }
+    ]
+  },
+  {
+    "name": "IceFall",
+    "data": {},
+    "items": [
+      {
+        "name": "IFMountains",
+        "source": "/models/IceFall/mountains.glb"
+      },
+      {
+        "name": "IFIceblocks",
+        "source": "/models/IceFall/iceblocks.glb"
       }
     ]
   }

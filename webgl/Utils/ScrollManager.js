@@ -14,17 +14,19 @@ export default class ScrollManager {
 
     // New elements
     this.debugFolder = null
-    this.speed = 0.1
-    this.factor = 0.005
     this.delta = 0
 
     // Actions
     this.setScroll = useScrollStore().setCurrent
     this.setTarget = useScrollStore().setTarget
+    this.setSpeed = useScrollStore().setSpeed
+    this.setFactor = useScrollStore().setFactor
 
     // Getters
     this.currentScroll = computed(() => useScrollStore().getCurrent)
     this.targetScroll = computed(() => useScrollStore().getTarget)
+    this.speedScroll = computed(() => useScrollStore().getSpeed)
+    this.factorScroll = computed(() => useScrollStore().getFactor)
 
     // Init
     this.init()
@@ -39,19 +41,23 @@ export default class ScrollManager {
       closed: false,
     })
 
-    this.debugFolder.addBinding(this, 'factor', {
-      label: 'Scroll Factor',
-      min: 0,
-      max: 0.01,
-      step: 0.001,
-    })
+    this.debugFolder
+      .addBinding({ factor: this.factorScroll.value }, 'factor', {
+        label: 'Factor',
+        min: 0,
+        max: 1,
+        step: 0.001,
+      })
+      .on('change', ({ value }) => this.setFactor(value))
 
-    this.debugFolder.addBinding(this, 'speed', {
-      label: 'Speed',
-      min: 0,
-      max: 0.25,
-      step: 0.001,
-    })
+    this.debugFolder
+      .addBinding({ speed: this.speedScroll.value }, 'speed', {
+        label: 'Speed',
+        min: 0,
+        max: 1,
+        step: 0.001,
+      })
+      .on('change', ({ value }) => this.setSpeed(value))
   }
 
   /**
@@ -63,7 +69,9 @@ export default class ScrollManager {
     const isMobile = isDeviceMobile()
 
     const setScroll = (e) => {
-      this.setTarget(this.targetScroll.value + this.delta * this.factor)
+      this.setTarget(
+        this.targetScroll.value + this.delta * (this.factorScroll.value / 100)
+      )
       this.$bus.emit('scroll', this.delta)
     }
 
@@ -98,7 +106,7 @@ export default class ScrollManager {
       MathUtils.lerp(
         this.currentScroll.value,
         this.targetScroll.value,
-        this.speed
+        this.speedScroll.value
       )
     )
   }

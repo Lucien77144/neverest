@@ -56,7 +56,7 @@ export default class SceneManager {
 
     this.debugFolder
       .addBinding({ value: this.persistScene.value }, 'value', {
-        label: 'Persist scene',
+        label: 'Persist',
       })
       .on('change', () => this.togglePersistScene())
 

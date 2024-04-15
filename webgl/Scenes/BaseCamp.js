@@ -1,8 +1,10 @@
-import { AmbientLight, DirectionalLight, Vector3 } from 'three'
+import { Vector3 } from 'three'
 import BaseCampItem from '../Components/Shared/BaseCampItem/BaseCampItem'
 import BasicScene from '../Modules/Basics/BasicScene'
 import { types, val } from '@theatre/core'
 import Floor from '../Components/BaseCamp/Floor/Floor'
+import gsap from 'gsap'
+import Lights from '../Components/Shared/Lights/Lights'
 
 export default class BaseCamp extends BasicScene {
   /**
@@ -14,20 +16,23 @@ export default class BaseCamp extends BasicScene {
     // New elements
     this.resources = this.experience.resources
     this.project = this.experience.project
+    this.interest = null
     this.sheet = null
     this.cameraObj = null
     this.blocking = []
 
     // Store
+    // Getters
     this.currentScroll = computed(
       () => Math.round(useScrollStore().getCurrent * 100) / 100
     )
+    this.factorScroll = computed(() => useScrollStore().getFactor)
+    this.currentScene = computed(() => useNavigationStore().getScene)
+    // Actions
+    this.setFactor = useScrollStore().setFactor
 
     // Watchers
-    this.watcher = watch(
-      this.currentScroll,
-      () => this.camera?.instance && this.playSequence()
-    )
+    this.watcher = watch(this.currentScroll, (v) => this.watchCurrentScroll(v))
 
     // Init the scene
     this.init()
@@ -40,23 +45,31 @@ export default class BaseCamp extends BasicScene {
     this.camera.instance.position.y = 5
   }
 
-  init() {
-    // Set the camera
-    this.setCamera()
+  /**
+   * Watch the current scroll progression
+   * @param {*} value
+   */
+  watchCurrentScroll(value) {
+    this.camera?.instance && this.playSequence()
 
-    // Setup the sheet
-    // this.setupSheet()
+    const setPower = (power) => {
+      if (this.interest.curr === power) return
 
-    // Blocking
-    this.setBlocking()
+      this.interest.curr = power
+      const factor = { value: this.factorScroll.value }
+      gsap.to(factor, {
+        value: power,
+        duration: 0.5,
+        ease: 'power1.inOut',
+        onUpdate: () => this.setFactor(factor.value),
+      })
+    }
 
-    // Set the floor
-    this.setFloor()
+    const trigger = this.interest.list.find(({ start, end }) => {
+      return value >= start && value <= end
+    })
 
-    // Set the lights
-    this.setLights()
-
-    super.init()
+    setPower(trigger?.power || this.interest.base)
   }
 
   /**
@@ -125,17 +138,7 @@ export default class BaseCamp extends BasicScene {
    * Set lights
    */
   setLights() {
-    this.lights = {
-      ambient: new AmbientLight(0xffffff, 0.5),
-      directional: new DirectionalLight(0xffffff, 0.8),
-    }
-
-    this.lights.directional.position.set(0, 1, 0)
-    this.lights.directional.target.position.set(0, 0, 0)
-
-    this.scene.add(this.lights.ambient)
-    this.scene.add(this.lights.directional)
-    this.scene.add(this.lights.directional.target)
+    this.components.lights = new Lights()
   }
 
   /**
@@ -320,18 +323,40 @@ export default class BaseCamp extends BasicScene {
       },
     ]
 
-    this.blocking.forEach((block) => {
-      this.components[block.name] = new BaseCampItem({
-        name: block.name,
-        model: block.model,
-        position: block.position,
-        rotation: block.rotation,
-        scale: block.scale,
+    this.blocking.forEach(({ name, model, position, rotation, scale }) => {
+      this.components[name] = new BaseCampItem({
+        name,
+        model,
+        position,
+        rotation,
+        scale,
       })
     })
   }
 
-  dispose() {
-    super.dispose()
+  init() {
+    // Set the camera
+    this.setCamera()
+
+    // Setup the sheet
+    // this.setupSheet()
+
+    // Blocking
+    this.setBlocking()
+
+    // Set the floor
+    this.setFloor()
+
+    // Set the lights
+    this.setLights()
+
+    // Set the interest
+    this.interest = {
+      base: this.factorScroll.value,
+      curr: this.factorScroll.value,
+      list: this.currentScene.value.nav?.interest || [],
+    }
+
+    super.init()
   }
 }

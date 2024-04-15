@@ -9,7 +9,7 @@ import DragManager from '~/utils/DragManager'
 import ScrollManager from './Utils/ScrollManager'
 import { Raycaster } from 'three'
 import AudioManager from './Utils/AudioManager'
-// import studio from '@theatre/studio'
+import studio from '@theatre/studio'
 import { getProject } from '@theatre/core'
 import keyframesBaseCamp from '~/assets/data/keyframesBaseCamp.json'
 import FragmentShaderManager from './Utils/FragmentShaderManager'
@@ -27,7 +27,7 @@ export default class Experience {
     Experience._instance = this
 
     // Init Theatre Studio
-    // studio.initialize()
+    studio.initialize()
 
     // Create a project for the animation
     this.project = getProject('NVRST', { state: keyframesBaseCamp })
@@ -81,8 +81,6 @@ export default class Experience {
       .addBinding({ landing: getLanding }, 'landing')
       .on('change', () => toggleLanding())
 
-    
-
     // Drag :
     const folder = this.debug.addFolder({ title: 'Position', expanded: true })
     this.debug.dragButton = folder.addButton({ title: 'Drag Position' })
@@ -107,7 +105,6 @@ export default class Experience {
       this.update()
     }
   }
-  
 
   /**
    * On drag
@@ -156,8 +153,7 @@ export default class Experience {
     this.resources = new Resources()
     this.audioManager = new AudioManager()
     this.shaderManager = new FragmentShaderManager([
-      // { name: 'test', force: true },
-      // { name: 'testAmbient', force: true, scene: 'scene0' },
+      { name: 'test', force: true },
     ])
 
     this.$bus.on('resize', () => this.resize())
