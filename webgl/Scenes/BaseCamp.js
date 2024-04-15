@@ -1,5 +1,5 @@
-import { Vector3 } from 'three'
-import BaseCampItem from '../Components/Shared/BaseCampItem/BaseCampItem'
+import { AmbientLight, DirectionalLight, Vector3 } from 'three'
+import BaseCampItem from '../Components/BaseCamp/BaseCampItem/BaseCampItem'
 import BasicScene from '../Modules/Basics/BasicScene'
 import { types, val } from '@theatre/core'
 import Floor from '../Components/BaseCamp/Floor/Floor'
@@ -42,7 +42,13 @@ export default class BaseCamp extends BasicScene {
    * Scroll the camera around the cube
    */
   setCamera() {
-    this.camera.instance.position.y = 5
+    this.camera.instance.position.y = 3.7
+    this.camera.instance.position.z = 20
+    this.camera.instance.fov = 20
+    this.camera.instance.far = 500
+    this.camera.instance.updateProjectionMatrix()
+
+    this.camera.instance.lookAt(new Vector3(0.551, -0.18, -36.868))
   }
 
   /**
@@ -83,23 +89,23 @@ export default class BaseCamp extends BasicScene {
     this.cameraObj = this.sheet.object(
       'Camera',
       {
-        rotation: types.compound({
-          x: types.number(this.camera.instance.rotation.x, { range: [-2, 2] }),
-          y: types.number(this.camera.instance.rotation.y, { range: [-2, 2] }),
-          z: types.number(this.camera.instance.rotation.z, { range: [-2, 2] }),
-        }),
+        // rotation: types.compound({
+        //   x: types.number(this.camera.instance.rotation.x, { range: [-2, 2] }),
+        //   y: types.number(this.camera.instance.rotation.y, { range: [-2, 2] }),
+        //   z: types.number(this.camera.instance.rotation.z, { range: [-2, 2] }),
+        // }),
         position: types.compound({
           x: types.number(this.camera.instance.position.x, {
-            range: [-10, 10],
+            range: [-100, 100],
           }),
           y: types.number(this.camera.instance.position.y, {
-            range: [-10, 10],
+            range: [-100, 100],
           }),
           z: types.number(this.camera.instance.position.z, {
-            range: [-30, 30],
+            range: [-100, 100],
           }),
         }),
-        visible: types.boolean(this.components.cube.item.visible),
+        // visible: types.boolean(this.components.cube.item.visible),
       },
       { reconfigure: true }
     )
@@ -110,9 +116,9 @@ export default class BaseCamp extends BasicScene {
 
       if (!this.camera.instance) return
 
-      this.camera.instance.rotation.set(rotation.x, rotation.y, rotation.z)
+      // this.camera.instance.rotation.set(rotation.x, rotation.y, rotation.z)
       this.camera.instance.position.set(position.x, position.y, position.z)
-      this.components.cube.item.visible = visible
+      // this.components.cube.item.visible = visible
     })
   }
 
@@ -152,6 +158,7 @@ export default class BaseCamp extends BasicScene {
         rotation: new Vector3(0, -0.631, 0),
         scale: new Vector3(0.746, 0.836, 0.746),
         model: this.resources.items.bloc.scene,
+        visibility: [0, 30],
       },
       {
         name: 'Boxd1',
@@ -159,6 +166,7 @@ export default class BaseCamp extends BasicScene {
         rotation: new Vector3(0, -1.269, 0),
         scale: new Vector3(0.72, 0.72, 0.72),
         model: this.resources.items.bloc.scene,
+        visibility: [0, 20],
       },
       {
         name: 'Boxd2',
@@ -166,6 +174,7 @@ export default class BaseCamp extends BasicScene {
         rotation: new Vector3(0, -0.624, 0),
         scale: new Vector3(0.72, 0.72, 0.72),
         model: this.resources.items.bloc.scene,
+        visibility: [0, 40],
       },
       {
         name: 'Boxd3',
@@ -173,20 +182,23 @@ export default class BaseCamp extends BasicScene {
         rotation: new Vector3(0, -0.624, 0),
         scale: new Vector3(0.5, 0.5, 0.5),
         model: this.resources.items.bloc.scene,
+        visibility: [0, 60],
       },
       {
         name: 'Boxu',
-        position: new Vector3(-5.608, 1.206, -5.397),
+        position: new Vector3(-5.608, 1.506, -5.397),
         rotation: new Vector3(0, 0.785, 0),
         scale: new Vector3(0.448, 0.448, 0.448),
         model: this.resources.items.bloc.scene,
+        visibility: [0, 80],
       },
       {
         name: 'Boxu1',
-        position: new Vector3(-4.521, 1.184, -5.838),
+        position: new Vector3(-4.521, 1.484, -5.838),
         rotation: new Vector3(-3.141, 0.789, -3.141),
         scale: new Vector3(0.327, 0.327, 0.327),
         model: this.resources.items.bloc.scene,
+        visibility: [0, 100],
       },
       {
         name: 'Boxd004',
@@ -194,6 +206,7 @@ export default class BaseCamp extends BasicScene {
         rotation: new Vector3(3.141, -1.197, 3.141),
         scale: new Vector3(0.72, 0.72, 0.72),
         model: this.resources.items.bloc.scene,
+        visibility: [0, 25],
       },
       {
         name: 'Boxd005',
@@ -201,6 +214,7 @@ export default class BaseCamp extends BasicScene {
         rotation: new Vector3(3.141, -0.124, 3.141),
         scale: new Vector3(0.72, 0.72, 0.72),
         model: this.resources.items.bloc.scene,
+        visibility: [0, 10],
       },
       {
         name: 'Boxu002',
@@ -208,6 +222,7 @@ export default class BaseCamp extends BasicScene {
         rotation: new Vector3(0, -0.077, 0),
         scale: new Vector3(0.448, 0.448, 0.448),
         model: this.resources.items.bloc.scene,
+        visibility: [0, 35],
       },
       {
         name: 'Boxu003',
@@ -215,6 +230,7 @@ export default class BaseCamp extends BasicScene {
         rotation: new Vector3(0, 0.216, 0),
         scale: new Vector3(0.327, 0.203, 0.327),
         model: this.resources.items.bloc.scene,
+        visibility: [0, 60],
       },
       {
         name: 'Boxd006',
@@ -222,6 +238,7 @@ export default class BaseCamp extends BasicScene {
         rotation: new Vector3(0, -0.624, 0),
         scale: new Vector3(0.72, 0.72, 0.72),
         model: this.resources.items.bloc.scene,
+        visibility: [0, 40],
       },
       {
         name: 'Box',
@@ -229,6 +246,7 @@ export default class BaseCamp extends BasicScene {
         rotation: new Vector3(3.141, 0.03, 3.141),
         scale: new Vector3(0.275, 0.275, 0.275),
         model: this.resources.items.bloc.scene,
+        visibility: [0, 100],
       },
       {
         name: 'Boxl',
@@ -236,6 +254,7 @@ export default class BaseCamp extends BasicScene {
         rotation: new Vector3(-3.141, -0.556, -3.141),
         scale: new Vector3(0.275, 0.275, 0.275),
         model: this.resources.items.bloc.scene,
+        visibility: [0, 54],
       },
       {
         name: 'Boxr',
@@ -243,6 +262,7 @@ export default class BaseCamp extends BasicScene {
         rotation: new Vector3(3.141, -0.31, 3.141),
         scale: new Vector3(0.275, 0.275, 0.275),
         model: this.resources.items.bloc.scene,
+        visibility: [0, 60],
       },
       {
         name: 'Mountain',
@@ -250,6 +270,7 @@ export default class BaseCamp extends BasicScene {
         rotation: new Vector3(Math.PI, -0.65, Math.PI),
         scale: new Vector3(46.323, 46.323, 46.323),
         model: this.resources.items.backgroundMountain.scene,
+        visibility: [0, 100],
       },
       {
         name: 'MountainL',
@@ -257,6 +278,7 @@ export default class BaseCamp extends BasicScene {
         rotation: new Vector3(0, -0.939, 0),
         scale: new Vector3(70.881, 70.881, 70.881),
         model: this.resources.items.backgroundMountainL.scene,
+        visibility: [0, 100],
       },
       {
         name: 'Mountainl',
@@ -264,6 +286,7 @@ export default class BaseCamp extends BasicScene {
         rotation: new Vector3(-0.051, 0.094, -0.095),
         scale: new Vector3(3.208, 3.208, 3.208),
         model: this.resources.items.backgroundMountainLS.scene,
+        visibility: [0, 100],
       },
       {
         name: 'MountainR',
@@ -271,6 +294,7 @@ export default class BaseCamp extends BasicScene {
         rotation: new Vector3(0, -0.749, 0),
         scale: new Vector3(61.155, 61.155, 61.155),
         model: this.resources.items.backgroundMountainR.scene,
+        visibility: [0, 100],
       },
       {
         name: 'Mountainr',
@@ -278,6 +302,7 @@ export default class BaseCamp extends BasicScene {
         rotation: new Vector3(-3.075, -0.701, 3.085),
         scale: new Vector3(3.208, 3.208, 3.208),
         model: this.resources.items.backgroundMountainRS.scene,
+        visibility: [0, 100],
       },
       {
         name: 'Stake',
@@ -285,6 +310,7 @@ export default class BaseCamp extends BasicScene {
         rotation: new Vector3(1.487, -0.274, 0.56),
         scale: new Vector3(0.425, 0.425, 0.425),
         model: this.resources.items.tent.scene,
+        visibility: [0, 30],
       },
       {
         name: 'Tent_Primative_l_1',
@@ -292,6 +318,7 @@ export default class BaseCamp extends BasicScene {
         rotation: new Vector3(0, 1.128, 0),
         scale: new Vector3(1.2, 1.2, 1.2),
         model: this.resources.items.tent.scene,
+        visibility: [0, 20],
       },
       {
         name: 'Tent_Primative_main',
@@ -299,6 +326,7 @@ export default class BaseCamp extends BasicScene {
         rotation: new Vector3(3.141, 0.045, 3.141),
         scale: new Vector3(1.412, 1.412, 1.412),
         model: this.resources.items.tent.scene,
+        visibility: [0, 30],
       },
       {
         name: 'Tent_Primative_r_1',
@@ -306,6 +334,7 @@ export default class BaseCamp extends BasicScene {
         rotation: new Vector3(-0.036, 0.938, -0.005),
         scale: new Vector3(1.044, 1.044, 1.044),
         model: this.resources.items.tent.scene,
+        visibility: [0, 40],
       },
       {
         name: 'Tent_Primative_r_2',
@@ -313,6 +342,7 @@ export default class BaseCamp extends BasicScene {
         rotation: new Vector3(3.141, 1.365, 3.141),
         scale: new Vector3(0.953, 0.953, 0.953),
         model: this.resources.items.tent.scene,
+        visibility: [0, 30],
       },
       {
         name: 'Tent_Primative_l_1001',
@@ -320,18 +350,22 @@ export default class BaseCamp extends BasicScene {
         rotation: new Vector3(0, 0.696, 0),
         scale: new Vector3(1.2, 1.2, 1.2),
         model: this.resources.items.tent.scene,
+        visibility: [0, 78],
       },
     ]
 
-    this.blocking.forEach(({ name, model, position, rotation, scale }) => {
-      this.components[name] = new BaseCampItem({
-        name,
-        model,
-        position,
-        rotation,
-        scale,
-      })
-    })
+    this.blocking.forEach(
+      ({ name, model, position, rotation, scale, visibility }) => {
+        this.components[name] = new BaseCampItem({
+          name,
+          model,
+          position,
+          rotation,
+          scale,
+          visibility,
+        })
+      }
+    )
   }
 
   init() {
@@ -339,7 +373,7 @@ export default class BaseCamp extends BasicScene {
     this.setCamera()
 
     // Setup the sheet
-    // this.setupSheet()
+    this.setupSheet()
 
     // Blocking
     this.setBlocking()
@@ -358,5 +392,16 @@ export default class BaseCamp extends BasicScene {
     }
 
     super.init()
+  }
+
+  update() {
+    super.update()
+
+    // update the camera
+    this.camera?.instance?.lookAt(new Vector3(0.551, 1.7, -36.868))
+  }
+
+  dispose() {
+    super.dispose()
   }
 }
