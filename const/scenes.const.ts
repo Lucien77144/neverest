@@ -41,12 +41,12 @@ const SCENES: TSceneInfos[] = [
         {
           start: 31,
           end: 35,
-          power: 0.01,
+          power: 0.025,
         },
         {
           start: 64,
           end: 68,
-          power: 0.01,
+          power: 0.025,
         },
       ],
     },
@@ -63,12 +63,12 @@ const SCENES: TSceneInfos[] = [
         {
           start: 31,
           end: 35,
-          power: 0.01,
+          power: 0.025,
         },
         {
           start: 64,
           end: 68,
-          power: 0.01,
+          power: 0.025,
         },
       ],
     },

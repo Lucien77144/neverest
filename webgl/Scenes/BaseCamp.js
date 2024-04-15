@@ -1,4 +1,4 @@
-import { AmbientLight, DirectionalLight, Vector3 } from 'three'
+import { Vector3 } from 'three'
 import BaseCampItem from '../Components/BaseCamp/BaseCampItem/BaseCampItem'
 import BasicScene from '../Modules/Basics/BasicScene'
 import { types, val } from '@theatre/core'
