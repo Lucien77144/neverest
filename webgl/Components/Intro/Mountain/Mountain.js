@@ -1,6 +1,4 @@
-import { ConeGeometry, Mesh, MeshNormalMaterial, MeshToonMaterial, Vector3 } from 'three'
-import { MathUtils } from 'three'
-import scenes from '~/const/scenes.const'
+import { MeshToonMaterial } from 'three'
 import Experience from '~/webgl/Experience'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 

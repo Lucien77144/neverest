@@ -4,7 +4,6 @@ import Iceblocks from '../Components/Icefall/Iceblocks/Iceblocks'
 import Mountains from '../Components/Icefall/Mountains/Mountains'
 import Lights from '../Components/Shared/Lights/Lights'
 import BasicScene from '../Modules/Basics/BasicScene'
-import { types, val } from '@theatre/core'
 
 export default class IceFall extends BasicScene {
   /**

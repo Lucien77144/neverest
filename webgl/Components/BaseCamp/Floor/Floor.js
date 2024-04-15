@@ -1,7 +1,5 @@
 import {
-  Color,
   Mesh,
-  MeshBasicMaterial,
   MeshStandardMaterial,
   PlaneGeometry,
 } from 'three'

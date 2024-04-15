@@ -1,4 +1,4 @@
-import { MeshNormalMaterial, Vector3 } from 'three'
+import { MeshNormalMaterial } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
 export default class BaseCampItem extends BasicItem {

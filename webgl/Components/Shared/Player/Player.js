@@ -1,6 +1,5 @@
 import { Group, Sprite, SpriteMaterial } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
-import Mountain from '../../Intro/Mountain/Mountain'
 
 export default class Player extends BasicItem {
   /**

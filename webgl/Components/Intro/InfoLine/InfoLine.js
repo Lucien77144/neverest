@@ -1,13 +1,8 @@
 import {
-  BoxGeometry,
   BufferGeometry,
   Group,
   Line,
-  LineBasicMaterial,
-  Mesh,
-  MeshNormalMaterial,
   Object3D,
-  RawShaderMaterial,
   ShaderMaterial,
   Uniform,
   Vector3,
@@ -15,8 +10,6 @@ import {
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import InfoLineVert from './InfoLineShader/InfoLineShader.vert?raw'
 import InfoLineFrag from './InfoLineShader/InfoLineShader.frag?raw'
-import Experience from '~/webgl/Experience'
-import { TextGeometry } from 'three/addons/geometries/TextGeometry.js'
 import gsap from 'gsap'
 
 export default class InfoLine extends BasicItem {
