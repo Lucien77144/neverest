@@ -156,7 +156,7 @@ export default class Experience {
     this.resources = new Resources()
     this.audioManager = new AudioManager()
     this.shaderManager = new FragmentShaderManager([
-      { name: 'test', force: true },
+      // { name: 'test', force: true },
       // { name: 'testAmbient', force: true, scene: 'scene0' },
     ])
 

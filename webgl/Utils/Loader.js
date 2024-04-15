@@ -5,6 +5,7 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
 import { LottieLoader } from 'three/examples/jsm/loaders/LottieLoader.js'
 import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js'
+import { FontLoader } from 'three/addons/loaders/FontLoader.js'
 
 export default class Loader {
   /**

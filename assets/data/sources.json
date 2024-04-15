@@ -88,6 +88,10 @@
       {
         "name": "backgroundMountainRS",
         "source": "/models/BaseCamp/mountainRS.glb"
+      },
+      {
+        "name": "introMountain",
+        "source": "/models/Intro/mount_everest_topo_map.glb"
       }
     ]
   },

@@ -1,4 +1,5 @@
 import {
+  BoxGeometry,
   BufferGeometry,
   Group,
   Line,
@@ -19,7 +20,7 @@ import { TextGeometry } from 'three/addons/geometries/TextGeometry.js'
 import gsap from 'gsap'
 
 export default class InfoLine extends BasicItem {
-  constructor(points, inputText) {
+  constructor(points, position, inputText, textposition, labelId) {
     super()
 
     // New elements
@@ -31,17 +32,17 @@ export default class InfoLine extends BasicItem {
     this.textGeometry = null
     this.textMaterial = null
     this.text = null
+    this.textRef = null
+    this.textposition = textposition
     this.points = points
+    this.position = position
     this.inputText = inputText
     this.isVisible = Math.sin(this.points[0].z) > 0
-
-    // Init
-    this.init()
+    this.labelId = labelId
   }
 
-  setRootGeometry(){
+  setRootGeometry() {
     this.rootObj = new Object3D()
-    this.rootObj.position.set(this.points[0].x,this.points[0].y,this.points[0].z)
   }
 
   setLineGeometry() {
@@ -49,7 +50,7 @@ export default class InfoLine extends BasicItem {
   }
 
   setLineMaterial() {
-    this.lineMaterial = new RawShaderMaterial({
+    this.lineMaterial = new ShaderMaterial({
       vertexShader: InfoLineVert,
       fragmentShader: InfoLineFrag,
       uniforms: {
@@ -58,7 +59,7 @@ export default class InfoLine extends BasicItem {
         ),
         uLowestpoint: new Uniform(this.points[0].y),
         uHighestPoint: new Uniform(this.points[this.points.length - 1].y),
-        uProgress: new Uniform(this.isVisible ? 1: 0),
+        uProgress: new Uniform(this.isVisible ? 1 : 0),
       },
       transparent: true,
     })
@@ -68,37 +69,35 @@ export default class InfoLine extends BasicItem {
     this.line = new Line(this.lineGeometry, this.lineMaterial)
   }
 
-  setTextGeometry() {
-    this.textGeometry = new TextGeometry(this.inputText,{
-      font: this.experience.resources.items.roboto,
-      size: 1,
-      depth: 1,
-      curveSegments: 1,
-    })
-
-
-  }
-
-  setTextMaterial() {
-
-  }
-
-  setText() {
-    this.text = new Mesh(this.textGeometry,new MeshNormalMaterial())
+  setTextRef() {
+    this.textRef = new Object3D()
+    this.textRef.position.set(
+      this.textposition.x,
+      this.textposition.y,
+      this.textposition.z
+    )
   }
 
   setGroup() {
     this.item = new Group()
+    this.item.layers.enableAll()
+    this.item.position.set(this.position.x, this.position.y, this.position.z)
     this.item.add(this.rootObj)
     this.item.add(this.line)
-    //this.item.add(this.text)
+    this.item.add(this.textRef)
   }
 
-  changeVisibility(visibility){
-    this.isVisible = visibility 
+  changeVisibility(visibility) {
+    this.isVisible = visibility
     gsap.to(this.lineMaterial.uniforms.uProgress, {
-      value:visibility ? 1 : 0,
-      duration:0.6
+      value: visibility ? 1 : 0,
+      duration: 0.6,
+      onStart:()=>{
+        if(!visibility)document.getElementById(this.labelId)?.style.setProperty('opacity', 0)
+      },
+      onComplete:()=>{
+        if(visibility)document.getElementById(this.labelId)?.style.setProperty('opacity', 1)
+      }
     })
   }
 
@@ -107,28 +106,30 @@ export default class InfoLine extends BasicItem {
     this.setLineGeometry()
     this.setLineMaterial()
     this.setLine()
-    this.setTextGeometry()
-    this.setTextMaterial()
-    this.setText()
+    this.setTextRef()
     this.setGroup()
   }
 
   update() {
-    
+    if (!this.rootObj) return
+    if(!document.getElementById("labelRendererDiv")) return
 
     const rootObjPosition = new Vector3()
     this.rootObj.getWorldPosition(rootObjPosition)
 
-    
-    if(this.isVisible && Math.sin(rootObjPosition.normalize().z) < 0){
+    if (this.isVisible && Math.sin(rootObjPosition.normalize().z) < 0.2) {
       this.changeVisibility(false)
     }
-    if(!this.isVisible && Math.sin(rootObjPosition.normalize().z) > 0){
+    if (!this.isVisible && Math.sin(rootObjPosition.normalize().z) > 0.2) {
       this.changeVisibility(true)
     }
-    
 
-     
-    
+    if (this.isVisible) {
+      if (rootObjPosition.normalize().x <= 0.2) {
+        this.item.rotation.y = -Math.asin(rootObjPosition.normalize().z)
+      } else if (rootObjPosition.normalize().x > 0.2) {
+        this.item.rotation.y = 2 * Math.PI + Math.asin(rootObjPosition.normalize().z)
+      }
+    }
   }
 }

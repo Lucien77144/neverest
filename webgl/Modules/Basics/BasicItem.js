@@ -64,6 +64,12 @@ export default class BasicItem {
     this.init
 
     /**
+     * After view init function
+     * Automatically called after the scene has built
+     */
+    this.afterViewInit
+
+    /**
      * If set, this function will be called on each tick to update
      * If false, the event will be ignored, even if parent is triggering it
      */

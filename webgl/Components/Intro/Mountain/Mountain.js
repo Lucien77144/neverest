@@ -1,6 +1,7 @@
-import { ConeGeometry, Mesh, MeshNormalMaterial, Vector3 } from 'three'
+import { ConeGeometry, Mesh, MeshNormalMaterial, MeshToonMaterial, Vector3 } from 'three'
 import { MathUtils } from 'three'
 import scenes from '~/const/scenes.const'
+import Experience from '~/webgl/Experience'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
 export default class Mountain extends BasicItem {
@@ -10,6 +11,9 @@ export default class Mountain extends BasicItem {
   constructor() {
     super()
     // Get elements from experience
+    this.experience = new Experience()
+    this.resources = this.experience.resources.items
+
     this.$bus = this.experience.$bus
 
     // New elements
@@ -19,60 +23,22 @@ export default class Mountain extends BasicItem {
     this.holdDuration = 2000
   }
 
-  /**
-   * Get geometry
-   */
-  setGeometry() {
-    this.geometry = new ConeGeometry(4, 8, 16)
-  }
 
-  /**
-   * Get material
-   */
   setMaterial() {
-    this.material = new MeshNormalMaterial()
+    this.material = new MeshToonMaterial({side:0, color:0xFFFFFF})
   }
 
-  /**
-   * Get mesh
-   */
-  setMesh() {
-    this.item = new Mesh(this.geometry, this.material)
+
+  setItem() {
+    const item = this.resources.introMountain.scene.clone()
+    this.item = item.children[0].children[0].children[0].children[0]
+    this.item.rotation.x = -Math.PI*0.5
+    this.item.scale.set(0.005,0.005,0.005)
+    this.item.material = new MeshToonMaterial({side:0, color:0xFFFFFF})
   }
 
-  /**
-   * Set audio of the scene
-   */
-  setAudio() {
-    this.audios = {
-      onichan: { loop: true, volume: 0.5 },
-      yameteAh: { loop: true, volume: 0.25, persist: true },
-      // babyshark: { loop: true, volume: 0.3 },
-    }
-  }
-
-  /**
-   * On hold item
-   */
-  onHold() {
-    const scene = scenes.list.find((scene) => scene.name === 'basecamp')
-    this.$bus.emit('scene:switch', scene)
-  }
-
-  /**
-   * Init the floor
-   */
   init() {
-    this.setGeometry()
     this.setMaterial()
-    this.setMesh()
-    this.setAudio()
-  }
-
-  /**
-   * Update the floor
-   */
-  update() {
-    
+    this.setItem()
   }
 }
