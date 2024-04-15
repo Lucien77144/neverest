@@ -1,4 +1,4 @@
-import { Group, Vector3 } from 'three'
+import { Vector3 } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import Mountain from '../Mountain/Mountain'
 import InfoLine from '../InfoLine/InfoLine'

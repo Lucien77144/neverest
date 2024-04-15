@@ -1,4 +1,3 @@
-import { Vector3 } from 'three'
 import InfoLine from '../Components/Intro/InfoLine/InfoLine'
 import Mountain from '../Components/Intro/Mountain/Mountain'
 import BasicScene from '../Modules/Basics/BasicScene'
