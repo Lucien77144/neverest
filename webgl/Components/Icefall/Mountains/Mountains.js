@@ -1,4 +1,4 @@
-import { MeshStandardMaterial } from 'three'
+import { MeshNormalMaterial } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
 export default class Mountains extends BasicItem {
@@ -18,7 +18,7 @@ export default class Mountains extends BasicItem {
     this.item = this.resources.IFMountains.scene.clone()
 
     this.item.children.forEach((e) => {
-      e.material = new MeshStandardMaterial({
+      e.material = new MeshNormalMaterial({
         color: 0xffffff,
       })
     })

@@ -102,6 +102,10 @@
       {
         "name": "IFIceblocks",
         "source": "/models/IceFall/iceblocks.glb"
+      },
+      {
+        "name": "IFFloor",
+        "source": "/models/IceFall/floor.glb"
       }
     ]
   }

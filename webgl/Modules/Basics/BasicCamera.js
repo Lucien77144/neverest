@@ -25,7 +25,7 @@ export default class BasicCamera {
    */
   setInstance() {
     this.instance = new PerspectiveCamera(
-      60,
+      20,
       this.viewport.width / this.viewport.height,
       0.1,
       500

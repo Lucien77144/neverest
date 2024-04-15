@@ -27,8 +27,8 @@ export default class Lights extends BasicItem {
    */
   setDirectionalLight() {
     this.directional = new DirectionalLight(0xffffff, 0.8)
-    this.directional.position.set(0, 1, 0)
-    this.directional.target.position.set(0, 0, 0)
+    this.directional.position.set(500, 500, 0)
+    this.directional.target.lookAt(0, 0, 0)
 
     this.item.add(this.directional)
     this.item.add(this.directional.target)

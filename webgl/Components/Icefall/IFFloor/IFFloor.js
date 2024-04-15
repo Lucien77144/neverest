@@ -1,7 +1,7 @@
 import { MeshNormalMaterial } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
-export default class Iceblocks extends BasicItem {
+export default class IFFloor extends BasicItem {
   /**
    * Constructor
    */
@@ -15,7 +15,7 @@ export default class Iceblocks extends BasicItem {
    * Get mesh
    */
   setItem() {
-    this.item = this.resources.IFIceblocks.scene.clone()
+    this.item = this.resources.IFFloor.scene.clone()
 
     this.item.children.forEach((e) => {
       e.material = new MeshNormalMaterial({
