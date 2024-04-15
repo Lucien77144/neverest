@@ -5,6 +5,7 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
 import { LottieLoader } from 'three/examples/jsm/loaders/LottieLoader.js'
 import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js'
+import { FontLoader } from 'three/addons/loaders/FontLoader.js'
 
 export default class Loader {
   /**
@@ -154,13 +155,46 @@ export default class Loader {
     const lottieLoader = new LottieLoader()
 
     this.loaders.push({
-      extensions: ['json'],
+      extensions: ['lottie'],
       action: (resource) => {
         lottieLoader.load(resource.source, (animation) => {
           this.fileLoadEnd(resource, animation)
         })
       },
     })
+
+    //Font
+
+    const fontLoader = new FontLoader()
+
+    this.loaders.push({
+      extensions: ['font'],
+      action:(ressource)=>{
+        fontLoader.load(ressource.source,(font)=>{
+          this.fileLoadEnd(ressource,font)
+        })
+      }
+    })
+  }
+
+  /**
+   * Get extension from ressource
+   * @param {*} source source to check
+   * @returns extension for loader uses
+   */
+  getExtension(source) {
+    const res = source.match(/\.([a-z0-9]+)$/i)?.[1]
+    if (!res) return false
+
+    if (res == 'json') {
+      if (source.includes('lottie')) {
+        return 'lottie'
+      } else if (source.includes('font')) {
+        return 'font'
+      }
+    }
+
+    return res
   }
 
   /**
@@ -216,10 +250,9 @@ export default class Loader {
   load(resources = []) {
     for (const resource of resources) {
       this.toLoad++
-      const extensionMatch = resource.source.match(/\.([a-z0-9]+)$/i)
+      const extension = this.getExtension(resource.source)
 
-      if (typeof extensionMatch[1] !== 'undefined') {
-        const extension = extensionMatch[1]
+      if (typeof extension !== 'undefined') {
         const loader = this.loaders.find((loader) =>
           loader.extensions.find((e) => e === extension)
         )

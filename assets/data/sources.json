@@ -32,7 +32,7 @@
     "items": [
       {
         "name": "robotAnimation",
-        "source": "/animations/animRobot.json"
+        "source": "/lottie/animRobot.json"
       }
     ]
   },
@@ -88,6 +88,21 @@
       {
         "name": "backgroundMountainRS",
         "source": "/models/BaseCamp/mountainRS.glb"
+      },
+      {
+        "name": "introMountain",
+        "source": "/models/Intro/mount_everest_topo_map.glb"
+      }
+    ]
+  },
+  {
+    "name": "font",
+    "data": {},
+    "items": [
+      {
+        "name": "roboto",
+        "source": "/font/Roboto.json",
+        "type": "font"
       }
     ]
   },

@@ -70,6 +70,16 @@ export default class BasicScene {
      * @param {number} delta - Delta of the scroll
      */
     this.onScroll
+
+    /**
+     * On switch start and if this scene is the previous one
+     */
+    this.onSwitchStart
+
+    /**
+     * On switch between scene complete and this scene is the new one
+     */
+    this.onSwitchComplete
   }
 
   /**
@@ -319,6 +329,7 @@ export default class BasicScene {
   init() {
     this.allComponents = this.getRecursiveComponents()
     this.addItemsToScene()
+    Object.values(this.allComponents).forEach((c) => c.afterViewInit?.())
 
     this.audios && this.addAudios(this.audios)
     this.scene.add(this.camera.instance)
@@ -348,6 +359,7 @@ export default class BasicScene {
    * Dispose the scene
    */
   dispose() {
+
     // Items
     Object.values(this.allComponents).forEach((c) => {
       this.triggerFn(c, 'dispose')
