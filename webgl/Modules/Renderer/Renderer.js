@@ -16,7 +16,6 @@ import {
 import Experience from '../../Experience'
 import vertexShader from './shaders/vertexShader.vert?raw'
 import fragmentShader from './shaders/fragmentShader.frag?raw'
-import TRANSITIONS from '~/const/transitions.const'
 
 export default class Renderer {
   /**
@@ -110,7 +109,6 @@ export default class Renderer {
           uScene0: new Uniform(this.rt0.texture),
           uScene1: new Uniform(this.rt1.texture),
           uTransition: new Uniform(),
-          uTemplate: new Uniform(TRANSITIONS.FADE),
           uTime: new Uniform(0),
         },
         vertexShader,

@@ -24,7 +24,14 @@ export default class Intro extends BasicScene {
       babyshark: { group: 'Enfants', loop: true, volume: 0.3, persist: true },
     }
 
-    // Init the scene 
+    this.shaders = [
+      {
+        name: 'testAmbient',
+        force: true,
+      },
+    ]
+
+    // Init the scene
     this.init()
   }
 

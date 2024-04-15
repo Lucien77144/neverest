@@ -4,6 +4,7 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
 import { LottieLoader } from 'three/examples/jsm/loaders/LottieLoader.js'
+import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js'
 
 export default class Loader {
   /**
@@ -49,6 +50,17 @@ export default class Loader {
         })
 
         image.src = resource.source
+      },
+    })
+
+    // EXR
+    const exrLoader = new EXRLoader()
+    this.loaders.push({
+      extensions: ['exr'],
+      action: (resource) => {
+        exrLoader.load(resource.source, (data) => {
+          this.fileLoadEnd(resource, data)
+        })
       },
     })
 
