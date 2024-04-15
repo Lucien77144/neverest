@@ -16,7 +16,16 @@ export default class BaseCampItem extends BasicItem {
     this.position = null
     this.rotation = null
     this.scale = null
+    this.visibility = null
     this.holdDuration = 2000
+
+    // Store
+    this.currentScroll = computed(
+      () => Math.round(useScrollStore().getCurrent * 100) / 100
+    )
+
+    // Watch
+    watch(this.currentScroll, () => this.updateVisibility())
   }
 
   /**
@@ -24,6 +33,14 @@ export default class BaseCampItem extends BasicItem {
    */
   setName() {
     this.name = this.options.name
+  }
+
+  /**
+   * Set Visibility
+   * @param {Array} _visibility
+   */
+  setVisibility(_visibility) {
+    this.visibility = _visibility
   }
 
   /**
@@ -74,22 +91,56 @@ export default class BaseCampItem extends BasicItem {
    */
   setItem() {
     this.setName()
+    this.setVisibility(this.options.visibility)
     this.setModel(this.options.model)
     this.setPosition(this.options.position)
     this.setRotation(this.options.rotation)
     this.setScale(this.options.scale)
 
+    // Set item
     this.item = this.model
+
+    // Set item material
     this.item.children[0].material = new MeshNormalMaterial()
+
+    // Set item name
     this.item.name = this.name
+
+    // Set item position
     this.position &&
       this.item.position.set(this.position.x, this.position.y, this.position.z)
+
+    // Set item rotation
     this.rotation &&
       this.item.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
+
+    // Set item scale
     this.scale && this.item.scale.copy(this.scale)
+
+    // Set item visibility
+    if (this.visibility[0] > this.currentScroll.value) {
+      this.item.children[0].visible = false
+    }
   }
 
-  /**P
+  /**
+   * Update item visibility
+   */
+  updateVisibility() {
+    if (!this.visibility?.length) return
+
+    // if current scroll is between visibility values
+    if (
+      this.visibility[0] <= this.currentScroll.value &&
+      this.currentScroll.value <= this.visibility[1]
+    ) {
+      this.item.children[0].visible = true
+    } else {
+      this.item.children[0].visible = false
+    }
+  }
+
+  /**
    * Init
    */
   init() {
