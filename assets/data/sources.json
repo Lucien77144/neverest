@@ -58,7 +58,7 @@
     ]
   },
   {
-    "name": "models",
+    "name": "BaseCamp",
     "data": {},
     "items": [
       {
@@ -88,6 +88,20 @@
       {
         "name": "backgroundMountainRS",
         "source": "/models/BaseCamp/mountainRS.glb"
+      }
+    ]
+  },
+  {
+    "name": "IceFall",
+    "data": {},
+    "items": [
+      {
+        "name": "IFMountains",
+        "source": "/models/IceFall/mountains.glb"
+      },
+      {
+        "name": "IFIceblocks",
+        "source": "/models/IceFall/iceblocks.glb"
       }
     ]
   }

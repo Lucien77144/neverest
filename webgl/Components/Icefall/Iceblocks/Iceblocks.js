@@ -1,0 +1,33 @@
+import { MeshStandardMaterial } from 'three'
+import BasicItem from '~/webgl/Modules/Basics/BasicItem'
+
+export default class Iceblocks extends BasicItem {
+  /**
+   * Constructor
+   */
+  constructor() {
+    super()
+    // New elements
+    this.resources = this.experience.resources.items
+  }
+
+  /**
+   * Get mesh
+   */
+  setItem() {
+    this.item = this.resources.IFIceblocks.scene.clone()
+
+    this.item.children.forEach((e) => {
+      e.material = new MeshStandardMaterial({
+        color: 0xffffff,
+      })
+    })
+  }
+
+  /**
+   * Init the floor
+   */
+  init() {
+    this.setItem()
+  }
+}

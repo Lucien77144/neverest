@@ -1,5 +1,6 @@
-import RockyCube from '../Components/Icefall/Cube/RockyCube'
-import Floor from '../Components/Shared/Floor/Floor'
+import Iceblocks from '../Components/Icefall/Iceblocks/Iceblocks'
+import Mountains from '../Components/Icefall/Mountains/Mountains'
+import Lights from '../Components/Shared/Lights/Lights'
 import BasicScene from '../Modules/Basics/BasicScene'
 import { types, val } from '@theatre/core'
 
@@ -15,8 +16,9 @@ export default class IceFall extends BasicScene {
 
     // New elements
     this.components = {
-      floor: new Floor(),
-      cube: new RockyCube(),
+      lights: new Lights(),
+      moutains: new Mountains(),
+      iceblocks: new Iceblocks(),
     }
     this.sheet = null
     this.icefallObj = null

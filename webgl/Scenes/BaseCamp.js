@@ -1,9 +1,10 @@
-import { AmbientLight, DirectionalLight, Vector3 } from 'three'
+import { Vector3 } from 'three'
 import BaseCampItem from '../Components/Shared/BaseCampItem/BaseCampItem'
 import BasicScene from '../Modules/Basics/BasicScene'
 import { types, val } from '@theatre/core'
 import Floor from '../Components/BaseCamp/Floor/Floor'
 import gsap from 'gsap'
+import Lights from '../Components/Shared/Lights/Lights'
 
 export default class BaseCamp extends BasicScene {
   /**
@@ -137,17 +138,7 @@ export default class BaseCamp extends BasicScene {
    * Set lights
    */
   setLights() {
-    this.lights = {
-      ambient: new AmbientLight(0xffffff, 0.5),
-      directional: new DirectionalLight(0xffffff, 0.8),
-    }
-
-    this.lights.directional.position.set(0, 1, 0)
-    this.lights.directional.target.position.set(0, 0, 0)
-
-    this.scene.add(this.lights.ambient)
-    this.scene.add(this.lights.directional)
-    this.scene.add(this.lights.directional.target)
+    this.components.lights = new Lights()
   }
 
   /**
