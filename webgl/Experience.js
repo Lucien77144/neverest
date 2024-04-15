@@ -152,7 +152,9 @@ export default class Experience {
     this.renderer = new Renderer()
     this.resources = new Resources()
     this.audioManager = new AudioManager()
-    this.shaderManager = new FragmentShaderManager()
+    this.shaderManager = new FragmentShaderManager([
+      { name: 'test', force: true },
+    ])
 
     this.$bus.on('resize', () => this.resize())
   }
