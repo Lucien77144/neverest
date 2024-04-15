@@ -28,6 +28,7 @@ export default class BasicScene {
 
     // Actions
     this.setProgressHold = useHoldStore().setProgress
+    this.setTargetScroll = useScrollStore().setTarget
 
     // Getters
     this.progressHold = computed(() => useHoldStore().getProgress)
@@ -206,9 +207,12 @@ export default class BasicScene {
     this.raycaster.setFromCamera(centered, this.camera.instance)
 
     // Filter the components to only get the ones that have the functions in the fn array
-    const list = Object.values(this.allComponents).filter(
-      (c) => fn.filter((f) => c[f] || c[f] == false).length > 0
-    )
+    const list = Object.values(this.allComponents).filter((c) => {
+      const funcs = fn.filter((f) => {
+        return (c[f] || c[f] == false) && !c.disabledFn?.includes(f)
+      })
+      return funcs.length > 0
+    })
 
     // Get the target object
     const target = this.raycaster.intersectObjects(

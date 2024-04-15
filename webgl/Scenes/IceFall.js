@@ -27,6 +27,11 @@ export default class IceFall extends BasicScene {
     this.icefallObj = null
     this.baseCamRot = null
     this.camRotTarget = null
+    this.currentPoint = 0
+    this.interests = []
+
+    // Getters
+    this.currentScene = computed(() => useNavigationStore().getScene)
 
     // Init the scene
     this.init()
@@ -39,6 +44,14 @@ export default class IceFall extends BasicScene {
     // Setup the sheet
     this.sheet = this.project.sheet('IceFall')
     this.icefallObj = this.sheet.object('IceFall', {})
+  }
+
+  /**
+   * Go to the next interest point
+   */
+  navigate() {
+    this.currentPoint += 1
+    this.setTargetScroll((100 / this.interests?.length) * this.currentPoint)
   }
 
   /**
@@ -87,7 +100,10 @@ export default class IceFall extends BasicScene {
    */
   init() {
     super.init()
-    this.setupSheet()
+    // this.setupSheet()
     this.initCamera()
+
+    // Set the interest points
+    this.interests = this.currentScene.value.nav?.interest
   }
 }

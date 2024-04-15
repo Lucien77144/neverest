@@ -53,6 +53,12 @@ export default class BasicItem {
      */
     this.holdDuration = 1000
 
+    /**
+     * Disable any functions of the item
+     * @param {string[]} - Array of functions to disable (onHold, onClick, onMouseEnter, onMouseLeave, onScroll, update)
+     */
+    this.disabledFn = []
+
     // --------------------------------
     // Functions
     // --------------------------------

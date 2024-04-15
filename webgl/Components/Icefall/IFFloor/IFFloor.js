@@ -17,10 +17,9 @@ export default class IFFloor extends BasicItem {
   setItem() {
     this.item = this.resources.IFFloor.scene.clone()
 
-    this.item.children.forEach((e) => {
-      e.material = new MeshNormalMaterial({
-        color: 0xffffff,
-      })
+    this.item.traverse((e) => {
+      if (!e.isMesh) return
+      e.material = new MeshNormalMaterial()
     })
   }
 
