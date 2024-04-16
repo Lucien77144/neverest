@@ -18,8 +18,6 @@
   "dependencies": {
     "@nuxtjs/i18n": "^8.1.1",
     "@pinia/nuxt": "^0.5.1",
-    "@theatre/core": "^0.7.0",
-    "@theatre/studio": "^0.7.0",
     "@types/three": "^0.160.0",
     "gsap": "^3.12.5",
     "mitt": "^3.0.1",

@@ -1,7 +1,6 @@
 import { Vector3 } from 'three'
 import BaseCampItem from '../Components/BaseCamp/BaseCampItem/BaseCampItem'
 import BasicScene from '../Modules/Basics/BasicScene'
-import { types, val } from '@theatre/core'
 import Floor from '../Components/BaseCamp/Floor/Floor'
 import gsap from 'gsap'
 import Lights from '../Components/Shared/Lights/Lights'
@@ -15,10 +14,7 @@ export default class BaseCamp extends BasicScene {
 
     // New elements
     this.resources = this.experience.resources
-    this.project = this.experience.project
     this.interest = null
-    this.sheet = null
-    this.cameraObj = null
     this.camFov = 20
     this.camRot = null
     this.blocking = []
@@ -65,8 +61,6 @@ export default class BaseCamp extends BasicScene {
    * @param {*} instant If the transtiion should be instant
    */
   watchCurrentScroll(value, instant = false) {
-    this.camera?.instance && this.playSequence()
-
     const trigger = this.interest.list.find(({ start, end }) => {
       return value >= start && value <= end
     })
@@ -127,61 +121,6 @@ export default class BaseCamp extends BasicScene {
       ease: 'power1.inOut',
       onUpdate: () => this.setFactor(factor.value),
     })
-  }
-
-  /**
-   * Setup the sheet
-   */
-  setupSheet() {
-    // Create a sheet
-    this.sheet = this.project.sheet('BaseCamp Camera animation')
-
-    // Create Theatre object with camera props
-    this.cameraObj = this.sheet.object(
-      'Camera',
-      {
-        // rotation: types.compound({
-        //   x: types.number(this.camera.instance.rotation.x, { range: [-2, 2] }),
-        //   y: types.number(this.camera.instance.rotation.y, { range: [-2, 2] }),
-        //   z: types.number(this.camera.instance.rotation.z, { range: [-2, 2] }),
-        // }),
-        position: types.compound({
-          x: types.number(this.camera.instance.position.x, {
-            range: [-100, 100],
-          }),
-          y: types.number(this.camera.instance.position.y, {
-            range: [-100, 100],
-          }),
-          z: types.number(this.camera.instance.position.z, {
-            range: [-100, 100],
-          }),
-        }),
-        // visible: types.boolean(this.components.cube.item.visible),
-      },
-      { reconfigure: true }
-    )
-
-    // Listen to values change
-    this.cameraObj.onValuesChange((values) => {
-      const { rotation, position, visible } = values
-
-      if (!this.camera.instance) return
-
-      // this.camera.instance.rotation.copy(rotation)
-      this.camera.instance.position.copy(position)
-      // this.components.cube.item.visible = visible
-    })
-  }
-
-  /**
-   * Play the sheet sequence depending on the scroll
-   */
-  playSequence() {
-    if (!this.sheet || !this.sheet.sequence) return
-
-    const sequenceLength = val(this.sheet.sequence.pointer.length)
-    const newPosition = (this.currentScroll.value / 100) * sequenceLength
-    this.sheet.sequence.position = newPosition
   }
 
   /**
@@ -418,9 +357,6 @@ export default class BaseCamp extends BasicScene {
   init() {
     // Set the camera
     this.setCamera()
-
-    // Setup the sheet
-    this.setupSheet()
 
     // Blocking
     this.setBlocking()
