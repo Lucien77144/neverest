@@ -35,38 +35,60 @@ export default class FragmentShaderManager {
   }
 
   /**
-   *
-   * @param {*} name
+   * Get the chunk of a shader
+   * @param {*} name Fragment shader name (from the shader const)
+   * @param {*} remove Boolean, if set remove the chunck from the frag
+   * @returns {Object} Chuncks of the shader (imports, start, end)
+   */
+  getChuncks(name, remove) {
+    const getChunck = (s, pos) => {
+      const start = this.frag.indexOf(`/** [${pos}_${s}] **/`)
+      const end = this.frag.indexOf(`/** [/${pos}_${s}] **/`)
+      return this.frag.substring(start, end)
+    }
+
+    const chuncks = {
+      imports: getChunck(name, 'imports'),
+      start: getChunck(name, 'start'),
+      end: getChunck(name, 'end'),
+    }
+
+    if (remove) {
+      this.frag = this.frag
+        .replaceAll(chuncks.start, `/** [start_${name}] **/`)
+        .replaceAll(chuncks.end, `/** [end_${name}] **/`)
+        .replaceAll(chuncks.imports, `/** [imports_${name}] **/`)
+    }
+
+    return chuncks
+  }
+
+  /**
+   * Remove a chunck from the current frag
+   * @param {*} name Fragment shader name (from the shader const)
+   * @returns {Object} Chuncks of the shader (imports, start, end)
    */
   remove(name) {
+    // this.getChuncks(name, true)
+
     // console.log(this.frag)
+
+    // this.renderMesh.material.fragmentShader = this.frag
+    // this.renderMesh.material.needsUpdate = true
+    // debugger
   }
 
   /**
    * Set the scene1 shader to scene0
    */
   shift() {
-    const getScene = (s, pos) => {
-      const start = this.frag.indexOf(`/** [${pos}_${s}] **/`)
-      const end = this.frag.indexOf(`/** [/${pos}_${s}] **/`)
-      return this.frag.substring(start, end)
-    }
-
-    const start0 = getScene('scene0', 'start')
-    const end0 = getScene('scene0', 'end')
-    const imports0 = getScene('scene0', 'imports')
-
-    const start1 = getScene('scene1', 'start')
-    const end1 = getScene('scene1', 'end')
-    const imports1 = getScene('scene1', 'imports')
+    const scene0 = this.getChuncks('scene0')
+    const scene1 = this.getChuncks('scene1', true)
 
     this.frag = this.frag
-      .replaceAll(start1, `/** [start_scene1] **/`)
-      .replaceAll(end1, `/** [end_scene1] **/`)
-      .replaceAll(imports1, `/** [imports_scene1] **/`)
-      .replaceAll(start0, start1.replaceAll('scene1', 'scene0'))
-      .replaceAll(end0, end1.replaceAll('scene1', 'scene0'))
-      .replaceAll(imports0, imports1.replaceAll('scene1', 'scene0'))
+      .replaceAll(scene0.start, scene1.start.replaceAll('scene1', 'scene0'))
+      .replaceAll(scene0.end, scene1.end.replaceAll('scene1', 'scene0'))
+      .replaceAll(scene0.imports, scene1.imports.replaceAll('scene1', 'scene0'))
 
     this.renderMesh.material.fragmentShader = this.frag
     this.renderMesh.material.needsUpdate = true

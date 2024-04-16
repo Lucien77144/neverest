@@ -19,6 +19,8 @@ export default class BaseCamp extends BasicScene {
     this.interest = null
     this.sheet = null
     this.cameraObj = null
+    this.camFov = 20
+    this.camRot = null
     this.blocking = []
 
     // Store
@@ -47,10 +49,12 @@ export default class BaseCamp extends BasicScene {
    * Scroll the camera around the cube
    */
   setCamera() {
+    this.camRot = new Vector3(0, 0, 0)
+
     this.camera.instance.position.y = 3.7
     this.camera.instance.position.z = 20
 
-    this.camera.instance.fov = 20
+    this.camera.instance.fov = this.camFov
     this.camera.instance.far = 500
 
     this.camera.instance.updateProjectionMatrix()
@@ -59,9 +63,10 @@ export default class BaseCamp extends BasicScene {
 
   /**
    * Watch the current scroll progression
-   * @param {*} value
+   * @param {*} value Scroll value
+   * @param {*} instant If the transtiion should be instant
    */
-  watchCurrentScroll(value) {
+  watchCurrentScroll(value, instant = false) {
     this.camera?.instance && this.playSequence()
 
     const trigger = this.interest.list.find(({ start, end }) => {
@@ -73,17 +78,42 @@ export default class BaseCamp extends BasicScene {
 
     this.$bus.emit('interest', trigger?.data)
 
-    this.setInterestVis(!!trigger?.data)
+    this.setInterestVis(!!trigger?.data, instant)
     this.setScrollFactor(power)
   }
 
   /**
    * Rotate the camera on x axis to show the sky and start animation for the transition
    * @param {boolean} active Is the interest active
+   * @param {object} instant Should the transition be instant
    */
-  setInterestVis(active) {
-    console.log(active)
-    // this.camera.instance.rotation.x = active ? 0.15 : 0
+  setInterestVis(active, instant) {
+    const val = {
+      ...this.camRot,
+      fov: this.camera.instance.fov,
+    }
+
+    if (active) {
+      this.shaderManager.add({
+        name: 'interest',
+        scene: 'scene0',
+      })
+    } else {
+      this.shaderManager.remove('interest')
+    }
+
+    gsap.to(val, {
+      x: active ? 0.15 : 0,
+      fov: active ? this.camFov * 0.85 : this.camFov,
+      duration: instant ? 0 : 0.75,
+      ease: 'power1.inOut',
+      onUpdate: () => {
+        this.camRot.x = val.x
+
+        this.camera.instance.fov = val.fov
+        this.camera.instance.updateProjectionMatrix()
+      },
+    })
   }
 
   /**
@@ -404,6 +434,7 @@ export default class BaseCamp extends BasicScene {
       curr: this.factorScroll.value,
       list: this.currentScene.value.nav?.interest || [],
     }
+    this.watchCurrentScroll(0, true)
 
     super.init()
   }
@@ -413,7 +444,7 @@ export default class BaseCamp extends BasicScene {
 
     // update the camera
     this.camera?.instance?.lookAt(new Vector3(0.551, 1.7, -36.868))
-    // this.camera.instance.rotation.y += 0.001
+    this.camera.instance.rotation.x += this.camRot.x
   }
 
   dispose() {

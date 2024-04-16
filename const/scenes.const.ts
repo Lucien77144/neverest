@@ -47,7 +47,7 @@ const SCENES: TSceneInfos[] = [
       interest: [
         {
           start: 0,
-          end: 2,
+          end: 1,
           power: 0.02,
           data: {
             title: 'BASECAMP',
