@@ -1,4 +1,4 @@
-import { AnimationMixer, LoopOnce, MeshNormalMaterial, Vector3 } from 'three'
+import { AnimationMixer, MeshNormalMaterial } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
 export default class BaseCampItem extends BasicItem {
@@ -198,6 +198,7 @@ export default class BaseCampItem extends BasicItem {
       -rotation.z,
       rotation.y
     )
+    this.parentScene.camera.instance.rotation.x += this.parentScene.camRot.x
   }
 
   /**
