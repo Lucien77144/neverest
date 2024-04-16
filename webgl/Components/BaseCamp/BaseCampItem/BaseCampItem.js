@@ -1,4 +1,4 @@
-import { MeshNormalMaterial } from 'three'
+import { AnimationMixer, LoopOnce, MeshNormalMaterial, Vector3 } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
 export default class BaseCampItem extends BasicItem {
@@ -19,15 +19,19 @@ export default class BaseCampItem extends BasicItem {
     this.visibility = null
     this.isCamera = false
     this.mixer = null
+    this.animationAction = null
     this.holdDuration = 2000
-    
+
     // Store
     this.currentScroll = computed(
-      () => Math.round(useScrollStore().getCurrent * 100) / 100
+      () => Math.round(useScrollStore().getCurrent * 10000) / 10000
     )
 
     // Watch
-    watch(this.currentScroll, () => this.updateVisibility())
+    watch(this.currentScroll, (v) => {
+      this.updateVisibility()
+      this.playAnimation(v)
+    })
   }
 
   /**
@@ -55,12 +59,29 @@ export default class BaseCampItem extends BasicItem {
   }
 
   /**
+   * Set Mixer
+   */
+  setMixer() {
+    // Set mixer
+    this.mixer = new AnimationMixer(this.model.scene)
+
+    // Set action
+    this.animationAction = this.mixer.clipAction(this.model.animations[0])
+  }
+
+  /**
    * Set Model
    * @param {Object} _model
    * @param {Object} _model.geometry
    * @param {Object} _model.material
    */
   setModel(_model) {
+    if (!_model) return
+
+    if (this.isCamera) {
+      this.model = _model
+      return
+    }
     this.model = _model.scene.clone()
   }
 
@@ -108,9 +129,11 @@ export default class BaseCampItem extends BasicItem {
     this.setPosition(this.options.position)
     this.setRotation(this.options.rotation)
     this.setScale(this.options.scale)
+    this.isCamera && this.setMixer()
 
     // Set item
-    this.item = this.model
+    !this.isCamera && (this.item = this.model)
+    this.isCamera && (this.item = this.model.scene)
 
     // Set item material
     this.item.children[0].material = new MeshNormalMaterial()
@@ -153,10 +176,36 @@ export default class BaseCampItem extends BasicItem {
   }
 
   /**
+   * Play animation on scroll
+   * @param {Number} value scroll value
+   */
+  playAnimation(value) {
+    if (!this.mixer || !this.item || !this.parentScene.camera.instance) return
+
+    const animDuration = this.animationAction.getClip().duration
+
+    this.mixer.setTime((value * animDuration) / (100 / 3))
+    this.animationAction.play()
+    this.mixer.update(1 / 60)
+
+    this.parentScene.camera.instance.position.copy(
+      this.item.children[0].position
+    )
+
+    const rotation = this.item.children[0].rotation.clone()
+    this.parentScene.camera.instance.rotation.set(
+      rotation.x - Math.PI / 2,
+      -rotation.z,
+      rotation.y
+    )
+  }
+
+  /**
    * Init
    */
   init() {
     // Set item
     this.setItem()
+    this.playAnimation(0)
   }
 }
