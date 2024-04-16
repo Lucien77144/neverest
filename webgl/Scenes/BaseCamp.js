@@ -64,24 +64,42 @@ export default class BaseCamp extends BasicScene {
   watchCurrentScroll(value) {
     this.camera?.instance && this.playSequence()
 
-    const setPower = (power) => {
-      if (this.interest.curr === power) return
-
-      this.interest.curr = power
-      const factor = { value: this.factorScroll.value }
-      gsap.to(factor, {
-        value: power,
-        duration: 0.5,
-        ease: 'power1.inOut',
-        onUpdate: () => this.setFactor(factor.value),
-      })
-    }
-
     const trigger = this.interest.list.find(({ start, end }) => {
       return value >= start && value <= end
     })
 
-    setPower(trigger?.power || this.interest.base)
+    const power = trigger?.power || this.interest.base
+    if (this.interest.curr === power) return
+
+    this.$bus.emit('interest', trigger?.data)
+
+    this.setInterestVis(!!trigger?.data)
+    this.setScrollFactor(power)
+  }
+
+  /**
+   * Rotate the camera on x axis to show the sky and start animation for the transition
+   * @param {boolean} active Is the interest active
+   */
+  setInterestVis(active) {
+    console.log(active)
+    // this.camera.instance.rotation.x = active ? 0.15 : 0
+  }
+
+  /**
+   * Set the scroll power
+   * @param {*} power
+   */
+  setScrollFactor(power) {
+    this.interest.curr = power
+
+    const factor = { value: this.factorScroll.value }
+    gsap.to(factor, {
+      value: power,
+      duration: 0.5,
+      ease: 'power1.inOut',
+      onUpdate: () => this.setFactor(factor.value),
+    })
   }
 
   /**
@@ -122,8 +140,8 @@ export default class BaseCamp extends BasicScene {
 
       if (!this.camera.instance) return
 
-      // this.camera.instance.rotation.set(rotation.x, rotation.y, rotation.z)
-      this.camera.instance.position.set(position.x, position.y, position.z)
+      // this.camera.instance.rotation.copy(rotation)
+      this.camera.instance.position.copy(position)
       // this.components.cube.item.visible = visible
     })
   }
@@ -395,6 +413,7 @@ export default class BaseCamp extends BasicScene {
 
     // update the camera
     this.camera?.instance?.lookAt(new Vector3(0.551, 1.7, -36.868))
+    // this.camera.instance.rotation.y += 0.001
   }
 
   dispose() {
