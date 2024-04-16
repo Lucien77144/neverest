@@ -17,8 +17,10 @@ export default class BaseCampItem extends BasicItem {
     this.rotation = null
     this.scale = null
     this.visibility = null
+    this.isCamera = false
+    this.mixer = null
     this.holdDuration = 2000
-
+    
     // Store
     this.currentScroll = computed(
       () => Math.round(useScrollStore().getCurrent * 100) / 100
@@ -44,13 +46,22 @@ export default class BaseCampItem extends BasicItem {
   }
 
   /**
+   * Set isCamera
+   * @param {Boolean} _isCamera
+   */
+  setIsCamera(_isCamera) {
+    if (!_isCamera) return
+    this.isCamera = _isCamera
+  }
+
+  /**
    * Set Model
    * @param {Object} _model
    * @param {Object} _model.geometry
    * @param {Object} _model.material
    */
   setModel(_model) {
-    this.model = _model.clone()
+    this.model = _model.scene.clone()
   }
 
   /**
@@ -92,6 +103,7 @@ export default class BaseCampItem extends BasicItem {
   setItem() {
     this.setName()
     this.setVisibility(this.options.visibility)
+    this.setIsCamera(this.options.isCamera)
     this.setModel(this.options.model)
     this.setPosition(this.options.position)
     this.setRotation(this.options.rotation)

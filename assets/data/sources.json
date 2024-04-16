@@ -92,6 +92,10 @@
       {
         "name": "introMountain",
         "source": "/models/Intro/mount_everest_topo_map.glb"
+      },
+      {
+        "name": "animCam",
+        "source": "/models/BaseCamp/cam.glb"
       }
     ]
   },
