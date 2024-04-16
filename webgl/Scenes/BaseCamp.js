@@ -34,6 +34,11 @@ export default class BaseCamp extends BasicScene {
     // Watchers
     this.watcher = watch(this.currentScroll, (v) => this.watchCurrentScroll(v))
 
+    this.components = {
+      floor: new Floor(),
+      lights: new Lights(),
+    }
+
     // Init the scene
     this.init()
   }
@@ -44,10 +49,11 @@ export default class BaseCamp extends BasicScene {
   setCamera() {
     this.camera.instance.position.y = 3.7
     this.camera.instance.position.z = 20
+
     this.camera.instance.fov = 20
     this.camera.instance.far = 500
-    this.camera.instance.updateProjectionMatrix()
 
+    this.camera.instance.updateProjectionMatrix()
     this.camera.instance.lookAt(new Vector3(0.551, -0.18, -36.868))
   }
 
@@ -131,20 +137,6 @@ export default class BaseCamp extends BasicScene {
     const sequenceLength = val(this.sheet.sequence.pointer.length)
     const newPosition = (this.currentScroll.value / 100) * sequenceLength
     this.sheet.sequence.position = newPosition
-  }
-
-  /**
-   * Set floor
-   */
-  setFloor() {
-    this.components.floor = new Floor()
-  }
-
-  /**
-   * Set lights
-   */
-  setLights() {
-    this.components.lights = new Lights()
   }
 
   /**
@@ -387,12 +379,6 @@ export default class BaseCamp extends BasicScene {
 
     // Blocking
     this.setBlocking()
-
-    // Set the floor
-    this.setFloor()
-
-    // Set the lights
-    this.setLights()
 
     // Set the interest
     this.interest = {
