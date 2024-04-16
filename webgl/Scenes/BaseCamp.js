@@ -52,9 +52,7 @@ export default class BaseCamp extends BasicScene {
 
     this.camera.instance.fov = 20
     this.camera.instance.far = 500
-
     this.camera.instance.updateProjectionMatrix()
-    this.camera.instance.lookAt(new Vector3(0.551, -0.18, -36.868))
   }
 
   /**
@@ -62,7 +60,7 @@ export default class BaseCamp extends BasicScene {
    * @param {*} value
    */
   watchCurrentScroll(value) {
-    this.camera?.instance && this.playSequence()
+    // this.camera?.instance && this.playSequence()
 
     const setPower = (power) => {
       if (this.interest.curr === power) return
@@ -262,8 +260,8 @@ export default class BaseCamp extends BasicScene {
         rotation: new Vector3(0, 0, 0),
         scale: new Vector3(1, 1, 1),
         model: this.resources.items.animCam,
-        visibility: [0, 0],
-        camera: true,
+        visibility: [0, 100],
+        isCamera: true,
       },
       {
         name: 'Mountain',
@@ -356,7 +354,7 @@ export default class BaseCamp extends BasicScene {
     ]
 
     this.blocking.forEach(
-      ({ name, model, position, rotation, scale, visibility, camera }) => {
+      ({ name, model, position, rotation, scale, visibility, isCamera }) => {
         this.components[name] = new BaseCampItem({
           name,
           model,
@@ -364,7 +362,7 @@ export default class BaseCamp extends BasicScene {
           rotation,
           scale,
           visibility,
-          camera,
+          isCamera,
         })
       }
     )
@@ -388,13 +386,6 @@ export default class BaseCamp extends BasicScene {
     }
 
     super.init()
-  }
-
-  update() {
-    super.update()
-
-    // update the camera
-    this.camera?.instance?.lookAt(new Vector3(0.551, 1.7, -36.868))
   }
 
   dispose() {
