@@ -16,6 +16,7 @@ import {
 import Experience from '../../Experience'
 import vertexShader from './shaders/vertexShader.vert?raw'
 import fragmentShader from './shaders/fragmentShader.frag?raw'
+import * as funcs from './shaders/funcs'
 
 export default class Renderer {
   /**
@@ -110,6 +111,11 @@ export default class Renderer {
           uScene1: new Uniform(this.rt1.texture),
           uTransition: new Uniform(),
           uTime: new Uniform(0),
+        },
+        defines: {
+          cnoise: funcs.cnoise,
+          fade: funcs.fade,
+          permute: funcs.permute,
         },
         vertexShader,
         fragmentShader,

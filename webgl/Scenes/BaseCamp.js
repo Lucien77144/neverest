@@ -86,12 +86,12 @@ export default class BaseCamp extends BasicScene {
     }
 
     if (active) {
-      this.shaderManager.add({
-        name: 'interest',
-        scene: 'scene0',
-      })
+      // this.shaderManager.add({
+      //   name: 'interest',
+      //   scene: 'scene0',
+      // })
     } else {
-      this.shaderManager.remove('interest')
+      // this.shaderManager.remove('interest')
     }
 
     gsap.to(val, {

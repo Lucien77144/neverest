@@ -12,7 +12,6 @@ export default class BasicScene {
     this.experience = new Experience()
     this.raycaster = this.experience.raycaster
     this.audioManager = this.experience.audioManager
-    this.shaderManager = this.experience.shaderManager
     this.$bus = this.experience.$bus
 
     // New elements
