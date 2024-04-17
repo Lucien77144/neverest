@@ -124,7 +124,6 @@ export default class BaseCampItem extends BasicItem {
 
     // Set item visibility
     this.item.children[0].visible = false
-    
   }
 
   /**
