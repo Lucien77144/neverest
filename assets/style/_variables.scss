@@ -1,7 +1,9 @@
 body,
 html {
-  --primary: #ff0000;
-  --secondary: #00ff00;
+  --primary: #975062;
+  --secondary: #f5e5e0;
+  --beige: #efdbd4;
+  --beige-sky: #f1dad2;
   --black: #151515;
   --white: #f4f4f4;
   --success: #00ff00;
@@ -13,13 +15,21 @@ html {
 $darken-amount: 10%;
 $lighten-amount: 10%;
 
-$primary: #ff0000;
+$primary: #975062;
 $primary-dark: darken($primary, $darken-amount);
 $primary-light: lighten($primary, $lighten-amount);
 
-$secondary: #00ff00;
+$secondary: #f5e5e0;
 $secondary-dark: darken($secondary, $darken-amount);
 $secondary-light: lighten($secondary, $lighten-amount);
+
+$beige: #efdbd4;
+$beige-dark: darken($beige, $darken-amount);
+$beige-light: lighten($beige, $lighten-amount);
+
+$beige-sky: #f1dad2;
+$beige-sky-dark: darken($beige-sky, $darken-amount);
+$beige-sky-light: lighten($beige-sky, $lighten-amount);
 
 $black: #151515;
 $black-dark: darken($black, $darken-amount);

@@ -29,6 +29,7 @@ export default class Renderer {
     this.time = this.experience.time
     this.sceneManager = this.experience.sceneManager
     this.stats = this.experience.stats
+    this.$bus = this.experience.$bus
 
     // New elements
     this.instance = null
@@ -38,9 +39,10 @@ export default class Renderer {
     this.renderMesh = null
     this.context = null
     this.debugFolder = null
+    this.handleMouseMoveEvt = null
     this.clearColor = {
-      color: '#ff039a',
-      alpha: 1,
+      color: '#f1dad2',
+      alpha: 0,
     }
 
     // Init
@@ -99,6 +101,16 @@ export default class Renderer {
   }
 
   /**
+   * Raycast on mouse move
+   */
+  onMouseMoveEvt({ centered }) {
+    this.renderMesh.material.uniforms.uCursor.value = new Vector2(
+      centered.x / 2,
+      centered.y / 2
+    )
+  }
+
+  /**
    * Set the render mesh
    */
   setRenderMesh() {
@@ -109,12 +121,23 @@ export default class Renderer {
           uScene0: new Uniform(this.rt0.texture),
           uScene1: new Uniform(this.rt1.texture),
           uTransition: new Uniform(),
+
+          // Focus
+          uFocMask: new Uniform(),
+          uFocColor: new Uniform(new Color('#f1dad2')),
+          uFocProgress: new Uniform(0),
+
+          // Time
           uTime: new Uniform(0),
+          uCursor: new Uniform(new Vector2(0.5, 0.5)),
         },
         vertexShader,
         fragmentShader,
       })
     )
+
+    this.handleMouseMoveEvt = this.onMouseMoveEvt.bind(this)
+    this.$bus.on('mousemove', this.handleMouseMoveEvt)
   }
 
   /**
@@ -221,5 +244,6 @@ export default class Renderer {
     this.instance.dispose()
     this.rt0.dispose()
     this.rt1.dispose()
+    this.$bus.off('mousemove', this.handleMouseMoveEvt)
   }
 }

@@ -3,6 +3,17 @@ import BaseCamp from '~/webgl/Scenes/BaseCamp'
 import IceFall from '~/webgl/Scenes/IceFall'
 import TestDA from '~/webgl/Scenes/TestDA'
 
+export type TSceneInterest = {
+  start: number // 0-100, start of the interest action
+  end: number // 0-100, end of the interest action
+  power: number // 0-1, multiply factor by this value
+  data?: {
+    // data emited on interest action
+    title: string
+    date: string
+  }
+}
+
 export type TSceneInfos = {
   id?: number
   isDefault?: boolean
@@ -12,11 +23,7 @@ export type TSceneInfos = {
     scale: number
     start?: number
     end?: number
-    interest?: {
-      start: number // 0-100, start of the interest action
-      end: number // 0-100, end of the interest action
-      power: number // 0-1, multiply factor by this value
-    }[]
+    interest?: TSceneInterest[]
   }
   transition?: {
     duration: number
@@ -48,14 +55,31 @@ const SCENES: TSceneInfos[] = [
       scale: 100,
       interest: [
         {
+          start: 0,
+          end: 1,
+          power: 0.02,
+          data: {
+            title: 'BASECAMP',
+            date: '1953',
+          },
+        },
+        {
           start: 31,
           end: 35,
-          power: 0.025,
+          power: 0.02,
+          data: {
+            title: 'BASECAMP',
+            date: '2024',
+          },
         },
         {
           start: 64,
           end: 68,
-          power: 0.025,
+          power: 0.02,
+          data: {
+            title: 'BASECAMP',
+            date: '2050',
+          },
         },
       ],
     },

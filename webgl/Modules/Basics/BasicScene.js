@@ -359,7 +359,6 @@ export default class BasicScene {
    * Dispose the scene
    */
   dispose() {
-
     // Items
     Object.values(this.allComponents).forEach((c) => {
       this.triggerFn(c, 'dispose')

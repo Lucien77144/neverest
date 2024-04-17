@@ -8,13 +8,12 @@ export default class IntroGroup extends BasicItem {
   constructor() {
     super()
 
-    
     this.labelRenderer = null
   }
 
-  setCameraPos(){
-    this.parentScene.camera.instance.position.set(0,10,50)
-    this.parentScene.camera.instance.lookAt(new Vector3(0,0,0))   
+  setCameraPos() {
+    this.parentScene.camera.instance.position.set(0, 10, 50)
+    this.parentScene.camera.instance.lookAt(new Vector3(0, 0, 0))
   }
 
   addComponents() {
@@ -34,7 +33,7 @@ export default class IntroGroup extends BasicItem {
         new Vector3(2, 5.5, 0),
         'labelColSud'
       ),
-      lights:new IntroLights()
+      lights: new IntroLights(),
     }
   }
 
@@ -42,10 +41,7 @@ export default class IntroGroup extends BasicItem {
     this.labelRenderer = new LabelRenderer(
       this.parentScene.scene,
       this.parentScene.camera,
-      [
-        this.components.infoLine1,
-        this.components.infoLine2
-      ]
+      [this.components.infoLine1, this.components.infoLine2]
     )
     this.labelRenderer.init()
   }
@@ -55,8 +51,6 @@ export default class IntroGroup extends BasicItem {
     this.addComponents()
   }
 
-
-
   update() {
     if (this.item) {
       this.item.rotation.y += 0.005
@@ -64,7 +58,5 @@ export default class IntroGroup extends BasicItem {
     if (this.labelRenderer) {
       this.labelRenderer.update()
     }
-
   }
-
 }

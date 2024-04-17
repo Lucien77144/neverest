@@ -109,7 +109,7 @@ export default class SceneManager {
     this.sceneName = next.name
     this.next = new next.Scene()
     this.next.shaders?.forEach((s) => {
-      this.experience.shaderManager.add({ ...s, scene: 'scene1' })
+      // this.experience.shaderManager.add({ ...s, scene: 'scene1' })
     })
 
     // Switch function start on previous scene
@@ -156,7 +156,7 @@ export default class SceneManager {
           this.debugFolder.disabled = false
         }
         this.active?.dispose()
-        this.experience.shaderManager.shift()
+        // this.experience.shaderManager.shift()
         this.active = this.next
         this.next = null
 
@@ -198,7 +198,7 @@ export default class SceneManager {
     // Init active scene
     this.active = new scene.Scene()
     this.active.shaders?.forEach((s) => {
-      this.experience.shaderManager.add({ ...s, scene: 'scene0' })
+      // this.experience.shaderManager.add({ ...s, scene: 'scene0' })
     })
     // Switch complete function on the new scene
     this.active?.onSwitchComplete?.()

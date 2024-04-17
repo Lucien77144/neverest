@@ -15,12 +15,14 @@ export default class BaseCamp extends BasicScene {
     // New elements
     this.resources = this.experience.resources
     this.interest = null
+    this.camFov = 20
+    this.camRot = null
     this.blocking = []
 
     // Store
     // Getters
     this.currentScroll = computed(
-      () => Math.round(useScrollStore().getCurrent * 100) / 100
+      () => Math.round(useScrollStore().getCurrent * 10000) / 10000
     )
     this.factorScroll = computed(() => useScrollStore().getFactor)
     this.currentScene = computed(() => useNavigationStore().getScene)
@@ -43,37 +45,84 @@ export default class BaseCamp extends BasicScene {
    * Scroll the camera around the cube
    */
   setCamera() {
+    this.camRot = new Vector3(0, 0, 0)
+
     this.camera.instance.position.y = 3.7
     this.camera.instance.position.z = 20
 
-    this.camera.instance.fov = 20
+    this.camera.instance.fov = this.camFov
     this.camera.instance.far = 500
     this.camera.instance.updateProjectionMatrix()
   }
 
   /**
    * Watch the current scroll progression
-   * @param {*} value
+   * @param {*} value Scroll value
+   * @param {*} instant If the transtiion should be instant
    */
-  watchCurrentScroll(value) {
-    const setPower = (power) => {
-      if (this.interest.curr === power) return
-
-      this.interest.curr = power
-      const factor = { value: this.factorScroll.value }
-      gsap.to(factor, {
-        value: power,
-        duration: 0.5,
-        ease: 'power1.inOut',
-        onUpdate: () => this.setFactor(factor.value),
-      })
-    }
-
+  watchCurrentScroll(value, instant = false) {
     const trigger = this.interest.list.find(({ start, end }) => {
       return value >= start && value <= end
     })
 
-    setPower(trigger?.power || this.interest.base)
+    const power = trigger?.power || this.interest.base
+    if (this.interest.curr === power) return
+
+    this.$bus.emit('interest', trigger?.data)
+
+    this.setInterestVis(!!trigger?.data, instant)
+    this.setScrollFactor(power)
+  }
+
+  /**
+   * Rotate the camera on x axis to show the sky and start animation for the transition
+   * @param {boolean} active Is the interest active
+   * @param {object} instant Should the transition be instant
+   */
+  setInterestVis(active, instant) {
+    const val = {
+      ...this.camRot,
+      fov: this.camera.instance.fov,
+    }
+
+    const uniforms = this.experience.renderer.renderMesh.material.uniforms
+    if (!uniforms.uFocMask.value) {
+      uniforms.uFocMask.value = this.resources.items.focusMask
+    }
+
+    gsap.to(uniforms.uFocProgress, {
+      value: active ? 1 : 0,
+      duration: instant ? 0 : 1,
+      ease: 'power1.inOut',
+    })
+
+    gsap.to(val, {
+      x: active ? 0.15 : 0,
+      fov: active ? this.camFov * 0.85 : this.camFov,
+      duration: instant ? 0 : 0.75,
+      ease: 'power1.inOut',
+      onUpdate: () => {
+        this.camRot.x = val.x
+        this.camera.instance.fov = val.fov
+        this.camera.instance.updateProjectionMatrix()
+      },
+    })
+  }
+
+  /**
+   * Set the scroll power
+   * @param {*} power
+   */
+  setScrollFactor(power) {
+    this.interest.curr = power
+
+    const factor = { value: this.factorScroll.value }
+    gsap.to(factor, {
+      value: power,
+      duration: 0.5,
+      ease: 'power1.inOut',
+      onUpdate: () => this.setFactor(factor.value),
+    })
   }
 
   /**
@@ -320,8 +369,13 @@ export default class BaseCamp extends BasicScene {
       curr: this.factorScroll.value,
       list: this.currentScene.value.nav?.interest || [],
     }
+    this.watchCurrentScroll(0, true)
 
     super.init()
+  }
+
+  update() {
+    super.update()
   }
 
   dispose() {
