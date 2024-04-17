@@ -91,7 +91,7 @@ export default class BaseCamp extends BasicScene {
   /**
    * Rotate the camera on x axis to show the sky and start animation for the transition
    * @param {boolean} active Is the interest active
-   * @param {object} instant Should the transition be instant
+   * @param {boolean} instant Should the transition be instant
    */
   setInterestVis(active, instant) {
     const val = {
@@ -362,10 +362,17 @@ export default class BaseCamp extends BasicScene {
   }
 
   /**
+   * On switch complete
+   */
+  onSwitchComplete() {
+    this.watchCurrentScroll(0)
+  }
+
+  /**
    * On switch start
    */
   onSwitchStart() {
-    this.scope.stop()
+    this.$bus.emit('interest', null)
   }
 
   /**
@@ -378,9 +385,15 @@ export default class BaseCamp extends BasicScene {
     // Blocking
     this.setBlocking()
 
-    // Set the interest
-    this.watchCurrentScroll(0, true)
-
     super.init()
+  }
+
+  /**
+   * Dispose
+   */
+  dispose() {
+    this.setInterestVis(false, true)
+    this.scope.stop()
+    super.dispose()
   }
 }

@@ -99,4 +99,12 @@ export default class IceFall extends BasicScene {
 
     this.setDisableScroll(true)
   }
+
+  /**
+   * Dispose
+   */
+  dispose() {
+    super.dispose()
+    this.setDisableScroll(false)
+  }
 }
