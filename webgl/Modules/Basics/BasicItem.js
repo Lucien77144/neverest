@@ -88,6 +88,12 @@ export default class BasicItem {
     this.onClick
 
     /**
+     * If set, this function will be called on mouse down item
+     * If false, the event will be ignored, even if parent is triggering it
+     */
+    this.onMouseMove
+
+    /**
      * If set, this function will be called on mouse enter item
      * If false, the event will be ignored, even if parent is triggering it
      */

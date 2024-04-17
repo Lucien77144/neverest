@@ -1,4 +1,4 @@
-import { AnimationMixer, LoopOnce, MeshNormalMaterial, Vector3 } from 'three'
+import { AnimationMixer, MathUtils } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
 export default class BaseCampItem extends BasicItem {
@@ -18,17 +18,13 @@ export default class BaseCampItem extends BasicItem {
     this.scale = null
     this.mixer = null
     this.animationAction = null
-    this.holdDuration = 2000
+    this.baseCamRot = null
+    this.camRotTarget = null
 
     // Store
     this.currentScroll = computed(
       () => Math.round(useScrollStore().getCurrent * 10000) / 10000
     )
-
-    // Watch
-    watch(this.currentScroll, (v) => {
-      this.playAnimation(v)
-    })
   }
 
   /**
@@ -131,7 +127,13 @@ export default class BaseCampItem extends BasicItem {
    * @param {Number} value scroll value
    */
   playAnimation(value) {
-    if (!this.mixer || !this.item || !this.parentScene.camera.instance) return
+    if (
+      !this.mixer ||
+      !this.item ||
+      !this.parentScene.camera.instance ||
+      !this.parentScene.scope.active
+    )
+      return
 
     const animDuration = this.animationAction.getClip().duration
 
@@ -149,6 +151,23 @@ export default class BaseCampItem extends BasicItem {
       -rotation.z,
       rotation.y
     )
+    this.parentScene.camera.instance.rotation.x += this.parentScene.camRot.x
+
+    if (this.camRotTarget) {
+      this.parentScene.camera.instance.rotation.x += this.camRotTarget.x
+      this.parentScene.camera.instance.rotation.y += this.camRotTarget.y
+    }
+  }
+
+  /**
+   * On mouse move in the window
+   * @param {*} centered Centered mouse position
+   */
+  onMouseMove(centered) {
+    this.camRotTarget = {
+      x: centered.y * 0.0025,
+      y: -centered.x * 0.0025,
+    }
   }
 
   /**
@@ -157,6 +176,12 @@ export default class BaseCampItem extends BasicItem {
   init() {
     // Set item
     this.setItem()
-    this.playAnimation(0)
+  }
+
+  /**
+   * Update
+   */
+  update() {
+    this.playAnimation(this.currentScroll.value)
   }
 }

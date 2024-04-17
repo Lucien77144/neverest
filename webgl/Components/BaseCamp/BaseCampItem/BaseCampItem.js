@@ -25,9 +25,7 @@ export default class BaseCampItem extends BasicItem {
     )
 
     // Watch
-    watch(this.currentScroll, (v) => {
-      this.updateVisibility()
-    })
+    watch(this.currentScroll, (v) => this.updateVisibility())
   }
 
   /**

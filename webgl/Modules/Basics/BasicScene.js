@@ -54,13 +54,6 @@ export default class BasicScene {
      */
     this.audios = {}
 
-    /**
-     * Array of shaders to add to the scene
-     * @param {string} name - Fragment shader name (from the shader const)
-     * @param {boolean} force - If set remove the doubled lines from the frag
-     */
-    this.shaders = []
-
     // --------------------------------
     // Functions
     // --------------------------------
@@ -121,6 +114,11 @@ export default class BasicScene {
    * Raycast on mouse move
    */
   onMouseMoveEvt({ centered }) {
+    // Trigger mouse move on all components
+    Object.values(this.allComponents).forEach((c) =>
+      this.triggerFn(c, 'onMouseMove', centered)
+    )
+
     // Get hovered item
     const hovered = this.getRaycastedItem(centered, [
       'onMouseEnter',

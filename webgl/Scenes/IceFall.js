@@ -61,8 +61,8 @@ export default class IceFall extends BasicScene {
     super.onMouseMoveEvt({ centered })
 
     this.camRotTarget = {
-      x: this.baseCamRot.x + centered.y * 0.01,
-      y: this.baseCamRot.y - centered.x * 0.01,
+      x: this.baseCamRot.x + centered.y * 0.0025,
+      y: this.baseCamRot.y - centered.x * 0.0025,
     }
   }
 

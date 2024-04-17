@@ -31,8 +31,12 @@ export default class BaseCamp extends BasicScene {
     // Actions
     this.setFactor = useScrollStore().setFactor
 
-    // Watchers
-    this.watcher = watch(this.currentScroll, (v) => this.watchCurrentScroll(v))
+    // Scope
+    this.scope = effectScope()
+    this.scope.run(() => {
+      // Watchers
+      watch(this.currentScroll, (v) => this.watchCurrentScroll(v))
+    })
 
     this.components = {
       floor: new Floor(),
@@ -107,7 +111,7 @@ export default class BaseCamp extends BasicScene {
     })
 
     gsap.to(val, {
-      x: active ? 0.15 : 0,
+      x: active ? 0.1 : 0,
       fov: active ? this.camFov * 0.85 : this.camFov,
       duration: instant ? 0 : 0.75,
       ease: 'power1.inOut',
@@ -357,6 +361,16 @@ export default class BaseCamp extends BasicScene {
     )
   }
 
+  /**
+   * On switch start
+   */
+  onSwitchStart() {
+    this.scope.stop()
+  }
+
+  /**
+   * Init the scene
+   */
   init() {
     // Set the camera
     this.setCamera()
@@ -373,13 +387,5 @@ export default class BaseCamp extends BasicScene {
     this.watchCurrentScroll(0, true)
 
     super.init()
-  }
-
-  update() {
-    super.update()
-  }
-
-  dispose() {
-    super.dispose()
   }
 }
