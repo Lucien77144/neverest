@@ -1,6 +1,7 @@
 import Intro from '~/webgl/Scenes/Intro'
 import BaseCamp from '~/webgl/Scenes/BaseCamp'
 import IceFall from '~/webgl/Scenes/IceFall'
+import TestDA from '~/webgl/Scenes/TestDA'
 
 export type TSceneInfos = {
   id?: number
@@ -28,6 +29,14 @@ const SCENES: TSceneInfos[] = [
     isDefault: true,
     name: 'intro',
     Scene: Intro,
+    transition: {
+      duration: 2000,
+    },
+  },
+  {
+    isDefault: false,
+    name: 'TestDa',
+    Scene: TestDA,
     transition: {
       duration: 2000,
     },

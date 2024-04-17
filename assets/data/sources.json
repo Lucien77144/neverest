@@ -54,6 +54,26 @@
         "name": "ground1953",
         "source": "/img/ground_Texture_1953.exr",
         "type": "texture"
+      },
+      {
+        "name": "testDA1",
+        "source": "/img/texturesTestDA/testDA1.png",
+        "type": "texture"
+      },
+      {
+        "name": "testDA2",
+        "source": "/img/texturesTestDA/testDA2.png",
+        "type": "texture"
+      },
+      {
+        "name": "testDA3",
+        "source": "/img/texturesTestDA/testDA3.png",
+        "type": "texture"
+      },
+      {
+        "name": "testDA4",
+        "source": "/img/texturesTestDA/testDA4.jpg",
+        "type": "texture"
       }
     ]
   },

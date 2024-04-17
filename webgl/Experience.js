@@ -9,6 +9,8 @@ import DragManager from '~/utils/DragManager'
 import ScrollManager from './Utils/ScrollManager'
 import { Raycaster } from 'three'
 import AudioManager from './Utils/AudioManager'
+//import studio from '@theatre/studio'
+import { getProject } from '@theatre/core'
 import keyframesBaseCamp from '~/assets/data/keyframesBaseCamp.json'
 import FragmentShaderManager from './Utils/FragmentShaderManager'
 
@@ -23,6 +25,12 @@ export default class Experience {
       return Experience._instance
     }
     Experience._instance = this
+
+    // Init Theatre Studio
+    //studio.initialize()
+
+    // Create a project for the animation
+    this.project = getProject('NVRST', { state: keyframesBaseCamp })
 
     // Nuxt elements
     this.$router = useRouter()
