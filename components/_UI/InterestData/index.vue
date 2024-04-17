@@ -1,7 +1,9 @@
 <template>
-  <div ref="dataRef" v-if="data?.title" class="ITData">
-    <h1 class="ITData__title">{{ data.date }}</h1>
-    <h2 class="ITData__date">{{ $t(data.title) }}</h2>
+  <div class="ITData">
+    <div ref="dataRef" v-if="data?.title" class="ITData__wrapper">
+      <h1 class="ITData__date">{{ data.date }}</h1>
+      <h2 class="ITData__title">{{ $t(data.title) }}</h2>
+    </div>
   </div>
 </template>
 
@@ -20,9 +22,9 @@ onMounted(() => {
   $bus.on('interest', (val?: TSceneInterest['data']) => {
     if (val) {
       data.value = val
-      dataRef.value?.classList.remove('ITData--hidden')
+      dataRef.value?.classList.remove('ITData__wrapper--hidden')
     } else {
-      dataRef.value?.classList.add('ITData--hidden')
+      dataRef.value?.classList.add('ITData__wrapper--hidden')
     }
   })
 })
