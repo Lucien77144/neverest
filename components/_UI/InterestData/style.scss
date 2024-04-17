@@ -1,5 +1,25 @@
 .ITData {
+  height: 50vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   transition: 0.25s ease-in-out;
+
+  h1,
+  h2 {
+    margin: 0;
+    color: $primary;
+  }
+
+  &__date {
+    font-size: 14rem;
+  }
+
+  &__title {
+    font-size: 14rem;
+  }
 
   &--hidden {
     visibility: hidden;

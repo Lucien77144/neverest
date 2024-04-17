@@ -1,8 +1,21 @@
+uniform sampler2D uFocMask;
 uniform sampler2D uScene0;
 uniform sampler2D uScene1;
 uniform float uTime;
 uniform float uTransition;
+uniform float uFocProgress;
+uniform vec3 uFocColor;
+uniform vec2 uCursor;
 varying vec2 vUv;
+
+void applyRotation(inout vec2 uv, float r) {
+    uv -= .5;
+
+    float a = atan(uv.y, uv.x);
+    a -= r;
+    uv = vec2(cos(a), sin(a)) * length(uv);
+    uv += .5;
+}
 
 vec4 permute(vec4 x)
 {
@@ -47,18 +60,40 @@ float cnoise(vec2 P)
     return 2.3 * n_xy;
 }
 
+float luminance(vec3 rgb, vec3 color) {
+    return dot(rgb, color);
+}
+
+vec3 applyBlackAndWhite(vec3 c) {
+    return vec3(luminance(c, vec3(.299, .587, .114)));
+}
+
 void main() {
     vec2 uv = vUv;
+
     vec2 scene0UV = vec2(uv.x,uv.y+uTransition);
+    vec4 scene0 = texture2D(uScene0, scene0UV);
+
+    vec2 focUV = uv;
+    focUV -= .5;
+    float focNoise = smoothstep(0., 1., cnoise(focUV * 15.));
+    float circle = length(focUV - uCursor * focNoise);
+    focUV += .5;
+    
+    float focVal = 1. - smoothstep(circle, 0.0, uFocProgress);
+    float focVal2 = 1. - smoothstep(circle, 0.0, uFocProgress - .25);
+
+    vec3 sceneRGB = scene0.rgb; 
+    vec3 coveredScene = mix(sceneRGB, vec3(luminance(sceneRGB, uFocColor)), focVal);
+    scene0.rgb = mix(sceneRGB, coveredScene, focVal);
+    scene0.rgb = mix(scene0.rgb, mix(sceneRGB, coveredScene, .5), focVal2 + .25);
+
     vec2 scene1UV = vec2(uv.x,uv.y-(1.0-uTransition));
-    vec4 scene = vec4(0.);
+    vec4 scene1 = texture2D(uScene1, scene1UV);
 
-    scene = texture2D(uScene0, scene0UV);
-    vec4 scene0 = scene;
-
-    scene = texture2D(uScene1, scene1UV);
-    vec4 scene1 = scene;
-
+    // -------------------- //
+    //     Transition       //
+    // -------------------- //
     float inverseuTransi = -uTransition + 1.;
     float cloudSizeMultiplicator = pow((inverseuTransi-0.5) * 2., 8.) * -.35 + .35;
     vec4 transiWithColor = vec4(step(inverseuTransi,uv.y),step(uv.y,inverseuTransi),0.0,1.0);

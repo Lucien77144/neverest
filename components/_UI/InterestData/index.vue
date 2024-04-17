@@ -1,7 +1,7 @@
 <template>
   <div ref="dataRef" v-if="data?.title" class="ITData">
-    <h1 class="ITData__title">{{ $t(data.title) }}</h1>
-    <h2 class="ITData__date">{{ data.date }}</h2>
+    <h1 class="ITData__title">{{ data.date }}</h1>
+    <h2 class="ITData__date">{{ $t(data.title) }}</h2>
   </div>
 </template>
 

@@ -41,6 +41,11 @@
     "data": {},
     "items": [
       {
+        "name": "focusMask",
+        "source": "/img/focus_mask.jpg",
+        "type": "texture"
+      },
+      {
         "name": "dirt",
         "source": "/img/dirt.jpg",
         "type": "texture"

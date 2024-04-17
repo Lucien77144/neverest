@@ -85,14 +85,16 @@ export default class BaseCamp extends BasicScene {
       fov: this.camera.instance.fov,
     }
 
-    if (active) {
-      // this.shaderManager.add({
-      //   name: 'interest',
-      //   scene: 'scene0',
-      // })
-    } else {
-      // this.shaderManager.remove('interest')
+    const uniforms = this.experience.renderer.renderMesh.material.uniforms
+    if (!uniforms.uFocMask.value) {
+      uniforms.uFocMask.value = this.resources.items.focusMask
     }
+
+    gsap.to(uniforms.uFocProgress, {
+      value: active ? 1 : 0,
+      duration: instant ? 0 : 1,
+      ease: 'power1.inOut',
+    })
 
     gsap.to(val, {
       x: active ? 0.15 : 0,
