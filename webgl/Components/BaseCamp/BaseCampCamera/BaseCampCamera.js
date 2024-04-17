@@ -1,4 +1,4 @@
-import { AnimationMixer, MeshNormalMaterial } from 'three'
+import { AnimationMixer, LoopOnce, MeshNormalMaterial, Vector3 } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
 export default class BaseCampItem extends BasicItem {
@@ -16,7 +16,8 @@ export default class BaseCampItem extends BasicItem {
     this.position = null
     this.rotation = null
     this.scale = null
-    this.visibility = null
+    this.mixer = null
+    this.animationAction = null
     this.holdDuration = 2000
 
     // Store
@@ -26,7 +27,7 @@ export default class BaseCampItem extends BasicItem {
 
     // Watch
     watch(this.currentScroll, (v) => {
-      this.updateVisibility()
+      this.playAnimation(v)
     })
   }
 
@@ -38,11 +39,14 @@ export default class BaseCampItem extends BasicItem {
   }
 
   /**
-   * Set Visibility
-   * @param {Array} _visibility
+   * Set Mixer
    */
-  setVisibility(_visibility) {
-    this.visibility = _visibility
+  setMixer() {
+    // Set mixer
+    this.mixer = new AnimationMixer(this.model.scene)
+
+    // Set action
+    this.animationAction = this.mixer.clipAction(this.model.animations[0])
   }
 
   /**
@@ -54,7 +58,7 @@ export default class BaseCampItem extends BasicItem {
   setModel(_model) {
     if (!_model) return
 
-    this.model = _model.scene.clone()
+    this.model = _model
   }
 
   /**
@@ -95,17 +99,14 @@ export default class BaseCampItem extends BasicItem {
    */
   setItem() {
     this.setName()
-    this.setVisibility(this.options.visibility)
     this.setModel(this.options.model)
     this.setPosition(this.options.position)
     this.setRotation(this.options.rotation)
     this.setScale(this.options.scale)
+    this.setMixer()
 
     // Set item
-    this.item = this.model
-
-    // Set item material
-    this.item.children[0].material = new MeshNormalMaterial()
+    this.item = this.model.scene
 
     // Set item name
     this.item.name = this.name
@@ -122,26 +123,32 @@ export default class BaseCampItem extends BasicItem {
     this.scale && this.item.scale.copy(this.scale)
 
     // Set item visibility
-    if (this.visibility[0] > this.currentScroll.value) {
-      this.item.children[0].visible = false
-    }
+    this.item.children[0].visible = false
   }
 
   /**
-   * Update item visibility
+   * Play animation on scroll
+   * @param {Number} value scroll value
    */
-  updateVisibility() {
-    if (!this.visibility?.length) return
+  playAnimation(value) {
+    if (!this.mixer || !this.item || !this.parentScene.camera.instance) return
 
-    // if current scroll is between visibility values
-    if (
-      this.visibility[0] <= this.currentScroll.value &&
-      this.currentScroll.value <= this.visibility[1]
-    ) {
-      this.item.children[0].visible = true
-    } else {
-      this.item.children[0].visible = false
-    }
+    const animDuration = this.animationAction.getClip().duration
+
+    this.mixer.setTime((value * animDuration) / (100 / 3))
+    this.animationAction.play()
+    this.mixer.update(1 / 60)
+
+    this.parentScene.camera.instance.position.copy(
+      this.item.children[0].position
+    )
+
+    const rotation = this.item.children[0].rotation.clone()
+    this.parentScene.camera.instance.rotation.set(
+      rotation.x - Math.PI / 2,
+      -rotation.z,
+      rotation.y
+    )
   }
 
   /**
@@ -150,5 +157,6 @@ export default class BaseCampItem extends BasicItem {
   init() {
     // Set item
     this.setItem()
+    this.playAnimation(0)
   }
 }
