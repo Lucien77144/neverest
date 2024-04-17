@@ -22,7 +22,6 @@ export default class IceFall extends BasicScene {
       iceblocks: new Iceblocks(),
       floor: new IFFloor(),
     }
-    this.sheet = null
     this.icefallObj = null
     this.baseCamRot = null
     this.camRotTarget = null
@@ -31,18 +30,12 @@ export default class IceFall extends BasicScene {
 
     // Getters
     this.currentScene = computed(() => useNavigationStore().getScene)
+    // Actions
+    this.setTargetScroll = useScrollStore().setTarget
+    this.setDisableScroll = useScrollStore().setDisable
 
     // Init the scene
     this.init()
-  }
-
-  /**
-   * Setup the theater sheet
-   */
-  setupSheet() {
-    // Setup the sheet
-    this.sheet = this.project.sheet('IceFall')
-    this.icefallObj = this.sheet.object('IceFall', {})
   }
 
   /**
@@ -50,7 +43,10 @@ export default class IceFall extends BasicScene {
    */
   navigate() {
     this.currentPoint += 1
+    
+    this.setDisableScroll(false)
     this.setTargetScroll((100 / this.interests?.length) * this.currentPoint)
+    this.setDisableScroll(true)
   }
 
   /**
@@ -99,8 +95,9 @@ export default class IceFall extends BasicScene {
    */
   init() {
     super.init()
-    // this.setupSheet()
     this.initCamera()
+
+    this.setDisableScroll(true)
 
     // Set the interest points
     this.interests = this.currentScene.value.nav?.interest

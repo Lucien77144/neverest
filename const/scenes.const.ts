@@ -94,14 +94,31 @@ const SCENES: TSceneInfos[] = [
       scale: 100,
       interest: [
         {
+          start: 0,
+          end: 1,
+          power: 0.02,
+          data: {
+            title: 'ICEFALL',
+            date: '1953',
+          },
+        },
+        {
           start: 31,
           end: 35,
-          power: 0.025,
+          power: 0.02,
+          data: {
+            title: 'ICEFALL',
+            date: '2024',
+          },
         },
         {
           start: 64,
           end: 68,
-          power: 0.025,
+          power: 0.02,
+          data: {
+            title: 'ICEFALL',
+            date: '2050',
+          },
         },
       ],
     },

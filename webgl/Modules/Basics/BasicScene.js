@@ -28,7 +28,6 @@ export default class BasicScene {
 
     // Actions
     this.setProgressHold = useHoldStore().setProgress
-    this.setTargetScroll = useScrollStore().setTarget
 
     // Getters
     this.progressHold = computed(() => useHoldStore().getProgress)

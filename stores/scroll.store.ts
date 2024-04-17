@@ -35,9 +35,7 @@ export const useScrollStore = defineStore('scroll', {
   },
   actions: {
     setCurrent(val: TScroll['current']) {
-      if (!this.disable) {
-        this.current = val
-      }
+      this.current = val
     },
     setTarget(val: TScroll['target']) {
       if (!this.disable) {
