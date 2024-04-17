@@ -41,6 +41,7 @@ export default class SceneManager {
     this.currentScroll = computed(
       () => Math.round(useScrollStore().getCurrent * 1000) / 100000
     )
+    this.factorScroll = computed(() => useScrollStore().getFactor)
     this.persistScene = computed(() => useDebugStore().getPersistScene)
     this.currentScale = computed(() => useNavigationStore().getScale)
     this.sceneNavigation = computed(() => useNavigationStore().getScene)
@@ -108,7 +109,13 @@ export default class SceneManager {
 
     // Init next scene
     this.sceneName = next.name
-    this.next = new next.Scene()
+    this.next = new next.Scene({
+      interest: {
+        list: next.nav?.interest,
+        base: this.factorScroll.value,
+        current: this.factorScroll.value,
+      },
+    })
 
     // Switch function start on previous scene
     this.active?.onSwitchStart?.()
@@ -193,7 +200,13 @@ export default class SceneManager {
     if (this.debug) this.setDebug(this.sceneName)
 
     // Init active scene
-    this.active = new scene.Scene()
+    this.active = new scene.Scene({
+      interest: {
+        list: scene.nav?.interest,
+        base: this.factorScroll.value,
+        current: this.factorScroll.value,
+      },
+    })
     // Switch complete function on the new scene
     this.active?.onSwitchComplete?.()
 

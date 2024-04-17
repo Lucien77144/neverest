@@ -9,7 +9,7 @@ export default class IceFall extends BasicScene {
   /**
    * Constructor
    */
-  constructor() {
+  constructor({ interest }) {
     super()
 
     // Get elements from experience
@@ -26,7 +26,7 @@ export default class IceFall extends BasicScene {
     this.baseCamRot = null
     this.camRotTarget = null
     this.currentPoint = 0
-    this.interests = []
+    this.interest = interest
 
     // Getters
     this.currentScene = computed(() => useNavigationStore().getScene)
@@ -43,9 +43,9 @@ export default class IceFall extends BasicScene {
    */
   navigate() {
     this.currentPoint += 1
-    
+
     this.setDisableScroll(false)
-    this.setTargetScroll((100 / this.interests?.length) * this.currentPoint)
+    this.setTargetScroll((100 / this.interest.list?.length) * this.currentPoint)
     this.setDisableScroll(true)
   }
 
@@ -98,8 +98,5 @@ export default class IceFall extends BasicScene {
     this.initCamera()
 
     this.setDisableScroll(true)
-
-    // Set the interest points
-    this.interests = this.currentScene.value.nav?.interest
   }
 }

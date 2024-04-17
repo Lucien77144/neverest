@@ -10,12 +10,12 @@ export default class BaseCamp extends BasicScene {
   /**
    * Constructor
    */
-  constructor() {
+  constructor({ interest }) {
     super()
 
     // New elements
     this.resources = this.experience.resources
-    this.interest = null
+    this.interest = interest
     this.camFov = 20
     this.camRot = null
     this.cam = null
@@ -75,7 +75,7 @@ export default class BaseCamp extends BasicScene {
    * @param {*} instant If the transtiion should be instant
    */
   watchCurrentScroll(value, instant = false) {
-    const trigger = this.interest.list.find(({ start, end }) => {
+    const trigger = this.interest.list?.find(({ start, end }) => {
       return value >= start && value <= end
     })
 
@@ -379,11 +379,6 @@ export default class BaseCamp extends BasicScene {
     this.setBlocking()
 
     // Set the interest
-    this.interest = {
-      base: this.factorScroll.value,
-      curr: this.factorScroll.value,
-      list: this.currentScene.value.nav?.interest || [],
-    }
     this.watchCurrentScroll(0, true)
 
     super.init()

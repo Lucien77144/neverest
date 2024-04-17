@@ -169,11 +169,11 @@ export default class Loader {
 
     this.loaders.push({
       extensions: ['font'],
-      action:(ressource)=>{
-        fontLoader.load(ressource.source,(font)=>{
-          this.fileLoadEnd(ressource,font)
+      action: (ressource) => {
+        fontLoader.load(ressource.source, (font) => {
+          this.fileLoadEnd(ressource, font)
         })
-      }
+      },
     })
   }
 
