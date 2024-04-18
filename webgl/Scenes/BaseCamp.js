@@ -30,6 +30,7 @@ export default class BaseCamp extends BasicScene {
     this.disabledScroll = computed(() => useScrollStore().getDisable)
     // Actions
     this.setFactor = useScrollStore().setFactor
+    this.instantScroll = useScrollStore().instant
 
     // Scope
     this.scope = effectScope()
@@ -122,17 +123,22 @@ export default class BaseCamp extends BasicScene {
 
   /**
    * Set the scroll power
-   * @param {*} power
+   * @param {*} value
    */
-  setScrollFactor(power) {
-    this.interest.curr = power
+  setScrollFactor(value) {
+    this.interest.curr = value
 
     const factor = { value: this.factorScroll.value }
     gsap.to(factor, {
-      value: power,
+      value,
       duration: 0.5,
       ease: 'power1.inOut',
-      onUpdate: () => this.setFactor(factor.value),
+      onUpdate: () => {
+        this.setFactor(factor.value)
+        if (value !== this.interest.base) {
+          this.instantScroll(this.currentScroll.value + 0.0001)
+        }
+      },
     })
   }
 

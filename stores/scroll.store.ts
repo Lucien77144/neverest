@@ -12,8 +12,8 @@ export const useScrollStore = defineStore('scroll', {
   state: (): TScroll => ({
     current: 0 as TScroll['current'], // 0-100
     target: 0 as TScroll['target'], // 0-100
-    speed: 0.1 as TScroll['speed'], // 0-1
-    factor: 0.1 as TScroll['factor'], // 0-1
+    speed: 0.05 as TScroll['speed'], // 0-1
+    factor: 0.3 as TScroll['factor'], // 0-1
     disable: false,
   }),
   getters: {
