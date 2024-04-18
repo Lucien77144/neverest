@@ -43,7 +43,9 @@ export default class IceFall extends BasicScene {
    */
   navigate() {
     this.currentPoint += 1
-    this.instantScroll((100 / this.interest.list?.length) * this.currentPoint)
+    this.instantScroll(
+      (100 / (this.interest.list?.length - 1)) * this.currentPoint
+    )
   }
 
   /**
@@ -92,6 +94,7 @@ export default class IceFall extends BasicScene {
    */
   afterTransitionInit() {
     this.setDisableScroll(true)
+    this.instantScroll(5)
   }
 
   /**

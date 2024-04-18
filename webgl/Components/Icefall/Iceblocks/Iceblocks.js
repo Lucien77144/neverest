@@ -20,7 +20,7 @@ export default class Iceblocks extends BasicItem {
     if (this.parentScene.currentPoint >= interests?.length) return
 
     this.parentScene.navigate()
-    if (this.parentScene.currentPoint >= interests?.length) {
+    if (this.parentScene.currentPoint >= interests?.length - 1) {
       this.disabledFn.push('onHold') // disable the hold if we reach the end
     }
 

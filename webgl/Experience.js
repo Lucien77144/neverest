@@ -30,7 +30,7 @@ export default class Experience {
     BasicScene && (this.BasicScene = BasicScene)
 
     // Utils
-    this.cursor = new CursorManager()
+    this.cursor = new CursorManager({ el: this.canvas })
 
     // New elements
     this.viewport = null

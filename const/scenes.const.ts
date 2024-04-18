@@ -102,8 +102,8 @@ const SCENES: TSceneInfos[] = [
           },
         },
         {
-          start: 31,
-          end: 35,
+          start: 100 / 3,
+          end: 37,
           power: 0.02,
           data: {
             title: 'ICEFALL',
@@ -111,8 +111,8 @@ const SCENES: TSceneInfos[] = [
           },
         },
         {
-          start: 64,
-          end: 68,
+          start: (100 / 3) * 2,
+          end: 70,
           power: 0.02,
           data: {
             title: 'ICEFALL',
