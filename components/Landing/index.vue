@@ -6,7 +6,7 @@
     </div>
     <div class="start__content">
       <p>
-        {{ $t('INTRO') }}
+        {{ $t('LANDING') }}
       </p>
     </div>
     <div class="start__footer">

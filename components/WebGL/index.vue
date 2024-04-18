@@ -1,6 +1,7 @@
 <template>
   <canvas ref="canvas" class="exp" />
   <UIInterestData />
+  <UITitle />
 </template>
 
 <script setup lang="ts">

@@ -22,7 +22,7 @@ const options = ref<string[]>(
  * Change the language of the experience
  * @param target Target element to get value from
  */
-const change = ({ target }: any) => {
+const change = ({ target }: any) => {  
   I18n.setLocale(target.value)
   $bus.emit('lang:change', target.value)
 }

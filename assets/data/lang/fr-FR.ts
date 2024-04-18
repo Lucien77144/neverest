@@ -7,8 +7,9 @@ export default {
   START: 'Démarrer',
   NEXT: 'Suivant',
   PREV: 'Précédent',
+  LANDING: 'Aliquip mollit occaecat mollit anim consequat adipisicing consectetur.',
   BASECAMP: 'Camp de base',
   ICEFALL: 'Chute de glace',
-  INTRO:
-    'FR - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+  INTRO_TITLE_1: 'Ouvrez la voie',
+  INTRO_TITLE_2: 'Neverest',
 }
