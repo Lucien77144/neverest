@@ -64,14 +64,14 @@ export default class BasicScene {
     this.onScroll
 
     /**
-     * On switch start and if this scene is the previous one
+     * On transition start, before the dispose
      */
-    this.onSwitchStart
+    this.onDisposeStart
 
     /**
      * On switch between scene complete and this scene is the new one
      */
-    this.onSwitchComplete
+    this.afterTransitionInit
   }
 
   /**
@@ -326,7 +326,7 @@ export default class BasicScene {
   init() {
     this.allComponents = this.getRecursiveComponents()
     this.addItemsToScene()
-    Object.values(this.allComponents).forEach((c) => c.afterViewInit?.())
+    Object.values(this.allComponents).forEach((c) => c.afterComponentsInit?.())
 
     this.audios && this.addAudios(this.audios)
     this.scene.add(this.camera.instance)

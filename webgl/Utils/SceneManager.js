@@ -25,13 +25,14 @@ export default class SceneManager {
     this.active = null
     this.next = null
     this.destination = null
+    this.baseScrollFactor = null
 
     // Actions
     this.togglePersistScene = useDebugStore().togglePersistScene
     this.setSceneStorage = useDebugStore().setScene
 
-    this.setCurrentScroll = useScrollStore().setCurrent
-    this.setTargetScroll = useScrollStore().setTarget
+    this.instantScroll = useScrollStore().instant
+    this.setDisableScroll = useScrollStore().setDisable
 
     this.setSceneNavigation = useNavigationStore().setScene
     this.setStartPosition = useNavigationStore().setStart
@@ -89,8 +90,7 @@ export default class SceneManager {
    * @param {number} val Scroll value, from 0 to 100
    */
   instantNavigate({ scroll, scale, start, scene }) {
-    scroll && this.setCurrentScroll(scroll)
-    scroll && this.setTargetScroll(scroll)
+    scroll && this.instantScroll(scroll)
     scale && this.setScale(scale || 0)
     start && this.setStartPosition(start || 0)
     scene && this.setScene(scene)
@@ -107,18 +107,21 @@ export default class SceneManager {
       this.debugFolder.disabled = true // Disable the debug folder during the transition
     }
 
+    // Disable scroll
+    this.setDisableScroll(true)
+
     // Init next scene
     this.sceneName = next.name
     this.next = new next.Scene({
       interest: {
         list: next.nav?.interest,
-        base: this.factorScroll.value,
+        base: this.baseScrollFactor,
         current: this.factorScroll.value,
       },
     })
 
     // Switch function start on previous scene
-    this.active?.onSwitchStart?.()
+    this.active?.onDisposeStart?.()
 
     // Update the store (and localstorage) with the new scene :
     this.setScene(next)
@@ -154,6 +157,11 @@ export default class SceneManager {
       onComplete: () => {
         // Reset transition uniform value :
         this.renderMesh.material.uniforms.uTransition.value = 0
+        this.instantNavigate({
+          start: next.nav?.start,
+          scale: next.nav?.scale,
+          scroll: 0,
+        })
 
         // Reset params :
         if (this.debug) {
@@ -165,7 +173,8 @@ export default class SceneManager {
         this.next = null
 
         // Switch complete function on the new scene
-        this.active?.onSwitchComplete?.()
+        this.setDisableScroll(false)
+        this.active?.afterTransitionInit?.()
       },
     })
   }
@@ -200,15 +209,16 @@ export default class SceneManager {
     if (this.debug) this.setDebug(this.sceneName)
 
     // Init active scene
+    this.baseScrollFactor = this.factorScroll.value
     this.active = new scene.Scene({
       interest: {
         list: scene.nav?.interest,
-        base: this.factorScroll.value,
+        base: this.baseScrollFactor,
         current: this.factorScroll.value,
       },
     })
     // Switch complete function on the new scene
-    this.active?.onSwitchComplete?.()
+    this.active?.afterTransitionInit?.()
 
     // Start navigation
     this.$bus.on('scene:switch', (scene) => this.switch(scene))

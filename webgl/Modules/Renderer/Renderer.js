@@ -123,7 +123,6 @@ export default class Renderer {
           uTransition: new Uniform(),
 
           // Focus
-          uFocMask: new Uniform(),
           uFocColor: new Uniform(new Color('#f1dad2')),
           uFocProgress: new Uniform(0),
 

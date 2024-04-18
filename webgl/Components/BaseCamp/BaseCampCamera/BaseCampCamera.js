@@ -25,6 +25,7 @@ export default class BaseCampItem extends BasicItem {
     this.currentScroll = computed(
       () => Math.round(useScrollStore().getCurrent * 10000) / 10000
     )
+    this.getDisabledScroll = computed(() => useScrollStore().getDisable)
   }
 
   /**
@@ -131,7 +132,7 @@ export default class BaseCampItem extends BasicItem {
       !this.mixer ||
       !this.item ||
       !this.parentScene.camera.instance ||
-      !this.parentScene.scope.active
+      this.getDisabledScroll.value
     )
       return
 

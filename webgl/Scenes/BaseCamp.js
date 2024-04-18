@@ -82,41 +82,38 @@ export default class BaseCamp extends BasicScene {
     const power = trigger?.power || this.interest.base
     if (this.interest.curr === power) return
 
-    this.$bus.emit('interest', trigger?.data)
-
-    this.setInterestVis(!!trigger?.data, instant)
+    this.setInterestVis(trigger?.data, instant)
     this.setScrollFactor(power)
   }
 
   /**
    * Rotate the camera on x axis to show the sky and start animation for the transition
-   * @param {boolean} active Is the interest active
+   * @param {object} data Is the interest active
    * @param {boolean} instant Should the transition be instant
    */
-  setInterestVis(active, instant) {
+  setInterestVis(data, instant) {
+    this.$bus.emit('interest', data)
+
     const val = {
       ...this.camRot,
       fov: this.camera.instance.fov,
     }
 
     const uniforms = this.experience.renderer.renderMesh.material.uniforms
-    if (!uniforms.uFocMask.value) {
-      uniforms.uFocMask.value = this.resources.items.focusMask
-    }
-
     gsap.to(uniforms.uFocProgress, {
-      value: active ? 1 : 0,
+      value: !!data ? 1 : 0,
       duration: instant ? 0 : 1,
       ease: 'power1.inOut',
     })
 
     gsap.to(val, {
-      x: active ? 0.1 : 0,
-      fov: active ? this.camFov * 0.85 : this.camFov,
+      x: !!data ? 0.1 : 0,
+      fov: !!data ? this.camFov * 0.85 : this.camFov,
       duration: instant ? 0 : 0.75,
       ease: 'power1.inOut',
       onUpdate: () => {
         this.camRot.x = val.x
+        if (!this.camera.instance) return
         this.camera.instance.fov = val.fov
         this.camera.instance.updateProjectionMatrix()
       },
@@ -362,20 +359,6 @@ export default class BaseCamp extends BasicScene {
   }
 
   /**
-   * On switch complete
-   */
-  onSwitchComplete() {
-    this.watchCurrentScroll(0)
-  }
-
-  /**
-   * On switch start
-   */
-  onSwitchStart() {
-    this.$bus.emit('interest', null)
-  }
-
-  /**
    * Init the scene
    */
   init() {
@@ -389,11 +372,28 @@ export default class BaseCamp extends BasicScene {
   }
 
   /**
+   * On switch complete
+   */
+  afterTransitionInit() {
+    this.watchCurrentScroll(0)
+  }
+
+  /**
+   * On transition start, before the dispose
+   */
+  onDisposeStart() {
+    this.scope.stop()
+    this.$bus.emit('interest', null)
+  }
+
+  /**
    * Dispose
    */
   dispose() {
-    this.setInterestVis(false, true)
-    this.scope.stop()
+    this.setInterestVis(null, true)
+
     super.dispose()
+    this.scope.stop()
+    this.scope = null
   }
 }

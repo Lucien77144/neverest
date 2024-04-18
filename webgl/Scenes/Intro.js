@@ -35,11 +35,11 @@ export default class Intro extends BasicScene {
     this.camera.instance.position.z += delta / 100
   }
 
-  onSwitchStart() {
+  onDisposeStart() {
     this.components.introGroup?.labelRenderer?.dispose?.()
   }
 
-  onSwitchComplete() {
+  afterTransitionInit() {
     this.components.introGroup.setLabelRenderer()
   }
 }

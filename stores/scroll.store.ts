@@ -35,12 +35,18 @@ export const useScrollStore = defineStore('scroll', {
   },
   actions: {
     setCurrent(val: TScroll['current']) {
-      this.current = val
+      if (!this.disable) {
+        this.current = val
+      }
     },
     setTarget(val: TScroll['target']) {
       if (!this.disable) {
         this.target = val
       }
+    },
+    instant(val: TScroll['target'] | TScroll['current']) {
+      this.target = val
+      this.current = val
     },
     setSpeed(val: TScroll['speed']) {
       this.speed = val

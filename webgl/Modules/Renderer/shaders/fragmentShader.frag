@@ -1,4 +1,3 @@
-uniform sampler2D uFocMask;
 uniform sampler2D uScene0;
 uniform sampler2D uScene1;
 uniform float uTime;

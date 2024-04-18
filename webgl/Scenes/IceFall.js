@@ -44,9 +44,7 @@ export default class IceFall extends BasicScene {
   navigate() {
     this.currentPoint += 1
 
-    this.setDisableScroll(false)
     this.setTargetScroll((100 / this.interest.list?.length) * this.currentPoint)
-    this.setDisableScroll(true)
   }
 
   /**
@@ -91,20 +89,17 @@ export default class IceFall extends BasicScene {
   }
 
   /**
+   * After init and entrance transition end
+   */
+  afterTransitionInit() {
+    this.setDisableScroll(true)
+  }
+
+  /**
    * Init
    */
   init() {
     super.init()
     this.initCamera()
-
-    this.setDisableScroll(true)
-  }
-
-  /**
-   * Dispose
-   */
-  dispose() {
-    super.dispose()
-    this.setDisableScroll(false)
   }
 }
