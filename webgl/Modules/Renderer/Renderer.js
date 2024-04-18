@@ -120,7 +120,7 @@ export default class Renderer {
         uniforms: {
           uScene0: new Uniform(this.rt0.texture),
           uScene1: new Uniform(this.rt1.texture),
-          uTransition: new Uniform(),
+          uTransition: new Uniform(0),
 
           // Focus
           uFocColor: new Uniform(new Color('#f1dad2')),

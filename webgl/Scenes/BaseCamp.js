@@ -27,6 +27,7 @@ export default class BaseCamp extends BasicScene {
     )
     this.factorScroll = computed(() => useScrollStore().getFactor)
     this.currentScene = computed(() => useNavigationStore().getScene)
+    this.disabledScroll = computed(() => useScrollStore().getDisable)
     // Actions
     this.setFactor = useScrollStore().setFactor
 
@@ -72,6 +73,8 @@ export default class BaseCamp extends BasicScene {
    * @param {*} instant If the transtiion should be instant
    */
   watchCurrentScroll(value, instant = false) {
+    if (this.disabledScroll.value) return
+
     const trigger = this.interest.list?.find(({ start, end }) => {
       return value >= start && value <= end
     })
@@ -361,6 +364,7 @@ export default class BaseCamp extends BasicScene {
   init() {
     // Set the camera
     this.setCamera()
+    this.setInterestVis(null, true)
 
     // Blocking
     this.setBlocking()
@@ -380,6 +384,8 @@ export default class BaseCamp extends BasicScene {
    */
   onDisposeStart() {
     this.scope.stop()
+    this.scope = null
+
     this.$bus.emit('interest', null)
   }
 
@@ -390,7 +396,5 @@ export default class BaseCamp extends BasicScene {
     this.setInterestVis(null, true)
 
     super.dispose()
-    this.scope.stop()
-    this.scope = null
   }
 }

@@ -31,7 +31,7 @@ export default class IceFall extends BasicScene {
     // Getters
     this.currentScene = computed(() => useNavigationStore().getScene)
     // Actions
-    this.setTargetScroll = useScrollStore().setTarget
+    this.instantScroll = useScrollStore().instant
     this.setDisableScroll = useScrollStore().setDisable
 
     // Init the scene
@@ -43,8 +43,7 @@ export default class IceFall extends BasicScene {
    */
   navigate() {
     this.currentPoint += 1
-
-    this.setTargetScroll((100 / this.interest.list?.length) * this.currentPoint)
+    this.instantScroll((100 / this.interest.list?.length) * this.currentPoint)
   }
 
   /**

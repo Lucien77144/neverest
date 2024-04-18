@@ -133,11 +133,13 @@ export default class BaseCampItem extends BasicItem {
   playAnimation(value) {
     if (!this.mixer || !this.item || !this.parentScene.camera.instance) return
 
-    const animDuration = this.animationAction.getClip().duration
+    if (!this.getDisabledScroll.value) {
+      const animDuration = this.animationAction.getClip().duration
 
-    this.mixer.setTime((value * animDuration) / (100 / 3))
-    this.animationAction.play()
-    this.mixer.update(1 / 60)
+      this.mixer.setTime((value * animDuration) / (100 / 3))
+      this.animationAction.play()
+      this.mixer.update(1 / 60)
+    }
 
     this.parentScene.camera.instance.position.copy(
       this.item.children[0].position
