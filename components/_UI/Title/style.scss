@@ -1,0 +1,30 @@
+.title {
+  position: absolute;
+  transform: translateX(-50%);
+  top: 10%;
+  left: 50%;
+  display: none;
+
+  &__wrapper {
+    padding: 2rem;
+  }
+
+  &__item {
+    margin: 0;
+    text-transform: uppercase;
+    color: $primary;
+    text-align: center;
+    font-family: $open-sans;
+    font-size: 3.125rem;
+
+    &:nth-of-type(2) {
+      font-size: 9rem;
+      font-style: italic;
+      line-height: 6rem;
+    }
+  }
+}
+
+.active {
+  display: block;
+}
