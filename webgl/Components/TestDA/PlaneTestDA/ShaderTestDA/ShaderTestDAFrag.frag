@@ -34,14 +34,16 @@ void main()
 
     vec4 texture = texture2D(uTexture, vUv);
     float border = step(uMaskThickness,vUv.x+noise(vUv.y*uMaskNoiseIntensity)*uMaskNoiseWidth-uMaskNoiseWidth*0.5) * step(vUv.x+noise((vUv.y+uDecalageBorderLeftRight)*uMaskNoiseIntensity)*uMaskNoiseWidth-uMaskNoiseWidth*0.5,1.0-uMaskThickness);
-    vec3 isColoried = step(0.1,texture.r) * border * mix(uBackgroundColor,uColor,texture.g*0.8+0.2);
+    float borderWithSmooth = smoothstep(0.0, uMaskThickness+uMaskNoiseWidth*0.5,vUv.x) * smoothstep(1.0, 1.0 - (uMaskThickness+uMaskNoiseWidth*0.5), vUv.x);
+    //border = mix(border, 1.0, borderWithSmooth);
+    vec3 isColoried = step(0.1,texture.r) * border  * mix(uBackgroundColor,uColor,texture.g );
     vec3 isBackground = (-(step(0.1,texture.r) * border) + 1.0) * uBackgroundColor;
 
     gl_FragColor = vec4(isColoried+isBackground,1.0);
 
     //Test Canvas Texture
 
-    //gl_FragColor = vec4(texture.g,0.0,0.0,1.0);
+    //gl_FragColor = vec4(border,0.0,0.0,1.0);
 
    //gl_FragColor = texture;
 
