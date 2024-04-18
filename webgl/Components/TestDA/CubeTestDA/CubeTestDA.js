@@ -34,7 +34,8 @@ export default class CubeTestDA extends BasicItem {
             fragmentShader:ShaderTestDAFrag,
             uniforms:{
                 uTexture:new Uniform(this.resources.testDA4),
-                uColor:new Uniform(new Color(0x636717))
+                uColor:new Uniform(new Color(0x636717)),
+                uMaskThickness: new Uniform(0.1)
             },
             transparent:true
         }
@@ -44,7 +45,7 @@ export default class CubeTestDA extends BasicItem {
 
   setItem() {
     this.item = new Mesh(this.geometry,this.material)
-    this.item.position.x = -3
+    this.item.position.x = 3
   }
 
   init() {

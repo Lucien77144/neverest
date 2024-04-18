@@ -12,13 +12,16 @@ export default class TestDA extends BasicScene {
       // New elements
       this.components = {
         planeDA:new PlaneTestDA(),
-        boxDA:new CubeTestDA()
       }
   
   
       // Init the scene
       this.init()
     }
-
     
+    init() {
+      super.init()
+
+      this.camera.instance.position.z = 40
+    }
   }
