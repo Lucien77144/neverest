@@ -23,6 +23,9 @@ export default class LabelRenderer {
       labelDiv.id = lbl.labelId
       labelDiv.textContent = lbl.inputText
       labelDiv.style.backgroundColor = 'transparent'
+      labelDiv.style.fontFamily = 'Outfit'
+      labelDiv.style.textTransform = 'uppercase'
+      labelDiv.style.color = '#975062'
 
       const label = new CSS2DObject(labelDiv)
       label.position.set(0, 0, 0)
