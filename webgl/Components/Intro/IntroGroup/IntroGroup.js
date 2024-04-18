@@ -3,6 +3,7 @@ import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import Mountain from '../Mountain/Mountain'
 import InfoLine from '../InfoLine/InfoLine'
 import IntroLights from '../IntroLights/IntroLights'
+import LabelRenderer from '~/webgl/Utils/LabelRenderer'
 
 export default class IntroGroup extends BasicItem {
   constructor() {
