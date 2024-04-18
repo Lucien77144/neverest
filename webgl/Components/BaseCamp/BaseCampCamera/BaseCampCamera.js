@@ -1,4 +1,4 @@
-import { AnimationMixer, MeshNormalMaterial } from 'three'
+import { AnimationMixer, MathUtils, Vector3 } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
 export default class BaseCampItem extends BasicItem {
@@ -16,16 +16,19 @@ export default class BaseCampItem extends BasicItem {
     this.position = null
     this.rotation = null
     this.scale = null
-    this.visibility = null
-    this.holdDuration = 2000
+    this.mixer = null
+    this.animationAction = null
+    this.baseCamRot = null
+    this.camRotTarget = {
+      x: 0,
+      y: 0,
+    }
 
     // Store
     this.currentScroll = computed(
       () => Math.round(useScrollStore().getCurrent * 10000) / 10000
     )
-
-    // Watch
-    watch(this.currentScroll, (v) => this.updateVisibility())
+    this.getDisabledScroll = computed(() => useScrollStore().getDisable)
   }
 
   /**
@@ -36,11 +39,14 @@ export default class BaseCampItem extends BasicItem {
   }
 
   /**
-   * Set Visibility
-   * @param {Array} _visibility
+   * Set Mixer
    */
-  setVisibility(_visibility) {
-    this.visibility = _visibility
+  setMixer() {
+    // Set mixer
+    this.mixer = new AnimationMixer(this.model.scene)
+
+    // Set action
+    this.animationAction = this.mixer.clipAction(this.model.animations[0])
   }
 
   /**
@@ -52,7 +58,7 @@ export default class BaseCampItem extends BasicItem {
   setModel(_model) {
     if (!_model) return
 
-    this.model = _model.scene.clone()
+    this.model = _model
   }
 
   /**
@@ -93,17 +99,14 @@ export default class BaseCampItem extends BasicItem {
    */
   setItem() {
     this.setName()
-    this.setVisibility(this.options.visibility)
     this.setModel(this.options.model)
     this.setPosition(this.options.position)
     this.setRotation(this.options.rotation)
     this.setScale(this.options.scale)
+    this.setMixer()
 
     // Set item
-    this.item = this.model
-
-    // Set item material
-    this.item.children[0].material = new MeshNormalMaterial()
+    this.item = this.model.scene
 
     // Set item name
     this.item.name = this.name
@@ -120,25 +123,50 @@ export default class BaseCampItem extends BasicItem {
     this.scale && this.item.scale.copy(this.scale)
 
     // Set item visibility
-    if (this.visibility[0] > this.currentScroll.value) {
-      this.item.children[0].visible = false
+    this.item.children[0].visible = false
+  }
+
+  /**
+   * Play animation on scroll
+   * @param {Number} value scroll value
+   */
+  playAnimation(value) {
+    if (!this.mixer || !this.item || !this.parentScene.camera.instance) return
+
+    if (!this.getDisabledScroll.value) {
+      const animDuration = this.animationAction.getClip().duration
+
+      this.mixer.setTime((value * animDuration) / (100 / 3))
+      this.animationAction.play()
+      this.mixer.update(1 / 60)
+    }
+
+    this.parentScene.camera.instance.position.copy(
+      this.item.children[0].position
+    )
+
+    const rotation = this.item.children[0].rotation.clone()
+    this.parentScene.camera.instance.rotation.set(
+      rotation.x - Math.PI / 2,
+      -rotation.z,
+      rotation.y
+    )
+    this.parentScene.camera.instance.rotation.x += this.parentScene.camRot.x
+
+    if (this.camRotTarget) {
+      this.parentScene.camera.instance.rotation.x += this.camRotTarget.x
+      this.parentScene.camera.instance.rotation.y += this.camRotTarget.y
     }
   }
 
   /**
-   * Update item visibility
+   * On mouse move in the window
+   * @param {*} centered Centered mouse position
    */
-  updateVisibility() {
-    if (!this.visibility?.length) return
-
-    // if current scroll is between visibility values
-    if (
-      this.visibility[0] <= this.currentScroll.value &&
-      this.currentScroll.value <= this.visibility[1]
-    ) {
-      this.item.children[0].visible = true
-    } else {
-      this.item.children[0].visible = false
+  onMouseMove(centered) {
+    this.camRotTarget = {
+      x: centered.y * 0.0025,
+      y: -centered.x * 0.0025,
     }
   }
 
@@ -148,5 +176,13 @@ export default class BaseCampItem extends BasicItem {
   init() {
     // Set item
     this.setItem()
+    this.baseCamRot = this.parentScene.camera.instance.rotation.clone()
+  }
+
+  /**
+   * Update
+   */
+  update() {
+    this.playAnimation(this.currentScroll.value)
   }
 }

@@ -1,11 +1,17 @@
 .ITData {
   height: 50vh;
   width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  transition: 0.25s ease-in-out;
+  padding: 1rem 2.5rem;
+
+  &__wrapper {
+    transition: 0.75s ease-in-out;
+
+    &--hidden {
+      visibility: hidden;
+      opacity: 0;
+      transform: translateY(-5rem);
+    }
+  }
 
   h1,
   h2 {
@@ -14,15 +20,10 @@
   }
 
   &__date {
-    font-size: 14rem;
+    font-size: 9.25rem;
   }
 
   &__title {
-    font-size: 14rem;
-  }
-
-  &--hidden {
-    visibility: hidden;
-    opacity: 0;
+    font-size: 3rem;
   }
 }

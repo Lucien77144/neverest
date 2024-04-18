@@ -1,17 +1,51 @@
 .progress {
   position: absolute;
   right: 0;
-  height: 80vh;
+  top: 50%;
+  margin-right: 2rem;
+  transform: translateY(-50%);
+  height: 50vh;
   display: flex;
   justify-content: flex-end;
   align-items: center;
 
-  &__bar {
+  &__el {
     fill: $white;
   }
 
-  &__bg {
-    fill: rgba($black, 0.1);
+  .pt {
+    transition: 0.25s ease-in-out;
+    stroke: $secondary;
+    filter: drop-shadow(0 0 2px rgba($primary, .5));
+
+    &--active {
+      r: 3;
+      stroke: $primary;
+      filter: drop-shadow(0 0 0 rgba($primary, .5));
+    }
+  }
+
+  .grp {
+    cursor: pointer;
+    transform-origin: center;
+    transition: 0.35s ease-in-out;
+    stroke: $primary;
+
+    &__fill {
+      transition: 0.35s ease-in-out;
+      fill: $secondary;
+    }
+
+    &--active {
+      r: 3;
+      stroke: $secondary;
+      transform: scale(0.95);
+
+      .grp__fill {
+        fill: $primary;
+        stroke: $primary;
+      }
+    }
   }
 }
 

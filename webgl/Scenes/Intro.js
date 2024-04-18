@@ -1,5 +1,3 @@
-import InfoLine from '../Components/Intro/InfoLine/InfoLine'
-import Mountain from '../Components/Intro/Mountain/Mountain'
 import BasicScene from '../Modules/Basics/BasicScene'
 import IntroGroup from '../Components/Intro/IntroGroup/IntroGroup'
 
@@ -12,23 +10,8 @@ export default class Intro extends BasicScene {
 
     // New elements
     this.components = {
-      // mountain: new Mountain(),
-      //line1:new InfoLine([new Vector3(5,0,0),new Vector3(5,5,0),new Vector3(7,7,0)],'AAAAA'),
-      introGroup: new IntroGroup()
+      introGroup: new IntroGroup(),
     }
-
-    this.audios = {
-      // onichan: { group: 'Cringe', loop: true, volume: 0.5 },
-      // yameteAh: { group: 'Cringe', loop: true, volume: 0.25 },
-      babyshark: { group: 'Enfants', loop: true, volume: 0.3, persist: true },
-    }
-
-    // this.shaders = [
-    //   {
-    //     name: 'testAmbient',
-    //     force: true,
-    //   },
-    // ]
 
     // Init the scene
     this.init()
@@ -42,18 +25,17 @@ export default class Intro extends BasicScene {
     this.camera.instance.position.z += delta / 100
   }
 
-  onSwitchStart(){
+  /**
+   * On transition start, before the dispose
+   */
+  onDisposeStart() {
     this.components.introGroup?.labelRenderer?.dispose?.()
   }
 
-  onSwitchComplete(){
+  /**
+   * After init and entrance transition end
+   */
+  afterTransitionInit() {
     this.components.introGroup.setLabelRenderer()
   }
-
-
-  dispose(){
-    super.dispose()
-  }
-
-  
 }

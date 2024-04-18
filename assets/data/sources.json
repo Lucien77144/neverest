@@ -83,55 +83,50 @@
     ]
   },
   {
-    "name": "BaseCamp",
+    "name": "Intro",
     "data": {},
     "items": [
       {
-        "name": "tent",
-        "source": "/models/BaseCamp/tent.glb"
-      },
-      {
-        "name": "bloc",
-        "source": "/models/BaseCamp/bloc.glb"
-      },
-      {
-        "name": "backgroundMountain",
-        "source": "/models/BaseCamp/mountain.glb"
-      },
-      {
-        "name": "backgroundMountainL",
-        "source": "/models/BaseCamp/mountainL.glb"
-      },
-      {
-        "name": "backgroundMountainLS",
-        "source": "/models/BaseCamp/mountainLS.glb"
-      },
-      {
-        "name": "backgroundMountainR",
-        "source": "/models/BaseCamp/mountainR.glb"
-      },
-      {
-        "name": "backgroundMountainRS",
-        "source": "/models/BaseCamp/mountainRS.glb"
-      },
-      {
         "name": "introMountain",
         "source": "/models/Intro/mount_everest_topo_map.glb"
-      },
-      {
-        "name": "animCam",
-        "source": "/models/BaseCamp/cam.glb"
       }
     ]
   },
   {
-    "name": "font",
+    "name": "BaseCamp",
     "data": {},
     "items": [
       {
-        "name": "roboto",
-        "source": "/font/Roboto.json",
-        "type": "font"
+        "name": "BCTent",
+        "source": "/models/BaseCamp/tent.glb"
+      },
+      {
+        "name": "BCBloc",
+        "source": "/models/BaseCamp/bloc.glb"
+      },
+      {
+        "name": "BCMountain",
+        "source": "/models/BaseCamp/mountain.glb"
+      },
+      {
+        "name": "BCMountainL",
+        "source": "/models/BaseCamp/mountainL.glb"
+      },
+      {
+        "name": "BCMountainLS",
+        "source": "/models/BaseCamp/mountainLS.glb"
+      },
+      {
+        "name": "BCMountainR",
+        "source": "/models/BaseCamp/mountainR.glb"
+      },
+      {
+        "name": "BCMountainRS",
+        "source": "/models/BaseCamp/mountainRS.glb"
+      },
+      {
+        "name": "BCAnimCam",
+        "source": "/models/BaseCamp/cam.glb"
       }
     ]
   },
@@ -150,6 +145,17 @@
       {
         "name": "IFFloor",
         "source": "/models/IceFall/floor.glb"
+      }
+    ]
+  },
+  {
+    "name": "font",
+    "data": {},
+    "items": [
+      {
+        "name": "roboto",
+        "source": "/font/Roboto.json",
+        "type": "font"
       }
     ]
   }

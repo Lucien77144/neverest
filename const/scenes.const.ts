@@ -41,7 +41,6 @@ const SCENES: TSceneInfos[] = [
     },
   },
   {
-    isDefault: false,
     name: 'TestDa',
     Scene: TestDA,
     transition: {
@@ -57,25 +56,25 @@ const SCENES: TSceneInfos[] = [
         {
           start: 0,
           end: 1,
-          power: 0.02,
+          power: 0.1,
           data: {
             title: 'BASECAMP',
             date: '1953',
           },
         },
         {
-          start: 31,
-          end: 35,
-          power: 0.02,
+          start: 33,
+          end: 36,
+          power: 0.1,
           data: {
             title: 'BASECAMP',
             date: '2024',
           },
         },
         {
-          start: 64,
-          end: 68,
-          power: 0.02,
+          start: 66,
+          end: 69,
+          power: 0.1,
           data: {
             title: 'BASECAMP',
             date: '2050',
@@ -94,14 +93,31 @@ const SCENES: TSceneInfos[] = [
       scale: 100,
       interest: [
         {
-          start: 31,
-          end: 35,
-          power: 0.025,
+          start: 0,
+          end: 1,
+          power: 0.1,
+          data: {
+            title: 'ICEFALL',
+            date: '1953',
+          },
         },
         {
-          start: 64,
-          end: 68,
-          power: 0.025,
+          start: 100 / 3,
+          end: 37,
+          power: 0.1,
+          data: {
+            title: 'ICEFALL',
+            date: '2024',
+          },
+        },
+        {
+          start: (100 / 3) * 2,
+          end: 70,
+          power: 0.1,
+          data: {
+            title: 'ICEFALL',
+            date: '2050',
+          },
         },
       ],
     },

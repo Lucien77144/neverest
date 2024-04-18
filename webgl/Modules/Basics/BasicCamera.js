@@ -28,7 +28,7 @@ export default class BasicCamera {
       20,
       this.viewport.width / this.viewport.height,
       0.1,
-      100
+      500
     )
     this.instance.position.z = 10
   }

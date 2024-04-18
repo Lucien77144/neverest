@@ -1,4 +1,3 @@
-uniform sampler2D uFocMask;
 uniform sampler2D uScene0;
 uniform sampler2D uScene1;
 uniform float uTime;
@@ -104,7 +103,7 @@ void main() {
 
     float isInCloudBand = max(sign(uv.y-(inverseuTransi-(cloudSizeMultiplicator+sin(uv.x*40.0)*cloudSizeMultiplicator*0.05))),0.0) * max(sign((inverseuTransi+cloudSizeMultiplicator+sin(uv.x*40.0)*cloudSizeMultiplicator*0.05)-uv.y),0.0);
     scenesTransi *= (-isInCloudBand+1.0);
-    scenesTransi+= isInCloudBand * cloud;
+    scenesTransi += isInCloudBand * cloud;
 
     gl_FragColor = scenesTransi;
 }

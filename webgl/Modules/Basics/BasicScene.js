@@ -28,7 +28,6 @@ export default class BasicScene {
 
     // Actions
     this.setProgressHold = useHoldStore().setProgress
-    this.setTargetScroll = useScrollStore().setTarget
 
     // Getters
     this.progressHold = computed(() => useHoldStore().getProgress)
@@ -54,13 +53,6 @@ export default class BasicScene {
      */
     this.audios = {}
 
-    /**
-     * Array of shaders to add to the scene
-     * @param {string} name - Fragment shader name (from the shader const)
-     * @param {boolean} force - If set remove the doubled lines from the frag
-     */
-    this.shaders = []
-
     // --------------------------------
     // Functions
     // --------------------------------
@@ -72,14 +64,14 @@ export default class BasicScene {
     this.onScroll
 
     /**
-     * On switch start and if this scene is the previous one
+     * On transition start, before the dispose
      */
-    this.onSwitchStart
+    this.onDisposeStart
 
     /**
      * On switch between scene complete and this scene is the new one
      */
-    this.onSwitchComplete
+    this.afterTransitionInit
   }
 
   /**
@@ -121,6 +113,11 @@ export default class BasicScene {
    * Raycast on mouse move
    */
   onMouseMoveEvt({ centered }) {
+    // Trigger mouse move on all components
+    Object.values(this.allComponents).forEach((c) =>
+      this.triggerFn(c, 'onMouseMove', centered)
+    )
+
     // Get hovered item
     const hovered = this.getRaycastedItem(centered, [
       'onMouseEnter',
@@ -329,7 +326,7 @@ export default class BasicScene {
   init() {
     this.allComponents = this.getRecursiveComponents()
     this.addItemsToScene()
-    Object.values(this.allComponents).forEach((c) => c.afterViewInit?.())
+    Object.values(this.allComponents).forEach((c) => c.afterComponentsInit?.())
 
     this.audios && this.addAudios(this.audios)
     this.scene.add(this.camera.instance)

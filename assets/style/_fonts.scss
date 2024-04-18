@@ -16,3 +16,21 @@
   src: url('../fonts/Lato-Light.ttf') format('truetype');
   font-weight: light;
 }
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('../fonts/OpenSansExtraBold.ttf') format('truetype');
+  font-weight: 800;
+}
+
+@font-face {
+  font-family: 'Outfit';
+  src: url('../fonts/OutfitExtraBold.ttf') format('truetype');
+  font-weight: 800;
+}
+
+@font-face {
+  font-family: 'Azeret Mono';
+  src: url('../fonts/AzeretMonoRegular.ttf') format('truetype');
+  font-weight: normal;
+}

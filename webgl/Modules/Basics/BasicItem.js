@@ -70,10 +70,10 @@ export default class BasicItem {
     this.init
 
     /**
-     * After view init function
-     * Automatically called after the scene has built
+     * After init and entrance transition end
+     * Automatically called after the components of the scene has built
      */
-    this.afterViewInit
+    this.afterComponentsInit
 
     /**
      * If set, this function will be called on each tick to update
@@ -86,6 +86,12 @@ export default class BasicItem {
      * If false, the event will be ignored, even if parent is triggering it
      */
     this.onClick
+
+    /**
+     * If set, this function will be called on mouse down item
+     * If false, the event will be ignored, even if parent is triggering it
+     */
+    this.onMouseMove
 
     /**
      * If set, this function will be called on mouse enter item

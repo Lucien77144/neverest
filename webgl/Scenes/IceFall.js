@@ -9,7 +9,7 @@ export default class IceFall extends BasicScene {
   /**
    * Constructor
    */
-  constructor() {
+  constructor({ interest }) {
     super()
 
     // Get elements from experience
@@ -22,27 +22,20 @@ export default class IceFall extends BasicScene {
       iceblocks: new Iceblocks(),
       floor: new IFFloor(),
     }
-    this.sheet = null
     this.icefallObj = null
     this.baseCamRot = null
     this.camRotTarget = null
     this.currentPoint = 0
-    this.interests = []
+    this.interest = interest
 
     // Getters
     this.currentScene = computed(() => useNavigationStore().getScene)
+    // Actions
+    this.instantScroll = useScrollStore().instant
+    this.setDisableScroll = useScrollStore().setDisable
 
     // Init the scene
     this.init()
-  }
-
-  /**
-   * Setup the theater sheet
-   */
-  setupSheet() {
-    // Setup the sheet
-    this.sheet = this.project.sheet('IceFall')
-    this.icefallObj = this.sheet.object('IceFall', {})
   }
 
   /**
@@ -50,7 +43,9 @@ export default class IceFall extends BasicScene {
    */
   navigate() {
     this.currentPoint += 1
-    this.setTargetScroll((100 / this.interests?.length) * this.currentPoint)
+    this.instantScroll(
+      (100 / (this.interest.list?.length - 1)) * this.currentPoint
+    )
   }
 
   /**
@@ -61,8 +56,8 @@ export default class IceFall extends BasicScene {
     super.onMouseMoveEvt({ centered })
 
     this.camRotTarget = {
-      x: this.baseCamRot.x + centered.y * 0.01,
-      y: this.baseCamRot.y - centered.x * 0.01,
+      x: this.baseCamRot.x + centered.y * 0.0025,
+      y: this.baseCamRot.y - centered.x * 0.0025,
     }
   }
 
@@ -95,14 +90,18 @@ export default class IceFall extends BasicScene {
   }
 
   /**
+   * After init and entrance transition end
+   */
+  afterTransitionInit() {
+    this.setDisableScroll(true)
+    this.instantScroll(5)
+  }
+
+  /**
    * Init
    */
   init() {
     super.init()
-    // this.setupSheet()
     this.initCamera()
-
-    // Set the interest points
-    this.interests = this.currentScene.value.nav?.interest
   }
 }
