@@ -1,4 +1,4 @@
-import { AnimationMixer, MathUtils } from 'three'
+import { AnimationMixer, MathUtils, Vector3 } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
 export default class BaseCampItem extends BasicItem {
@@ -19,7 +19,10 @@ export default class BaseCampItem extends BasicItem {
     this.mixer = null
     this.animationAction = null
     this.baseCamRot = null
-    this.camRotTarget = null
+    this.camRotTarget = {
+      x: 0,
+      y: 0,
+    }
 
     // Store
     this.currentScroll = computed(
@@ -128,13 +131,7 @@ export default class BaseCampItem extends BasicItem {
    * @param {Number} value scroll value
    */
   playAnimation(value) {
-    if (
-      !this.mixer ||
-      !this.item ||
-      !this.parentScene.camera.instance ||
-      this.getDisabledScroll.value
-    )
-      return
+    if (!this.mixer || !this.item || !this.parentScene.camera.instance) return
 
     const animDuration = this.animationAction.getClip().duration
 
@@ -177,6 +174,7 @@ export default class BaseCampItem extends BasicItem {
   init() {
     // Set item
     this.setItem()
+    this.baseCamRot = this.parentScene.camera.instance.rotation.clone()
   }
 
   /**

@@ -39,6 +39,9 @@ export default class Intro extends BasicScene {
     this.components.introGroup?.labelRenderer?.dispose?.()
   }
 
+  /**
+   * After init and entrance transition end
+   */
   afterTransitionInit() {
     this.components.introGroup.setLabelRenderer()
   }

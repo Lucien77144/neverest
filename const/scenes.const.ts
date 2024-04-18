@@ -41,7 +41,6 @@ const SCENES: TSceneInfos[] = [
     },
   },
   {
-    isDefault: false,
     name: 'TestDa',
     Scene: TestDA,
     transition: {

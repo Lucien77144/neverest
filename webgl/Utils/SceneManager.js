@@ -155,13 +155,15 @@ export default class SceneManager {
         })
       },
       onComplete: () => {
-        // Reset transition uniform value :
-        this.renderMesh.material.uniforms.uTransition.value = 0
+        // Reset navigation values
         this.instantNavigate({
           start: next.nav?.start,
           scale: next.nav?.scale,
           scroll: 0,
         })
+
+        // Reset transition uniform value :
+        this.renderMesh.material.uniforms.uTransition.value = 0
 
         // Reset params :
         if (this.debug) {

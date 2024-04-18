@@ -17,8 +17,7 @@ export default class BaseCamp extends BasicScene {
     this.resources = this.experience.resources
     this.interest = interest
     this.camFov = 20
-    this.camRot = null
-    this.cam = null
+    this.camRot = new Vector3(0, 0, 0)
     this.blocking = []
 
     // Store
@@ -51,8 +50,6 @@ export default class BaseCamp extends BasicScene {
    * Scroll the camera around the cube
    */
   setCamera() {
-    this.camRot = new Vector3(0, 0, 0)
-
     this.camera.instance.position.y = 3.7
     this.camera.instance.position.z = 20
 
@@ -372,7 +369,7 @@ export default class BaseCamp extends BasicScene {
   }
 
   /**
-   * On switch complete
+   * After init and entrance transition end
    */
   afterTransitionInit() {
     this.watchCurrentScroll(0)
