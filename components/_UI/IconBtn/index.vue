@@ -1,6 +1,5 @@
 <template>
   <div ref="btn" :class="big && 'big', disable && isDisabled && 'disabled'" class="iconBtn">
-    <img src="/public/img/icons/bg.svg" alt="">
     <button :type="type" :disable="disable" :isDisabled="isDisabled" @click="$emit('click', $props.value)">
       <slot />
     </button>
