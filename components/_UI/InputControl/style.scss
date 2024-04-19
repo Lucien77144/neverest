@@ -15,7 +15,8 @@
 
   &-secondary {
     overflow: hidden;
-    padding-right: 1rem;
+    padding-right: 1.5rem;
+    transform: translateX(10px);
 
     &Wrapper {
       display: flex;
@@ -53,7 +54,8 @@
 
   &-secondary {
     overflow: hidden;
-    padding-bottom: 1rem;
+    padding-bottom: 1.5rem;
+    transform: translateY(10px);
 
     &Wrapper {
       display: flex;
