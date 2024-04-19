@@ -2,11 +2,17 @@
   position: fixed;
   z-index: 999;
   transform: translateX(-50%);
-  bottom: 0;
+  bottom: 2.3rem;
   left: 50%;
+  background-color: $secondary;
+  min-width: 60%;
+  min-height: 4rem;
+  border-image: url(/public/img/border.svg) 8 / 80px round;
 
   &__wrapper {
-    padding: 2rem;
+    padding: 1.5rem 3rem;
+    font-size: 0.875rem;
+    text-align: center;
   }
 
   &__item {

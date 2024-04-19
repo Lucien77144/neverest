@@ -14,22 +14,18 @@
         >
       </div>
     </div>
-    <UIIconBtn :big="true" @click="setDisabled(!disabled)"
+    <UIIconBtn :big="true" :is-disabled="disabled" @click="setDisabled(!disabled)"
       ><img class="icon-big" src="/public/img/icons/subtitle.svg" alt=""
     /></UIIconBtn>
   </div>
   <div class="IC_sound">
     <div class="IC_sound-secondary">
       <div class="IC_sound-secondaryWrapper">
-        <UIIconBtn
-          ><img src="/public/img/icons/music.svg" alt=""
-        /></UIIconBtn>
-        <UIIconBtn
-          ><img src="/public/img/icons/voice.svg" alt=""
-        /></UIIconBtn>
+        <UIIconBtn><img src="/public/img/icons/music.svg" alt="" /></UIIconBtn>
+        <UIIconBtn><img src="/public/img/icons/voice.svg" alt="" /></UIIconBtn>
       </div>
     </div>
-    <UIIconBtn :big="true"
+    <UIIconBtn :big="true" :is-disabled="isMuted" @click="toggleMute()"
       ><img class="icon-big" src="/public/img/icons/sound.svg" alt=""
     /></UIIconBtn>
   </div>
@@ -45,6 +41,19 @@ const { $bus }: any = useNuxtApp()
 // Store
 const disabled = computed(() => useSubtitlesStore().getDisabled)
 const setDisabled = (val: boolean) => useSubtitlesStore().setDisabled(val)
+const isMuted = ref(false)
+
+$bus.on('audio:mute', () => {
+  isMuted.value = true
+})
+
+$bus.on('audio:unmute', () => {
+  isMuted.value = false
+})
+
+function toggleMute() {
+  isMuted.value ? $bus.emit('audio:unmute') : $bus.emit('audio:mute')
+}
 </script>
 
 <style src="./style.scss" lang="scss" scoped></style>
