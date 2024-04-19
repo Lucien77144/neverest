@@ -21,6 +21,7 @@ $darken-amount: 10%;
 $lighten-amount: 10%;
 
 $primary: #5E313C;
+$primary-darker: #372933;
 $primary-dark: darken($primary, $darken-amount);
 $primary-light: lighten($primary, $lighten-amount);
 
