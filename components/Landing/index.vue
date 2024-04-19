@@ -9,10 +9,10 @@
     <div class="start__footer">
       <p>{{ $t('LANDING_START') }}</p>
       <div class="start__footer__content">
-        <UIBtn @click="$bus.emit('start')">
+        <UIBtn @click="$bus.emit('start'); $bus.emit('audio:unmute')">
           {{ $t('YES') }}
         </UIBtn>
-        <UIBtn @click="$bus.emit('start')">
+        <UIBtn @click="$bus.emit('start'); $bus.emit('audio:mute')">
           {{ $t('NO') }}
         </UIBtn>
       </div>

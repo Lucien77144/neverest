@@ -1,7 +1,7 @@
 <template>
-  <div ref="btn" :class="big && 'big'" class="iconBtn">
+  <div ref="btn" :class="big && 'big', disable && isDisabled && 'disabled'" class="iconBtn">
     <img src="/public/img/icons/bg.svg" alt="">
-    <button :type="type" :disable="disable" @click="$emit('click', $props.value); disable && toggleDisabled()">
+    <button :type="type" :disable="disable" :isDisabled="isDisabled" @click="$emit('click', $props.value)">
       <slot />
     </button>
   </div>
@@ -24,6 +24,10 @@ const $props = defineProps({
     type: Boolean,
     default: true,
   },
+  isDisabled: {
+    type: Boolean,
+    default: false,
+  },
   big: {
     type: Boolean,
     default: false,
@@ -37,7 +41,7 @@ const $props = defineProps({
 /**
  * Toggle disabled class
  */
-function toggleDisabled() {  
+function toggleDisabled() {
   btn.value?.classList.toggle('disabled')
 }
 </script>
