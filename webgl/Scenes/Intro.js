@@ -1,5 +1,6 @@
 import BasicScene from '../Modules/Basics/BasicScene'
 import IntroGroup from '../Components/Intro/IntroGroup/IntroGroup'
+import CSSRenderer from '../Utils/CSSRenderer'
 
 export default class Intro extends BasicScene {
   /**
@@ -26,16 +27,25 @@ export default class Intro extends BasicScene {
   }
 
   /**
-   * On transition start, before the dispose
+   * Init
    */
-  onDisposeStart() {
-    this.components.introGroup?.labelRenderer?.dispose?.()
+  init() {
+    super.init()
+    this.cssRenderer = new CSSRenderer(this.scene, this.camera)
   }
 
   /**
    * After init and entrance transition end
    */
   afterTransitionInit() {
+    super.afterTransitionInit()
     this.components.introGroup.setLabelRenderer()
+  }
+
+  /**
+   * Dispose
+   */
+  onDisposeStart() {
+    this.cssRenderer?.dispose?.()
   }
 }

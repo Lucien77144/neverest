@@ -1,4 +1,4 @@
-import { AnimationMixer, MeshNormalMaterial } from 'three'
+import { MeshNormalMaterial } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
 export default class BaseCampItem extends BasicItem {
@@ -7,8 +7,8 @@ export default class BaseCampItem extends BasicItem {
    */
   constructor(_options = {}) {
     super()
-
     this.options = _options
+    this.$bus = this.experience.$bus
 
     // New elements
     this.name = null
@@ -17,15 +17,18 @@ export default class BaseCampItem extends BasicItem {
     this.rotation = null
     this.scale = null
     this.visibility = null
-    this.holdDuration = 2000
 
     // Store
     this.currentScroll = computed(
       () => Math.round(useScrollStore().getCurrent * 10000) / 10000
     )
+    this.addToList = useDialogsStore().addToList
 
     // Watch
-    watch(this.currentScroll, (v) => this.updateVisibility())
+    this.scope = effectScope()
+    this.scope.run(() => {
+      watch(this.currentScroll, (v) => this.updateVisibility())
+    })
   }
 
   /**
@@ -142,11 +145,28 @@ export default class BaseCampItem extends BasicItem {
     }
   }
 
+  afterTransitionInit() {
+    if (this.name == 'Tent_Primative_main') {
+      const dialog = this.parentScene.dialogs?.find(
+        (d) => d.id === 'Tent_Primative_main'
+      )
+      dialog && this.addToList({ ...dialog, parent: this.item })
+    }
+  }
+
   /**
    * Init
    */
   init() {
     // Set item
     this.setItem()
+  }
+
+  /**
+   * Dispose
+   */
+  dispose() {
+    this.scope.stop()
+    this.scope = null
   }
 }

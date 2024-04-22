@@ -17,7 +17,6 @@ export default class InfoLine extends BasicItem {
     super()
 
     // New elements
-
     this.rootObj = null
     this.lineGeometry = null
     this.lineMaterial = null
@@ -85,12 +84,14 @@ export default class InfoLine extends BasicItem {
     gsap.to(this.lineMaterial.uniforms.uProgress, {
       value: visibility ? 1 : 0,
       duration: 0.6,
-      onStart:()=>{
-        if(!visibility)document.getElementById(this.labelId)?.style.setProperty('opacity', 0)
+      onStart: () => {
+        if (!visibility)
+          document.getElementById(this.labelId)?.style.setProperty('opacity', 0)
       },
-      onComplete:()=>{
-        if(visibility)document.getElementById(this.labelId)?.style.setProperty('opacity', 1)
-      }
+      onComplete: () => {
+        if (visibility)
+          document.getElementById(this.labelId)?.style.setProperty('opacity', 1)
+      },
     })
   }
 
@@ -105,7 +106,7 @@ export default class InfoLine extends BasicItem {
 
   update() {
     if (!this.rootObj) return
-    if(!document.getElementById("labelRendererDiv")) return
+    if (!document.getElementById('css-2d-renderer')) return
 
     const rootObjPosition = new Vector3()
     this.rootObj.getWorldPosition(rootObjPosition)
@@ -121,7 +122,8 @@ export default class InfoLine extends BasicItem {
       if (rootObjPosition.normalize().x <= 0.2) {
         this.item.rotation.y = -Math.asin(rootObjPosition.normalize().z)
       } else if (rootObjPosition.normalize().x > 0.2) {
-        this.item.rotation.y = 2 * Math.PI + Math.asin(rootObjPosition.normalize().z)
+        this.item.rotation.y =
+          2 * Math.PI + Math.asin(rootObjPosition.normalize().z)
       }
     }
   }

@@ -1,6 +1,7 @@
 <template>
   <canvas ref="canvas" class="exp" />
   <UIInterestData />
+  <WebGLCSS2DRenderer />
 </template>
 
 <script setup lang="ts">

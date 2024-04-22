@@ -93,6 +93,7 @@ export default class IceFall extends BasicScene {
    * After init and entrance transition end
    */
   afterTransitionInit() {
+    super.afterTransitionInit()
     this.setDisableScroll(true)
     this.instantScroll(5)
   }

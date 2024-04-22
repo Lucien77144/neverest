@@ -5,17 +5,19 @@ import BasicScene from '../Modules/Basics/BasicScene'
 import Floor from '../Components/BaseCamp/Floor/Floor'
 import gsap from 'gsap'
 import Lights from '../Components/Shared/Lights/Lights'
+import CSSRenderer from '../Utils/CSSRenderer'
 
 export default class BaseCamp extends BasicScene {
   /**
    * Constructor
    */
-  constructor({ interest }) {
+  constructor({ interest, dialogs }) {
     super()
 
     // New elements
     this.resources = this.experience.resources
     this.interest = interest
+    this.dialogs = dialogs
     this.camFov = 20
     this.camRot = new Vector3(0, 0, 0)
     this.blocking = []
@@ -365,6 +367,14 @@ export default class BaseCamp extends BasicScene {
   }
 
   /**
+   * Resize
+   */
+  resize() {
+    super.resize()
+    this.cssRenderer?.resize?.()
+  }
+
+  /**
    * Init the scene
    */
   init() {
@@ -376,13 +386,24 @@ export default class BaseCamp extends BasicScene {
     this.setBlocking()
 
     super.init()
+
+    this.cssRenderer = new CSSRenderer(this.scene, this.camera)
   }
 
   /**
    * After init and entrance transition end
    */
   afterTransitionInit() {
+    super.afterTransitionInit()
     this.watchCurrentScroll(0)
+  }
+
+  /**
+   * Update
+   */
+  update() {
+    super.update()
+    this.cssRenderer?.update?.()
   }
 
   /**
@@ -391,6 +412,7 @@ export default class BaseCamp extends BasicScene {
   onDisposeStart() {
     this.scope.stop()
     this.scope = null
+    this.cssRenderer.dispose()
 
     this.$bus.emit('interest', null)
   }

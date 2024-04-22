@@ -3,13 +3,13 @@ import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import Mountain from '../Mountain/Mountain'
 import InfoLine from '../InfoLine/InfoLine'
 import IntroLights from '../IntroLights/IntroLights'
-import LabelRenderer from '~/webgl/Utils/LabelRenderer'
 
 export default class IntroGroup extends BasicItem {
   constructor() {
     super()
 
-    this.labelRenderer = null
+    // New elements
+    this.cssRenderer = null
   }
 
   setCameraPos() {
@@ -38,13 +38,30 @@ export default class IntroGroup extends BasicItem {
     }
   }
 
+  buildHtmlLabels(list) {
+    list.forEach((l) => {
+      const el = document.createElement('div')
+      el.id = l.labelId
+      el.textContent = l.inputText
+      el.style.setProperty('transition', 'opacity 0.35s ease')
+      el.style.setProperty('opacity', '0')
+      el.style.backgroundColor = 'transparent'
+      el.style.fontFamily = 'Outfit'
+      el.style.textTransform = 'uppercase'
+      el.style.color = '#975062'
+      this.cssRenderer.instance.domElement.appendChild(el)
+
+      this.cssRenderer.add({
+        el,
+        parent: l.item.children[2],
+        id: l.labelId,
+      })
+    })
+  }
+
   setLabelRenderer() {
-    this.labelRenderer = new LabelRenderer(
-      this.parentScene.scene,
-      this.parentScene.camera,
-      [this.components.infoLine1, this.components.infoLine2]
-    )
-    this.labelRenderer.init()
+    this.cssRenderer = this.parentScene.cssRenderer
+    this.buildHtmlLabels([this.components.infoLine1, this.components.infoLine2])
   }
 
   init() {
@@ -56,8 +73,8 @@ export default class IntroGroup extends BasicItem {
     if (this.item) {
       this.item.rotation.y += 0.005
     }
-    if (this.labelRenderer) {
-      this.labelRenderer.update()
+    if (this.cssRenderer) {
+      this.cssRenderer.update()
     }
   }
 }

@@ -2,6 +2,7 @@ import Intro from '~/webgl/Scenes/Intro'
 import BaseCamp from '~/webgl/Scenes/BaseCamp'
 import IceFall from '~/webgl/Scenes/IceFall'
 import TestDA from '~/webgl/Scenes/TestDA'
+import { UIBtn } from '#components'
 
 export type TSceneInterest = {
   start: number // 0-100, start of the interest action
@@ -12,6 +13,20 @@ export type TSceneInterest = {
     title: string
     date: string
   }
+}
+
+export type TSceneDialog = {
+  id: string
+  template: any
+  props?: any
+  el?: any
+  content: [
+    {
+      type: 'text' | 'video' | 'image'
+      value: string
+      audio: string
+    }
+  ]
 }
 
 export type TSceneInfos = {
@@ -25,6 +40,7 @@ export type TSceneInfos = {
     end?: number
     interest?: TSceneInterest[]
   }
+  cssRenderer?: TSceneDialog[]
   transition?: {
     duration: number
   }
@@ -82,6 +98,20 @@ const SCENES: TSceneInfos[] = [
         },
       ],
     },
+    cssRenderer: [
+      {
+        id: 'Tent_Primative_main',
+        template: UIBtn,
+        props: {},
+        content: [
+          {
+            type: 'text',
+            value: 'This is a tent dialog',
+            audio: 'tent_audio',
+          },
+        ],
+      },
+    ],
     transition: {
       duration: 2000,
     },

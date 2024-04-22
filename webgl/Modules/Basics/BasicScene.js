@@ -335,6 +335,16 @@ export default class BasicScene {
   }
 
   /**
+   * On switch between scene complete and this scene is the new one
+   */
+  afterTransitionInit() {
+    // Trigger afterTransitionInit on all components
+    Object.values(this.allComponents).forEach((c) =>
+      this.triggerFn(c, 'afterTransitionInit')
+    )
+  }
+
+  /**
    * Update the scene
    */
   update() {

@@ -70,10 +70,16 @@ export default class BasicItem {
     this.init
 
     /**
-     * After init and entrance transition end
+     * After init function
      * Automatically called after the components of the scene has built
      */
     this.afterComponentsInit
+
+    /**
+     * After transition init function
+     * Automatically called after the scene has been switched
+     */
+    this.afterTransitionInit
 
     /**
      * If set, this function will be called on each tick to update

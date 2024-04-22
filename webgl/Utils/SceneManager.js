@@ -118,6 +118,7 @@ export default class SceneManager {
         base: this.baseScrollFactor,
         current: this.factorScroll.value,
       },
+      dialogs: next.cssRenderer,
     })
 
     // Switch function start on previous scene
@@ -170,7 +171,7 @@ export default class SceneManager {
           this.debugScene.value = next.name
           this.debugFolder.disabled = false
         }
-        this.active?.dispose()
+        this.active.dispose()
         this.active = this.next
         this.next = null
 
@@ -218,6 +219,7 @@ export default class SceneManager {
         base: this.baseScrollFactor,
         current: this.factorScroll.value,
       },
+      dialogs: scene.cssRenderer,
     })
     // Switch complete function on the new scene
     this.active?.afterTransitionInit?.()
