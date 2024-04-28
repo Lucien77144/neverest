@@ -1,18 +1,17 @@
 <template>
   <div id="css-2d-renderer" class="renderer">
     <div
-      v-for="(el, i) in listRef"
+      v-for="(d, i) in list"
       :key="i"
-      :id="el?.id"
-      :ref="(r) => (el.el = r)"
+      :id="d?.id"
+      :ref="(el) => add({ ...d, el })"
     >
-      <!-- :ref="(r) => (el.el = r) && el.el.remove()" -->
       <component
-        :is="{ ...el?.template }"
-        :content="el?.content"
-        :props="el?.props"
+        :is="{ ...d?.template }"
+        :content="d?.content"
+        :props="d?.props"
       >
-        {{ el?.id }}
+        {{ d?.id }}
       </component>
     </div>
   </div>
@@ -24,17 +23,11 @@ import type { TSceneDialog } from '~/const/scenes.const'
 // Bus
 const { $bus }: any = useNuxtApp()
 
-// Refs
-const listRef = ref<TSceneDialog[]>()
-
 // Dialogs list
 const list = computed(() => useDialogsStore().getList)
 
-watch(list, (curr) => {
-  listRef.value = curr
-
-  $bus.emit('dialogs:add', listRef.value)
-})
+// Add dialog to css renderer
+const add = (d: TSceneDialog) => $bus.emit('dialogs:add', d)
 </script>
 
 <style src="./style.scss" lang="scss" scoped></style>

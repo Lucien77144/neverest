@@ -213,7 +213,7 @@ export default class Loader {
       const trackEl = document.createElement('track')
       trackEl.src = subtitles[key]
       trackEl.kind = 'subtitles'
-      trackEl.label = this.i18n.t('LANG.' + key.toUpperCase())
+      trackEl.label = this.i18n.t('LANG.' + key.toUpperCase() + '.LABEL')
       trackEl.srclang = key
       trackEl.default = this.i18n.locale.value == key
 

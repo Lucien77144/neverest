@@ -7,13 +7,17 @@ import Experience from '~/webgl/Experience'
 
 export default class CSSRenderer {
   constructor(scene, camera) {
+    // Get elements from experience
     this.experience = new Experience()
     this.$bus = this.experience.$bus
     this.viewport = this.experience.viewport
+
+    // New elements
     this.instance = null
     this.scene = scene
     this.camera = camera
     this.list = {}
+    this.handleAddDialogs = this.addDialogs.bind(this)
 
     // Setters
     this.removeFromList = useDialogsStore().removeFromList
@@ -26,11 +30,26 @@ export default class CSSRenderer {
    * @param {*} id id of the element
    */
   remove(id) {
-    if (this.list[id]) {
-      this.list[id].parent.remove(this.list[id].obj)
-      this.removeFromList(id)
-      delete this.list[id]
-    }
+    const d = this.list[id]
+    if (!d) return
+
+    d.el.remove()
+    d.parent.remove(d.obj)
+    this.removeFromList(id)
+
+    delete this.list[id]
+  }
+
+  /**
+   * Handle add a dialog
+   * @param {*} dialog
+   */
+  addDialogs({ id, el, position, parent, layers, center }) {
+    // Remove not present elements
+    Object.keys(this.list).forEach((k) => !(id === k) && this.remove(k))
+
+    // Add new elements
+    !this.list[id] && this.add({ id, el, position, parent, layers, center })
   }
 
   /**
@@ -44,7 +63,7 @@ export default class CSSRenderer {
     obj.layers.set(layers || 0)
 
     parent.add(obj)
-    this.list[id] = { obj, parent }
+    this.list[id] = { obj, parent, el }
   }
 
   /**
@@ -52,7 +71,6 @@ export default class CSSRenderer {
    */
   init() {
     let element = document.getElementById('css-2d-renderer')
-
     if (!element) {
       element = document.createElement('div')
       element.style.position = 'absolute'
@@ -64,30 +82,7 @@ export default class CSSRenderer {
     this.instance = new CSS2DRenderer({ element })
     this.instance.setSize(this.viewport.width, this.viewport.height)
 
-    this.$bus.on('dialogs:add', (d) => {
-      // Remove not present elements
-      Object.keys(this.list).forEach((k) => {
-        if (!d.find((e) => e.id === k)) {
-          this.remove(k)
-        }
-      })
-
-      // Add new elements
-      d.forEach((el) => {
-        el.id = el.id.toLowerCase()
-
-        if (!this.list[el.id]) {
-          this.add({
-            id: el.id,
-            el: el.el,
-            position: el.position,
-            parent: el.parent,
-            layers: el.layers,
-            center: el.center,
-          })
-        }
-      })
-    })
+    this.$bus.on('dialogs:add', this.handleAddDialogs)
   }
 
   /**
@@ -109,8 +104,7 @@ export default class CSSRenderer {
    * Dispose
    */
   dispose() {
-    Object.keys(this.list).forEach((k) => {
-      this.remove(k)
-    })
+    this.$bus.off('dialogs:add', this.handleAddDialogs)
+    Object.keys(this.list).forEach((k) => this.remove(k))
   }
 }

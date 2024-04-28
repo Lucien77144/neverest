@@ -21,9 +21,6 @@ export const useDialogsStore = defineStore('dialogs', {
       this.list = [...this.list, el]
     },
     removeFromList(id: TSceneDialog['id']) {
-      console.log(id)
-      console.log(this.list)
-
       this.list = [...this.list.filter((el) => el.id != id)]
     },
   },
