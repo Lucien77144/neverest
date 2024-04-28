@@ -1,4 +1,4 @@
-import { MeshNormalMaterial } from 'three'
+import { MeshNormalMaterial, Vector3 } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
 export default class BaseCampItem extends BasicItem {
@@ -22,7 +22,6 @@ export default class BaseCampItem extends BasicItem {
     this.currentScroll = computed(
       () => Math.round(useScrollStore().getCurrent * 10000) / 10000
     )
-    this.addToList = useDialogsStore().addToList
 
     // Watch
     this.scope = effectScope()
@@ -150,7 +149,12 @@ export default class BaseCampItem extends BasicItem {
       const dialog = this.parentScene.dialogs?.find(
         (d) => d.id === 'Tent_Primative_main'
       )
-      dialog && this.addToList({ ...dialog, parent: this.item })
+      this.addCSS2D({
+        ...dialog,
+        parent: this.item,
+        sprite: true,
+        position: new Vector3(0, 1, 0),
+      })
     }
   }
 

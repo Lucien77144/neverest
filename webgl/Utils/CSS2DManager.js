@@ -1,11 +1,10 @@
-import { Vector2, Vector3 } from 'three'
 import {
   CSS2DRenderer,
   CSS2DObject,
 } from 'three/addons/renderers/CSS2DRenderer.js'
 import Experience from '~/webgl/Experience'
 
-export default class CSSRenderer {
+export default class CSS2DManager {
   constructor(scene, camera) {
     // Get elements from experience
     this.experience = new Experience()
@@ -17,10 +16,10 @@ export default class CSSRenderer {
     this.scene = scene
     this.camera = camera
     this.list = {}
-    this.handleAddDialogs = this.addDialogs.bind(this)
+    this.handleAdd = this.add.bind(this)
 
     // Setters
-    this.removeFromList = useDialogsStore().removeFromList
+    this.removeFromList = useCSSRendererStore().removeFromCSS2DList
 
     this.init()
   }
@@ -41,28 +40,32 @@ export default class CSSRenderer {
   }
 
   /**
-   * Handle add a dialog
-   * @param {*} dialog
+   * Handle add a CSS 2D element
+   * @param {ICSS2DRendererStore} element data
    */
-  addDialogs({ id, el, position, parent, layers, center }) {
+  add({ id, el, position, rotation, center, scalar, parent, layers }) {
+    // Format id
+    id = id.toLowerCase()
+
     // Remove not present elements
     Object.keys(this.list).forEach((k) => !(id === k) && this.remove(k))
 
     // Add new elements
-    !this.list[id] && this.add({ id, el, position, parent, layers, center })
-  }
+    if (this.list[id]) return
 
-  /**
-   * Add elements to renderer
-   * @param {*} list list of elements
-   */
-  add({ id, el, position, parent, layers, center }) {
+    // Active element
+    el.classList.add('renderer__item--active')
+
+    // Create object
     const obj = new CSS2DObject(el)
-    obj.position.copy(position || new Vector3(0, 0, 0))
-    obj.center.copy(center || new Vector2(0.5, 0.5))
-    obj.layers.set(layers || 0)
-
+    scalar && obj.scale.setScalar(scalar)
+    rotation && obj.rotation.copy(rotation)
+    position && obj.position.copy(position)
+    center && obj.center.copy(center)
+    layers && obj.layers.set(layers)
     parent.add(obj)
+
+    // Save to list
     this.list[id] = { obj, parent, el }
   }
 
@@ -76,13 +79,13 @@ export default class CSSRenderer {
       element.style.position = 'absolute'
       element.id = 'css-2d-renderer'
       element.style.top = 0
-      document.body.appendChild(element)
+      document.getElementById('webgl-css-wrapper').appendChild(element)
     }
 
     this.instance = new CSS2DRenderer({ element })
     this.instance.setSize(this.viewport.width, this.viewport.height)
 
-    this.$bus.on('dialogs:add', this.handleAddDialogs)
+    this.$bus.on('CSS2D:add', this.handleAdd)
   }
 
   /**
@@ -94,17 +97,16 @@ export default class CSSRenderer {
 
   /**
    * Update
-   
    */
   update() {
-    this.instance?.render(this.scene, this.camera.instance)
+    this.instance?.render(this.scene, this.camera)
   }
 
   /**
    * Dispose
    */
   dispose() {
-    this.$bus.off('dialogs:add', this.handleAddDialogs)
+    this.$bus.off('CSS2D:add', this.handleAdd)
     Object.keys(this.list).forEach((k) => this.remove(k))
   }
 }

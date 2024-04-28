@@ -219,7 +219,7 @@ export default class SceneManager {
         base: this.baseScrollFactor,
         current: this.factorScroll.value,
       },
-      dialogs: scene.cssRenderer,
+      dialogs: scene.dialogs,
     })
     // Switch complete function on the new scene
     this.active?.afterTransitionInit?.()

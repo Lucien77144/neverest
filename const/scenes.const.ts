@@ -15,18 +15,12 @@ export type TSceneInterest = {
   }
 }
 
-export type TSceneDialog = {
-  id: string
-  template: any
-  props?: any
-  el?: any
-  content: [
-    {
-      type: 'text' | 'video' | 'image'
-      value: string
-      audio: string
-    }
-  ]
+interface ISceneDialog extends ICSS2DRendererStore {
+  data: {
+    type: 'text' | 'video' | 'image'
+    value: string
+    audio: string
+  }[]
 }
 
 export type TSceneInfos = {
@@ -40,7 +34,7 @@ export type TSceneInfos = {
     end?: number
     interest?: TSceneInterest[]
   }
-  cssRenderer?: TSceneDialog[]
+  dialogs?: ISceneDialog[]
   transition?: {
     duration: number
   }
@@ -98,12 +92,11 @@ const SCENES: TSceneInfos[] = [
         },
       ],
     },
-    cssRenderer: [
+    dialogs: [
       {
         id: 'Tent_Primative_main',
         template: UIBtn,
-        props: {},
-        content: [
+        data: [
           {
             type: 'text',
             value: 'This is a tent dialog',

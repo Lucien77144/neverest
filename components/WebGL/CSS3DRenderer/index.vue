@@ -1,6 +1,7 @@
 <template>
-  <div id="css-2d-renderer" class="renderer">
+  <div id="css-3d-renderer" class="renderer">
     <div
+      class="renderer__item"
       v-for="(d, i) in list"
       :key="i"
       :id="d?.id?.toLowerCase()"
@@ -18,10 +19,10 @@
 const { $bus }: any = useNuxtApp()
 
 // Dialogs list
-const list = computed(() => useCSSRendererStore().get2DList)
+const list = computed(() => useCSSRendererStore().get3DList)
 
 // Add dialog to css renderer
-const add = (d: ICSS2DRendererStore) => $bus.emit('CSS2D:add', d)
+const add = (d: ICSS3DRendererStore) => $bus.emit('CSS3D:add', d)
 </script>
 
 <style src="./style.scss" lang="scss" scoped></style>

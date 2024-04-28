@@ -126,6 +126,22 @@ export default class BasicItem {
   }
 
   /**
+   * Add CSS2D to the item
+   * @param {ICSS2DRendererStore} item
+   */
+  addCSS2D(item) {
+    this.parentScene.addCSS2D(item)
+  }
+
+  /**
+   * Add CSS3D to the item
+   * @param {ICSS2DRendererStore} item
+   */
+  addCSS3D(item) {
+    this.parentScene.addCSS3D(item)
+  }
+
+  /**
    * Dispose the item
    */
   dispose() {

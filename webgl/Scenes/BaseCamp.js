@@ -5,7 +5,6 @@ import BasicScene from '../Modules/Basics/BasicScene'
 import Floor from '../Components/BaseCamp/Floor/Floor'
 import gsap from 'gsap'
 import Lights from '../Components/Shared/Lights/Lights'
-import CSSRenderer from '../Utils/CSSRenderer'
 
 export default class BaseCamp extends BasicScene {
   /**
@@ -367,14 +366,6 @@ export default class BaseCamp extends BasicScene {
   }
 
   /**
-   * Resize
-   */
-  resize() {
-    super.resize()
-    this.cssRenderer?.resize?.()
-  }
-
-  /**
    * Init the scene
    */
   init() {
@@ -386,8 +377,6 @@ export default class BaseCamp extends BasicScene {
     this.setBlocking()
 
     super.init()
-
-    this.cssRenderer = new CSSRenderer(this.scene, this.camera)
   }
 
   /**
@@ -399,20 +388,11 @@ export default class BaseCamp extends BasicScene {
   }
 
   /**
-   * Update
-   */
-  update() {
-    super.update()
-    this.cssRenderer?.update?.()
-  }
-
-  /**
    * On transition start, before the dispose
    */
   onDisposeStart() {
     this.scope.stop()
     this.scope = null
-    this.cssRenderer.dispose()
 
     this.$bus.emit('interest', null)
   }

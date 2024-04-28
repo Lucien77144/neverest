@@ -1,9 +1,12 @@
 <template>
   <canvas ref="canvas" class="exp" />
+  <div id="webgl-css-wrapper">
+    <WebGLCSS2DRenderer />
+    <WebGLCSS3DRenderer />
+  </div>
   <UIInterestData />
-  <WebGLCSS2DRenderer />
   <UITitle />
-  <div ref="startBtn" class="startBtn">
+  <div ref="startBtn" class="start">
     <UIBtn @click="start()">{{ $t('START') }}</UIBtn>
   </div>
 </template>
@@ -43,7 +46,7 @@ watch(scene, (v) => {
         startBtn.value?.classList.add('active')
       },
     })
-  } else {    
+  } else {
     gsap.to(startBtn.value, {
       duration: 1,
       y: 100,

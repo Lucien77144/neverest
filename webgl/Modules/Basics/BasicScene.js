@@ -2,6 +2,8 @@ import { Group, Scene } from 'three'
 import BasicCamera from './BasicCamera'
 import Experience from '~/webgl/Experience'
 import gsap from 'gsap'
+import CSS2DManager from '~/webgl/Utils/CSS2DManager'
+import CSS3DManager from '~/webgl/Utils/CSS3DManager'
 
 export default class BasicScene {
   /**
@@ -26,8 +28,14 @@ export default class BasicScene {
     this.handleMouseMoveEvt = null
     this.handleScrollEvt = null
 
+    // Utils
+    this.css2d = null
+    this.css3d = null
+
     // Actions
     this.setProgressHold = useHoldStore().setProgress
+    this.addToCSS2DList = useCSSRendererStore().addToCSS2DList
+    this.addToCSS3DList = useCSSRendererStore().addToCSS3DList
 
     // Getters
     this.progressHold = computed(() => useHoldStore().getProgress)
@@ -268,6 +276,24 @@ export default class BasicScene {
   }
 
   /**
+   * Add CSS2D to the item
+   * @param {ICSS2DRendererStore} item
+   */
+  addCSS2D(item) {
+    this.css2d ??= new CSS2DManager(this.scene, this.camera.instance)
+    this.addToCSS2DList(item)
+  }
+
+  /**
+   * Add CSS3D to the item
+   * @param {ICSS3DRendererStore} item
+   */
+  addCSS3D(item) {
+    this.css3d ??= new CSS3DManager(this.scene, this.camera.instance)
+    this.addToCSS3DList(item)
+  }
+
+  /**
    * Add a audio to the scene
    * @param {*} audios Object of audios
    * @param {*} parent Parent of the audio (if set)
@@ -353,6 +379,8 @@ export default class BasicScene {
     )
 
     this.camera.update()
+    this.css2d?.update()
+    this.css3d?.update()
   }
 
   /**
@@ -360,6 +388,8 @@ export default class BasicScene {
    */
   resize() {
     this.camera.resize()
+    this.css2d?.resize()
+    this.css3d?.resize()
   }
 
   /**
@@ -379,6 +409,8 @@ export default class BasicScene {
     // Camera
     this.scene.remove(this.camera.instance)
     this.camera.dispose()
+    this.css2d?.dispose()
+    this.css3d?.dispose()
 
     // Debug
     this.debugFolder && this.debug?.remove(this.debugFolder)

@@ -1,6 +1,6 @@
 import BasicScene from '../Modules/Basics/BasicScene'
 import IntroGroup from '../Components/Intro/IntroGroup/IntroGroup'
-import CSSRenderer from '../Utils/CSSRenderer'
+import CSS2DRenderer from '../Utils/CSS2DManager'
 
 export default class Intro extends BasicScene {
   /**
@@ -38,7 +38,7 @@ export default class Intro extends BasicScene {
    */
   init() {
     super.init()
-    this.cssRenderer = new CSSRenderer(this.scene, this.camera)
+    this.cssRenderer = new CSS2DRenderer(this.scene, this.camera)
   }
 
   /**
