@@ -4,29 +4,34 @@
       <div class="IC_text-secondaryWrapper">
         <UIIconBtn
           :disable="false"
-          @click="I18n.setLocale('fr'); $bus.emit('lang:change', 'fr')"
-          >Fr</UIIconBtn
+          @click="I18n.setLocale('fr'), $bus.emit('lang:change', 'fr')"
         >
+          {{ $t('LANG.FR.TAG') }}
+        </UIIconBtn>
         <UIIconBtn
           :disable="false"
-          @click="I18n.setLocale('en'); $bus.emit('lang:change', 'en')"
-          >En</UIIconBtn
+          @click="I18n.setLocale('en'), $bus.emit('lang:change', 'en')"
         >
+          {{ $t('LANG.EN.TAG') }}
+        </UIIconBtn>
       </div>
     </div>
-    <UIIconBtn :big="true" :is-disabled="disabled" @click="setDisabled(!disabled)"
-      ><img class="icon-big" src="/public/img/icons/subtitle.svg" alt=""
+    <UIIconBtn
+      :big="true"
+      :is-disabled="disabled"
+      @click="setDisabled(!disabled)"
+      ><img class="icon-big" src="/img/icons/subtitle.svg" alt=""
     /></UIIconBtn>
   </div>
   <div class="IC_sound">
     <div class="IC_sound-secondary">
       <div class="IC_sound-secondaryWrapper">
-        <UIIconBtn><img src="/public/img/icons/music.svg" alt="" /></UIIconBtn>
-        <UIIconBtn><img src="/public/img/icons/voice.svg" alt="" /></UIIconBtn>
+        <UIIconBtn><img src="/img/icons/music.svg" alt="" /></UIIconBtn>
+        <UIIconBtn><img src="/img/icons/voice.svg" alt="" /></UIIconBtn>
       </div>
     </div>
     <UIIconBtn :big="true" :is-disabled="isMuted" @click="toggleMute()"
-      ><img class="icon-big" src="/public/img/icons/sound.svg" alt=""
+      ><img class="icon-big" src="/img/icons/sound.svg" alt=""
     /></UIIconBtn>
   </div>
 </template>
