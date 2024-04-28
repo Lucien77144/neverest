@@ -192,10 +192,12 @@ export default class SceneManager {
 
   /**
    * Init scene
+   * @param {*} baseScene If set, initial scene name to load
    */
-  init() {
+  init(baseScene = null) {
     // Get the scene from the store or the default one
-    this.sceneName = this.debug
+    this.sceneName = baseScene
+    this.sceneName ??= this.debug
       ? useDebugStore().getScene
       : this.scenes.default.name
     const scene = this.getSceneFromList(this.sceneName)

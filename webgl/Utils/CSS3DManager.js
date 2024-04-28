@@ -18,6 +18,8 @@ export default class CSS3DManager {
     this.scene = scene
     this.camera = camera
     this.list = {}
+
+    // Events
     this.handleAdd = this.add.bind(this)
 
     // Setters

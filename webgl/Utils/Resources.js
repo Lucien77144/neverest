@@ -1,6 +1,7 @@
 import Loader from './Loader.js'
 import sources from './assets/data/sources.json'
 import { Texture } from 'three'
+import gsap from 'gsap'
 
 export default class Resources {
   /**
@@ -11,12 +12,16 @@ export default class Resources {
     this.sources = []
     this.items = {} // Will contain every resources
     this.groups = {}
+    this.progress = { value: 0 }
     this.toLoad = null
     this.loaded = null
     this.loader = null
 
     // Plugins
     this.$bus = useNuxtApp().$bus
+
+    // Store
+    this.landing = computed(() => useDebugStore().getLanding)
 
     // Init
     this.init()
@@ -120,7 +125,19 @@ export default class Resources {
       // Progress and event
       this.groups.current.loaded++
       this.loaded++
-      this.$bus.emit('progress', [this.groups.current, file.resource, data])
+
+      // Set the loading event
+      gsap.timeline().to(this.progress, {
+        value: (this.loaded / this.toLoad) * 100,
+        duration: 1,
+        ease: 'power2.inOut',
+        onUpdate: () => this.$bus.emit('loading', this.progress.value),
+        onComplete: () => {
+          if (this.progress.value === 100 && !this.landing.value) {
+            this.$bus.emit('start')
+          }
+        },
+      })
     })
 
     // Loader all end event

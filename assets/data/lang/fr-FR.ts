@@ -23,6 +23,7 @@ export default {
   LANDING_START: 'Activer le son pour une meilleure expérience',
   BASECAMP: 'Camp de base',
   ICEFALL: 'Chute de glace',
+  SOUTHCOL: 'Col sud',
   INTRO_TITLE_1: 'Ouvrez la voie',
   INTRO_TITLE_2: 'Neverest',
 }

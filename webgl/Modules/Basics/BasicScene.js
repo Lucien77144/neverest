@@ -23,10 +23,12 @@ export default class BasicScene {
     this.hovered = null
     this.holded = null
     this.holdProgress = null
-    this.handleMouseDownEvt = null
-    this.handleMouseUpEvt = null
-    this.handleMouseMoveEvt = null
-    this.handleScrollEvt = null
+
+    // Events
+    this.handleMouseDownEvt = this.onMouseDownEvt.bind(this)
+    this.handleMouseUpEvt = this.onMouseUpEvt.bind(this)
+    this.handleMouseMoveEvt = this.onMouseMoveEvt.bind(this)
+    this.handleScrollEvt = this.onScrollEvt.bind(this)
 
     // Utils
     this.css2d = null
@@ -86,11 +88,6 @@ export default class BasicScene {
    * Set events
    */
   setEvents() {
-    this.handleMouseDownEvt = this.onMouseDownEvt.bind(this)
-    this.handleMouseUpEvt = this.onMouseUpEvt.bind(this)
-    this.handleMouseMoveEvt = this.onMouseMoveEvt.bind(this)
-    this.handleScrollEvt = this.onScrollEvt.bind(this)
-
     this.$bus.on('mousedown', this.handleMouseDownEvt)
     this.$bus.on('mouseup', this.handleMouseUpEvt)
     this.$bus.on('mousemove', this.handleMouseMoveEvt)

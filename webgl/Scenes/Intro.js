@@ -1,6 +1,5 @@
 import BasicScene from '../Modules/Basics/BasicScene'
 import IntroGroup from '../Components/Intro/IntroGroup/IntroGroup'
-import CSS2DRenderer from '../Utils/CSS2DManager'
 
 export default class Intro extends BasicScene {
   /**
@@ -31,28 +30,5 @@ export default class Intro extends BasicScene {
    */
   onScroll(delta) {
     this.camera.instance.position.z += delta / 100
-  }
-
-  /**
-   * Init
-   */
-  init() {
-    super.init()
-    this.cssRenderer = new CSS2DRenderer(this.scene, this.camera)
-  }
-
-  /**
-   * After init and entrance transition end
-   */
-  afterTransitionInit() {
-    super.afterTransitionInit()
-    this.components.introGroup.setLabelRenderer()
-  }
-
-  /**
-   * Dispose
-   */
-  onDisposeStart() {
-    this.cssRenderer?.dispose?.()
   }
 }

@@ -7,7 +7,7 @@ type TCSSRendererStore = {
   scalar?: number // Scale of the element
   layers?: number[] | number // Layers to render the element
   el?: Element | ComponentPublicInstance | null // Component ref
-  data: any // Data to pass to the component
+  data?: any // Data to pass to the component
 }
 
 export interface ICSS2DRendererStore extends TCSSRendererStore {
@@ -31,7 +31,7 @@ export const useCSSRendererStore = defineStore('cssRenderer', {
     get2DList(): TCSSRenderer['css2DList'] {
       return this.css2DList
     },
-    get3DList(): TCSSRenderer['css2DList'] {
+    get3DList(): TCSSRenderer['css3DList'] {
       return this.css3DList
     },
   },
@@ -41,7 +41,8 @@ export const useCSSRendererStore = defineStore('cssRenderer', {
       this.css2DList = css2DList
     },
     addToCSS2DList(el: ICSS2DRendererStore) {
-      this.css2DList = [...this.css2DList, el]
+      this.css2DList.push(el)
+      this.css2DList = [...this.css2DList]
     },
     removeFromCSS2DList(id: ICSS2DRendererStore['id']) {
       this.css2DList = [...this.css2DList.filter((el) => el.id != id)]
@@ -52,7 +53,8 @@ export const useCSSRendererStore = defineStore('cssRenderer', {
       this.css3DList = css3DList
     },
     addToCSS3DList(el: ICSS3DRendererStore) {
-      this.css3DList = [...this.css3DList, el]
+      this.css3DList.push(el)
+      this.css3DList = [...this.css3DList]
     },
     removeFromCSS3DList(id: ICSS3DRendererStore['id']) {
       this.css3DList = [...this.css3DList.filter((el) => el.id != id)]

@@ -16,6 +16,8 @@ export default class CSS2DManager {
     this.scene = scene
     this.camera = camera
     this.list = {}
+
+    // Events
     this.handleAdd = this.add.bind(this)
 
     // Setters
@@ -32,6 +34,8 @@ export default class CSS2DManager {
     const d = this.list[id]
     if (!d) return
 
+    console.log('remove')
+
     d.el.remove()
     d.parent.remove(d.obj)
     this.removeFromList(id)
@@ -46,9 +50,6 @@ export default class CSS2DManager {
   add({ id, el, position, rotation, center, scalar, parent, layers }) {
     // Format id
     id = id.toLowerCase()
-
-    // Remove not present elements
-    Object.keys(this.list).forEach((k) => !(id === k) && this.remove(k))
 
     // Add new elements
     if (this.list[id]) return
@@ -108,5 +109,6 @@ export default class CSS2DManager {
   dispose() {
     this.$bus.off('CSS2D:add', this.handleAdd)
     Object.keys(this.list).forEach((k) => this.remove(k))
+    this.instance = null
   }
 }

@@ -16,7 +16,7 @@ export default class Experience {
   /**
    * Constructor
    */
-  constructor({ canvas, BasicScene } = {}) {
+  constructor({ canvas, baseScene } = {}) {
     if (Experience._instance) {
       return Experience._instance
     }
@@ -26,8 +26,8 @@ export default class Experience {
     this.$router = useRouter()
 
     // Set container
-    canvas && (this.canvas = canvas)
-    BasicScene && (this.BasicScene = BasicScene)
+    this.canvas = canvas
+    this.baseScene = baseScene
 
     // Utils
     this.cursor = new CursorManager({ el: this.canvas })
@@ -45,6 +45,10 @@ export default class Experience {
     this.time = null
     this.resources = null
     this.offset = { x: 0, y: 0 }
+
+    // Events
+    this.handleResize = this.resize.bind(this)
+    this.handleStart = this.start.bind(this)
 
     // plugin
     this.$bus = useNuxtApp().$bus
@@ -89,7 +93,7 @@ export default class Experience {
       !this.sceneManager?.active &&
       this.resources.toLoad === this.resources.loaded
     ) {
-      this.sceneManager.init(this.viewport.debug && this.BasicScene)
+      this.sceneManager.init(this.viewport.debug && this.baseScene)
 
       this.update()
     }
@@ -142,7 +146,9 @@ export default class Experience {
     this.resources = new Resources()
     this.audioManager = new AudioManager()
 
-    this.$bus.on('resize', () => this.resize())
+    // Events
+    this.$bus.on('start', this.handleStart)
+    this.$bus.on('resize', this.handleResize)
   }
 
   /**

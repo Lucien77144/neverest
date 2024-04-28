@@ -1,14 +1,13 @@
 <template>
   <div id="css-2d-renderer" class="renderer">
     <div
+      class="renderer__item"
       v-for="(d, i) in list"
       :key="i"
       :id="d?.id?.toLowerCase()"
       :ref="(el) => add({ ...d, el })"
     >
-      <component :is="{ ...d?.template }" :data="d?.data">
-        {{ d?.id }}
-      </component>
+      <component :is="{ ...d?.template }" :data="d?.data"></component>
     </div>
   </div>
 </template>

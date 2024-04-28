@@ -1,6 +1,6 @@
 <template>
   <UILoader />
-  <div ref="land" class="start">
+  <div ref="landingRef" v-if="landing" class="start">
     <div class="start__content">
       <p>
         {{ $t('LANDING') }}
@@ -9,10 +9,10 @@
     <div class="start__footer">
       <p>{{ $t('LANDING_START') }}</p>
       <div class="start__footer__content">
-        <UIBtn @click="$bus.emit('start'); $bus.emit('audio:unmute')">
+        <UIBtn @click="start(false)">
           {{ $t('YES') }}
         </UIBtn>
-        <UIBtn @click="$bus.emit('start'); $bus.emit('audio:mute')">
+        <UIBtn @click="start(true)">
           {{ $t('NO') }}
         </UIBtn>
       </div>
@@ -21,32 +21,33 @@
 </template>
 
 <script lang="ts" setup>
+import gsap from 'gsap'
+
 // Plugins
 const { $bus }: any = useNuxtApp()
 
 // Refs
-const land = ref<HTMLElement | null>(null)
+const landingRef = ref<HTMLElement | null>(null)
+
+// Store
+const landing = computed(() => useDebugStore().getLanding)
 
 /**
- * On click, emit start
+ * Start the experience
+ * @param muted - If the audio should be muted
  */
-$bus.on('start', () => {
-  land.value?.classList.add('disabled')
-  setTimeout(() => land.value?.remove(), 500)
-})
+const start = (muted: boolean) => {
+  $bus.emit('start')
+  $bus.emit(muted ? 'audio:mute' : 'audio:unmute')
 
-/**
- * On loading end, remove the landing if not in debug mode
- */
-$bus.on('loading', (value: number) => {
-  // Debug store
-  const { getLanding } = useDebugStore()
-
-  if (value === 100 && !getLanding) {
-    land.value?.remove()
-    $bus.emit('start')
+  if (landingRef.value) {
+    gsap.to(landingRef.value, {
+      duration: 0.75,
+      opacity: 0,
+      onComplete: () => landingRef.value?.remove(),
+    })
   }
-})
+}
 </script>
 
 <style src="./style.scss" lang="scss" scoped></style>
