@@ -2,6 +2,7 @@ import {
   CanvasTexture,
   Color,
   Mesh,
+  MeshNormalMaterial,
   PlaneGeometry,
   QuadraticBezierCurve,
   ShaderMaterial,
@@ -177,7 +178,7 @@ export default class PlaneTestDA extends BasicItem {
         ctx.beginPath()
         ctx.arc(
           point.x,
-          point.y,
+          point.y+Math.random()*10,
           Math.random() * thicknessCurve,
           0,
           Math.PI * 2
@@ -220,6 +221,9 @@ export default class PlaneTestDA extends BasicItem {
 
   setItem() {
     this.item = new Mesh(this.geometry, this.material)
+    //this.item = this.resources.TentMain.scene.clone()
+    //this.item.rotation.y = Math.PI*0.5
+    //this.item.children[0].material = this.material
   }
 
   addTextureParamsIntoDebuger() {
@@ -241,7 +245,7 @@ export default class PlaneTestDA extends BasicItem {
 
     curveFolder.addBinding(this.curvesParam, 'numberOfCurve', {
       min: 3,
-      max: 120,
+      max: 150,
       step: 1,
       label: 'Curve Amount',
     })

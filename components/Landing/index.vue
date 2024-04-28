@@ -1,19 +1,21 @@
 <template>
   <UILoader />
   <div ref="land" class="start">
-    <div class="start__title">
-      <img :src="`/img/icons/countries/${$i18n.locale}.png`" alt="" />
-    </div>
     <div class="start__content">
       <p>
-        {{ $t('INTRO') }}
+        {{ $t('LANDING') }}
       </p>
     </div>
     <div class="start__footer">
-      <UILangPicker />
-      <UIBtn @click="$bus.emit('start')">
-        {{ $t('START') }}
-      </UIBtn>
+      <p>{{ $t('LANDING_START') }}</p>
+      <div class="start__footer__content">
+        <UIBtn @click="$bus.emit('start'); $bus.emit('audio:unmute')">
+          {{ $t('YES') }}
+        </UIBtn>
+        <UIBtn @click="$bus.emit('start'); $bus.emit('audio:mute')">
+          {{ $t('NO') }}
+        </UIBtn>
+      </div>
     </div>
   </div>
 </template>

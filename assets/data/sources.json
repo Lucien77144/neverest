@@ -127,6 +127,10 @@
       {
         "name": "BCAnimCam",
         "source": "/models/BaseCamp/cam.glb"
+      },
+      {
+        "name": "TentMain",
+        "source": "/models/BaseCamp/TENT_MAIN.glb"
       }
     ]
   },

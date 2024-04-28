@@ -6,6 +6,7 @@
     <NextScene />
     <UILangPicker />
     <UIProgressBar />
+    <UIInputControl />
   </div>
 </template>
 
