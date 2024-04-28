@@ -10,13 +10,12 @@ export default class BaseCamp extends BasicScene {
   /**
    * Constructor
    */
-  constructor({ interest, dialogs }) {
+  constructor({ interest }) {
     super()
 
     // New elements
     this.resources = this.experience.resources
     this.interest = interest
-    this.dialogs = dialogs
     this.camFov = 20
     this.camRot = new Vector3(0, 0, 0)
     this.blocking = []
@@ -31,15 +30,17 @@ export default class BaseCamp extends BasicScene {
     this.disabledScroll = computed(() => useScrollStore().getDisable)
     // Actions
     this.setFactor = useScrollStore().setFactor
+    this.setInterest = useInterestStore().setInterest
+    this.setInterestVisible = useInterestStore().setVisible
     this.instantScroll = useScrollStore().instant
 
     // Scope
-    this.scope = effectScope()
     this.scope.run(() => {
       // Watchers
       watch(this.currentScroll, (v) => this.watchCurrentScroll(v))
     })
 
+    // Components
     this.components = {
       floor: new Floor(),
       lights: new Lights(),
@@ -48,6 +49,10 @@ export default class BaseCamp extends BasicScene {
     // Init the scene
     this.init()
   }
+
+  // --------------------------------
+  // Workflow
+  // --------------------------------
 
   /**
    * Scroll the camera around the cube
@@ -94,7 +99,8 @@ export default class BaseCamp extends BasicScene {
    * @param {boolean} instant Should the transition be instant
    */
   setInterestVis(data, instant) {
-    this.$bus.emit('interest', data)
+    data && this.setInterest(data)
+    this.setInterestVisible(!!data)
 
     const val = {
       ...this.camRot,
@@ -111,7 +117,7 @@ export default class BaseCamp extends BasicScene {
     gsap.to(val, {
       x: !!data ? 0.1 : 0,
       fov: !!data ? this.camFov * 0.85 : this.camFov,
-      duration: instant ? 0 : 0.75,
+      duration: instant ? 0 : 1,
       ease: 'power1.inOut',
       onUpdate: () => {
         this.camRot.x = val.x
@@ -365,13 +371,18 @@ export default class BaseCamp extends BasicScene {
     )
   }
 
+  // --------------------------------
+  // Lifecycle
+  // --------------------------------
+
   /**
    * Init the scene
    */
   init() {
     // Set the camera
     this.setCamera()
-    this.setInterestVis(null, true)
+    this.setInterestVis(null)
+    this.setInterestVisible(false)
 
     // Blocking
     this.setBlocking()
@@ -382,8 +393,8 @@ export default class BaseCamp extends BasicScene {
   /**
    * After init and entrance transition end
    */
-  afterTransitionInit() {
-    super.afterTransitionInit()
+  onInitComplete() {
+    super.onInitComplete()
     this.watchCurrentScroll(0)
   }
 
@@ -391,10 +402,8 @@ export default class BaseCamp extends BasicScene {
    * On transition start, before the dispose
    */
   onDisposeStart() {
-    this.scope.stop()
-    this.scope = null
-
-    this.$bus.emit('interest', null)
+    super.onDisposeStart()
+    this.setInterestVisible(false)
   }
 
   /**
@@ -402,7 +411,6 @@ export default class BaseCamp extends BasicScene {
    */
   dispose() {
     this.setInterestVis(null, true)
-
     super.dispose()
   }
 }

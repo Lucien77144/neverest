@@ -12,16 +12,7 @@ export default class IceFall extends BasicScene {
   constructor({ interest }) {
     super()
 
-    // Get elements from experience
-    this.project = this.experience.project
-
     // New elements
-    this.components = {
-      lights: new Lights(),
-      moutains: new Mountains(),
-      iceblocks: new Iceblocks(),
-      floor: new IFFloor(),
-    }
     this.icefallObj = null
     this.baseCamRot = null
     this.camRotTarget = null
@@ -34,9 +25,21 @@ export default class IceFall extends BasicScene {
     this.instantScroll = useScrollStore().instant
     this.setDisableScroll = useScrollStore().setDisable
 
+    // Components
+    this.components = {
+      lights: new Lights(),
+      moutains: new Mountains(),
+      iceblocks: new Iceblocks(),
+      floor: new IFFloor(),
+    }
+
     // Init the scene
     this.init()
   }
+
+  // --------------------------------
+  // Workflow
+  // --------------------------------
 
   /**
    * Go to the next interest point
@@ -46,6 +49,16 @@ export default class IceFall extends BasicScene {
     this.instantScroll(
       (100 / (this.interest.list?.length - 1)) * this.currentPoint
     )
+  }
+
+  /**
+   * Set the camera
+   */
+  initCamera() {
+    this.camera.instance.position.set(0.31, 28, 60)
+    this.camera.instance.lookAt(new Vector3((Math.PI * 75) / 180, 10, 0))
+    this.baseCamRot = this.camera.instance.rotation.clone()
+    this.camRotTarget = this.baseCamRot.clone()
   }
 
   /**
@@ -61,15 +74,9 @@ export default class IceFall extends BasicScene {
     }
   }
 
-  /**
-   * Set the camera
-   */
-  initCamera() {
-    this.camera.instance.position.set(0.31, 28, 60)
-    this.camera.instance.lookAt(new Vector3((Math.PI * 75) / 180, 10, 0))
-    this.baseCamRot = this.camera.instance.rotation.clone()
-    this.camRotTarget = this.baseCamRot.clone()
-  }
+  // --------------------------------
+  // Lifecycle
+  // --------------------------------
 
   /**
    * Update
@@ -92,8 +99,8 @@ export default class IceFall extends BasicScene {
   /**
    * After init and entrance transition end
    */
-  afterTransitionInit() {
-    super.afterTransitionInit()
+  onInitComplete() {
+    super.onInitComplete()
     this.setDisableScroll(true)
     this.instantScroll(5)
   }

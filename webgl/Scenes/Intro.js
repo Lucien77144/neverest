@@ -8,14 +8,13 @@ export default class Intro extends BasicScene {
   constructor() {
     super()
 
-    // New elements
+    // Components
     this.components = {
       introGroup: new IntroGroup(),
     }
 
+    // Audios
     this.audios = {
-      // onichan: { group: 'Cringe', loop: true, volume: 0.5 },
-      // yameteAh: { group: 'Cringe', loop: true, volume: 0.25 },
       babyshark: { group: 'Enfants', loop: true, volume: 0.3, persist: true },
       tedTalk: { group: 'Enfants', loop: true, volume: 0.3, persist: true },
     }
@@ -24,11 +23,34 @@ export default class Intro extends BasicScene {
     this.init()
   }
 
+  // --------------------------------
+  // Workflow
+  // --------------------------------
+
   /**
    * On scroll
    * @param {*} delta
    */
   onScroll(delta) {
     this.camera.instance.position.z += delta / 100
+  }
+
+  // --------------------------------
+  // Lifecycle
+  // --------------------------------
+
+  /**
+   * On switch between scene complete and this scene is the new one
+   */
+  onInitComplete() {
+    super.onInitComplete()
+    this.$bus.emit('title:disable', false)
+  }
+
+  /**
+   * On transition start, before the dispose
+   */
+  onDisposeStart() {
+    this.$bus.emit('title:disable', true)
   }
 }

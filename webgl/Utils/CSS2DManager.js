@@ -34,8 +34,6 @@ export default class CSS2DManager {
     const d = this.list[id]
     if (!d) return
 
-    console.log('remove')
-
     d.el.remove()
     d.parent.remove(d.obj)
     this.removeFromList(id)
@@ -49,10 +47,10 @@ export default class CSS2DManager {
    */
   add({ id, el, position, rotation, center, scalar, parent, layers }) {
     // Format id
-    id = id.toLowerCase()
+    id = id?.toLowerCase()
 
     // Add new elements
-    if (this.list[id]) return
+    if (!id || !el || this.list[id]) return
 
     // Active element
     el.classList.add('renderer__item--active')

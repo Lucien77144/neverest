@@ -1,3 +1,4 @@
+import { UIIntroData } from '#components'
 import { MeshNormalMaterial, Vector3 } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
@@ -24,7 +25,6 @@ export default class BaseCampItem extends BasicItem {
     )
 
     // Watch
-    this.scope = effectScope()
     this.scope.run(() => {
       watch(this.currentScroll, (v) => this.updateVisibility())
     })
@@ -144,13 +144,17 @@ export default class BaseCampItem extends BasicItem {
     }
   }
 
-  afterTransitionInit() {
+  /**
+   * On init complete
+   */
+  onInitComplete() {
     if (this.name == 'Tent_Primative_main') {
-      const dialog = this.parentScene.dialogs?.find(
-        (d) => d.id === 'Tent_Primative_main'
-      )
       this.addCSS2D({
-        ...dialog,
+        id: 'tent-primative-main',
+        template: UIIntroData,
+        data: {
+          value: 'This is a tent dialog',
+        },
         parent: this.item,
         sprite: true,
         position: new Vector3(0, 1, 0),
@@ -164,13 +168,5 @@ export default class BaseCampItem extends BasicItem {
   init() {
     // Set item
     this.setItem()
-  }
-
-  /**
-   * Dispose
-   */
-  dispose() {
-    this.scope.stop()
-    this.scope = null
   }
 }

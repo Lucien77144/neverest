@@ -3,7 +3,14 @@
   transform: translateX(-50%);
   top: 10%;
   left: 50%;
-  display: none;
+  transition: 0.75s ease-in-out;
+  transition-property: opacity, transform, visibility;
+
+  &--disabled {
+    visibility: hidden;
+    opacity: 0;
+    transform: translate(-50%, 5rem);
+  }
 
   &__wrapper {
     padding: 2rem;
@@ -23,8 +30,4 @@
       line-height: 6rem;
     }
   }
-}
-
-.active {
-  display: block;
 }

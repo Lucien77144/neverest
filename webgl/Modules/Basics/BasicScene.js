@@ -42,8 +42,11 @@ export default class BasicScene {
     // Getters
     this.progressHold = computed(() => useHoldStore().getProgress)
 
+    // Scope
+    this.scope = effectScope()
+
     // --------------------------------
-    // Elements
+    // Elements (to override in the child class)
     // --------------------------------
 
     /**
@@ -68,6 +71,22 @@ export default class BasicScene {
     // --------------------------------
 
     /**
+     * Add CSS2D to the item
+     * @param {ICSS2DRendererStore} item
+     */
+    this.addCSS2D
+
+    /**
+     * Add CSS3D to the item
+     * @param {ICSS2DRendererStore} item
+     */
+    this.addCSS3D
+
+    // --------------------------------
+    // Lifecycle
+    // --------------------------------
+
+    /**
      * On scroll function
      * @param {number} delta - Delta of the scroll
      */
@@ -81,8 +100,12 @@ export default class BasicScene {
     /**
      * On switch between scene complete and this scene is the new one
      */
-    this.afterTransitionInit
+    this.onInitComplete
   }
+
+  // --------------------------------
+  // Workflow
+  // --------------------------------
 
   /**
    * Set events
@@ -273,24 +296,6 @@ export default class BasicScene {
   }
 
   /**
-   * Add CSS2D to the item
-   * @param {ICSS2DRendererStore} item
-   */
-  addCSS2D(item) {
-    this.css2d ??= new CSS2DManager(this.scene, this.camera.instance)
-    this.addToCSS2DList(item)
-  }
-
-  /**
-   * Add CSS3D to the item
-   * @param {ICSS3DRendererStore} item
-   */
-  addCSS3D(item) {
-    this.css3d ??= new CSS3DManager(this.scene, this.camera.instance)
-    this.addToCSS3DList(item)
-  }
-
-  /**
    * Add a audio to the scene
    * @param {*} audios Object of audios
    * @param {*} parent Parent of the audio (if set)
@@ -342,6 +347,38 @@ export default class BasicScene {
     return res
   }
 
+  // --------------------------------
+  // Functions
+  // --------------------------------
+
+  /**
+   * Add CSS2D to the item
+   * @param {ICSS2DRendererStore} item
+   */
+  addCSS2D(item) {
+    this.css2d ??= new CSS2DManager(this.scene, this.camera.instance)
+    this.addToCSS2DList(item)
+  }
+
+  /**
+   * Add CSS3D to the item
+   * @param {ICSS3DRendererStore} item
+   */
+  addCSS3D(item) {
+    this.css3d ??= new CSS3DManager(this.scene, this.camera.instance)
+    this.addToCSS3DList(item)
+  }
+
+  // --------------------------------
+  // Lifecycle
+  // --------------------------------
+
+  /**
+   * On scroll function
+   * @param {number} delta - Delta of the scroll
+   */
+  onScroll(delta) {}
+
   /**
    * Init the scene
    * Automatically called after the constructor
@@ -349,21 +386,22 @@ export default class BasicScene {
   init() {
     this.allComponents = this.getRecursiveComponents()
     this.addItemsToScene()
-    Object.values(this.allComponents).forEach((c) => c.afterComponentsInit?.())
 
     this.audios && this.addAudios(this.audios)
     this.scene.add(this.camera.instance)
 
     this.setEvents()
+
+    Object.values(this.allComponents).forEach((c) => c.afterSceneInit?.())
   }
 
   /**
    * On switch between scene complete and this scene is the new one
    */
-  afterTransitionInit() {
-    // Trigger afterTransitionInit on all components
+  onInitComplete() {
+    // Trigger onInitComplete on all components
     Object.values(this.allComponents).forEach((c) =>
-      this.triggerFn(c, 'afterTransitionInit')
+      this.triggerFn(c, 'onInitComplete')
     )
   }
 
@@ -390,9 +428,18 @@ export default class BasicScene {
   }
 
   /**
+   * On transition start, before the dispose
+   */
+  onDisposeStart() {}
+
+  /**
    * Dispose the scene
    */
   dispose() {
+    // Scope
+    this.scope.stop()
+    this.scope = null
+
     // Items
     Object.values(this.allComponents).forEach((c) => {
       this.triggerFn(c, 'dispose')

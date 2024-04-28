@@ -118,7 +118,6 @@ export default class SceneManager {
         base: this.baseScrollFactor,
         current: this.factorScroll.value,
       },
-      dialogs: next.cssRenderer,
     })
 
     // Switch function start on previous scene
@@ -177,7 +176,7 @@ export default class SceneManager {
 
         // Switch complete function on the new scene
         this.setDisableScroll(false)
-        this.active?.afterTransitionInit?.()
+        this.active?.onInitComplete?.()
       },
     })
   }
@@ -221,10 +220,9 @@ export default class SceneManager {
         base: this.baseScrollFactor,
         current: this.factorScroll.value,
       },
-      dialogs: scene.dialogs,
     })
     // Switch complete function on the new scene
-    this.active?.afterTransitionInit?.()
+    this.active?.onInitComplete?.()
 
     // Start navigation
     this.$bus.on('scene:switch', (scene) => this.switch(scene))

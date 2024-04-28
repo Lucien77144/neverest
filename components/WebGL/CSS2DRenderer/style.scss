@@ -2,7 +2,11 @@
   position: absolute;
   top: 0;
 
-  & > div:not(.renderer__item--active) {
-    display: none;
+  &__item {
+    pointer-events: all;
+
+    &:not(.renderer__item--active) {
+      display: none;
+    }
   }
 }

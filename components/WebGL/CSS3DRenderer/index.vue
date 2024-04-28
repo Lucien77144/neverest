@@ -7,7 +7,11 @@
       :id="d?.id?.toLowerCase()"
       :ref="(el) => add({ ...d, el })"
     >
-      <component :is="{ ...d?.template }" :data="d?.data"></component>
+      <component
+        v-if="d?.template"
+        :is="{ ...d?.template }"
+        :data="d?.data"
+      ></component>
     </div>
   </div>
 </template>

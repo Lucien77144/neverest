@@ -21,6 +21,10 @@ export default class BasicCamera {
     this.init()
   }
 
+  // --------------------------------
+  // Workflow
+  // --------------------------------
+
   /**
    * Set listener
    */
@@ -80,6 +84,10 @@ export default class BasicCamera {
         this.instance.position.set(value.x, value.y, value.z)
       })
   }
+
+  // --------------------------------
+  // Lifecycle
+  // --------------------------------
 
   /**
    * Init the camera

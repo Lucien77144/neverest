@@ -36,8 +36,8 @@ export default class CSS3DManager {
     const d = this.list[id]
     if (!d) return
 
-    d.el.remove()
     d.parent.remove(d.obj)
+    d.el.remove()
     this.removeFromList(id)
 
     delete this.list[id]
@@ -49,13 +49,10 @@ export default class CSS3DManager {
    */
   add({ id, el, position, rotation, scalar, parent, layers, sprite }) {
     // Format id
-    id = id.toLowerCase()
-
-    // Remove not present elements
-    Object.keys(this.list).forEach((k) => !(id === k) && this.remove(k))
+    id = id?.toLowerCase()
 
     // Add new elements
-    if (this.list[id]) return
+    if (!id || !el || this.list[id]) return
 
     // Active element
     el.classList.add('renderer__item--active')

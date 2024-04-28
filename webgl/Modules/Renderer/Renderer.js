@@ -51,6 +51,10 @@ export default class Renderer {
     this.init()
   }
 
+  // --------------------------------
+  // Workflow
+  // --------------------------------
+
   /**
    * Set debug
    */
@@ -193,6 +197,10 @@ export default class Renderer {
     this.instance.setRenderTarget(null)
     this.instance.render(this.renderMesh, this.camera)
   }
+
+  // --------------------------------
+  // Lifecycle
+  // --------------------------------
 
   /**
    * Init the renderer
