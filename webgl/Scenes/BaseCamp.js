@@ -145,14 +145,6 @@ export default class BaseCamp extends BasicScene {
     this.components = {
       floor: new Floor(),
       lights: new Lights(),
-      // BCBloc: new BCBloc({
-      //   name: 'Boxd',
-      //   position: new Vector3(-6.768, -0.019, -3.797),
-      //   rotation: new Vector3(0, -0.631, 0),
-      //   scale: new Vector3(0.746, 0.836, 0.746),
-      //   visibility: [0, 30],
-      // }),
-      // ...BCBlocs.map((b) => ({ [b.name]: new BCBloc(b) })),
       ...BCBlocs.reduce((acc, b) => {
         acc[b.name] = new BCBloc(b)
         return acc

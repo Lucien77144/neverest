@@ -1,17 +1,19 @@
 <template>
-  <div class="audio-player" @click="toggle()">
+  <div :key="data?.id" class="audio-player" @click="toggle()">
     <client-only>
       <Vue3Lottie
-        ref="lottieAnimation"
+        ref="lottieRef"
         :animationData="audioPlayer"
         :autoPlay="false"
+        :speed="1 / audio.duration"
+        @onLoopComplete="resetLottie"
       />
     </client-only>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { MathUtils } from 'three'
+import gsap from 'gsap'
 import { Vue3Lottie } from 'vue3-lottie'
 import audioPlayer from '~/assets/data/audioplayer.json'
 
@@ -20,36 +22,32 @@ const { data } = defineProps({
   data: Object,
 })
 
-// Refs
-const lottieAnimation = ref<InstanceType<typeof Vue3Lottie>>()
-
-// Consts
+// Const
 const audio = data?.source
 
+// Refs
+const lottieRef = ref<InstanceType<typeof Vue3Lottie>>()
+
+// Reset the lottie animation
+const resetLottie = () => {
+  const to = { value: lottieRef.value?.getDuration() || 1 }
+  gsap.to(to, {
+    duration: 0.25,
+    ease: 'power2.inOut',
+    value: 0,
+    onUpdate: () => lottieRef.value?.goToAndStop(to.value),
+  })
+}
+
 // Audio Events
-audio.addEventListener('ended', () => {
-  lottieAnimation.value?.stop()
-  lottieAnimation.value?.goToAndStop(0)
-})
-audio.addEventListener('play', () => {
-  lottieAnimation.value?.play()
-})
-audio.addEventListener('pause', () => {
-  lottieAnimation.value?.stop()
-})
+audio.addEventListener('play', () => lottieRef.value?.play())
+audio.addEventListener('pause', () => lottieRef.value?.pause())
 
 // Toggle audio
-const toggle = () => {
-  if (!audio) return
+const toggle = () => (audio?.paused ? audio?.play() : audio?.pause())
 
-  if (audio.paused) {
-    audio.play()
-    lottieAnimation.value?.play()
-  } else {
-    audio.pause()
-    lottieAnimation.value?.stop()
-  }
-}
+// On mounted
+onMounted(() => lottieRef.value?.setSpeed(1 / audio.duration))
 </script>
 
 <style src="./style.scss" lang="scss" scoped></style>
