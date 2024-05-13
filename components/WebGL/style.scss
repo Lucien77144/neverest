@@ -12,3 +12,16 @@
   position: relative;
   pointer-events: none;
 }
+
+.start {
+  position: absolute;
+  bottom: 10rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: none;
+}
+
+.active {
+  display: block;
+}
