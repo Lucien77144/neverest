@@ -638,8 +638,6 @@ export default class BaseCamp extends BasicScene {
       }
     ]
 
-    console.log(this.blocking);
-
     this.blocking.forEach(
       ({ name, model, position, rotation, scale, visibility, isCamera }) => {
         this.components[name] = new BaseCampItem({

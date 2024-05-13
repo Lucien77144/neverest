@@ -37,8 +37,6 @@ const route = useRoute()
 const scene = computed(() => useNavigationStore().getScene)
 
 watch(scene, (v) => {
-  console.log(v)
-
   if (v?.name == 'intro') {
     gsap.to(startBtn.value, {
       duration: 0,

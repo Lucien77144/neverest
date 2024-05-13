@@ -17,10 +17,8 @@ const isDisabled = ref(false)
 // isDisabled.value = true
 onMounted(() => {
   if (document.querySelector('.subtitles__wrapper')?.innerHTML != '') {
-    console.log('ui')
     isDisabled.value = false
   } else {
-    console.log('no')
     isDisabled.value = true
   }
 })
