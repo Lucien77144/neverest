@@ -37,6 +37,7 @@ export default class ScrollManager {
    */
   setDebug() {
     this.debugFolder = this.debug.addFolder({
+expanded:false,
       title: 'Scroll',
       closed: false,
     })

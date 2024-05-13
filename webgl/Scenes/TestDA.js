@@ -1,4 +1,5 @@
-import CubeTestDA from "../Components/TestDA/CubeTestDA/CubeTestDA"
+import ModelsContainerTestDA from "../Components/TestDA/ModelsContainerTestDA/ModelsContainerTestDA"
+import ModelTestDA from "../Components/TestDA/ModelsContainerTestDA/ModelsContainerTestDA"
 import PlaneTestDA from "../Components/TestDA/PlaneTestDA/PlaneTestDA"
 import BasicScene from "../Modules/Basics/BasicScene"
 
@@ -12,6 +13,7 @@ export default class TestDA extends BasicScene {
       // New elements
       this.components = {
         planeDA:new PlaneTestDA(),
+        //modelDA: new ModelsContainerTestDA()
       }
   
   
