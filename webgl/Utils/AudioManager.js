@@ -19,10 +19,12 @@ export default class AudioManager {
    */
   setDebug(title, audio) {
     // Folder
-    this.debugFolder ??= this.debug.addFolder({ title: 'Audio' })
+    this.debugFolder ??= this.debug.addFolder({
+expanded:false, title: 'Audio' })
 
     // Subfolder
     const sub = this.debugFolder.addFolder({
+expanded:false,
       title: `${audio.parent ? '🔗 - ' : ''}${title}`,
       expanded: audio.isPlaying,
     })

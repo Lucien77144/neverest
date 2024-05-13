@@ -1,3 +1,5 @@
+import ModelsContainerTestDA from '../Components/TestDA/ModelsContainerTestDA/ModelsContainerTestDA'
+import ModelTestDA from '../Components/TestDA/ModelsContainerTestDA/ModelsContainerTestDA'
 import PlaneTestDA from '../Components/TestDA/PlaneTestDA/PlaneTestDA'
 import BasicScene from '../Modules/Basics/BasicScene'
 
@@ -8,9 +10,10 @@ export default class TestDA extends BasicScene {
   constructor() {
     super()
 
-    // Components
+    // New elements
     this.components = {
       planeDA: new PlaneTestDA(),
+      //modelDA: new ModelsContainerTestDA()
     }
 
     // Init the scene
