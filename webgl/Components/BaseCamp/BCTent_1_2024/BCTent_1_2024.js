@@ -1,7 +1,7 @@
 import { MeshNormalMaterial } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
-export default class BCBloc extends BasicItem {
+export default class BCTent_1_2024 extends BasicItem {
   /**
    * Constructor
    */
@@ -9,7 +9,7 @@ export default class BCBloc extends BasicItem {
     position = new Vector3(0, 0, 0),
     rotation = new Vector3(0, 0, 0),
     scale = new Vector3(1, 1, 1),
-    name = 'BCBloc',
+    name = 'BCTent_1_2024',
     visibility = [0, 100],
   }) {
     super()
@@ -29,7 +29,7 @@ export default class BCBloc extends BasicItem {
    * Set item
    */
   setItem() {
-    this.item = this.resources.BCBloc.scene.clone()
+    this.item = this.resources.BCTent_1_2024.scene.clone()
     this.item.position.copy(this.position)
     this.item.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
     this.item.scale.copy(this.scale)
