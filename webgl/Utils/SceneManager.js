@@ -54,6 +54,7 @@ export default class SceneManager {
    */
   setDebug(value) {
     this.debugFolder = this.debug.addFolder({
+expanded:false,
       title: 'Scenes',
     })
 

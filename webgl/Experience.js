@@ -75,7 +75,8 @@ export default class Experience {
       .on('change', () => toggleLanding())
 
     // Drag :
-    const folder = this.debug.addFolder({ title: 'Position', expanded: true })
+    const folder = this.debug.addFolder({
+expanded:false, title: 'Debugger Position' })
     this.debug.dragButton = folder.addButton({ title: 'Drag Position' })
     folder
       .addButton({ title: 'Reset Position' })

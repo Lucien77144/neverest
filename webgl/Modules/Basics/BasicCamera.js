@@ -59,6 +59,7 @@ export default class BasicCamera {
    */
   setDebug() {
     this.debugFolder = this.debug.addFolder({
+expanded:false,
       title: 'Camera',
     })
 
