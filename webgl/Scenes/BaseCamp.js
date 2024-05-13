@@ -309,11 +309,11 @@ export default class BaseCamp extends BasicScene {
       },
       {
         name: 'Stake',
-        position: new Vector3(5.866, -1.144, -17.924),
-        rotation: new Vector3(1.487, -0.274, 0.56),
-        scale: new Vector3(0.425, 0.425, 0.425),
-        model: this.resources.items.BCTent,
-        visibility: [0, 30],
+        position: new Vector3(6.066, -0.05, -17.924),
+        rotation: new Vector3(0.0, 3.5, 0.1),
+        scale: new Vector3(1, 1, 1),
+        model: this.resources.items.BCDrapeau,
+        visibility: [0, 33],
       },
       {
         name: 'Tent_Primative_l_1',
@@ -465,7 +465,7 @@ export default class BaseCamp extends BasicScene {
         position: new Vector3(0.551, 0.135, -36.868),
         rotation: new Vector3(0, -0.4, 0),
         scale: new Vector3(1.412, 1.412, 1.412),
-        model: this.resources.items.BCTentMain2024,
+        model: this.resources.items.BCTent1_1953,
         visibility: [33, 78],
       },
       {
@@ -473,7 +473,7 @@ export default class BaseCamp extends BasicScene {
         position: new Vector3(4.166, 0.018, -25.984),
         rotation: new Vector3(0.047, -0.407, 0.06),
         scale: new Vector3(1.412, 1.412, 1.412),
-        model: this.resources.items.BCTentMain2024,
+        model: this.resources.items.BCTent1_1953,
         visibility: [33, 78],
       },
       {
@@ -489,7 +489,7 @@ export default class BaseCamp extends BasicScene {
         position: new Vector3(5.277, 0.135, -50.743),
         rotation: new Vector3(0, -0.13, 0),
         scale: new Vector3(1.412, 1.412, 1.412),
-        model: this.resources.items.BCTentMain2024,
+        model: this.resources.items.BCTent1_1953,
         visibility: [33, 78],
       },
       {
@@ -637,6 +637,8 @@ export default class BaseCamp extends BasicScene {
         visibility: [33, 78],
       }
     ]
+
+    console.log(this.blocking);
 
     this.blocking.forEach(
       ({ name, model, position, rotation, scale, visibility, isCamera }) => {
