@@ -84,6 +84,7 @@ export default class CSS3DManager {
 
     this.instance = new CSS3DRenderer({ element })
     this.instance.setSize(this.viewport.width, this.viewport.height)
+    this.instance.set
 
     this.$bus.on('CSS3D:add', this.handleAdd)
   }
