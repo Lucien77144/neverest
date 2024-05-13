@@ -1,13 +1,16 @@
 button {
-  font-weight: bold;
   padding: 10px 20px;
-  border: none;
+  border: 1px solid $primary;
   border-radius: 5px;
   background-color: $white;
   cursor: pointer;
   transition: background-color 0.3s;
+  pointer-events: all;
+  font-family: $azeret;
+  color: $primary;
 
   &:hover {
-    background-color: $white-dark;
+    background-color: $primary;
+    color: $white;
   }
 }

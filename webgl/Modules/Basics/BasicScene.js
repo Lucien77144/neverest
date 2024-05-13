@@ -2,6 +2,8 @@ import { Group, Scene } from 'three'
 import BasicCamera from './BasicCamera'
 import Experience from '~/webgl/Experience'
 import gsap from 'gsap'
+import CSS2DManager from '~/webgl/Utils/CSS2DManager'
+import CSS3DManager from '~/webgl/Utils/CSS3DManager'
 
 export default class BasicScene {
   /**
@@ -21,19 +23,30 @@ export default class BasicScene {
     this.hovered = null
     this.holded = null
     this.holdProgress = null
-    this.handleMouseDownEvt = null
-    this.handleMouseUpEvt = null
-    this.handleMouseMoveEvt = null
-    this.handleScrollEvt = null
+
+    // Events
+    this.handleMouseDownEvt = this.onMouseDownEvt.bind(this)
+    this.handleMouseUpEvt = this.onMouseUpEvt.bind(this)
+    this.handleMouseMoveEvt = this.onMouseMoveEvt.bind(this)
+    this.handleScrollEvt = this.onScrollEvt.bind(this)
+
+    // Utils
+    this.css2d = null
+    this.css3d = null
 
     // Actions
     this.setProgressHold = useHoldStore().setProgress
+    this.addToCSS2DList = useCSSRendererStore().addToCSS2DList
+    this.addToCSS3DList = useCSSRendererStore().addToCSS3DList
 
     // Getters
     this.progressHold = computed(() => useHoldStore().getProgress)
 
+    // Scope
+    this.scope = effectScope()
+
     // --------------------------------
-    // Elements
+    // Elements (to override in the child class)
     // --------------------------------
 
     /**
@@ -58,6 +71,22 @@ export default class BasicScene {
     // --------------------------------
 
     /**
+     * Add CSS2D to the item
+     * @param {ICSS2DRendererStore} item
+     */
+    this.addCSS2D
+
+    /**
+     * Add CSS3D to the item
+     * @param {ICSS2DRendererStore} item
+     */
+    this.addCSS3D
+
+    // --------------------------------
+    // Lifecycle
+    // --------------------------------
+
+    /**
      * On scroll function
      * @param {number} delta - Delta of the scroll
      */
@@ -71,18 +100,17 @@ export default class BasicScene {
     /**
      * On switch between scene complete and this scene is the new one
      */
-    this.afterTransitionInit
+    this.onInitComplete
   }
+
+  // --------------------------------
+  // Workflow
+  // --------------------------------
 
   /**
    * Set events
    */
   setEvents() {
-    this.handleMouseDownEvt = this.onMouseDownEvt.bind(this)
-    this.handleMouseUpEvt = this.onMouseUpEvt.bind(this)
-    this.handleMouseMoveEvt = this.onMouseMoveEvt.bind(this)
-    this.handleScrollEvt = this.onScrollEvt.bind(this)
-
     this.$bus.on('mousedown', this.handleMouseDownEvt)
     this.$bus.on('mouseup', this.handleMouseUpEvt)
     this.$bus.on('mousemove', this.handleMouseMoveEvt)
@@ -319,6 +347,38 @@ export default class BasicScene {
     return res
   }
 
+  // --------------------------------
+  // Functions
+  // --------------------------------
+
+  /**
+   * Add CSS2D to the item
+   * @param {ICSS2DRendererStore} item
+   */
+  addCSS2D(item) {
+    this.css2d ??= new CSS2DManager(this.scene, this.camera.instance)
+    this.addToCSS2DList(item)
+  }
+
+  /**
+   * Add CSS3D to the item
+   * @param {ICSS3DRendererStore} item
+   */
+  addCSS3D(item) {
+    this.css3d ??= new CSS3DManager(this.scene, this.camera.instance)
+    this.addToCSS3DList(item)
+  }
+
+  // --------------------------------
+  // Lifecycle
+  // --------------------------------
+
+  /**
+   * On scroll function
+   * @param {number} delta - Delta of the scroll
+   */
+  onScroll(delta) {}
+
   /**
    * Init the scene
    * Automatically called after the constructor
@@ -326,12 +386,23 @@ export default class BasicScene {
   init() {
     this.allComponents = this.getRecursiveComponents()
     this.addItemsToScene()
-    Object.values(this.allComponents).forEach((c) => c.afterComponentsInit?.())
 
     this.audios && this.addAudios(this.audios)
     this.scene.add(this.camera.instance)
 
     this.setEvents()
+
+    Object.values(this.allComponents).forEach((c) => c.afterSceneInit?.())
+  }
+
+  /**
+   * On switch between scene complete and this scene is the new one
+   */
+  onInitComplete() {
+    // Trigger onInitComplete on all components
+    Object.values(this.allComponents).forEach((c) =>
+      this.triggerFn(c, 'onInitComplete')
+    )
   }
 
   /**
@@ -343,6 +414,8 @@ export default class BasicScene {
     )
 
     this.camera.update()
+    this.css2d?.update()
+    this.css3d?.update()
   }
 
   /**
@@ -350,12 +423,23 @@ export default class BasicScene {
    */
   resize() {
     this.camera.resize()
+    this.css2d?.resize()
+    this.css3d?.resize()
   }
+
+  /**
+   * On transition start, before the dispose
+   */
+  onDisposeStart() {}
 
   /**
    * Dispose the scene
    */
   dispose() {
+    // Scope
+    this.scope.stop()
+    this.scope = null
+
     // Items
     Object.values(this.allComponents).forEach((c) => {
       this.triggerFn(c, 'dispose')
@@ -369,6 +453,8 @@ export default class BasicScene {
     // Camera
     this.scene.remove(this.camera.instance)
     this.camera.dispose()
+    this.css2d?.dispose()
+    this.css3d?.dispose()
 
     // Debug
     this.debugFolder && this.debug?.remove(this.debugFolder)

@@ -101,8 +101,20 @@
         "source": "/models/BaseCamp/tent.glb"
       },
       {
+        "name": "BCTent2024",
+        "source": "/models/BaseCamp/tent2024.glb"
+      },
+      {
+        "name": "BCTentMain2024",
+        "source": "/models/BaseCamp/tentMain2024.glb"
+      },
+      {
         "name": "BCBloc",
         "source": "/models/BaseCamp/bloc.glb"
+      },
+      {
+        "name": "BCBloc2024",
+        "source": "/models/BaseCamp/bloc2024.glb"
       },
       {
         "name": "BCMountain",

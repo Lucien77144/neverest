@@ -11,13 +11,13 @@ import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import InfoLineVert from './InfoLineShader/InfoLineShader.vert?raw'
 import InfoLineFrag from './InfoLineShader/InfoLineShader.frag?raw'
 import gsap from 'gsap'
+import { UIIntroData } from '#components'
 
 export default class InfoLine extends BasicItem {
-  constructor(points, position, inputText, textposition, labelId) {
+  constructor(points, position, cssItem) {
     super()
 
     // New elements
-
     this.rootObj = null
     this.lineGeometry = null
     this.lineMaterial = null
@@ -25,23 +25,29 @@ export default class InfoLine extends BasicItem {
     this.textGeometry = null
     this.textMaterial = null
     this.text = null
-    this.textRef = null
-    this.textposition = textposition
-    this.points = points
     this.position = position
-    this.inputText = inputText
+    this.points = points
+    this.cssItem = cssItem
     this.isVisible = Math.sin(this.points[0].z) > 0
-    this.labelId = labelId
   }
 
+  /**
+   * Set root geometry
+   */
   setRootGeometry() {
     this.rootObj = new Object3D()
   }
 
+  /**
+   * Set line geometry
+   */
   setLineGeometry() {
     this.lineGeometry = new BufferGeometry().setFromPoints(this.points)
   }
 
+  /**
+   * Set line material
+   */
   setLineMaterial() {
     this.lineMaterial = new ShaderMaterial({
       vertexShader: InfoLineVert,
@@ -58,54 +64,78 @@ export default class InfoLine extends BasicItem {
     })
   }
 
+  /**
+   * Set line
+   */
   setLine() {
     this.line = new Line(this.lineGeometry, this.lineMaterial)
   }
 
-  setTextRef() {
-    this.textRef = new Object3D()
-    this.textRef.position.set(
-      this.textposition.x,
-      this.textposition.y,
-      this.textposition.z
-    )
-  }
-
+  /**
+   * Set group
+   */
   setGroup() {
     this.item = new Group()
     this.item.layers.enableAll()
     this.item.position.set(this.position.x, this.position.y, this.position.z)
     this.item.add(this.rootObj)
     this.item.add(this.line)
-    this.item.add(this.textRef)
   }
 
+  /**
+   * Change visibility
+   * @param {boolean} visibility Visibility
+   */
   changeVisibility(visibility) {
     this.isVisible = visibility
     gsap.to(this.lineMaterial.uniforms.uProgress, {
       value: visibility ? 1 : 0,
       duration: 0.6,
-      onStart:()=>{
-        if(!visibility)document.getElementById(this.labelId)?.style.setProperty('opacity', 0)
+      onStart: () => {
+        !visibility &&
+          document
+            .querySelector(`#${this.cssItem.id} > .introData`)
+            ?.style.setProperty('opacity', 0)
       },
-      onComplete:()=>{
-        if(visibility)document.getElementById(this.labelId)?.style.setProperty('opacity', 1)
-      }
+      onComplete: () => {
+        visibility &&
+          document
+            .querySelector(`#${this.cssItem.id} > .introData`)
+            ?.style.setProperty('opacity', 1)
+      },
     })
   }
 
+  /**
+   * Set the 2D Renderer value
+   */
+  set2DText() {
+    this.addCSS2D({
+      id: this.cssItem.id,
+      template: UIIntroData,
+      parent: this.item,
+      position: this.cssItem.position,
+      data: this.cssItem.data,
+    })
+  }
+
+  /**
+   * Init
+   */
   init() {
     this.setRootGeometry()
     this.setLineGeometry()
     this.setLineMaterial()
     this.setLine()
-    this.setTextRef()
     this.setGroup()
+    this.set2DText()
   }
 
+  /**
+   * Update
+   */
   update() {
     if (!this.rootObj) return
-    if(!document.getElementById("labelRendererDiv")) return
 
     const rootObjPosition = new Vector3()
     this.rootObj.getWorldPosition(rootObjPosition)
@@ -121,7 +151,8 @@ export default class InfoLine extends BasicItem {
       if (rootObjPosition.normalize().x <= 0.2) {
         this.item.rotation.y = -Math.asin(rootObjPosition.normalize().z)
       } else if (rootObjPosition.normalize().x > 0.2) {
-        this.item.rotation.y = 2 * Math.PI + Math.asin(rootObjPosition.normalize().z)
+        this.item.rotation.y =
+          2 * Math.PI + Math.asin(rootObjPosition.normalize().z)
       }
     }
   }

@@ -1,39 +1,34 @@
-import { AmbientLight, DirectionalLight, Group, Vector3 } from "three"
-import BasicItem from "~/webgl/Modules/Basics/BasicItem"
+import { AmbientLight, DirectionalLight, Group, Vector3 } from 'three'
+import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
 export default class IntroLights extends BasicItem {
-    constructor() {
-      super()
-  
+  /**
+   * Set lights
+   */
+  setLights() {
+    const aLight = new AmbientLight(0xffffff, 0.5)
+    const dLight = new DirectionalLight(0xffffff, 2.5)
 
-    }
-  
-    setLights(){
-        let aLight = new AmbientLight(0xFFFFFF,0.5)
-        let dLight =  new DirectionalLight(0xFFFFFF,2.5)
-        dLight.position.set(2,2,2)
-        dLight.lookAt(new Vector3(0,0,0))
-        this.lights = [
-            aLight,
-            dLight
-        ]
-    }
+    dLight.position.set(2, 2, 2)
+    dLight.lookAt(new Vector3(0, 0, 0))
 
-    setGroup(){
-        let lightGroup = new Group()
-        this.lights.forEach(l=>lightGroup.add(l))
-        this.item = lightGroup
-    }
-  
-    
-  
-    init() {
-      this.setLights()
-      this.setGroup()
-    }
-  
-  
-  
-    
-  
+    this.lights = [aLight, dLight]
   }
+
+  /**
+   * Set group
+   */
+  setGroup() {
+    const lightGroup = new Group()
+    this.lights.forEach((l) => lightGroup.add(l))
+    this.item = lightGroup
+  }
+
+  /**
+   * Init
+   */
+  init() {
+    this.setLights()
+    this.setGroup()
+  }
+}

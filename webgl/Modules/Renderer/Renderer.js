@@ -39,15 +39,21 @@ export default class Renderer {
     this.renderMesh = null
     this.context = null
     this.debugFolder = null
-    this.handleMouseMoveEvt = null
     this.clearColor = {
       color: '#f1dad2',
       alpha: 0,
     }
 
+    // Events
+    this.handleMouseMoveEvt = this.onMouseMoveEvt.bind(this)
+
     // Init
     this.init()
   }
+
+  // --------------------------------
+  // Workflow
+  // --------------------------------
 
   /**
    * Set debug
@@ -136,7 +142,6 @@ expanded:false,
       })
     )
 
-    this.handleMouseMoveEvt = this.onMouseMoveEvt.bind(this)
     this.$bus.on('mousemove', this.handleMouseMoveEvt)
   }
 
@@ -193,6 +198,10 @@ expanded:false,
     this.instance.setRenderTarget(null)
     this.instance.render(this.renderMesh, this.camera)
   }
+
+  // --------------------------------
+  // Lifecycle
+  // --------------------------------
 
   /**
    * Init the renderer

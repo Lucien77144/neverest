@@ -8,6 +8,7 @@ export default class BasicCamera {
   constructor() {
     // Get elements from experience
     this.experience = new Experience()
+    this.$bus = this.experience.$bus
     this.viewport = this.experience.viewport
     this.debug = this.experience.debug
 
@@ -19,6 +20,10 @@ export default class BasicCamera {
     // Init
     this.init()
   }
+
+  // --------------------------------
+  // Workflow
+  // --------------------------------
 
   /**
    * Set listener
@@ -39,6 +44,14 @@ export default class BasicCamera {
   setListener() {
     this.listener = new AudioListener()
     this.instance.add(this.listener)
+
+    this.$bus.on('audio:mute', () => {
+      this.listener.setMasterVolume(0)
+    })
+
+    this.$bus.on('audio:unmute', () => {
+      this.listener.setMasterVolume(1)
+    })
   }
 
   /**
@@ -72,6 +85,10 @@ expanded:false,
         this.instance.position.set(value.x, value.y, value.z)
       })
   }
+
+  // --------------------------------
+  // Lifecycle
+  // --------------------------------
 
   /**
    * Init the camera

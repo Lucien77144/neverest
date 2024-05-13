@@ -171,13 +171,13 @@ expanded:false,
           this.debugScene.value = next.name
           this.debugFolder.disabled = false
         }
-        this.active?.dispose()
+        this.active.dispose()
         this.active = this.next
         this.next = null
 
         // Switch complete function on the new scene
         this.setDisableScroll(false)
-        this.active?.afterTransitionInit?.()
+        this.active?.onInitComplete?.()
       },
     })
   }
@@ -192,10 +192,12 @@ expanded:false,
 
   /**
    * Init scene
+   * @param {*} baseScene If set, initial scene name to load
    */
-  init() {
+  init(baseScene = null) {
     // Get the scene from the store or the default one
-    this.sceneName = this.debug
+    this.sceneName = baseScene
+    this.sceneName ??= this.debug
       ? useDebugStore().getScene
       : this.scenes.default.name
     const scene = this.getSceneFromList(this.sceneName)
@@ -221,7 +223,7 @@ expanded:false,
       },
     })
     // Switch complete function on the new scene
-    this.active?.afterTransitionInit?.()
+    this.active?.onInitComplete?.()
 
     // Start navigation
     this.$bus.on('scene:switch', (scene) => this.switch(scene))

@@ -1,8 +1,27 @@
-.exp {
+.canvas {
   position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
   height: 100vh !important;
   width: 100vw !important;
+}
+
+#webgl-css-wrapper {
+  z-index: 2;
+  position: relative;
+  pointer-events: none;
+}
+
+.start {
+  position: absolute;
+  bottom: 10rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: none;
+}
+
+.active {
+  display: block;
 }

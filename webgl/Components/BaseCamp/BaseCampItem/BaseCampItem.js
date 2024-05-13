@@ -1,4 +1,5 @@
-import { AnimationMixer, MeshNormalMaterial } from 'three'
+import { UIIntroData } from '#components'
+import { MeshNormalMaterial, Vector3 } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
 export default class BaseCampItem extends BasicItem {
@@ -7,8 +8,8 @@ export default class BaseCampItem extends BasicItem {
    */
   constructor(_options = {}) {
     super()
-
     this.options = _options
+    this.$bus = this.experience.$bus
 
     // New elements
     this.name = null
@@ -17,7 +18,6 @@ export default class BaseCampItem extends BasicItem {
     this.rotation = null
     this.scale = null
     this.visibility = null
-    this.holdDuration = 2000
 
     // Store
     this.currentScroll = computed(
@@ -25,7 +25,9 @@ export default class BaseCampItem extends BasicItem {
     )
 
     // Watch
-    watch(this.currentScroll, (v) => this.updateVisibility())
+    this.scope.run(() => {
+      watch(this.currentScroll, (v) => this.updateVisibility())
+    })
   }
 
   /**
@@ -139,6 +141,24 @@ export default class BaseCampItem extends BasicItem {
       this.item.children[0].visible = true
     } else {
       this.item.children[0].visible = false
+    }
+  }
+
+  /**
+   * On init complete
+   */
+  onInitComplete() {
+    if (this.name == 'Tent_Primative_main') {
+      this.addCSS2D({
+        id: 'tent-primative-main',
+        template: UIIntroData,
+        data: {
+          value: 'This is a tent dialog',
+        },
+        parent: this.item,
+        sprite: true,
+        position: new Vector3(0, 1, 0),
+      })
     }
   }
 

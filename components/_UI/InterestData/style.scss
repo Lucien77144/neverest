@@ -1,16 +1,14 @@
 .ITData {
   height: 50vh;
   width: 100vw;
-  padding: 1rem 2.5rem;
+  padding: 3.5rem 6.5rem;
+  transition: 0.5s ease-in-out;
+  transition-property: opacity, transform, visibility;
 
-  &__wrapper {
-    transition: 0.75s ease-in-out;
-
-    &--hidden {
-      visibility: hidden;
-      opacity: 0;
-      transform: translateY(-5rem);
-    }
+  &--hidden {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(5rem);
   }
 
   h1,
@@ -20,10 +18,25 @@
   }
 
   &__date {
-    font-size: 9.25rem;
+    font-size: 10.625rem;
+    font-family: $outfit;
+    line-height: 0.9;
   }
 
   &__title {
-    font-size: 3rem;
+    font-size: 2.25rem;
+    font-family: $open-sans;
+    text-transform: uppercase;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(5rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

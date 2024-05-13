@@ -2,11 +2,27 @@
   position: fixed;
   z-index: 999;
   transform: translateX(-50%);
-  bottom: 0;
+  bottom: 2.3rem;
   left: 50%;
+  width: 60%;
+  height: 4rem;
+  border-image: url(/img/border.svg) 6 / 80px round;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   &__wrapper {
-    padding: 2rem;
+    position: relative;
+    top: 0;
+    left: 0;
+    font-size: 0.875rem;
+    text-align: center;
+    background-color: $secondary;
+    height: calc(100% - 1rem);
+    width: calc(100% - 1rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   &__item {

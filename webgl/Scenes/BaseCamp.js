@@ -30,15 +30,17 @@ export default class BaseCamp extends BasicScene {
     this.disabledScroll = computed(() => useScrollStore().getDisable)
     // Actions
     this.setFactor = useScrollStore().setFactor
+    this.setInterest = useInterestStore().setInterest
+    this.setInterestVisible = useInterestStore().setVisible
     this.instantScroll = useScrollStore().instant
 
     // Scope
-    this.scope = effectScope()
     this.scope.run(() => {
       // Watchers
       watch(this.currentScroll, (v) => this.watchCurrentScroll(v))
     })
 
+    // Components
     this.components = {
       floor: new Floor(),
       lights: new Lights(),
@@ -47,6 +49,10 @@ export default class BaseCamp extends BasicScene {
     // Init the scene
     this.init()
   }
+
+  // --------------------------------
+  // Workflow
+  // --------------------------------
 
   /**
    * Scroll the camera around the cube
@@ -93,7 +99,8 @@ export default class BaseCamp extends BasicScene {
    * @param {boolean} instant Should the transition be instant
    */
   setInterestVis(data, instant) {
-    this.$bus.emit('interest', data)
+    data && this.setInterest(data)
+    this.setInterestVisible(!!data)
 
     const val = {
       ...this.camRot,
@@ -110,7 +117,7 @@ export default class BaseCamp extends BasicScene {
     gsap.to(val, {
       x: !!data ? 0.1 : 0,
       fov: !!data ? this.camFov * 0.85 : this.camFov,
-      duration: instant ? 0 : 0.75,
+      duration: instant ? 0 : 1,
       ease: 'power1.inOut',
       onUpdate: () => {
         this.camRot.x = val.x
@@ -147,6 +154,7 @@ export default class BaseCamp extends BasicScene {
    */
   setBlocking() {
     this.blocking = [
+      // 1953
       {
         name: 'Boxd',
         position: new Vector3(-6.768, -0.019, -3.797),
@@ -347,6 +355,287 @@ export default class BaseCamp extends BasicScene {
         model: this.resources.items.BCTent,
         visibility: [0, 78],
       },
+      // 2024
+      {
+        name: "Tent_Primative_l_1002",
+        position: new Vector3(-10.4, -0.919, -13.491),
+        rotation: new Vector3(0, 0.934, 0),
+        scale: new Vector3(1.803, 1.803, 1.803),
+        model: this.resources.items.BCTent2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_l_1003",
+        position: new Vector3(-10.003, -0.465, -19.582),
+        rotation: new Vector3(0, 0.934, 0),
+        scale: new Vector3(1.803, 1.803, 1.803),
+        model: this.resources.items.BCTent2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_l_1004",
+        position: new Vector3(-8.725, -0.236, -25.45),
+        rotation: new Vector3(0.096, 0.933, -0.12),
+        scale: new Vector3(1.803, 1.803, 1.803),
+        model: this.resources.items.BCTent2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_l_1005",
+        position: new Vector3(-8.884, -0.258, -30.942),
+        rotation: new Vector3(0, 0.934, 0),
+        scale: new Vector3(1.803, 1.803, 1.803),
+        model: this.resources.items.BCTent2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_l_1006",
+        position: new Vector3(-16.356, -0.098, -16.973),
+        rotation: new Vector3(0, 0.934, 0),
+        scale: new Vector3(1.803, 1.803, 1.803),
+        model: this.resources.items.BCTent2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_l_1007",
+        position: new Vector3(-15.883, -0.098, -22.354),
+        rotation: new Vector3(0, 0.934, 0),
+        scale: new Vector3(1.803, 1.803, 1.803),
+        model: this.resources.items.BCTent2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_l_1008",
+        position: new Vector3(-15.076, -0.098, -27.122),
+        rotation: new Vector3(0, 0.934, 0),
+        scale: new Vector3(1.803, 1.803, 1.803),
+        model: this.resources.items.BCTent2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_l_1009",
+        position: new Vector3(-13.735, -0.098, -32.011),
+        rotation: new Vector3(0, 0.934, 0),
+        scale: new Vector3(1.803, 1.803, 1.803),
+        model: this.resources.items.BCTent2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_l_1010",
+        position: new Vector3(-11.037, -0.098, -36.744),
+        rotation: new Vector3(0, 0.934, 0),
+        scale: new Vector3(1.803, 1.803, 1.803),
+        model: this.resources.items.BCTent2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_l_1011",
+        position: new Vector3(-6.79, -0.336, -37.142),
+        rotation: new Vector3(0, 0.934, 0),
+        scale: new Vector3(1.803, 1.803, 1.803),
+        model: this.resources.items.BCTent2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_l_1012",
+        position: new Vector3(-9.384, -0.098, -42.549),
+        rotation: new Vector3(0, 0.934, 0),
+        scale: new Vector3(1.803, 1.803, 1.803),
+        model: this.resources.items.BCTent2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_l_1013",
+        position: new Vector3(-5.551, -0.191, -47.315),
+        rotation: new Vector3(0, 0.934, 0),
+        scale: new Vector3(1.803, 1.803, 1.803),
+        model: this.resources.items.BCTent2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_l_1014",
+        position: new Vector3(-7.303, -0.098, -52.639),
+        rotation: new Vector3(0, 0.934, 0),
+        scale: new Vector3(1.803, 1.803, 1.803),
+        model: this.resources.items.BCTent2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_main001",
+        position: new Vector3(0.551, 0.135, -36.868),
+        rotation: new Vector3(0, -0.4, 0),
+        scale: new Vector3(1.412, 1.412, 1.412),
+        model: this.resources.items.BCTentMain2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_main002",
+        position: new Vector3(4.166, 0.018, -25.984),
+        rotation: new Vector3(0.047, -0.407, 0.06),
+        scale: new Vector3(1.412, 1.412, 1.412),
+        model: this.resources.items.BCTentMain2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_main003",
+        position: new Vector3(8.533, 0.135, -46.167),
+        rotation: new Vector3(0, -0.616, 0),
+        scale: new Vector3(1.412, 1.412, 1.412),
+        model: this.resources.items.BCTentMain2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_main004",
+        position: new Vector3(5.277, 0.135, -50.743),
+        rotation: new Vector3(0, -0.13, 0),
+        scale: new Vector3(1.412, 1.412, 1.412),
+        model: this.resources.items.BCTentMain2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_main005",
+        position: new Vector3(-2.168, 0.135, -63.095),
+        rotation: new Vector3(0, 0.019, 0),
+        scale: new Vector3(1.412, 1.412, 1.412),
+        model: this.resources.items.BCTentMain2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_main006",
+        position: new Vector3(1.486, 0.135, -56.101),
+        rotation: new Vector3(0, -0.945, 0),
+        scale: new Vector3(1.412, 1.412, 1.412),
+        model: this.resources.items.BCTentMain2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_main007",
+        position: new Vector3(19.652, 0.331, -25.15),
+        rotation: new Vector3(0, -0.665, 0),
+        scale: new Vector3(1.412, 1.412, 1.412),
+        model: this.resources.items.BCTentMain2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_main008",
+        position: new Vector3(17.464, 0.331, -30.708),
+        rotation: new Vector3(0, -0.069, 0),
+        scale: new Vector3(1.412, 1.412, 1.412),
+        model: this.resources.items.BCTentMain2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_main009",
+        position: new Vector3(11.483, 0.331, -41.528),
+        rotation: new Vector3(0, 0.114, 0),
+        scale: new Vector3(1.412, 1.412, 1.412),
+        model: this.resources.items.BCTentMain2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_main010",
+        position: new Vector3(14.686, 0.331, -36.479),
+        rotation: new Vector3(0, -1.069, 0),
+        scale: new Vector3(1.412, 1.412, 1.412),
+        model: this.resources.items.BCTentMain2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_main011",
+        position: new Vector3(1.297, 0.135, -46.228),
+        rotation: new Vector3(0, -0.616, 0),
+        scale: new Vector3(1.412, 1.412, 1.412),
+        model: this.resources.items.BCTentMain2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_main012",
+        position: new Vector3(15.3, 0.331, -18.687),
+        rotation: new Vector3(0, -0.665, 0),
+        scale: new Vector3(1.412, 1.412, 1.412),
+        model: this.resources.items.BCTentMain2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_main013",
+        position: new Vector3(13.427, 0.331, -25.211),
+        rotation: new Vector3(0, -0.069, 0),
+        scale: new Vector3(1.412, 1.412, 1.412),
+        model: this.resources.items.BCTentMain2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_main014",
+        position: new Vector3(9.861, 0.331, -31.365),
+        rotation: new Vector3(0, 0.114, 0),
+        scale: new Vector3(1.412, 1.412, 1.412),
+        model: this.resources.items.BCTentMain2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_main015",
+        position: new Vector3(6.515, 0.331, -39.342),
+        rotation: new Vector3(0, -1.069, 0),
+        scale: new Vector3(1.412, 1.412, 1.412),
+        model: this.resources.items.BCTentMain2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Tent_Primative_main016",
+        position: new Vector3(9.468, 0.121, -20.786),
+        rotation: new Vector3(-0.01, -0.085, 0.069),
+        scale: new Vector3(1.412, 1.412, 1.412),
+        model: this.resources.items.BCTentMain2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Boxd007",
+        position: new Vector3(-6.717, 0.426, -27.655),
+        rotation: new Vector3(0, -0.624, 0),
+        scale: new Vector3(0.72, 0.72, 0.72),
+        model: this.resources.items.BCBloc2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Boxd008",
+        position: new Vector3(-2.085, 0.338, -20.207),
+        rotation: new Vector3(0, -0.788, 0),
+        scale: new Vector3(0.72, 0.72, 0.72),
+        model: this.resources.items.BCBloc2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Boxd009",
+        position: new Vector3(-0.602, 0.126, -19.623),
+        rotation: new Vector3(0, -0.218, 0),
+        scale: new Vector3(0.474, 0.474, 0.474),
+        model: this.resources.items.BCBloc2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Boxd010",
+        position: new Vector3(-0.74, 0.914, -20.004),
+        rotation: new Vector3(0, -1.306, 0),
+        scale: new Vector3(0.274, 0.274, 0.274),
+        model: this.resources.items.BCBloc2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Boxd011",
+        position: new Vector3(-10.133, 0.73, -22.401),
+        rotation: new Vector3(0, 0.37, 0),
+        scale: new Vector3(0.72, 0.72, 0.72),
+        model: this.resources.items.BCBloc2024,
+        visibility: [33, 78],
+      },
+      {
+        name: "Boxd012",
+        position: new Vector3(-9.334, 0.142, -16.435),
+        rotation: new Vector3(-0.018, 0.37, 0.007),
+        scale: new Vector3(0.523, 0.523, 0.523),
+        model: this.resources.items.BCBloc2024,
+        visibility: [33, 78],
+      }
     ]
 
     this.blocking.forEach(
@@ -364,13 +653,18 @@ export default class BaseCamp extends BasicScene {
     )
   }
 
+  // --------------------------------
+  // Lifecycle
+  // --------------------------------
+
   /**
    * Init the scene
    */
   init() {
     // Set the camera
     this.setCamera()
-    this.setInterestVis(null, true)
+    this.setInterestVis(null)
+    this.setInterestVisible(false)
 
     // Blocking
     this.setBlocking()
@@ -381,7 +675,8 @@ export default class BaseCamp extends BasicScene {
   /**
    * After init and entrance transition end
    */
-  afterTransitionInit() {
+  onInitComplete() {
+    super.onInitComplete()
     this.watchCurrentScroll(0)
   }
 
@@ -389,10 +684,8 @@ export default class BaseCamp extends BasicScene {
    * On transition start, before the dispose
    */
   onDisposeStart() {
-    this.scope.stop()
-    this.scope = null
-
-    this.$bus.emit('interest', null)
+    super.onDisposeStart()
+    this.setInterestVisible(false)
   }
 
   /**
@@ -400,7 +693,6 @@ export default class BaseCamp extends BasicScene {
    */
   dispose() {
     this.setInterestVis(null, true)
-
     super.dispose()
   }
 }

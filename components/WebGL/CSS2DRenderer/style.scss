@@ -1,0 +1,12 @@
+.renderer {
+  position: absolute;
+  top: 0;
+
+  &__item {
+    pointer-events: all;
+
+    &:not(.renderer__item--active) {
+      display: none;
+    }
+  }
+}

@@ -1,24 +1,31 @@
 .start {
   position: fixed;
   z-index: 100;
-  background-color: $black-light;
+  background-color: $primary-darker;
   height: 100vh;
   width: 100vw;
-
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 1.5rem;
-  transition: 0.5s ease-in-out;
-
-  &.disabled {
-    visibility: hidden;
-    opacity: 0;
-  }
 
   &__content {
     max-width: 50%;
     color: $white;
+    text-align: justify;
+    line-height: 1.3;
+  }
+
+  &__footer {
+    color: $white;
+
+    &__content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      padding-top: 0.5rem;
+    }
   }
 }

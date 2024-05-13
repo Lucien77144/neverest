@@ -4,8 +4,8 @@
   <div class="panel">
     <UISubtitle />
     <NextScene />
-    <UILangPicker />
     <UIProgressBar />
+    <UIInputControl />
   </div>
 </template>
 
