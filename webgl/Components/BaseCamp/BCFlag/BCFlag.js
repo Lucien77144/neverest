@@ -1,5 +1,5 @@
 import { Modal } from '#components'
-import { MeshNormalMaterial, Vector3 } from 'three'
+import { DoubleSide, MeshNormalMaterial, Vector3 } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
 export default class BCFlag extends BasicItem {
@@ -42,6 +42,7 @@ export default class BCFlag extends BasicItem {
    */
   setMaterial() {
     this.item.children[0].material = new MeshNormalMaterial()
+    this.item.children[0].material.side = DoubleSide
   }
 
   /**

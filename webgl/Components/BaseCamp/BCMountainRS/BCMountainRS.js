@@ -1,4 +1,4 @@
-import { MeshNormalMaterial } from 'three'
+import { DoubleSide, MeshNormalMaterial } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
 export default class BCMountainRS extends BasicItem {
@@ -41,6 +41,7 @@ export default class BCMountainRS extends BasicItem {
    */
   setMaterial() {
     this.item.children[0].material = new MeshNormalMaterial()
+    this.item.children[0].material.side = DoubleSide
   }
 
   /**
