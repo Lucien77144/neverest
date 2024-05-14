@@ -1,6 +1,7 @@
 import { MathUtils, MeshNormalMaterial } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import gsap from 'gsap'
+import CraieMaterial from '../../Shared/CraieMaterial/CraieMaterial'
 
 export default class Iceblocks extends BasicItem {
   /**
@@ -61,9 +62,29 @@ export default class Iceblocks extends BasicItem {
   setItem() {
     this.item = this.resources.IFIceblocks.scene.clone()
 
+    const testM2 = new CraieMaterial({
+      textureParams:{
+        textureSize:512,
+        nbOfColumns:1,
+        borderSize:0.1,
+        columnsOffset:0.05,
+        nbOfCurvePerColumns:60,
+        areCurveOnSameDirection:true,
+        curveDirection:'up',
+        curveDirectionAmountFactor:0.4,
+        maxCurveHorizontalDecalage:0.3,
+        maxHeightCurve:1,
+        maxThicknessCurve:2,
+        nbOfPointsPerCurve:3
+      },
+      side:0,
+      color:'#537D90',
+      bgColor:'#F8ECE8'
+    }).instance
+
     this.item.traverse((e) => {
       if (!e.isMesh) return
-      e.material = new MeshNormalMaterial()
+      e.material = testM2
     })
   }
 

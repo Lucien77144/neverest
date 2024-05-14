@@ -40,7 +40,7 @@ export default class Renderer {
     this.context = null
     this.debugFolder = null
     this.clearColor = {
-      color: '#f1dad2',
+      color: '#87CEEB',
       alpha: 0,
     }
 
