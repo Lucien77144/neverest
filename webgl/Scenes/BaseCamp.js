@@ -12,8 +12,6 @@ import BCTent_1_2024 from '../Components/BaseCamp/BCTent_1_2024/BCTent_1_2024'
 import BCTent_2_2024 from '../Components/BaseCamp/BCTent_2_2024/BCTent_2_2024'
 import BCTent_3_2024 from '../Components/BaseCamp/BCTent_3_2024/BCTent_3_2024'
 
-
-
 export default class BaseCamp extends BasicScene {
   /**
    * Constructor
@@ -23,6 +21,7 @@ export default class BaseCamp extends BasicScene {
 
     // New elements
     this.resources = this.experience.resources
+    this.renderUniforms = this.experience.renderer.renderMesh.material.uniforms
     this.interest = interest
     this.camFov = 20
     this.camRot = new Vector3(0, 0, 0)
@@ -487,8 +486,7 @@ export default class BaseCamp extends BasicScene {
       fov: this.camera.instance.fov,
     }
 
-    const uniforms = this.experience.renderer.renderMesh.material.uniforms
-    gsap.to(uniforms.uFocProgress, {
+    gsap.to(this.renderUniforms.uFocProgress, {
       value: !!data ? 1 : 0,
       duration: instant ? 0 : 1,
       ease: 'power1.inOut',
@@ -515,18 +513,13 @@ export default class BaseCamp extends BasicScene {
   setScrollFactor(value) {
     this.interest.curr = value
 
-    const factor = { value: this.factorScroll.value }
-    gsap.to(factor, {
-      value,
-      duration: 0.5,
-      ease: 'power1.inOut',
-      onUpdate: () => {
-        this.setFactor(factor.value)
-        if (value !== this.interest.base) {
-          this.instantScroll(this.currentScroll.value + 0.0001)
-        }
-      },
-    })
+    const factor = this.factorScroll.value
+    this.setFactor(0)
+    setTimeout(() => this.setFactor(factor), 500)
+
+    if (value !== this.interest.base) {
+      this.instantScroll(this.currentScroll.value + 0.0001)
+    }
   }
 
   /**

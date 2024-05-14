@@ -76,7 +76,9 @@ export default class Experience {
 
     // Drag :
     const folder = this.debug.addFolder({
-expanded:false, title: 'Debugger Position' })
+      expanded: false,
+      title: 'Debugger Position',
+    })
     this.debug.dragButton = folder.addButton({ title: 'Drag Position' })
     folder
       .addButton({ title: 'Reset Position' })
