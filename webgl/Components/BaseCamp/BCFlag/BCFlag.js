@@ -1,4 +1,5 @@
-import { MeshNormalMaterial } from 'three'
+import { Modal } from '#components'
+import { MeshNormalMaterial, Vector3 } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
 export default class BCFlag extends BasicItem {
@@ -49,5 +50,42 @@ export default class BCFlag extends BasicItem {
   init() {
     this.setItem()
     this.setMaterial()
+
+    // this.addCSS2D({
+    //   id: this.name + '_audio',
+    //   template: UIAudioPlayer,
+    //   data: {
+    //     source: this.resources.yameteAh,
+    //   },
+    //   parent: this.item,
+    //   position: new Vector3(0, 1, 0),
+    // })
+
+    this.addCSS2D({
+      id: this.name + '_modal',
+      template: Modal,
+      data: {
+        content: [
+          {
+            type: 'audio',
+            source: this.resources.yameteAh,
+          },
+          {
+            type: 'video',
+            source: this.resources.yameteAh,
+          },
+          {
+            type: 'image',
+            source: this.resources.yameteAh,
+          },
+          {
+            type: 'text',
+            source: 'Yamete Ah',
+          },
+        ],
+      },
+      parent: this.item,
+      position: new Vector3(0, 1, 0),
+    })
   }
 }
