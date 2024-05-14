@@ -79,6 +79,11 @@
         "name": "testDA4",
         "source": "/img/texturesTestDA/testDA4.jpg",
         "type": "texture"
+      },
+      {
+        "name": "circle",
+        "source": "/img/circle.svg",
+        "type": "texture"
       }
     ]
   },

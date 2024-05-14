@@ -44,7 +44,7 @@ export default class BCTent_2_1953 extends BasicItem {
   }
 
   /**
-   * Init the floor
+   * Init
    */
   init() {
     this.setItem()

@@ -44,7 +44,7 @@ export default class BCSmallBox_1953 extends BasicItem {
   }
 
   /**
-   * Init the floor
+   * Init
    */
   init() {
     this.setItem()
