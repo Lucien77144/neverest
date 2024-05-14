@@ -11,25 +11,17 @@
 <script lang="ts" setup>
 // Cues
 const subtitles = computed(() => useSubtitlesStore().getCues)
-const disabled = computed(() => useSubtitlesStore().getDisabled)
 const isDisabled = ref(false)
 
-// isDisabled.value = true
-onMounted(() => {
-  if (document.querySelector('.subtitles__wrapper')?.innerHTML != '') {
+isDisabled.value = true
+
+watch(subtitles, (val) => {  
+  if (val[0]) {
     isDisabled.value = false
   } else {
     isDisabled.value = true
   }
-})
 
-// Watch
-watch(disabled, (val) => {
-  isDisabled.value = val
-})
-
-watch(subtitles, (val) => {
-  isDisabled.value = !val
 })
 </script>
 

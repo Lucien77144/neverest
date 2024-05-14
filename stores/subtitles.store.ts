@@ -1,27 +1,19 @@
-type THold = {
-  cues: VTTCue[],
-  disabled: boolean,
+type TSubtitle = {
+  cues: VTTCue[]
 }
 
 export const useSubtitlesStore = defineStore('subtitles', {
-  state: (): THold => ({
+  state: (): TSubtitle => ({
     cues: [],
-    disabled: false,
   }),
   getters: {
-    getCues(): VTTCue[] {
+    getCues(): TSubtitle['cues'] {
       return this.cues
-    },
-    getDisabled(): boolean {
-      return this.disabled
     },
   },
   actions: {
-    setCues(val: VTTCue[]) {
+    setCues(val: TSubtitle['cues']) {
       this.cues = { ...val }
-    },
-    setDisabled(val: boolean) {
-      this.disabled = val
     },
   },
 })
