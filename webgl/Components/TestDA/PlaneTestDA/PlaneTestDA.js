@@ -59,6 +59,7 @@ export default class PlaneTestDA extends BasicItem {
       maxCurveHorizontalDecalage: 0.5,
       maxHeightCurve: 3,
       maxThicknessCurve: 15,
+      nbOfPointsPerCurve:2
     }
 
     this.modelFolder = null
@@ -144,7 +145,7 @@ export default class PlaneTestDA extends BasicItem {
 
     for(let i = 0; i<this.columnsCurvesParams.nbOfColumns; i++){
 
-      const columnXStartPos = this.columnsCurvesParams.borderSize * columnsWidth + (i * (singleColumnWidth+this.columnsCurvesParams.columnsOffset * columnsWidth))
+      const columnXStartPos = this.columnsCurvesParams.borderSize * canvas.width + (i * (singleColumnWidth+this.columnsCurvesParams.columnsOffset * columnsWidth))
       const columnXEndPos = columnXStartPos + singleColumnWidth
 
 
@@ -193,8 +194,8 @@ export default class PlaneTestDA extends BasicItem {
           ),
         )
 
-        const curvePoints = curve.getPoints(singleColumnWidth * 0.5)
-        const curveLeftPoints = curveLeft.getPoints(singleColumnWidth*0.5)
+        const curvePoints = curve.getPoints(singleColumnWidth * this.columnsCurvesParams.nbOfPointsPerCurve)
+        const curveLeftPoints = curveLeft.getPoints(singleColumnWidth * this.columnsCurvesParams.nbOfPointsPerCurve)
         
         curvePoints.forEach(point=>{
 
@@ -352,11 +353,13 @@ export default class PlaneTestDA extends BasicItem {
 
   setGeometry() {
     this.geometry = new PlaneGeometry(3, 3, 256, 256)
+    console.log(this.resources.TESTDAMountain.scene.children[0].geometry)
+    this.geometry = this.resources.TESTDAMountain.scene.children[0].geometry
   }
 
   setMaterial() {
     this.material = new ShaderMaterial({
-      side: 0,
+      side: 2,
       vertexShader: ShaderTestDAVert,
       fragmentShader: ShaderTestDAFrag,
       uniforms: {
@@ -369,12 +372,13 @@ export default class PlaneTestDA extends BasicItem {
         uDecalageBorderLeftRight: new Uniform(0),
         uTextureRepetitions : new Uniform(2)
       },
-      transparent: false,
+      transparent: false
     })
   }
 
   setItem() {
     this.item = new Mesh(this.geometry, this.material)
+    this.item.scale.set(0.3,0.3,0.3)
     //this.item = this.resources.TentMain.scene.clone()
     //this.item.rotation.y = Math.PI*0.5
     //this.item.children[0].material = this.material    
@@ -469,6 +473,13 @@ expanded:false,
       step: 0.01,
       label: 'Number of curves going up / down factor',
       disabled: this.columnsCurvesParams.areCurveOnSameDirection,
+    })
+
+    curveFolder.addBinding(this.columnsCurvesParams, 'nbOfPointsPerCurve', {
+      min: 0,
+      max: 5,
+      step: 0.1,
+      label: 'Number of points per curve',
     })
 
     curveFolder.addBinding(this.columnsCurvesParams, 'maxHeightCurve', {

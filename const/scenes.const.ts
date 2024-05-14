@@ -3,6 +3,7 @@ import BaseCamp from '~/webgl/Scenes/BaseCamp'
 import IceFall from '~/webgl/Scenes/IceFall'
 import TestDA from '~/webgl/Scenes/TestDA'
 import { UIBtn } from '#components'
+import TransitionClouds from '~/webgl/Scenes/TransitionClouds'
 
 export type TSceneInterest = {
   start: number // 0-100, start of the interest action
@@ -44,6 +45,13 @@ const SCENES: TSceneInfos[] = [
   {
     name: 'TestDa',
     Scene: TestDA,
+    transition: {
+      duration: 2000,
+    },
+  },
+  {
+    name: 'Transition Clouds',
+    Scene: TransitionClouds,
     transition: {
       duration: 2000,
     },
