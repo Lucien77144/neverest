@@ -106,6 +106,42 @@
         "source": "/models/BaseCamp/tent.glb"
       },
       {
+        "name": "BCTent_1_1953",
+        "source": "/models/BaseCamp/tent1_1953.glb"
+      },
+      {
+        "name": "BCTent_2_1953",
+        "source": "/models/BaseCamp/tent2_1953.glb"
+      },
+      {
+        "name": "BCTent_3_1953",
+        "source": "/models/BaseCamp/tent3_1953.glb"
+      },
+      {
+        "name": "BCTent_1_2024",
+        "source": "/models/BaseCamp/tent1_2024.glb"
+      },
+      {
+        "name": "BCTent_2_2024",
+        "source": "/models/BaseCamp/tent2_2024.glb"
+      },
+      {
+        "name": "BCTent_3_2024",
+        "source": "/models/BaseCamp/tent3_2024.glb"
+      },
+      {
+        "name": "BCSmallBox_1953",
+        "source": "/models/BaseCamp/smallBox_1953.glb"
+      },
+      {
+        "name": "BCMediumBox_1953",
+        "source": "/models/BaseCamp/mediumBox_1953.glb"
+      },
+      {
+        "name": "BCBigBox_1953",
+        "source": "/models/BaseCamp/bigBox_1953.glb"
+      },
+      {
         "name": "BCTent2024",
         "source": "/models/BaseCamp/tent2024.glb"
       },
@@ -140,6 +176,10 @@
       {
         "name": "BCMountainRS",
         "source": "/models/BaseCamp/mountainRS.glb"
+      },
+      {
+        "name": "BCFlag",
+        "source": "/models/BaseCamp/flag_1953.glb"
       },
       {
         "name": "BCAnimCam",

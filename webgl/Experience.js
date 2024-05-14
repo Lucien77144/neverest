@@ -63,7 +63,11 @@ export default class Experience {
   setDebug() {
     if (!this.viewport.debug) return
 
-    const { getLanding, toggleLanding } = useDebugStore()
+    const { toggleLanding, init } = useDebugStore()
+
+    const local = JSON.parse(localStorage.getItem('debug') || '{}')
+
+    init(local)
     this.debug = new Pane({
       title: 'Debug',
       expanded: true,
@@ -71,12 +75,14 @@ export default class Experience {
 
     // Toggle landing
     this.debug
-      .addBinding({ landing: getLanding }, 'landing')
+      .addBinding({ landing: local.landing }, 'landing')
       .on('change', () => toggleLanding())
 
     // Drag :
     const folder = this.debug.addFolder({
-expanded:false, title: 'Debugger Position' })
+      expanded: false,
+      title: 'Debugger Position',
+    })
     this.debug.dragButton = folder.addButton({ title: 'Drag Position' })
     folder
       .addButton({ title: 'Reset Position' })

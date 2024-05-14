@@ -15,6 +15,7 @@ export default class BasicScene {
     this.raycaster = this.experience.raycaster
     this.audioManager = this.experience.audioManager
     this.$bus = this.experience.$bus
+    this.debug = this.experience.debug
 
     // New elements
     this.scene = new Scene()
@@ -23,6 +24,8 @@ export default class BasicScene {
     this.hovered = null
     this.holded = null
     this.holdProgress = null
+    this.debugFolder = null
+    this.wireframe = false
 
     // Events
     this.handleMouseDownEvt = this.onMouseDownEvt.bind(this)
@@ -106,6 +109,24 @@ export default class BasicScene {
   // --------------------------------
   // Workflow
   // --------------------------------
+
+  /**
+   * Set debug
+   */
+  setDebug() {
+    this.debugFolder = this.debug.addFolder({
+      expanded: false,
+      title: 'Scene',
+    })
+
+    this.debugFolder.addBinding(this, 'wireframe').on('change', () =>
+      this.scene.traverse((c) => {
+        if (c.isMesh) {
+          c.material.wireframe = this.wireframe
+        }
+      })
+    )
+  }
 
   /**
    * Set events
@@ -386,6 +407,8 @@ export default class BasicScene {
   init() {
     this.allComponents = this.getRecursiveComponents()
     this.addItemsToScene()
+
+    this.debug && this.setDebug()
 
     this.audios && this.addAudios(this.audios)
     this.scene.add(this.camera.instance)

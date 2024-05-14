@@ -25,18 +25,11 @@ onMounted(() => {
 
 // Watch
 watch(disabled, (val) => {
-  console.log(val)
   isDisabled.value = val
 })
 
 watch(subtitles, (val) => {
-  if (val) {
-    console.log('yes')
-    isDisabled.value = false
-  } else {
-    console.log('c chud en vré')
-    isDisabled.value = true
-  }
+  isDisabled.value = !val
 })
 </script>
 

@@ -3,7 +3,7 @@ import StatsJs from 'stats.js'
 export default class Stats {
   constructor(_active) {
     this.instance = new StatsJs()
-    this.instance.showPanel(1) // 0: fps, 1: ms, 2: mb, 3+: custom
+    this.instance.showPanel(0) // 0: fps, 1: ms, 2: mb, 3+: custom
 
     this.active = false
     this.max = 40

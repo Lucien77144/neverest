@@ -1,7 +1,7 @@
-import { AnimationMixer, MathUtils, Vector3 } from 'three'
+import { AnimationMixer } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
-export default class BaseCampItem extends BasicItem {
+export default class BaseCampCamera extends BasicItem {
   /**
    * Constructor
    */
