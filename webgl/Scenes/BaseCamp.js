@@ -153,6 +153,24 @@ export default class BaseCamp extends BasicScene {
         scale: new Vector3(1, 1, 1),
         model: this.resources.items.BCFlag,
         visibility: [0, 33],
+        modal: [
+          {
+            type: 'audio',
+            source: this.resources.yameteAh,
+          },
+          {
+            type: 'video',
+            source: this.resources.yameteAh,
+          },
+          {
+            type: 'image',
+            source: this.resources.yameteAh,
+          },
+          {
+            type: 'text',
+            source: 'Yamete Ah',
+          },
+        ],
       }),
     }
 

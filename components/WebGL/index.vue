@@ -5,6 +5,7 @@
   </div>
   <canvas ref="canvasRef" class="canvas" />
   <div id="webgl-interface">
+    <Modal />
     <UIInterestData />
     <UITitle />
     <div ref="startBtn" class="start">
@@ -47,7 +48,7 @@ watch(scene, (v) => {
         startBtn.value?.classList.add('active')
       },
     })
-  } else {    
+  } else {
     gsap.to(startBtn.value, {
       duration: 1,
       y: 100,

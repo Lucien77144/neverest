@@ -13,6 +13,7 @@ export default class BCFlag extends BasicItem {
     scale = new Vector3(1, 1, 1),
     name = 'BCFlag',
     visibility = [0, 100],
+    modal,
   }) {
     super()
 
@@ -22,6 +23,7 @@ export default class BCFlag extends BasicItem {
     this.scale = scale
     this.name = name
     this.visibility = visibility
+    this.modal = modal
 
     // New elements
     this.resources = this.experience.resources.items
@@ -53,7 +55,7 @@ export default class BCFlag extends BasicItem {
 
     this.components.modalSprite = new ModalSprite({
       position,
-      data: {},
+      data: this.modal,
     })
   }
 

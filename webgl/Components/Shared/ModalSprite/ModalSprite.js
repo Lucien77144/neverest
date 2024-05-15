@@ -1,4 +1,5 @@
-import { Sprite, SpriteMaterial, Vector3 } from 'three'
+import gsap from 'gsap'
+import { ClampToEdgeWrapping, Sprite, SpriteMaterial, Vector3 } from 'three'
 import { clamp } from 'three/src/math/MathUtils'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
@@ -10,6 +11,8 @@ export default class ModalSprite extends BasicItem {
     super()
     // Elements
     this.resources = this.experience.resources.items
+    this.renderUniforms = this.experience.renderer.renderMesh.material.uniforms
+    this.$bus = this.experience.$bus
     this.position = position
     this.data = data
 
@@ -18,6 +21,7 @@ export default class ModalSprite extends BasicItem {
     this.item = null
     this.material = null
     this.active = false
+    this.scale = 1
   }
 
   /**
@@ -38,11 +42,41 @@ export default class ModalSprite extends BasicItem {
   }
 
   /**
+   * Set uniforms of the render mesh
+   */
+  setUniforms() {
+    this.resources.modalT1.wrapS = this.resources.modalT1.wrapT =
+      ClampToEdgeWrapping
+    this.resources.modalT2.wrapS = this.resources.modalT2.wrapT =
+      ClampToEdgeWrapping
+    this.resources.modalT2.wrapS = this.resources.modalT2.wrapT =
+      ClampToEdgeWrapping
+
+    this.resources.modalT1.repeat.set(1, 1)
+    this.resources.modalT2.repeat.set(1, 1)
+    this.resources.modalT3.repeat.set(1, 1)
+
+    this.renderUniforms.uModalT1.value = this.resources.modalT1
+    this.renderUniforms.uModalT2.value = this.resources.modalT2
+    this.renderUniforms.uModalT3.value = this.resources.modalT3
+  }
+
+  /**
    * On click item
    */
   onClick() {
-    console.log('clicked')
-    this.item.active = !this.item.active
+    gsap.to(this.renderUniforms.uModalProgress, {
+      value: 1,
+      duration: 1.5,
+      ease: 'power1.inOut',
+      onComplete: () => this.$bus.emit('modal:open', this.data),
+    })
+
+    gsap.to(this, {
+      scale: 0.75,
+      duration: 0.75,
+      ease: 'power1.inOut',
+    })
   }
 
   /**
@@ -58,7 +92,7 @@ export default class ModalSprite extends BasicItem {
 
     const distance = camPos.distanceTo(pos)
 
-    const scale = clamp(distance / 40, 0.35, 1)
+    const scale = clamp(distance / 40, 0.35, 1) * this.scale
     this.item.scale.set(scale, scale, scale)
   }
 
@@ -69,5 +103,6 @@ export default class ModalSprite extends BasicItem {
     this.camera = this.parentScene.camera.instance
     this.setMaterial()
     this.setSprite()
+    this.setUniforms()
   }
 }
