@@ -99,14 +99,14 @@ export default class BaseCamp extends BasicScene {
         acc[b.name] = new BCTent_1_2024(b)
         return acc
       }, {}),
-      // ...BCTENT_2_2024.reduce((acc, b) => {
-      //   acc[b.name] = new BCTent_2_2024(b)
-      //   return acc
-      // }, {}),
-      // ...BCTENT_3_2024.reduce((acc, b) => {
-      //   acc[b.name] = new BCTent_3_2024(b)
-      //   return acc
-      // }, {}),
+      ...BCTENT_2_2024.reduce((acc, b) => {
+        acc[b.name] = new BCTent_2_2024(b)
+        return acc
+      }, {}),
+      ...BCTENT_3_2024.reduce((acc, b) => {
+        acc[b.name] = new BCTent_3_2024(b)
+        return acc
+      }, {}),
       BCMountain: new BCMountain({
         name: 'Mountain',
         position: new Vector3(0.192, 11.703, -200.766),
@@ -147,14 +147,14 @@ export default class BaseCamp extends BasicScene {
         position: new Vector3(6.2, -0.251, -18.331),
         rotation: new Vector3(0.005, 0.291, -0.289),
         model: this.resources.items.BCFlag,
-        visibility: [0, 33],
+        visibility: [0, 25.87],
       }),
       BCCailloux: new BCCailloux({
         name: 'TasCailloux',
         position: new Vector3(-9.567, 0, -32.582),
         rotation: new Vector3(0, 0.262, 0),
         model: this.resources.items.BCCailloux,
-        visibility: [0, 33],
+        visibility: [0, 25.87],
       }),
     }
 
@@ -199,12 +199,14 @@ export default class BaseCamp extends BasicScene {
     })
 
     const power = trigger?.power || this.interest.base
+
+    console.log(value)
+    Object.values(this.components).forEach((c) => this.setComponentVis(c))
+
     if (this.interest.curr === power) return
 
     this.setInterestVis(trigger?.data, instant)
     this.setScrollFactor(power)
-
-    Object.values(this.components).forEach((c) => this.setComponentVis(c))
   }
 
   /**
@@ -218,9 +220,13 @@ export default class BaseCamp extends BasicScene {
       c.visibility[0] <= this.currentScroll.value &&
       this.currentScroll.value <= c.visibility[1]
     ) {
-      c.item.visible = true
+      if (!c.item.visible) {
+        c.item.visible = true
+      }
     } else {
-      c.item.visible = false
+      if (c.item.visible) {
+        c.item.visible = false
+      }
     }
   }
 

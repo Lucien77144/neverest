@@ -136,7 +136,7 @@ export default class BaseCampCamera extends BasicItem {
     if (!this.getDisabledScroll.value) {
       const animDuration = this.animationAction.getClip().duration
 
-      this.mixer.setTime((value * animDuration) / (100 / 3))
+      this.mixer.setTime((value * animDuration) / (100 / 2))
       this.animationAction.play()
       this.mixer.update(1 / 60)
     }

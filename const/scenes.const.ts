@@ -72,8 +72,8 @@ const SCENES: TSceneInfos[] = [
           },
         },
         {
-          start: 33,
-          end: 36,
+          start: 48.5,
+          end: 51.5,
           power: 0.1,
           data: {
             title: 'BASECAMP',
@@ -81,8 +81,8 @@ const SCENES: TSceneInfos[] = [
           },
         },
         {
-          start: 66,
-          end: 69,
+          start: 95,
+          end: 98,
           power: 0.1,
           data: {
             title: 'BASECAMP',

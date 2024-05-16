@@ -22,7 +22,7 @@ import scenes from '~/const/scenes.const'
 const next = ref<HTMLElement>()
 
 // Const
-const GAP = 10
+const GAP = 2
 
 // Plugins
 const { $bus }: any = useNuxtApp()
