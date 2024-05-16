@@ -15,13 +15,12 @@ const isDisabled = ref(false)
 
 isDisabled.value = true
 
-watch(subtitles, (val) => {  
+watch(subtitles, (val) => {
   if (val[0]) {
     isDisabled.value = false
   } else {
     isDisabled.value = true
   }
-
 })
 </script>
 

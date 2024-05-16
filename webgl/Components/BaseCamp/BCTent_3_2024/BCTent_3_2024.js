@@ -8,7 +8,6 @@ export default class BCTent_3_2024 extends BasicItem {
   constructor({
     position = new Vector3(0, 0, 0),
     rotation = new Vector3(0, 0, 0),
-    scale = new Vector3(1, 1, 1),
     name = 'BCTent_3_2024',
     visibility = [0, 100],
   }) {
@@ -17,7 +16,6 @@ export default class BCTent_3_2024 extends BasicItem {
     // Elements
     this.position = position
     this.rotation = rotation
-    this.scale = scale
     this.name = name
     this.visibility = visibility
 
@@ -32,7 +30,6 @@ export default class BCTent_3_2024 extends BasicItem {
     this.item = this.resources.BCTent_3_2024.scene.clone()
     this.item.position.copy(this.position)
     this.item.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
-    this.item.scale.copy(this.scale)
     this.item.name = this.name
   }
 

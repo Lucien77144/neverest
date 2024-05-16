@@ -1,5 +1,6 @@
 import {
   Mesh,
+  MeshNormalMaterial,
   MeshStandardMaterial,
   PlaneGeometry,
 } from 'three'
@@ -22,14 +23,14 @@ export default class Floor extends BasicItem {
    * Get geometry
    */
   setGeometry() {
-    this.geometry = new PlaneGeometry(300, 400, 256, 256)
+    this.geometry = new PlaneGeometry(300, 400, 10, 10)
   }
 
   /**
    * Get material
    */
   setMaterial() {
-    this.material = new MeshStandardMaterial({ color: 0x99c1ff })
+    this.material = new MeshNormalMaterial({})
     this.material.displacementMap = this.resources.items.ground1953
     this.material.displacementScale = 10
 

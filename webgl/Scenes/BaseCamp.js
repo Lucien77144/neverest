@@ -19,6 +19,7 @@ import BCMountainLS from '../Components/BaseCamp/BCMountainLS/BCMountainLS'
 import BCMountainR from '../Components/BaseCamp/BCMountainR/BCMountainR'
 import BCMountainRS from '../Components/BaseCamp/BCMountainRS/BCMountainRS'
 import BCFlag from '../Components/BaseCamp/BCFlag/BCFlag'
+import BCCailloux from '../Components/BaseCamp/BCCailloux/BCCailloux'
 
 // Import const from the blocking folder
 import { BCSMALLBOX } from '~/const/blocking/baseCamp.const'
@@ -98,60 +99,61 @@ export default class BaseCamp extends BasicScene {
         acc[b.name] = new BCTent_1_2024(b)
         return acc
       }, {}),
-      ...BCTENT_2_2024.reduce((acc, b) => {
-        acc[b.name] = new BCTent_2_2024(b)
-        return acc
-      }, {}),
-      ...BCTENT_3_2024.reduce((acc, b) => {
-        acc[b.name] = new BCTent_3_2024(b)
-        return acc
-      }, {}),
+      // ...BCTENT_2_2024.reduce((acc, b) => {
+      //   acc[b.name] = new BCTent_2_2024(b)
+      //   return acc
+      // }, {}),
+      // ...BCTENT_3_2024.reduce((acc, b) => {
+      //   acc[b.name] = new BCTent_3_2024(b)
+      //   return acc
+      // }, {}),
       BCMountain: new BCMountain({
         name: 'Mountain',
-        position: new Vector3(6.861, 1.409, -200.991),
+        position: new Vector3(0.192, 11.703, -200.766),
         rotation: new Vector3(Math.PI, -0.65, Math.PI),
-        scale: new Vector3(46.323, 46.323, 46.323),
         model: this.resources.items.BCMountain,
         visibility: [0, 100],
       }),
       BCMountainL: new BCMountainL({
         name: 'MountainL',
-        position: new Vector3(-61.858, -0.462, -140.939),
-        rotation: new Vector3(0, -0.939, 0),
-        scale: new Vector3(70.881, 70.881, 70.881),
+        position: new Vector3(-51.506, -7.769, -140.148),
+        rotation: new Vector3(0, -Math.PI / 3, 0),
         model: this.resources.items.BCMountainL,
         visibility: [0, 100],
       }),
       BCMountainLS: new BCMountainLS({
         name: 'MountainLS',
-        position: new Vector3(-16.473, 2.165, -85.604),
+        position: new Vector3(-22.29, -1, -65.826),
         rotation: new Vector3(-0.051, 0.094, -0.095),
-        scale: new Vector3(3.208, 3.208, 3.208),
         model: this.resources.items.BCMountainLS,
         visibility: [0, 100],
       }),
       BCMountainR: new BCMountainR({
         name: 'MountainR',
-        position: new Vector3(39.906, -1.376, -158.968),
-        rotation: new Vector3(0, -0.749, 0),
-        scale: new Vector3(61.155, 61.155, 61.155),
+        position: new Vector3(55.752, 10.605, -162.061),
+        rotation: new Vector3(0, 0, 0),
         model: this.resources.items.BCMountainR,
         visibility: [0, 100],
       }),
       BCMountainRS: new BCMountainRS({
         name: 'MountainRS',
-        position: new Vector3(21.521, 3.897, -49.116),
+        position: new Vector3(15.168, -0.8, -68.82),
         rotation: new Vector3(-3.075, -0.701, 3.085),
-        scale: new Vector3(3.208, 3.208, 3.208),
         model: this.resources.items.BCMountainRS,
         visibility: [0, 100],
       }),
       BCFlag: new BCFlag({
         name: 'Flag',
-        position: new Vector3(6.066, -0.05, -17.924),
-        rotation: new Vector3(0.0, 3.5, 0.1),
-        scale: new Vector3(1, 1, 1),
+        position: new Vector3(6.2, -0.251, -18.331),
+        rotation: new Vector3(0.005, 0.291, -0.289),
         model: this.resources.items.BCFlag,
+        visibility: [0, 33],
+      }),
+      BCCailloux: new BCCailloux({
+        name: 'TasCailloux',
+        position: new Vector3(-9.567, 0, -32.582),
+        rotation: new Vector3(0, 0.262, 0),
+        model: this.resources.items.BCCailloux,
         visibility: [0, 33],
       }),
     }

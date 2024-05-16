@@ -8,7 +8,6 @@ export default class BCMountainL extends BasicItem {
   constructor({
     position = new Vector3(0, 0, 0),
     rotation = new Vector3(0, 0, 0),
-    scale = new Vector3(1, 1, 1),
     name = 'BCMountainL',
     visibility = [0, 100],
   }) {
@@ -17,7 +16,6 @@ export default class BCMountainL extends BasicItem {
     // Elements
     this.position = position
     this.rotation = rotation
-    this.scale = scale
     this.name = name
     this.visibility = visibility
 
@@ -32,7 +30,6 @@ export default class BCMountainL extends BasicItem {
     this.item = this.resources.BCMountainL.scene.clone()
     this.item.position.copy(this.position)
     this.item.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
-    this.item.scale.copy(this.scale)
     this.item.name = this.name
   }
 
