@@ -7,6 +7,9 @@ import Lights from '../Components/Shared/Lights/Lights'
 import BCSmallBox_1953 from '../Components/BaseCamp/BCSmallBox_1953/BCSmallBox_1953'
 import BCMediumBox_1953 from '../Components/BaseCamp/BCMediumBox_1953/BCMediumBox_1953'
 import BCBigBox_1953 from '../Components/BaseCamp/BCBigBox_1953/BCBigBox_1953'
+import BCSmallBox_2024 from '../Components/BaseCamp/BCSmallBox_2024/BCSmallBox_2024'
+import BCMediumBox_2024 from '../Components/BaseCamp/BCMediumBox_2024/BCMediumBox_2024'
+import BCBigBox_2024 from '../Components/BaseCamp/BCBigBox_2024/BCBigBox_2024'
 import BCTent_1_1953 from '../Components/BaseCamp/BCTent_1_1953/BCTent_1_1953'
 import BCTent_2_1953 from '../Components/BaseCamp/BCTent_2_1953/BCTent_2_1953'
 import BCTent_3_1953 from '../Components/BaseCamp/BCTent_3_1953/BCTent_3_1953'
@@ -22,9 +25,9 @@ import BCFlag from '../Components/BaseCamp/BCFlag/BCFlag'
 import BCCailloux from '../Components/BaseCamp/BCCailloux/BCCailloux'
 
 // Import const from the blocking folder
-import { BCSMALLBOX } from '~/const/blocking/baseCamp.const'
-import { BCMEDIUMBOX } from '~/const/blocking/baseCamp.const'
-import { BCBIGBOX } from '~/const/blocking/baseCamp.const'
+import { BCSMALLBOX_1953 } from '~/const/blocking/baseCamp.const'
+import { BCMEDIUMBOX_1953 } from '~/const/blocking/baseCamp.const'
+import { BCBIGBOX_1953 } from '~/const/blocking/baseCamp.const'
 import { BCTENT_1_1953 } from '~/const/blocking/baseCamp.const'
 import { BCTENT_2_1953 } from '~/const/blocking/baseCamp.const'
 import { BCTENT_3_1953 } from '~/const/blocking/baseCamp.const'
@@ -71,42 +74,66 @@ export default class BaseCamp extends BasicScene {
     this.components = {
       floor: new Floor(),
       lights: new Lights(),
-      ...BCSMALLBOX.reduce((acc, b) => {
-        acc[b.name] = new BCSmallBox_1953(b)
-        return acc
-      }, {}),
-      ...BCMEDIUMBOX.reduce((acc, b) => {
-        acc[b.name] = new BCMediumBox_1953(b)
-        return acc
-      }, {}),
-      ...BCBIGBOX.reduce((acc, b) => {
-        acc[b.name] = new BCBigBox_1953(b)
-        return acc
-      }, {}),
-      ...BCTENT_1_1953.reduce((acc, b) => {
-        acc[b.name] = new BCTent_1_1953(b)
-        return acc
-      }, {}),
-      ...BCTENT_2_1953.reduce((acc, b) => {
-        acc[b.name] = new BCTent_2_1953(b)
-        return acc
-      }, {}),
-      ...BCTENT_3_1953.reduce((acc, b) => {
-        acc[b.name] = new BCTent_3_1953(b)
-        return acc
-      }, {}),
-      ...BCTENT_1_2024.reduce((acc, b) => {
-        acc[b.name] = new BCTent_1_2024(b)
-        return acc
-      }, {}),
-      ...BCTENT_2_2024.reduce((acc, b) => {
-        acc[b.name] = new BCTent_2_2024(b)
-        return acc
-      }, {}),
-      ...BCTENT_3_2024.reduce((acc, b) => {
-        acc[b.name] = new BCTent_3_2024(b)
-        return acc
-      }, {}),
+      // ...BCSMALLBOX_1953.reduce((acc, b) => {
+      //   acc[b.name] = new BCSmallBox_1953(b)
+      //   return acc
+      // }, {}),
+      // ...BCMEDIUMBOX_1953.reduce((acc, b) => {
+      //   acc[b.name] = new BCMediumBox_1953(b)
+      //   return acc
+      // }, {}),
+      // ...BCBIGBOX_1953.reduce((acc, b) => {
+      //   acc[b.name] = new BCBigBox_1953(b)
+      //   return acc
+      // }, {}),
+      BCSmallBox_2024: new BCSmallBox_2024({
+        name: 'BCSmallBox_2024',
+        position: new Vector3(0, 0, 0),
+        rotation: new Vector3(0, 0, 0),
+        visibility: [25.87, 75.97],
+      }),
+      BCMediumBox_2024: new BCMediumBox_2024({
+        name: 'BCMediumBox_2024',
+        position: new Vector3(0, 0, 0),
+        rotation: new Vector3(0, 0, 0),
+        visibility: [25.87, 75.97],
+      }),
+      BCBigBox_2024: new BCBigBox_2024({
+        name: 'BCBigBox_2024',
+        position: new Vector3(0, 0, 0),
+        rotation: new Vector3(0, 0, 0),
+        visibility: [25.87, 75.97],
+      }),
+      // ...BCTENT_1_1953.reduce((acc, b) => {
+      //   acc[b.name] = new BCTent_1_1953(b)
+      //   return acc
+      // }, {}),
+      // ...BCTENT_2_1953.reduce((acc, b) => {
+      //   acc[b.name] = new BCTent_2_1953(b)
+      //   return acc
+      // }, {}),
+      BCTent_2_1953: new BCTent_2_1953({
+        name: 'BCTent_2_1953',
+        position: new Vector3(0, 0, 0),
+        rotation: new Vector3(0, 0, 0),
+        visibility: [0, 17.15],
+      }),
+      // ...BCTENT_3_1953.reduce((acc, b) => {
+      //   acc[b.name] = new BCTent_3_1953(b)
+      //   return acc
+      // }, {}),
+      // ...BCTENT_1_2024.reduce((acc, b) => {
+      //   acc[b.name] = new BCTent_1_2024(b)
+      //   return acc
+      // }, {}),
+      // ...BCTENT_2_2024.reduce((acc, b) => {
+      //   acc[b.name] = new BCTent_2_2024(b)
+      //   return acc
+      // }, {}),
+      // ...BCTENT_3_2024.reduce((acc, b) => {
+      //   acc[b.name] = new BCTent_3_2024(b)
+      //   return acc
+      // }, {}),
       BCMountain: new BCMountain({
         name: 'Mountain',
         position: new Vector3(0.192, 11.703, -200.766),
@@ -200,7 +227,6 @@ export default class BaseCamp extends BasicScene {
 
     const power = trigger?.power || this.interest.base
 
-    console.log(value)
     Object.values(this.components).forEach((c) => this.setComponentVis(c))
 
     if (this.interest.curr === power) return

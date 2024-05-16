@@ -7,7 +7,7 @@ export type TBlockingInfos = {
   visibility: [number, number]
 }
 
-export const BCSMALLBOX: TBlockingInfos[] = [
+export const BCSMALLBOX_1953: TBlockingInfos[] = [
   {
     name: 'BoitePetite1',
     position: new Vector3(6.71, -0.058, -18.197),
@@ -26,7 +26,9 @@ export const BCSMALLBOX: TBlockingInfos[] = [
     rotation: new Vector3(0, -0.986, 0),
     visibility: [0, 25.87],
   },
-  // 2024
+]
+
+export const BCSMALLBOX_2024: TBlockingInfos[] = [
   {
     name: 'BoitePetite1_2024',
     position: new Vector3(-1.866, 1.006, -19.711),
@@ -47,7 +49,7 @@ export const BCSMALLBOX: TBlockingInfos[] = [
   },
 ]
 
-export const BCMEDIUMBOX: TBlockingInfos[] = [
+export const BCMEDIUMBOX_1953: TBlockingInfos[] = [
   {
     name: 'BoiteMoyenne1',
     position: new Vector3(-4.669, 1.081, -35.599),
@@ -78,7 +80,9 @@ export const BCMEDIUMBOX: TBlockingInfos[] = [
     rotation: new Vector3(-Math.PI, 0.297, -Math.PI),
     visibility: [0, 25.87],
   },
-  // 2024
+]
+
+export const BCMEDIUMBOX_2024: TBlockingInfos[] = [
   {
     name: 'BoiteMoyenne1_2024',
     position: new Vector3(9.429, 0.3, -17.631),
@@ -111,7 +115,7 @@ export const BCMEDIUMBOX: TBlockingInfos[] = [
   },
 ]
 
-export const BCBIGBOX: TBlockingInfos[] = [
+export const BCBIGBOX_1953: TBlockingInfos[] = [
   {
     name: 'BoiteGrande1',
     position: new Vector3(-4.404, 0, -6.196),
@@ -148,7 +152,9 @@ export const BCBIGBOX: TBlockingInfos[] = [
     rotation: new Vector3(Math.PI, -1.484, Math.PI),
     visibility: [0, 25.87],
   },
-  // 2024
+]
+
+export const BCBIGBOX_2024: TBlockingInfos[] = [
   {
     name: 'BoiteGrande1_2024',
     position: new Vector3(-2.085, 0.500, -20.207),
