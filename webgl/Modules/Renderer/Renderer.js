@@ -137,11 +137,9 @@ export default class Renderer {
           uFocProgress: new Uniform(0),
 
           // Data modal
-          uModalColor: new Uniform(new Color('#0a0a0a')),
+          uModalColor: new Uniform(new Color('#0d1a48')),
           uModalProgress: new Uniform(0),
-          uModalT1: new Uniform(),
-          uModalT2: new Uniform(),
-          uModalT3: new Uniform(),
+          uBlob: new Uniform(),
 
           // Config
           uTime: new Uniform(0),

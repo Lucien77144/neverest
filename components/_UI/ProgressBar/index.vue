@@ -2,6 +2,7 @@
   <div class="t-25" :class="{ disabled: !scene?.nav }">
     <svg
       class="progress"
+      ref="progressRef"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 48 424"
@@ -109,7 +110,10 @@
 <script lang="ts" setup>
 import scenes from '~/const/scenes.const'
 
-// bus event
+// Refs
+const progressRef = ref<HTMLElement | null>(null)
+
+// Bus event
 const { $bus }: any = useNuxtApp()
 
 // Props
@@ -146,6 +150,9 @@ function navigate(name: string) {
   if (scene.value?.name === next?.name) return
   scene && $bus.emit('scene:switch', next)
 }
+
+// Events
+$bus.on('modal:init', () => progressRef.value?.classList.add('disabled'))
 </script>
 
 <style src="./style.scss" lang="scss" scoped></style>

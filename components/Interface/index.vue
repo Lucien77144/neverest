@@ -1,6 +1,6 @@
 <template>
   <UILoader />
-  <div ref="interfaceRef" class="interface">
+  <div class="interface">
     <UIRadialProgress />
     <div class="panel">
       <UISubtitle />
@@ -11,19 +11,6 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-// Refs
-const interfaceRef = ref<HTMLElement | null>(null)
-
-// Bus
-const { $bus }: any = useNuxtApp()
-
-// Events
-$bus.on('modal:init', () => {
-  if (interfaceRef.value) {
-    interfaceRef.value.classList.add('hidden')
-  }
-})
-</script>
+<script lang="ts" setup></script>
 
 <style src="./style.scss" lang="scss" scoped></style>

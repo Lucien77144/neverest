@@ -8,20 +8,32 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  will-change: opacity, pointer-events;
 
   &__el {
     fill: $white;
   }
 
+  &.disabled {
+    .pt {
+      transform: translateX(100%);
+    }
+  }
+
+  @for $i from 1 through 3 {
+    .pt:nth-child(#{$i}) {
+      transition-delay: 0.5s * $i;
+    }
+  }
   .pt {
     transition: 0.25s ease-in-out;
     stroke: $secondary;
-    filter: drop-shadow(0 0 2px rgba($primary, .5));
+    filter: drop-shadow(0 0 2px rgba($primary, 0.5));
 
     &--active {
       r: 3;
       stroke: $primary;
-      filter: drop-shadow(0 0 0 rgba($primary, .5));
+      filter: drop-shadow(0 0 0 rgba($primary, 0.5));
     }
   }
 

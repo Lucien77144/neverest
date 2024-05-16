@@ -4,9 +4,7 @@ uniform float uTime;
 uniform float uTransition;
 uniform float uModalProgress;
 uniform float uFocProgress;
-uniform sampler2D uModalT1;
-uniform sampler2D uModalT2;
-uniform sampler2D uModalT3;
+uniform sampler2D uBlob;
 uniform vec3 uModalColor;
 uniform vec3 uFocColor;
 uniform vec2 uResolution;
@@ -96,17 +94,13 @@ void applyFishEye(inout vec2 uv, float z) {
     uv += .5;
 }
 
-void fitToScreen(inout vec4 color) {
-    color.rgb = 1. - (color.rgb + (1. - color.a));
-}
-
-vec2 getMaskUv(vec2 uv, float speed) {
-    vec2 modalUv = uv - .5;
-         modalUv *= abs(sin(uModalProgress)) * (1. - uModalProgress) * 3.;
-         modalUv += .5;
-         modalUv *= uRatio;
-         modalUv -= (uRatio * .5 - .5);
-    return modalUv;
+vec2 getMaskUv(vec2 uv) {
+    vec2 maskUv = uv - .5;
+         maskUv *= (uModalProgress * max(uResolution.x, uResolution.y));
+         maskUv += .5;
+         maskUv *= uRatio;
+         maskUv -= (uRatio * .5 - .5);
+    return maskUv;
 }
 
 void main() {
@@ -152,44 +146,15 @@ void main() {
     //        Modal         //
     // -------------------- //
 
-    float progress = 1. - clampedSine(1. - uModalProgress, 1.);
-         
-    vec4 modalColor = mix(frag, vec4(uModalColor, 1.), .25);
-    // vec4 modalColor = mix(frag, vec4(uModalColor, 1.), 1.);
-    
-    vec2 modalT1Uv = getMaskUv(uv, 1.);
-    applyFishEye(modalT1Uv, 1. - uModalProgress);
-    applySpine(modalT1Uv, uModalProgress + clampedSine(uTime * .001, -1.));
-    applyRotation(modalT1Uv, uTime * .001);
+    vec2 maskUv = getMaskUv(uv);
+    applyRotation(maskUv, uTime * .001);
 
-    vec2 modalT2Uv = getMaskUv(uv, 2.);
-    applyFishEye(modalT2Uv, 1. - uModalProgress);
-    applySpine(modalT2Uv, uModalProgress + clampedSine(uTime * .001, 1.));
-    applyRotation(modalT2Uv, uTime * .001);
-    
-    vec2 modalT3Uv = getMaskUv(uv, 3.);
-    applyFishEye(modalT3Uv, 1. - uModalProgress);
-    applySpine(modalT3Uv, uModalProgress + clampedSine(uTime * .001, -1.));
-    applyRotation(modalT3Uv, uTime * .001);
+    float play = 1. - (uModalProgress == 0. ? 0. : 1.);
+    vec4 blob = texture2D(uBlob, maskUv);
+    float m = min(blob.r + blob.g + blob.b, 1.) - (play);
+    float mask = 1. - min(m, 1.);
 
-    vec4 modalT1 = texture2D(uModalT1, modalT1Uv);
-    vec4 modalT2 = texture2D(uModalT2, modalT2Uv);
-    vec4 modalT3 = texture2D(uModalT3, modalT3Uv);
-
-    fitToScreen(modalT1);
-    fitToScreen(modalT2);
-    fitToScreen(modalT3);
-
-    float end = 1. - step(uModalProgress, .999999);
-    float draw = min(
-        // modalT1.r + 
-        modalT2.r + 
-        modalT3.r
-    , 1.);
-          draw *= uModalProgress;
-          draw = end >= 1. ? 1. : draw;
-
-    frag = mix(frag, modalColor, draw);
+    frag = mix(frag, vec4(uModalColor, 1.), 1. - mask);
 
     gl_FragColor = frag;
 }
