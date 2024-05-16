@@ -181,18 +181,14 @@ void main() {
     fitToScreen(modalT3);
 
     float end = 1. - step(uModalProgress, .999999);
-    float draw = min(modalT1.r + modalT2.r + modalT3.r, 1.);
+    float draw = min(
+        // modalT1.r + 
+        modalT2.r + 
+        modalT3.r
+    , 1.);
           draw *= uModalProgress;
           draw = end >= 1. ? 1. : draw;
 
-
-    // float vignette = length(uv - .5) - (1. - (max(uModalProgress - .5, 0.) * 2.));
-    // float resV = mix(0., 1., smoothstep(vignette, vignette + .1, 0.));
-
-    // frag = mix(frag, modalColor, clamp((1. - resV), 0. , 1.));
-    // frag = mix(frag, modalColor, 1. - clamp(mask + (1. - resV), 0. , 1.));
-    // frag = mix(frag, modalColor, draw);
-    
     frag = mix(frag, modalColor, draw);
 
     gl_FragColor = frag;

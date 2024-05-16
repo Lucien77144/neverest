@@ -69,6 +69,7 @@ export default class ModalSprite extends BasicItem {
       value: 1,
       duration: 1.5,
       ease: 'power1.inOut',
+      onStart: () => this.$bus.emit('modal:init'),
       onComplete: () => this.$bus.emit('modal:open', this.data),
     })
 

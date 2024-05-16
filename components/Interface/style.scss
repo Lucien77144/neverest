@@ -1,11 +1,21 @@
-.panel {
-  position: fixed;
-  z-index: 10;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
+.interface {
+  transform-origin: center;
+  transition: 0.25s ease-in-out;
+  &.hidden {
+    visibility: hidden;
+    transform: scale(1.1);
+    opacity: 0;
+  }
 
-  * {
-    pointer-events: all !important;
+  .panel {
+    position: fixed;
+    z-index: 10;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+
+    * {
+      pointer-events: all !important;
+    }
   }
 }

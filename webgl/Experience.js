@@ -149,8 +149,8 @@ export default class Experience {
     this.sceneManager = new SceneManager()
     this.raycaster = new Raycaster()
     this.stats = new Stats(this.viewport.debug)
-    this.renderer = new Renderer()
     this.resources = new Resources()
+    this.renderer = new Renderer()
     this.audioManager = new AudioManager()
 
     // Events

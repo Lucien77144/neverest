@@ -54,7 +54,7 @@ export default class SceneManager {
    */
   setDebug(value) {
     this.debugFolder = this.debug.addFolder({
-expanded:false,
+      expanded: false,
       title: 'Navigation',
     })
 
@@ -112,6 +112,7 @@ expanded:false,
     this.setDisableScroll(true)
 
     // Init next scene
+    const previous = this.sceneName
     this.sceneName = next.name
     this.next = new next.Scene({
       interest: {
@@ -137,6 +138,11 @@ expanded:false,
     const currScroll = this.currentScroll.value * 100
 
     // Smooth transition with gsap
+    const diff =
+      scenes.list.findIndex((s) => s.name === next.name) -
+      scenes.list.findIndex((s) => s.name === previous)
+    this.renderMesh.material.uniforms.uDirection.value = Math.sign(diff);
+
     gsap.to(this.renderMesh.material.uniforms.uTransition, {
       value: 1,
       duration: transition.duration / 1000,
