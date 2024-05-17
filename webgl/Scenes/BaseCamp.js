@@ -78,14 +78,32 @@ export default class BaseCamp extends BasicScene {
       //   acc[b.name] = new BCSmallBox_1953(b)
       //   return acc
       // }, {}),
+      BCSmallBox_1953: new BCSmallBox_1953({
+        name: 'BCSmallBox_1953',
+        position: new Vector3(0, 0, 0),
+        rotation: new Vector3(0, 0, 0),
+        visibility: [0, 25.87],
+      }),
       // ...BCMEDIUMBOX_1953.reduce((acc, b) => {
       //   acc[b.name] = new BCMediumBox_1953(b)
       //   return acc
       // }, {}),
+      BCMediumBox_1953: new BCMediumBox_1953({
+        name: 'BCMediumBox_1953',
+        position: new Vector3(0, 0, 0),
+        rotation: new Vector3(0, 0, 0),
+        visibility: [0, 25.87],
+      }),
       // ...BCBIGBOX_1953.reduce((acc, b) => {
       //   acc[b.name] = new BCBigBox_1953(b)
       //   return acc
       // }, {}),
+      BCBigBox_1953: new BCBigBox_1953({
+        name: 'BCBigBox_1953',
+        position: new Vector3(0, 0, 0),
+        rotation: new Vector3(0, 0, 0),
+        visibility: [0, 25.87],
+      }),
       BCSmallBox_2024: new BCSmallBox_2024({
         name: 'BCSmallBox_2024',
         position: new Vector3(0, 0, 0),
@@ -108,6 +126,12 @@ export default class BaseCamp extends BasicScene {
       //   acc[b.name] = new BCTent_1_1953(b)
       //   return acc
       // }, {}),
+      BCTent_1_1953: new BCTent_1_1953({
+        name: 'BCTENT_1_1953_1',
+        position: new Vector3(0.328, 0, -35.809),
+        rotation: new Vector3(0, -0.3, 0),
+        visibility: [0, 25.87],
+      }),
       // ...BCTENT_2_1953.reduce((acc, b) => {
       //   acc[b.name] = new BCTent_2_1953(b)
       //   return acc
@@ -122,18 +146,42 @@ export default class BaseCamp extends BasicScene {
       //   acc[b.name] = new BCTent_3_1953(b)
       //   return acc
       // }, {}),
+      BCTent_3_1953: new BCTent_3_1953({
+        name: 'BCTENT_3_1953_1',
+        position: new Vector3(-9.319, 0, -37.493),
+        rotation: new Vector3(0, 0.2, 0),
+        visibility: [0, 25.87],
+      }),
       // ...BCTENT_1_2024.reduce((acc, b) => {
       //   acc[b.name] = new BCTent_1_2024(b)
       //   return acc
       // }, {}),
+      BCTent_1_2024: new BCTent_1_2024({
+        name: 'BC_Tent_1_2024_1',
+        position: new Vector3(0.328, 0, -35.809),
+        rotation: new Vector3(0, -0.3, 0),
+        visibility: [25.87, 75.97],
+      }),
       // ...BCTENT_2_2024.reduce((acc, b) => {
       //   acc[b.name] = new BCTent_2_2024(b)
       //   return acc
       // }, {}),
+      BCTent_2_2024: new BCTent_2_2024({
+        name: 'BCTent_2_2024',
+        position: new Vector3(0, 0, 0),
+        rotation: new Vector3(0, 0, 0),
+        visibility: [25.87, 75.97],
+      }),
       // ...BCTENT_3_2024.reduce((acc, b) => {
       //   acc[b.name] = new BCTent_3_2024(b)
       //   return acc
       // }, {}),
+      BCTent_3_2024: new BCTent_3_2024({
+        name: 'BCTent_3_2024',
+        position: new Vector3(0, 0, 0),
+        rotation: new Vector3(0, 0, 0),
+        visibility: [25.87, 75.97],
+      }),
       BCMountain: new BCMountain({
         name: 'Mountain',
         position: new Vector3(0.192, 11.703, -200.766),

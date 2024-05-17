@@ -1,4 +1,5 @@
-import { DoubleSide, MeshNormalMaterial } from 'three'
+import { DoubleSide, InstancedMesh, MeshNormalMaterial, Object3D } from 'three'
+import { BCBIGBOX_1953 } from '~/const/blocking/baseCamp.const'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
 export default class BCBigBox_1953 extends BasicItem {
@@ -10,6 +11,7 @@ export default class BCBigBox_1953 extends BasicItem {
     rotation = new Vector3(0, 0, 0),
     name = 'BCBigBox_1953',
     visibility = [0, 100],
+    isInstances = true,
   }) {
     super()
 
@@ -18,9 +20,28 @@ export default class BCBigBox_1953 extends BasicItem {
     this.rotation = rotation
     this.name = name
     this.visibility = visibility
+    this.isInstances = isInstances
 
     // New elements
     this.resources = this.experience.resources.items
+  }
+
+  /**
+   * Set Instances
+   */
+  setInstances() {
+    const instance = this.resources.BCBigBox_1953.scene.children[0]
+    const dummy = new Object3D()
+    this.item = new InstancedMesh(instance.geometry, new MeshNormalMaterial(), BCBIGBOX_1953.length)
+
+    BCBIGBOX_1953.forEach((el, i) => {
+      dummy.position.set(el.position.x, el.position.y, el.position.z)
+      dummy.rotation.set(el.rotation.x, el.rotation.y, el.rotation.z)
+      dummy.updateMatrix()
+      this.item.setMatrixAt(i, dummy.matrix)
+    })
+
+    this.item.instanceMatrix.needsUpdate = true
   }
 
   /**
@@ -45,7 +66,8 @@ export default class BCBigBox_1953 extends BasicItem {
    * Init the floor
    */
   init() {
-    this.setItem()
-    this.setMaterial()
+    this.isInstances && this.setInstances()
+    !this.isInstances && this.setItem()
+    !this.isInstances && this.setMaterial()
   }
 }

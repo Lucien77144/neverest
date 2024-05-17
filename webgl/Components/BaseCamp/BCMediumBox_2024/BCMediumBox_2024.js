@@ -1,4 +1,4 @@
-import { DoubleSide, InstancedMesh, MeshNormalMaterial } from 'three'
+import { DoubleSide, InstancedMesh, MeshNormalMaterial, Object3D } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import { BCMEDIUMBOX_2024 } from '~/const/blocking/baseCamp.const'
 
@@ -30,15 +30,15 @@ export default class BCMediumBox_2024 extends BasicItem {
    * Set Instances
    */
   setInstances() {
-    let dummy = this.resources.BCMediumBox_1953.scene.children[0]
-    this.item = new InstancedMesh(dummy.geometry, new MeshNormalMaterial(), BCMEDIUMBOX_2024.length)
+    const instance = this.resources.BCMediumBox_1953.scene.children[0]
+    const dummy = new Object3D()
+    this.item = new InstancedMesh(instance.geometry, new MeshNormalMaterial(), BCMEDIUMBOX_2024.length)
 
     BCMEDIUMBOX_2024.forEach((el, i) => {
-      let mesh = dummy.clone()
-      mesh.position.set(el.position.x, el.position.y, el.position.z)
-      mesh.rotation.set(el.rotation.x, el.rotation.y, el.rotation.z)
-      mesh.updateMatrix()
-      this.item.setMatrixAt(i, mesh.matrix)
+      dummy.position.set(el.position.x, el.position.y, el.position.z)
+      dummy.rotation.set(el.rotation.x, el.rotation.y, el.rotation.z)
+      dummy.updateMatrix()
+      this.item.setMatrixAt(i, dummy.matrix)
     })
 
     this.item.instanceMatrix.needsUpdate = true

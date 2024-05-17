@@ -1,4 +1,4 @@
-import { DoubleSide, InstancedMesh, MeshNormalMaterial } from 'three'
+import { DoubleSide, InstancedMesh, MeshNormalMaterial, Object3D } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import { BCTENT_2_1953 } from '~/const/blocking/baseCamp.const'
 
@@ -25,24 +25,28 @@ export default class BCTent_2_1953 extends BasicItem {
     // New elements
     this.resources = this.experience.resources.items
   }
-  
-    /**
-     * Set Instances
-     */
-    setInstances() {
-      let dummy = this.resources.BCTent_2_1953.scene.children[0]
-      this.item = new InstancedMesh(dummy.geometry, new MeshNormalMaterial(), BCTENT_2_1953.length)
-  
-      BCTENT_2_1953.forEach((el, i) => {
-        let mesh = dummy.clone()
-        mesh.position.set(el.position.x, el.position.y, el.position.z)
-        mesh.rotation.set(el.rotation.x, el.rotation.y, el.rotation.z)
-        mesh.updateMatrix()
-        this.item.setMatrixAt(i, mesh.matrix)
-      })
-  
-      this.item.instanceMatrix.needsUpdate = true
-    }
+
+  /**
+   * Set Instances
+   */
+  setInstances() {
+    const instance = this.resources.BCTent_2_1953.scene.children[0]
+    const dummy = new Object3D()
+    this.item = new InstancedMesh(
+      instance.geometry,
+      new MeshNormalMaterial(),
+      BCTENT_2_1953.length
+    )
+
+    BCTENT_2_1953.forEach((el, i) => {
+      dummy.position.set(el.position.x, el.position.y, el.position.z)
+      dummy.rotation.set(el.rotation.x, el.rotation.y, el.rotation.z)
+      dummy.updateMatrix()
+      this.item.setMatrixAt(i, dummy.matrix)
+    })
+
+    this.item.instanceMatrix.needsUpdate = true
+  }
 
   /**
    * Set item
