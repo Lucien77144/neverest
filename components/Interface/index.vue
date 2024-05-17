@@ -3,6 +3,7 @@
   <div class="interface">
     <UIRadialProgress />
     <div class="panel">
+      <Modal />
       <UISubtitle />
       <NextScene />
       <UIProgressBar />

@@ -8,23 +8,17 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  will-change: opacity, pointer-events;
+  will-change: right, margin-right;
 
   &__el {
     fill: $white;
   }
 
   &.disabled {
-    .pt {
-      transform: translateX(100%);
-    }
+    right: -100%;
+    margin-right: -2rem;
   }
 
-  @for $i from 1 through 3 {
-    .pt:nth-child(#{$i}) {
-      transition-delay: 0.5s * $i;
-    }
-  }
   .pt {
     transition: 0.25s ease-in-out;
     stroke: $secondary;

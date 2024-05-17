@@ -96,7 +96,7 @@ void applyFishEye(inout vec2 uv, float z) {
 
 vec2 getMaskUv(vec2 uv) {
     vec2 maskUv = uv - .5;
-         maskUv *= (uModalProgress * max(uResolution.x, uResolution.y));
+         maskUv *= (uModalProgress * min(uResolution.x, uResolution.y));
          maskUv += .5;
          maskUv *= uRatio;
          maskUv -= (uRatio * .5 - .5);
@@ -151,6 +151,7 @@ void main() {
 
     float play = 1. - (uModalProgress == 0. ? 0. : 1.);
     vec4 blob = texture2D(uBlob, maskUv);
+    
     float m = min(blob.r + blob.g + blob.b, 1.) - (play);
     float mask = 1. - min(m, 1.);
 

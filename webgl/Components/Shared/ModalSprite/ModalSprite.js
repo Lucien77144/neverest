@@ -56,29 +56,32 @@ export default class ModalSprite extends BasicItem {
    * On click item
    */
   onClick() {
+    const base = { value: this.camera.fov }
+    const fov = { value: this.camera.fov }
     gsap.to(this.renderUniforms.uModalProgress, {
       value: 1,
-      duration: 2.5,
-      ease: CustomEase.create('custom', 'M0,0 C0.835,0 1,1 1,1 '),
+      duration: 1.5,
+      ease: CustomEase.create(
+        'custom',
+        'M0,0 C0.799,0 0.72,0.004 0.8,0.683 0.826,0.91 0.849,1 1,1 '
+      ),
       onStart: () => this.$bus.emit('modal:init'),
-      onComplete: () => this.$bus.emit('modal:open', this.data),
+      onComplete: () => {
+        this.$bus.emit('modal:open', this.data)
+        this.camera.fov = base.value
+        this.camera.updateProjectionMatrix()
+      },
     })
 
-    // const base = { value: this.camera.fov }
-    // const fov = { value: this.camera.fov }
-    // gsap.to(fov, {
-    //   value: fov * 0.5,
-    //   duration: 0.75,
-    //   ease: 'power4.out',
-    //   onUpdate: () => {
-    //     this.camera.fov = fov.value
-    //     this.camera.updateProjectionMatrix()
-    //   },
-    //   onComplete: () => {
-    //     this.camera.fov = base.value
-    //     this.camera.updateProjectionMatrix()
-    //   },
-    // })
+    gsap.to(fov, {
+      value: base.value * 0.5,
+      duration: 0.5,
+      ease: 'power1.inOut',
+      onUpdate: () => {
+        this.camera.fov = fov.value
+        this.camera.updateProjectionMatrix()
+      },
+    })
   }
 
   /**

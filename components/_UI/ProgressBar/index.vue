@@ -1,7 +1,8 @@
 <template>
-  <div class="t-25" :class="{ disabled: !scene?.nav }">
+  <div class="t-25">
     <svg
-      class="progress"
+      class="progress t-25"
+      :class="{ disabled: !scene?.nav }"
       ref="progressRef"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

@@ -1,11 +1,14 @@
 <template>
-  <!-- <div v-if="data">
-    <section>
+  <div class="modal" v-if="data">
+    <section class="modal__scroll">
+      SCROLL
+    </section>
+    <section class="modal__content">
       <article v-for="c in data">
         {{ c.type }}
       </article>
     </section>
-  </div> -->
+  </div>
 </template>
 
 <script lang="ts" setup>

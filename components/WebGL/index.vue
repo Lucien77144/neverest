@@ -5,7 +5,6 @@
   </div>
   <canvas ref="canvasRef" class="canvas" />
   <div id="webgl-interface">
-    <Modal />
     <UIInterestData />
     <UITitle />
     <div ref="startBtn" class="start">
