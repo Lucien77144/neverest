@@ -135,6 +135,34 @@
         "source": "/models/BaseCamp/2024/tent3_2024.glb"
       },
       {
+        "name": "BCTent_1_2024",
+        "source": "/models/BaseCamp/2024/tent1_2024.glb"
+      },
+      {
+        "name": "BCTent_2_2024",
+        "source": "/models/BaseCamp/2024/tent2_2024.glb"
+      },
+      {
+        "name": "BCTent_3_2024",
+        "source": "/models/BaseCamp/2024/tent3_2024.glb"
+      },
+      {
+        "name": "BCTent_1_2050",
+        "source": "/models/BaseCamp/2050/tent1_2050.glb"
+      },
+      {
+        "name": "BCTent_2_2050",
+        "source": "/models/BaseCamp/2050/tent2_2050.glb"
+      },
+      {
+        "name": "BCTent_3_2050",
+        "source": "/models/BaseCamp/2050/tent3_2050.glb"
+      },
+      {
+        "name": "BCTent_Main_2050",
+        "source": "/models/BaseCamp/2050/tentMain_2050.glb"
+      },
+      {
         "name": "BCSmallBox_1953",
         "source": "/models/BaseCamp/Box/smallBox_1953.glb"
       },
