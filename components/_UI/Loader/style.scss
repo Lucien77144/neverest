@@ -9,7 +9,7 @@ h1 {
 }
 
 .loader {
-  z-index: 1000;
+  z-index: 10001;
   background-color: $black;
 
   position: fixed;
@@ -27,5 +27,9 @@ h1 {
   &.disabled {
     visibility: hidden;
     opacity: 0;
+  }
+
+  .lottie-animation-container {
+    width: 50vw;
   }
 }

@@ -27,16 +27,6 @@
     ]
   },
   {
-    "name": "animations",
-    "data": {},
-    "items": [
-      {
-        "name": "robotAnimation",
-        "source": "/lottie/animRobot.json"
-      }
-    ]
-  },
-  {
     "name": "textures",
     "data": {},
     "items": [
