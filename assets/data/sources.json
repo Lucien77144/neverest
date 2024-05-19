@@ -89,21 +89,6 @@
         "name": "blob",
         "source": "/img/transitions/blob.svg",
         "type": "texture"
-      },
-      {
-        "name": "modalT1",
-        "source": "/img/transitions/modalT1.svg",
-        "type": "texture"
-      },
-      {
-        "name": "modalT2",
-        "source": "/img/transitions/modalT2.svg",
-        "type": "texture"
-      },
-      {
-        "name": "modalT3",
-        "source": "/img/transitions/modalT3.svg",
-        "type": "texture"
       }
     ]
   },

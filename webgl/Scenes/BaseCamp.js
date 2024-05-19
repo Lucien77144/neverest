@@ -38,33 +38,26 @@ export default class BaseCamp extends BasicScene {
   constructor({ interest }) {
     super()
 
-    // New elements
+    // Get elements from experience
+    this.scrollManager = this.experience.scrollManager
     this.resources = this.experience.resources
     this.renderUniforms = this.experience.renderer.renderMesh.material.uniforms
+
+    // New elements
     this.interest = interest
     this.camFov = 20
     this.camRot = new Vector3(0, 0, 0)
     this.list = []
+    this.factorChange = false
 
     // Store
-    // Getters
-    this.currentScroll = computed(
-      () => Math.round(useScrollStore().getCurrent * 10000) / 10000
-    )
-    this.factorScroll = computed(() => useScrollStore().getFactor)
-    this.currentScene = computed(() => useNavigationStore().getScene)
-    this.disabledScroll = computed(() => useScrollStore().getDisable)
     // Actions
-    this.setFactor = useScrollStore().setFactor
-    this.setInterest = useInterestStore().setInterest
-    this.setInterestVisible = useInterestStore().setVisible
-    this.instantScroll = useScrollStore().instant
+    this.setInterest = useExperienceStore().setInterest
 
-    // Scope
-    this.scope.run(() => {
-      // Watchers
-      watch(this.currentScroll, (v) => this.watchCurrentScroll(v))
-    })
+    // Events
+    this.scrollManager.on('scroll', ({ current }) =>
+      this.watchCurrentScroll(current)
+    )
 
     // Components
     this.components = {
@@ -208,7 +201,7 @@ export default class BaseCamp extends BasicScene {
    * @param {*} instant If the transtiion should be instant
    */
   watchCurrentScroll(value, instant = false) {
-    if (this.disabledScroll.value) return
+    if (this.scrollManager.disabled) return
 
     const trigger = this.interest.list?.find(({ start, end }) => {
       return value >= start && value <= end
@@ -229,11 +222,12 @@ export default class BaseCamp extends BasicScene {
   setComponentVis(c) {
     if (!c.visibility?.length) return
 
+    const scroll = this.scrollManager.current
+    const start = c.visibility[0]
+    const end = c.visibility[1]
+
     // If current scroll is between visibility values
-    if (
-      c.visibility[0] <= this.currentScroll.value &&
-      this.currentScroll.value <= c.visibility[1]
-    ) {
+    if (start <= scroll && scroll <= end) {
       c.item.visible = true
     } else {
       c.item.visible = false
@@ -246,8 +240,8 @@ export default class BaseCamp extends BasicScene {
    * @param {boolean} instant Should the transition be instant
    */
   setInterestVis(data, instant) {
-    data && this.setInterest(data)
-    this.setInterestVisible(!!data)
+    data && this.setInterest({ data })
+    this.setInterest({ visible: !!data })
 
     const val = {
       ...this.camRot,
@@ -279,14 +273,20 @@ export default class BaseCamp extends BasicScene {
    * @param {*} value
    */
   setScrollFactor(value) {
+    if (this.factorChange) return
+
+    this.factorChange = true
     this.interest.curr = value
 
-    const factor = this.factorScroll.value
-    this.setFactor(0)
-    setTimeout(() => this.setFactor(factor), 500)
+    const factor = this.scrollManager.factor
+    this.scrollManager.setFactor(0)
+    setTimeout(() => {
+      this.scrollManager.setFactor(factor)
+      this.factorChange = false
+    }, 500)
 
     if (value !== this.interest.base) {
-      this.instantScroll(this.currentScroll.value + 0.0001)
+      this.scrollManager.to(this.scrollManager.current + 0.01)
     }
   }
 
@@ -301,7 +301,7 @@ export default class BaseCamp extends BasicScene {
     // Set the camera
     this.setCamera()
     this.setInterestVis(null)
-    this.setInterestVisible(false)
+    this.setInterest({ visible: false })
 
     // Init the scene and components (basic scene)
     super.init()
@@ -322,7 +322,7 @@ export default class BaseCamp extends BasicScene {
    */
   onDisposeStart() {
     super.onDisposeStart()
-    this.setInterestVisible(false)
+    this.setInterest({ visible: false })
   }
 
   /**

@@ -1,12 +1,12 @@
 <template>
   <div
-    v-if="sceneNavigation?.nav"
+    v-if="navigation?.scene?.nav"
     ref="next"
     class="next"
     :class="{
       active:
         currentScroll > 100 - GAP &&
-        sceneNavigation.nav.end !== scenes.nav.total,
+        navigation.scene.nav.end !== scenes.nav.total,
     }"
   >
     <UIDragBtn @navigate="navigate">
@@ -28,15 +28,15 @@ const GAP = 10
 const { $bus }: any = useNuxtApp()
 
 // Getters
-const currentScroll = computed(() => useScrollStore().getCurrent)
-const sceneNavigation = computed(() => useNavigationStore().getScene)
+const currentScroll = computed(() => useExperienceStore().getScroll)
+const navigation = computed(() => useExperienceStore().getNavigation)
 
 /**
  * Switch scene
  */
 function navigate() {
   const curr = scenes.nav.list.findIndex(
-    ({ id }) => id === sceneNavigation.value?.id
+    ({ id }) => id === navigation.value.scene?.id
   )
   const scene = scenes.nav.list[curr + 1]
 

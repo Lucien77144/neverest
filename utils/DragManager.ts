@@ -3,6 +3,13 @@ import Viewport from './Viewport'
 
 type TDragEvents = 'dragstart' | 'drag' | 'dragend' | 'tap'
 
+export type TDragEvent = {
+  position: TCursor
+  delta: TCursor
+  normalized: TCursor
+  centered: TCursor
+}
+
 const TAP_TRESHOLD: number = 2
 
 export default class DragManager extends EventEmitter {

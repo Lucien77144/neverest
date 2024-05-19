@@ -60,7 +60,7 @@ export default class Renderer {
    * Set debug
    */
   setDebug() {
-    this.debugFolder = this.debug.addFolder({
+    this.debugFolder = this.debug.panel.addFolder({
       expanded: false,
       title: 'Renderer',
     })

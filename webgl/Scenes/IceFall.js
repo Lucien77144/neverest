@@ -12,18 +12,15 @@ export default class IceFall extends BasicScene {
   constructor({ interest }) {
     super()
 
+    // Get elements from experience
+    this.scrollManager = this.experience.scrollManager
+
     // New elements
     this.icefallObj = null
     this.baseCamRot = null
     this.camRotTarget = null
     this.currentPoint = 0
     this.interest = interest
-
-    // Getters
-    this.currentScene = computed(() => useNavigationStore().getScene)
-    // Actions
-    this.instantScroll = useScrollStore().instant
-    this.setDisableScroll = useScrollStore().setDisable
 
     // Components
     this.components = {
@@ -46,9 +43,9 @@ export default class IceFall extends BasicScene {
    */
   navigate() {
     this.currentPoint += 1
-    this.instantScroll(
-      (100 / (this.interest.list?.length - 1)) * this.currentPoint
-    )
+
+    const scroll = (100 / (this.interest.list?.length - 1)) * this.currentPoint
+    this.scrollManager.to(scroll)
   }
 
   /**
@@ -101,8 +98,8 @@ export default class IceFall extends BasicScene {
    */
   onInitComplete() {
     super.onInitComplete()
-    this.setDisableScroll(true)
-    this.instantScroll(5)
+    this.scrollManager.setDisable(true)
+    this.scrollManager.to(5)
   }
 
   /**

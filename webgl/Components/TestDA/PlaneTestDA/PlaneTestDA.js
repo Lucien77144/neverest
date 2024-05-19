@@ -398,7 +398,7 @@ export default class PlaneTestDA extends BasicItem {
   }
 
   addTextureParamsIntoDebuger() {
-    this.debugFolder = this.debug.addFolder({
+    this.debugFolder = this.debug.panel.addFolder({
       expanded: false,
       title: 'Test DA Scene',
     })

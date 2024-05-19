@@ -2,12 +2,16 @@ import Loader from './Loader.js'
 import sources from './assets/data/sources.json'
 import { Texture } from 'three'
 import gsap from 'gsap'
+import Experience from '../Experience.js'
 
 export default class Resources {
   /**
    * Constructor
    */
   constructor(_groups) {
+    // Get elements from experience
+    this.experience = new Experience()
+
     // New elements
     this.sources = []
     this.items = {} // Will contain every resources
@@ -19,9 +23,6 @@ export default class Resources {
 
     // Plugins
     this.$bus = useNuxtApp().$bus
-
-    // Store
-    this.landing = computed(() => useDebugStore().getLanding)
 
     // Init
     this.init()
@@ -133,7 +134,7 @@ export default class Resources {
         ease: 'power2.inOut',
         onUpdate: () => this.$bus.emit('loading', this.progress.value),
         onComplete: () => {
-          if (this.progress.value === 100 && !this.landing.value) {
+          if (this.progress.value === 100 && !this.experience.landingPage) {
             this.$bus.emit('start')
           }
         },

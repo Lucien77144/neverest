@@ -2,7 +2,7 @@
   <div class="t-25">
     <svg
       class="progress t-25"
-      :class="{ disabled: !scene?.nav }"
+      :class="{ disabled: !navigation.scene?.nav }"
       ref="progressRef"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -126,20 +126,18 @@ defineProps({
 
 // Getters
 const scroll = computed(() =>
-  formatScroll(Math.round(useScrollStore().getCurrent * 1000) / 100000)
+  formatScroll(Math.round(useExperienceStore().getScroll) / 100)
 )
-const start = computed(() => useNavigationStore().getStart)
-const scale = computed(() => useNavigationStore().getScale)
-const scene = computed(() => useNavigationStore().getScene)
+const navigation = computed(() => useExperienceStore().getNavigation)
 
 /**
  * Format scroll values
  */
 function formatScroll(value: number): number {
   const total = scenes.nav.total
-  const prev = start.value / total
+  const prev = navigation.value.start / total
 
-  return (value / total) * scale.value + prev
+  return (value / total) * navigation.value.scale + prev
 }
 
 /**
@@ -148,7 +146,8 @@ function formatScroll(value: number): number {
 function navigate(name: string) {
   const next = scenes.nav.list.find((s) => s.name === name)
 
-  if (scene.value?.name === next?.name) return
+  const scene = navigation.value.scene
+  if (scene?.name === next?.name) return
   scene && $bus.emit('scene:switch', next)
 }
 
