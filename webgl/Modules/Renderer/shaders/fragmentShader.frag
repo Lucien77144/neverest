@@ -2,10 +2,30 @@ uniform sampler2D uScene0;
 uniform sampler2D uScene1;
 uniform float uTime;
 uniform float uTransition;
+uniform float uModalProgress;
 uniform float uFocProgress;
+uniform sampler2D uBlob;
+uniform vec3 uModalColor;
 uniform vec3 uFocColor;
+uniform vec2 uResolution;
 uniform vec2 uCursor;
+uniform vec2 uRatio;
 varying vec2 vUv;
+
+// Renvoie un nombre entre 0 et 1, la magnitude multiplie ce nombre
+float clampedSine(float t, float magnitude) {
+    return (1. + cos(t)) / 2. * magnitude; 
+}
+
+void applySpine(inout vec2 uv, float s) {
+    uv -= .5;
+    float l = 1.-length(uv);
+    float a = atan(uv.y, uv.x);
+
+    a += l*s;
+    uv = vec2(cos(a), sin(a)) * length(uv);
+    uv += .5;
+}
 
 void applyRotation(inout vec2 uv, float r) {
     uv -= .5;
@@ -67,8 +87,25 @@ vec3 applyBlackAndWhite(vec3 c) {
     return vec3(luminance(c, vec3(.299, .587, .114)));
 }
 
+void applyFishEye(inout vec2 uv, float z) {
+    uv -= .5;
+    float l = length(uv);
+    uv *= smoothstep(0., z * .5, l);
+    uv += .5;
+}
+
+vec2 getMaskUv(vec2 uv) {
+    vec2 maskUv = uv - .5;
+         maskUv *= (uModalProgress * min(uResolution.x, uResolution.y));
+         maskUv += .5;
+         maskUv *= uRatio;
+         maskUv -= (uRatio * .5 - .5);
+    return maskUv;
+}
+
 void main() {
     vec2 uv = vUv;
+    vec4 frag = vec4(0.);
 
     vec2 scene0UV = vec2(uv.x,uv.y+uTransition);
     vec4 scene0 = texture2D(uScene0, scene0UV);
@@ -80,7 +117,7 @@ void main() {
     focUV += .5;
     
     float focVal = 1. - smoothstep(circle, 0.0, uFocProgress);
-    float focVal2 = 1. - smoothstep(circle, 0.0, uFocProgress - .25);
+    float focVal2 = 1. - smoothstep(circle, 0.0, uFocProgress - .35);
 
     vec3 sceneRGB = scene0.rgb; 
     vec3 coveredScene = mix(sceneRGB, vec3(luminance(sceneRGB, uFocColor)), focVal);
@@ -99,11 +136,26 @@ void main() {
 
     //vec4 test = vec4(step(uTransition,uv.y)*topImage.x+step(uv.y,uTransition)*bottomImage.x,step(uTransition,uv.y)*topImage.y+step(uv.y,uTransition)*bottomImage.y,step(uTransition,uv.y)*topImage.z+step(uv.y,uTransition)*bottomImage.z,1.0);
     vec4 cloud = step(cnoise(uv*30.0),0.1) * vec4(0.81,0.87,0.96,1.0) + step(0.1,cnoise(uv*30.0)) * vec4(1.0);
-    vec4 scenesTransi = scene0 * step(uv.y,inverseuTransi) + step(inverseuTransi,uv.y) * scene1;
+    frag = scene0 * step(uv.y,inverseuTransi) + step(inverseuTransi,uv.y) * scene1;
 
     float isInCloudBand = max(sign(uv.y-(inverseuTransi-(cloudSizeMultiplicator+sin(uv.x*40.0)*cloudSizeMultiplicator*0.05))),0.0) * max(sign((inverseuTransi+cloudSizeMultiplicator+sin(uv.x*40.0)*cloudSizeMultiplicator*0.05)-uv.y),0.0);
-    scenesTransi *= (-isInCloudBand+1.0);
-    scenesTransi += isInCloudBand * cloud;
+    frag *= (-isInCloudBand+1.0);
+    frag += isInCloudBand * cloud;
 
-    gl_FragColor = scenesTransi;
+    // -------------------- //
+    //        Modal         //
+    // -------------------- //
+
+    vec2 maskUv = getMaskUv(uv);
+    applyRotation(maskUv, uTime * .001);
+
+    float play = 1. - (uModalProgress == 0. ? 0. : 1.);
+    vec4 blob = texture2D(uBlob, maskUv);
+    
+    float m = min(blob.r + blob.g + blob.b, 1.) - (play);
+    float mask = 1. - min(m, 1.);
+
+    frag = mix(frag, vec4(uModalColor, 1.), 1. - mask);
+
+    gl_FragColor = frag;
 }

@@ -63,7 +63,7 @@ export default class BCBigBox_1953 extends BasicItem {
   }
 
   /**
-   * Init the floor
+   * Init
    */
   init() {
     this.isInstances && this.setInstances()

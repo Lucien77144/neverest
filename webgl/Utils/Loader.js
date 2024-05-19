@@ -38,7 +38,7 @@ export default class Loader {
   init() {
     // Images
     this.loaders.push({
-      extensions: ['jpg', 'png'],
+      extensions: ['jpg', 'png', 'svg'],
       action: (resource) => {
         const image = new Image()
 

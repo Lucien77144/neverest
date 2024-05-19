@@ -89,6 +89,16 @@
         "name": "CloudImg",
         "source": "/img/TestTransi/cloud.jpg",
         "type": "texture"
+      },
+      {
+        "name": "circle",
+        "source": "/img/circle.svg",
+        "type": "texture"
+      },
+      {
+        "name": "blob",
+        "source": "/img/transitions/blob.svg",
+        "type": "texture"
       }
     ]
   },

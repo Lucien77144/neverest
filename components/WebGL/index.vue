@@ -1,4 +1,6 @@
 <template>
+  <Landing v-if="!active && landing" />
+  <Interface />
   <div id="webgl-css-wrapper">
     <WebGLCSS2DRenderer />
     <WebGLCSS3DRenderer />
@@ -7,7 +9,7 @@
   <div id="webgl-interface">
     <UIInterestData />
     <UITitle />
-    <div ref="startBtn" class="start">
+    <div ref="startBtn" class="start__btn">
       <UIBtn @click="start()">{{ $t('START') }}</UIBtn>
     </div>
   </div>
@@ -34,10 +36,12 @@ const startBtn = ref<HTMLElement | null>(null)
 const route = useRoute()
 
 // get active scene
-const scene = computed(() => useNavigationStore().getScene)
+const active = computed(() => useExperienceStore().getActive)
+const landing = computed(() => useExperienceStore().getLanding)
+const navigation = computed(() => useExperienceStore().getNavigation)
 
-watch(scene, (v) => {
-  if (v?.name == 'intro') {
+watch(navigation, (v) => {
+  if (v.scene?.name == 'intro') {
     gsap.to(startBtn.value, {
       duration: 0,
       y: 0,
@@ -47,7 +51,7 @@ watch(scene, (v) => {
         startBtn.value?.classList.add('active')
       },
     })
-  } else {    
+  } else {
     gsap.to(startBtn.value, {
       duration: 1,
       y: 100,

@@ -42,14 +42,15 @@ export default class BasicCamera {
    * Set listener
    */
   setListener() {
-    this.listener = new AudioListener()
-    this.instance.add(this.listener)
-
     this.$bus.on('audio:mute', () => {
-      this.listener.setMasterVolume(0)
+      this.listener?.setMasterVolume(0)
     })
 
     this.$bus.on('audio:unmute', () => {
+      if (!this.listener) {
+        this.listener = new AudioListener()
+        this.instance.add(this.listener)
+      }
       this.listener.setMasterVolume(1)
     })
   }
@@ -58,8 +59,8 @@ export default class BasicCamera {
    * Set debug
    */
   setDebug() {
-    this.debugFolder = this.debug.addFolder({
-expanded:false,
+    this.debugFolder = this.debug.panel.addFolder({
+      expanded: false,
       title: 'Camera',
     })
 
@@ -124,7 +125,7 @@ expanded:false,
   dispose() {
     if (!this.instance) return
 
-    this.debugFolder && this.debug.remove(this.debugFolder)
+    this.debugFolder && this.debug.panel.remove(this.debugFolder)
     this.instance = null
     this.listener = null
   }

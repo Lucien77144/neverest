@@ -1,6 +1,7 @@
 import { Modal } from '#components'
 import { DoubleSide, MeshNormalMaterial, Vector3 } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
+import ModalSprite from '../../Shared/ModalSprite/ModalSprite'
 
 export default class BCFlag extends BasicItem {
   /**
@@ -11,6 +12,7 @@ export default class BCFlag extends BasicItem {
     rotation = new Vector3(0, 0, 0),
     name = 'BCFlag',
     visibility = [0, 100],
+    modal,
   }) {
     super()
 
@@ -19,6 +21,7 @@ export default class BCFlag extends BasicItem {
     this.rotation = rotation
     this.name = name
     this.visibility = visibility
+    this.modal = modal
 
     // New elements
     this.resources = this.experience.resources.items
@@ -27,63 +30,38 @@ export default class BCFlag extends BasicItem {
   /**
    * Set item
    */
-  setItem() {
+  setBCFlag() {
     this.item = this.resources.BCFlag.scene.clone()
     this.item.position.copy(this.position)
     this.item.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
     this.item.name = this.name
-  }
 
-  /**
-   * Set material
-   */
-  setMaterial() {
     this.item.children[0].material = new MeshNormalMaterial()
     this.item.children[0].material.side = DoubleSide
   }
 
   /**
-   * Init the floor
+   * Set sprite
+   */
+  setSprite() {
+    const mat = this.item.children[0].children[0]
+    const boundings = mat.geometry.boundingBox
+
+    const position = new Vector3()
+    mat.getWorldPosition(position)
+    position.y = boundings.min.y + (boundings.max.y - boundings.min.y)
+
+    this.components.modalSprite = new ModalSprite({
+      position,
+      data: this.modal,
+    })
+  }
+
+  /**
+   * Init
    */
   init() {
-    this.setItem()
-    this.setMaterial()
-
-    // this.addCSS2D({
-    //   id: this.name + '_audio',
-    //   template: UIAudioPlayer,
-    //   data: {
-    //     source: this.resources.yameteAh,
-    //   },
-    //   parent: this.item,
-    //   position: new Vector3(0, 1, 0),
-    // })
-
-    this.addCSS2D({
-      id: this.name + '_modal',
-      template: Modal,
-      data: {
-        content: [
-          {
-            type: 'audio',
-            source: this.resources.yameteAh,
-          },
-          {
-            type: 'video',
-            source: this.resources.yameteAh,
-          },
-          {
-            type: 'image',
-            source: this.resources.yameteAh,
-          },
-          {
-            type: 'text',
-            source: 'Yamete Ah',
-          },
-        ],
-      },
-      parent: this.item,
-      position: new Vector3(0, 1, 0),
-    })
+    this.setBCFlag()
+    this.setSprite()
   }
 }

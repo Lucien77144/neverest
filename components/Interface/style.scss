@@ -1,11 +1,16 @@
-.panel {
-  position: fixed;
-  z-index: 10;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
+.interface {
+  position: relative;
+  z-index: 2;
 
-  * {
-    pointer-events: all !important;
+  .panel {
+    position: fixed;
+    z-index: 10;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+
+    * {
+      pointer-events: all !important;
+    }
   }
 }

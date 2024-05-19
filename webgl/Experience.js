@@ -1,14 +1,12 @@
 import Renderer from './Modules/Renderer/Renderer'
-import { Pane } from 'tweakpane'
 import Time from './Utils/Time'
 import Resources from './Utils/Resources'
-import Stats from './Utils/Stats'
 import SceneManager from './Utils/SceneManager'
 import CursorManager from '../utils/CursorManager'
 import DragManager from '~/utils/DragManager'
-import ScrollManager from './Utils/ScrollManager'
 import { Raycaster } from 'three'
 import AudioManager from './Utils/AudioManager'
+import Debug from './Utils/Debug'
 
 export default class Experience {
   static _instance
@@ -22,9 +20,6 @@ export default class Experience {
     }
     Experience._instance = this
 
-    // Nuxt elements
-    this.$router = useRouter()
-
     // Set container
     this.canvas = canvas
     this.baseScene = baseScene
@@ -33,9 +28,9 @@ export default class Experience {
     this.cursor = new CursorManager({ el: this.canvas })
 
     // New elements
+    this.landingPage = true
     this.viewport = null
     this.debug = null
-    this.stats = null
     this.audioManager = null
     this.scrollManager = null
     this.dragManager = null
@@ -49,47 +44,93 @@ export default class Experience {
     // Events
     this.handleResize = this.resize.bind(this)
     this.handleStart = this.start.bind(this)
+    this.handleUpdate = this.update.bind(this)
+    this.handleScroll = this.scroll.bind(this)
 
-    // plugin
+    // Plugins
     this.$bus = useNuxtApp().$bus
+
+    // Store
+    this.setCurrentScroll = useExperienceStore().setScroll
+    this.setLandingPage = useExperienceStore().setLanding
+    this.setActive = useExperienceStore().setActive
 
     // Init
     this.init()
   }
 
   /**
-   * Get debug
+   * Set debug panel
    */
-  setDebug() {
+  initDebug() {
     if (!this.viewport.debug) return
-
-    const { toggleLanding, init } = useDebugStore()
-
-    const local = JSON.parse(localStorage.getItem('debug') || '{}')
-
-    init(local)
-    this.debug = new Pane({
-      title: 'Debug',
-      expanded: true,
-    })
+    this.debug = new Debug()
 
     // Toggle landing
-    this.debug
-      .addBinding({ landing: local.landing }, 'landing')
-      .on('change', () => toggleLanding())
+    const landing = this.debug.panel.addBinding(this, 'landingPage', {
+      label: 'Landing page',
+    })
+    this.landingPage = this.debug.persist(landing)?.binding.value
+    this.setLandingPage(this.landingPage)
+  }
 
-    // Drag :
-    const folder = this.debug.addFolder({
+  /**
+   * Set global debuggers
+   */
+  setDebug() {
+    this.setDragDebug()
+    this.setScrollDebug()
+  }
+
+  /**
+   * Set drag debugger
+   */
+  setDragDebug() {
+    if (!this.debug) return
+
+    const folder = this.debug.panel.addFolder({
       expanded: false,
       title: 'Debugger Position',
     })
-    this.debug.dragButton = folder.addButton({ title: 'Drag Position' })
+    this.debug.panel.dragButton = folder.addButton({ title: 'Drag Position' })
+
     folder
       .addButton({ title: 'Reset Position' })
       .on('click', () => this.handlePosChange({ x: 0, y: 0 }))
 
-    // Set events
-    this.setEvents()
+    // Init a drag manager and it event
+    this.dragManager = new DragManager({
+      el: this.debug.panel.dragButton.element,
+    })
+
+    this.dragManager.on('drag', this.onDrag.bind(this))
+  }
+
+  /**
+   * Set scroll debugger
+   */
+  setScrollDebug() {
+    if (!this.debug) return
+
+    const folder = this.debug.panel.addFolder({
+      expanded: false,
+      title: 'Scroll',
+      closed: false,
+    })
+
+    folder.addBinding(this.scrollManager, 'factor', {
+      label: 'Factor',
+      min: 0,
+      max: 1,
+      step: 0.001,
+    })
+
+    folder.addBinding(this.scrollManager, 'speed', {
+      label: 'Speed',
+      min: 0,
+      max: 1,
+      step: 0.001,
+    })
   }
 
   /**
@@ -100,6 +141,7 @@ export default class Experience {
       !this.sceneManager?.active &&
       this.resources.toLoad === this.resources.loaded
     ) {
+      this.setActive(true)
       this.sceneManager.init(this.viewport.debug && this.baseScene)
 
       this.update()
@@ -131,31 +173,32 @@ export default class Experience {
   }
 
   /**
-   * Set events
-   */
-  setEvents() {
-    this.dragManager = new DragManager({ el: this.debug.dragButton.element })
-    this.dragManager.on('drag', this.onDrag.bind(this))
-  }
-
-  /**
    * Init the experience
    */
   init() {
+    // Set viewport and time
     this.viewport = new Viewport()
-    this.setDebug()
     this.time = new Time()
+
+    // Init debug
+    this.initDebug()
+
+    // Set elements
     this.scrollManager = new ScrollManager()
     this.sceneManager = new SceneManager()
     this.raycaster = new Raycaster()
-    this.stats = new Stats(this.viewport.debug)
-    this.renderer = new Renderer()
     this.resources = new Resources()
+    this.renderer = new Renderer()
     this.audioManager = new AudioManager()
+
+    // Set global debuggers
+    this.setDebug()
 
     // Events
     this.$bus.on('start', this.handleStart)
     this.$bus.on('resize', this.handleResize)
+    this.$bus.on('tick', this.handleUpdate)
+    this.scrollManager.on('scroll', this.handleScroll)
   }
 
   /**
@@ -167,15 +210,20 @@ export default class Experience {
   }
 
   /**
+   * On scroll
+   * @param {TScrollEvent} event
+   */
+  scroll(event) {
+    this.setCurrentScroll(event.current)
+  }
+
+  /**
    * Update the experience
    */
   update() {
     this.renderer.update()
     this.sceneManager.update()
-    this.stats?.update()
-    this.scrollManager?.update()
-
-    window.requestAnimationFrame(() => this.update())
+    this.debug?.update()
   }
 
   /**
@@ -183,6 +231,7 @@ export default class Experience {
    */
   dispose() {
     this.viewport?.destroy()
+    this.scrollManager?.destroy()
     this.time.stop()
     this.renderer.dispose()
     this.resources.dispose()

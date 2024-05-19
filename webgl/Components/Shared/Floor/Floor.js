@@ -36,7 +36,7 @@ export default class Floor extends BasicItem {
   }
 
   /**
-   * Init the floor
+   * Init
    */
   init() {
     this.setGeometry()

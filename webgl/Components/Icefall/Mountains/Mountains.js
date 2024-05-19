@@ -45,7 +45,7 @@ export default class Mountains extends BasicItem {
   }
 
   /**
-   * Init the floor
+   * Init
    */
   init() {
     this.setItem()

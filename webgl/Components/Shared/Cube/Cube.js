@@ -7,14 +7,15 @@ export default class Cube extends BasicItem {
    */
   constructor() {
     super()
+
+    // Get elements from experience
+    this.scrollManager = this.experience.scrollManager
+
     // New elements
     this.geometry = null
     this.material = null
     this.mesh = null
     this.holdDuration = 2000
-
-    // Store
-    this.currentScroll = computed(() => useScrollStore().getCurrent)
   }
 
   /**
@@ -51,7 +52,6 @@ export default class Cube extends BasicItem {
    */
   setPlayer() {
     // this.components = {}
-
     // this.item.add(this.components.player.item)
   }
 
@@ -77,13 +77,13 @@ export default class Cube extends BasicItem {
   update() {
     // this.item.rotation.y = MathUtils.lerp(
     //   this.item.rotation.y,
-    //   this.currentScroll.value * 0.1,
+    //   this.scrollManager.current * 0.1,
     //   0.1
     // )
   }
 
   /**
-   * Init the floor
+   * Init
    */
   init() {
     this.setGeometry()

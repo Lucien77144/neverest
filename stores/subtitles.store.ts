@@ -13,7 +13,7 @@ export const useSubtitlesStore = defineStore('subtitles', {
   },
   actions: {
     setCues(val: TSubtitle['cues']) {
-      this.cues = { ...val }
+      this.cues = val
     },
   },
 })

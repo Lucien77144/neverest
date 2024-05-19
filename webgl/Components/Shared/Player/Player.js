@@ -30,7 +30,7 @@ export default class Player extends BasicItem {
     const map = this.experience.resources.items[media.source]
 
     const material = new SpriteMaterial({
-      map: map,
+      map,
     })
 
     const sprite = new Sprite(material)

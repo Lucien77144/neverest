@@ -38,7 +38,7 @@ export default class Cube2 extends BasicItem {
   }
 
   /**
-   * Init the floor
+   * Init
    */
   init() {
     this.setGeometry()

@@ -1,7 +1,9 @@
 <template>
-  <div class="t-25" :class="{ disabled: !scene?.nav }">
+  <div class="t-25">
     <svg
-      class="progress"
+      class="progress t-25"
+      :class="{ disabled: !navigation.scene?.nav }"
+      ref="progressRef"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 48 424"
@@ -109,7 +111,10 @@
 <script lang="ts" setup>
 import scenes from '~/const/scenes.const'
 
-// bus event
+// Refs
+const progressRef = ref<HTMLElement | null>(null)
+
+// Bus event
 const { $bus }: any = useNuxtApp()
 
 // Props
@@ -121,20 +126,18 @@ defineProps({
 
 // Getters
 const scroll = computed(() =>
-  formatScroll(Math.round(useScrollStore().getCurrent * 1000) / 100000)
+  formatScroll(Math.round(useExperienceStore().getScroll) / 100)
 )
-const start = computed(() => useNavigationStore().getStart)
-const scale = computed(() => useNavigationStore().getScale)
-const scene = computed(() => useNavigationStore().getScene)
+const navigation = computed(() => useExperienceStore().getNavigation)
 
 /**
  * Format scroll values
  */
 function formatScroll(value: number): number {
   const total = scenes.nav.total
-  const prev = start.value / total
+  const prev = navigation.value.start / total
 
-  return (value / total) * scale.value + prev
+  return (value / total) * navigation.value.scale + prev
 }
 
 /**
@@ -143,9 +146,13 @@ function formatScroll(value: number): number {
 function navigate(name: string) {
   const next = scenes.nav.list.find((s) => s.name === name)
 
-  if (scene.value?.name === next?.name) return
+  const scene = navigation.value.scene
+  if (scene?.name === next?.name) return
   scene && $bus.emit('scene:switch', next)
 }
+
+// Events
+$bus.on('modal:init', () => progressRef.value?.classList.add('disabled'))
 </script>
 
 <style src="./style.scss" lang="scss" scoped></style>

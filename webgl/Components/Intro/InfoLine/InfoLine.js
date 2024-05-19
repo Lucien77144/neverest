@@ -8,8 +8,8 @@ import {
   Vector3,
 } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
-import InfoLineVert from './InfoLineShader/InfoLineShader.vert?raw'
-import InfoLineFrag from './InfoLineShader/InfoLineShader.frag?raw'
+import vertexShader from './shaders/vertexShader.vert?raw'
+import fragmentShader from './shaders/fragmentShader.frag?raw'
 import gsap from 'gsap'
 import { UIIntroData } from '#components'
 
@@ -50,8 +50,8 @@ export default class InfoLine extends BasicItem {
    */
   setLineMaterial() {
     this.lineMaterial = new ShaderMaterial({
-      vertexShader: InfoLineVert,
-      fragmentShader: InfoLineFrag,
+      vertexShader,
+      fragmentShader,
       uniforms: {
         uLineHeight: new Uniform(
           this.points[this.points.length - 1].y - this.points[0].y

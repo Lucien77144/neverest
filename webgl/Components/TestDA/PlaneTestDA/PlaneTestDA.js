@@ -1,19 +1,18 @@
 import {
   CanvasTexture,
   Color,
+  DoubleSide,
   Mesh,
-  MeshNormalMaterial,
   PlaneGeometry,
   QuadraticBezierCurve,
   ShaderMaterial,
   Uniform,
   Vector2,
-  Vector3,
 } from 'three'
 import Experience from '~/webgl/Experience'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
-import ShaderTestDAVert from './ShaderTestDA/ShaderTestDAVert.vert?raw'
-import ShaderTestDAFrag from './ShaderTestDA/ShaderTestDAFrag.frag?raw'
+import vertexShader from './shaders/vertexShader.vert?raw'
+import fragmentShader from './shaders/fragmentShader.frag?raw'
 
 export default class PlaneTestDA extends BasicItem {
   /**
@@ -49,11 +48,11 @@ export default class PlaneTestDA extends BasicItem {
     }
 
     this.columnsCurvesParams = {
-      nbOfColumns:2,
-      borderSize:0.05,
-      columnsOffset:-0.1,
-      nbOfCurvePerColumns:20,
-      areCurveOnSameDirection:true,
+      nbOfColumns: 2,
+      borderSize: 0.05,
+      columnsOffset: -0.1,
+      nbOfCurvePerColumns: 20,
+      areCurveOnSameDirection: true,
       curveDirection: 'up',
       curveDirectionAmountFactor: 0.5,
       maxCurveHorizontalDecalage: 0.5,
@@ -63,7 +62,7 @@ export default class PlaneTestDA extends BasicItem {
     }
 
     this.modelFolder = null
-    this.modelAutoRotate = {value:true}
+    this.modelAutoRotate = { value: true }
   }
 
   //createTexture(){
@@ -127,8 +126,7 @@ export default class PlaneTestDA extends BasicItem {
   //
   //}
 
-  createColumnsPointsTexture(){
-
+  createColumnsPointsTexture() {
     const canvas = document.createElement('canvas')
     canvas.width = 1000
     canvas.height = 1000
@@ -138,82 +136,102 @@ export default class PlaneTestDA extends BasicItem {
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
     const nbOfGouttieres = this.columnsCurvesParams.nbOfColumns - 1
-    const columnsWidth = canvas.width - (this.columnsCurvesParams.borderSize * canvas.width * 2)
-    const gouttieresSize = nbOfGouttieres * (this.columnsCurvesParams.columnsOffset * columnsWidth)
-    const singleColumnWidth 
-    = (columnsWidth / this.columnsCurvesParams.nbOfColumns) - (gouttieresSize/this.columnsCurvesParams.nbOfColumns)
+    const columnsWidth =
+      canvas.width - this.columnsCurvesParams.borderSize * canvas.width * 2
+    const gouttieresSize =
+      nbOfGouttieres * (this.columnsCurvesParams.columnsOffset * columnsWidth)
+    const singleColumnWidth =
+      columnsWidth / this.columnsCurvesParams.nbOfColumns -
+      gouttieresSize / this.columnsCurvesParams.nbOfColumns
 
     for(let i = 0; i<this.columnsCurvesParams.nbOfColumns; i++){
 
       const columnXStartPos = this.columnsCurvesParams.borderSize * canvas.width + (i * (singleColumnWidth+this.columnsCurvesParams.columnsOffset * columnsWidth))
       const columnXEndPos = columnXStartPos + singleColumnWidth
 
+      for (let i = 0; i < this.columnsCurvesParams.nbOfCurvePerColumns; i++) {
+        const curveVerticalDirection = this.columnsCurvesParams
+          .areCurveOnSameDirection
+          ? this.columnsCurvesParams.curveDirection === 'up'
+            ? -1
+            : 1
+          : Math.random() > this.columnsCurvesParams.curveDirectionAmountFactor
+          ? 1
+          : -1
 
-      for(let i = 0; i<this.columnsCurvesParams.nbOfCurvePerColumns;i++){
-       
-
-
-        const curveVerticalDirection = this.columnsCurvesParams.areCurveOnSameDirection
-        ? this.columnsCurvesParams.curveDirection === 'up'
-          ? -1
-          : 1
-        : Math.random() > this.columnsCurvesParams.curveDirectionAmountFactor
-        ? 1
-        : -1
-
-        const curveHorizontalDecalage = this.columnsCurvesParams.maxCurveHorizontalDecalage * (Math.random()*2-1) * singleColumnWidth
-        const thicknessCurve = this.columnsCurvesParams.maxThicknessCurve * Math.random()
+        const curveHorizontalDecalage =
+          this.columnsCurvesParams.maxCurveHorizontalDecalage *
+          (Math.random() * 2 - 1) *
+          singleColumnWidth
+        const thicknessCurve =
+          this.columnsCurvesParams.maxThicknessCurve * Math.random()
 
         const curve = new QuadraticBezierCurve(
           new Vector2(
             columnXStartPos,
-            canvas.height*i/this.columnsCurvesParams.nbOfCurvePerColumns
+            (canvas.height * i) / this.columnsCurvesParams.nbOfCurvePerColumns
           ),
           new Vector2(
             columnXStartPos + singleColumnWidth * 0.5 + curveHorizontalDecalage,
-            canvas.height*(i+0.25+(curveVerticalDirection*Math.random()*this.columnsCurvesParams.maxHeightCurve))/this.columnsCurvesParams.nbOfCurvePerColumns
+            (canvas.height *
+              (i +
+                0.25 +
+                curveVerticalDirection *
+                  Math.random() *
+                  this.columnsCurvesParams.maxHeightCurve)) /
+              this.columnsCurvesParams.nbOfCurvePerColumns
           ),
           new Vector2(
-            columnXEndPos, 
-            canvas.height*(i+0.5)/this.columnsCurvesParams.nbOfCurvePerColumns
+            columnXEndPos,
+            (canvas.height * (i + 0.5)) /
+              this.columnsCurvesParams.nbOfCurvePerColumns
           )
         )
 
         const curveLeft = new QuadraticBezierCurve(
           new Vector2(
-            columnXEndPos, 
-            canvas.height*(i+0.5)/this.columnsCurvesParams.nbOfCurvePerColumns
+            columnXEndPos,
+            (canvas.height * (i + 0.5)) /
+              this.columnsCurvesParams.nbOfCurvePerColumns
           ),
           new Vector2(
             columnXStartPos + singleColumnWidth * 0.5 + curveHorizontalDecalage,
-            canvas.height*(i+0.75+(curveVerticalDirection*Math.random()*this.columnsCurvesParams.maxHeightCurve))/this.columnsCurvesParams.nbOfCurvePerColumns
+            (canvas.height *
+              (i +
+                0.75 +
+                curveVerticalDirection *
+                  Math.random() *
+                  this.columnsCurvesParams.maxHeightCurve)) /
+              this.columnsCurvesParams.nbOfCurvePerColumns
           ),
           new Vector2(
             columnXStartPos,
-            canvas.height*(i+1)/this.columnsCurvesParams.nbOfCurvePerColumns
-          ),
+            (canvas.height * (i + 1)) /
+              this.columnsCurvesParams.nbOfCurvePerColumns
+          )
         )
 
         const curvePoints = curve.getPoints(singleColumnWidth * this.columnsCurvesParams.nbOfPointsPerCurve)
         const curveLeftPoints = curveLeft.getPoints(singleColumnWidth * this.columnsCurvesParams.nbOfPointsPerCurve)
         
-        curvePoints.forEach(point=>{
-
+        curvePoints.forEach((point) => {
           let greenChannel
 
           const isRandomPoint = Math.random() < 0.1
 
-          if(!isRandomPoint){
-            greenChannel = ((-point.x + columnXStartPos + columnXEndPos) - columnXStartPos) / (columnXEndPos - columnXStartPos)
-          }else{
+          if (!isRandomPoint) {
+            greenChannel =
+              (-point.x + columnXStartPos + columnXEndPos - columnXStartPos) /
+              (columnXEndPos - columnXStartPos)
+          } else {
             greenChannel = Math.random()
           }
 
           ctx.beginPath()
           ctx.arc(
             point.x,
-            point.y+Math.random()*10,
-            thicknessCurve*Math.random(),
+            point.y + Math.random() * 10,
+            thicknessCurve * Math.random(),
             0,
             Math.PI * 2
           )
@@ -223,23 +241,23 @@ export default class PlaneTestDA extends BasicItem {
           ctx.closePath()
         })
 
-        curveLeftPoints.forEach(point=>{
-
+        curveLeftPoints.forEach((point) => {
           let greenChannel
 
           const isRandomPoint = Math.random() < 0.1
 
-          if(!isRandomPoint){
-            greenChannel = (point.x - columnXStartPos) / (columnXEndPos - columnXStartPos)
-          }else{
+          if (!isRandomPoint) {
+            greenChannel =
+              (point.x - columnXStartPos) / (columnXEndPos - columnXStartPos)
+          } else {
             greenChannel = Math.random()
           }
 
           ctx.beginPath()
           ctx.arc(
             point.x,
-            point.y+Math.random()*10,
-            thicknessCurve*Math.random(),
+            point.y + Math.random() * 10,
+            thicknessCurve * Math.random(),
             0,
             Math.PI * 2
           )
@@ -248,9 +266,7 @@ export default class PlaneTestDA extends BasicItem {
           ctx.fill()
           ctx.closePath()
         })
-        
       }
-
     }
 
     this.canvasTexture = new CanvasTexture(canvas)
@@ -259,7 +275,6 @@ export default class PlaneTestDA extends BasicItem {
       this.material.uniforms.uTexture.value = this.canvasTexture
     }
     canvas.remove()
-
   }
 
   createPointsTexture() {
@@ -331,7 +346,7 @@ export default class PlaneTestDA extends BasicItem {
         ctx.beginPath()
         ctx.arc(
           point.x,
-          point.y+Math.random()*10,
+          point.y + Math.random() * 10,
           Math.random() * thicknessCurve,
           0,
           Math.PI * 2
@@ -359,9 +374,9 @@ export default class PlaneTestDA extends BasicItem {
 
   setMaterial() {
     this.material = new ShaderMaterial({
-      side: 2,
-      vertexShader: ShaderTestDAVert,
-      fragmentShader: ShaderTestDAFrag,
+      side: DoubleSide,
+      vertexShader,
+      fragmentShader,
       uniforms: {
         uTexture: new Uniform(this.canvasTexture),
         uColor: new Uniform(new Color(this.color.value)),
@@ -370,7 +385,7 @@ export default class PlaneTestDA extends BasicItem {
         uMaskNoiseIntensity: new Uniform(50.0),
         uMaskNoiseWidth: new Uniform(0.1),
         uDecalageBorderLeftRight: new Uniform(0),
-        uTextureRepetitions : new Uniform(2)
+        uTextureRepetitions: new Uniform(2),
       },
       transparent: false
     })
@@ -381,33 +396,33 @@ export default class PlaneTestDA extends BasicItem {
     this.item.scale.set(0.3,0.3,0.3)
     //this.item = this.resources.TentMain.scene.clone()
     //this.item.rotation.y = Math.PI*0.5
-    //this.item.children[0].material = this.material    
+    //this.item.children[0].material = this.material
   }
 
   addTextureParamsIntoDebuger() {
-    this.debugFolder = this.debug.addFolder({
-      expanded:false,
+    this.debugFolder = this.debug.panel.addFolder({
+      expanded: false,
       title: 'Test DA Scene',
     })
 
     this.modelFolder = this.debugFolder.addFolder({
-      expanded:false,
-      title:'Model Controls'
+      expanded: false,
+      title: 'Model Controls',
     })
 
-    this.modelFolder.addBinding(this.modelAutoRotate,'value',{
-      label:'Autorotate'
+    this.modelFolder.addBinding(this.modelAutoRotate, 'value', {
+      label: 'Autorotate',
     })
 
-    this.modelFolder.addBinding(this.item.rotation,'y',{
-      min:0,
-      max:Math.PI*2,
-      step:0.1,
-      label:'Model Rotation'
+    this.modelFolder.addBinding(this.item.rotation, 'y', {
+      min: 0,
+      max: Math.PI * 2,
+      step: 0.1,
+      label: 'Model Rotation',
     })
 
     const textureFolder = this.debugFolder.addFolder({
-expanded:false,
+      expanded: false,
       title: 'Texture drawing params',
     })
 
@@ -416,7 +431,7 @@ expanded:false,
       .on('click', () => this.createColumnsPointsTexture())
 
     const curveFolder = textureFolder.addFolder({
-expanded:false,
+      expanded: false,
       title: 'Curves',
     })
 
@@ -424,21 +439,21 @@ expanded:false,
       min: 1,
       max: 6,
       step: 1,
-      label: 'Columns amount'
+      label: 'Columns amount',
     })
 
     curveFolder.addBinding(this.columnsCurvesParams, 'borderSize', {
       min: 0,
       max: 0.5,
       step: 0.01,
-      label: 'Border size'
+      label: 'Border size',
     })
 
     curveFolder.addBinding(this.columnsCurvesParams, 'columnsOffset', {
       min: -0.5,
       max: 0.5,
       step: 0.01,
-      label: 'Columns offset'
+      label: 'Columns offset',
     })
 
     curveFolder.addBinding(this.columnsCurvesParams, 'nbOfCurvePerColumns', {
@@ -467,13 +482,17 @@ expanded:false,
       disabled: !this.columnsCurvesParams.areCurveOnSameDirection,
     })
 
-    curveFolder.addBinding(this.columnsCurvesParams, 'curveDirectionAmountFactor', {
-      min: 0,
-      max: 1,
-      step: 0.01,
-      label: 'Number of curves going up / down factor',
-      disabled: this.columnsCurvesParams.areCurveOnSameDirection,
-    })
+    curveFolder.addBinding(
+      this.columnsCurvesParams,
+      'curveDirectionAmountFactor',
+      {
+        min: 0,
+        max: 1,
+        step: 0.01,
+        label: 'Number of curves going up / down factor',
+        disabled: this.columnsCurvesParams.areCurveOnSameDirection,
+      }
+    )
 
     curveFolder.addBinding(this.columnsCurvesParams, 'nbOfPointsPerCurve', {
       min: 0,
@@ -496,18 +515,22 @@ expanded:false,
       label: 'Max Curves Thickness',
     })
 
-    curveFolder.addBinding(this.columnsCurvesParams, 'maxCurveHorizontalDecalage', {
-      min: 0,
-      max: 0.5,
-      step: 0.01,
-      label: 'Max Curves Horizontal Offset',
-    })
+    curveFolder.addBinding(
+      this.columnsCurvesParams,
+      'maxCurveHorizontalDecalage',
+      {
+        min: 0,
+        max: 0.5,
+        step: 0.01,
+        label: 'Max Curves Horizontal Offset',
+      }
+    )
   }
 
   addUniformsIntoDebuger() {
     const maskFolder = this.debugFolder.addFolder({
-expanded:false,
-      title: 'Horizontal Border', 
+      expanded: false,
+      title: 'Horizontal Border',
     })
 
     maskFolder.addBinding(this.material.uniforms.uMaskThickness, 'value', {
@@ -573,9 +596,9 @@ expanded:false,
     this.addUniformsIntoDebuger()
   }
 
-  update(){
-    if(!this.item) return
-    if(this.modelAutoRotate.value){
+  update() {
+    if (!this.item) return
+    if (this.modelAutoRotate.value) {
       //this.item.rotation.y += 0.01
     }
   }

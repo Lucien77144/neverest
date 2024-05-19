@@ -42,7 +42,7 @@ export default class BCMountainLS extends BasicItem {
   }
 
   /**
-   * Init the floor
+   * Init
    */
   init() {
     this.setItem()

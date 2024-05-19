@@ -24,6 +24,7 @@ export default class Renderer {
   constructor() {
     // Get elements from experience
     this.experience = new Experience()
+    this.resources = this.experience.resources
     this.viewport = this.experience.viewport
     this.debug = this.experience.debug
     this.time = this.experience.time
@@ -59,8 +60,8 @@ export default class Renderer {
    * Set debug
    */
   setDebug() {
-    this.debugFolder = this.debug.addFolder({
-expanded:false,
+    this.debugFolder = this.debug.panel.addFolder({
+      expanded: false,
       title: 'Renderer',
     })
 
@@ -125,16 +126,27 @@ expanded:false,
       new PlaneGeometry(2, 2),
       new ShaderMaterial({
         uniforms: {
+          // Scene gesture
           uScene0: new Uniform(this.rt0.texture),
           uScene1: new Uniform(this.rt1.texture),
           uTransition: new Uniform(0),
+          uDirection: new Uniform(1),
 
           // Focus
           uFocColor: new Uniform(new Color('#f1dad2')),
           uFocProgress: new Uniform(0),
 
-          // Time
+          // Data modal
+          uModalColor: new Uniform(new Color('#0d1a48')),
+          uModalProgress: new Uniform(0),
+          uBlob: new Uniform(),
+
+          // Config
           uTime: new Uniform(0),
+          uRatio: new Uniform(this.getVec2Ratio()),
+          uResolution: new Uniform(
+            new Vector2(this.viewport.width, this.viewport.height)
+          ),
           uCursor: new Uniform(new Vector2(0.5, 0.5)),
         },
         vertexShader,
@@ -172,6 +184,17 @@ expanded:false,
 
     // Context
     this.context = this.instance.getContext()
+  }
+
+  /**
+   * Get the vec2 ratio
+   */
+  getVec2Ratio() {
+    const x = this.viewport.width / this.viewport.height
+    const y = this.viewport.height / this.viewport.width
+
+    const isH = x > y
+    return new Vector2(!isH ? 1 : x, isH ? 1 : y)
   }
 
   /**
@@ -243,6 +266,12 @@ expanded:false,
     const size = this.instance.getDrawingBufferSize(new Vector2())
     this.rt0.setSize(size.width, size.height)
     this.rt1.setSize(size.width, size.height)
+
+    this.renderMesh.material.uniforms.uResolution.value = new Vector2(
+      this.viewport.width,
+      this.viewport.height
+    )
+    this.renderMesh.material.uniforms.uRatio.value = this.getVec2Ratio()
   }
 
   /**

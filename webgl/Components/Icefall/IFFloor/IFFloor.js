@@ -45,7 +45,7 @@ export default class IFFloor extends BasicItem {
   }
 
   /**
-   * Init the floor
+   * Init
    */
   init() {
     this.setItem()

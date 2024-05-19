@@ -1,11 +1,14 @@
 <template>
   <UILoader />
-  <UIRadialProgress />
-  <div class="panel">
-    <UISubtitle />
-    <NextScene />
-    <UIProgressBar />
-    <UIInputControl />
+  <div class="interface">
+    <UIRadialProgress />
+    <div class="panel">
+      <Modal />
+      <UISubtitle />
+      <NextScene />
+      <UIProgressBar />
+      <UIInputControl />
+    </div>
   </div>
 </template>
 
