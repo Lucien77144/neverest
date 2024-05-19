@@ -4,7 +4,7 @@ import Resources from './Utils/Resources'
 import SceneManager from './Utils/SceneManager'
 import CursorManager from '../utils/CursorManager'
 import DragManager from '~/utils/DragManager'
-import { Raycaster } from 'three'
+import { ClampToEdgeWrapping, Raycaster } from 'three'
 import AudioManager from './Utils/AudioManager'
 import Debug from './Utils/Debug'
 
@@ -134,6 +134,16 @@ export default class Experience {
   }
 
   /**
+   * Set uniforms of the render mesh
+   */
+  setUniforms() {
+    const items = this.resources.items
+    items.blob.wrapS = items.blob.wrapT = ClampToEdgeWrapping
+    items.blob.repeat.set(1, 1)
+    this.renderer.renderMesh.material.uniforms.uBlob.value = items.blob
+  }
+
+  /**
    * Start the experience
    */
   start() {
@@ -143,6 +153,8 @@ export default class Experience {
     ) {
       this.setActive(true)
       this.sceneManager.init(this.viewport.debug && this.baseScene)
+
+      this.setUniforms()
 
       this.update()
     }

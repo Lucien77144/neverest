@@ -44,15 +44,6 @@ export default class ModalSprite extends BasicItem {
   }
 
   /**
-   * Set uniforms of the render mesh
-   */
-  setUniforms() {
-    this.resources.blob.wrapS = this.resources.blob.wrapT = ClampToEdgeWrapping
-    this.resources.blob.repeat.set(1, 1)
-    this.renderUniforms.uBlob.value = this.resources.blob
-  }
-
-  /**
    * On click item
    */
   onClick() {
@@ -108,6 +99,5 @@ export default class ModalSprite extends BasicItem {
     this.camera = this.parentScene.camera.instance
     this.setMaterial()
     this.setSprite()
-    this.setUniforms()
   }
 }
