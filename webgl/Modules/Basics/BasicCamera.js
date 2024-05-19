@@ -11,8 +11,11 @@ export default class BasicCamera {
     this.$bus = this.experience.$bus
     this.viewport = this.experience.viewport
     this.debug = this.experience.debug
+    this.audioManager = this.experience.audioManager
 
     // New elements
+    this.pendingAudios = []
+
     this.instance = null
     this.listener = null
     this.debugFolder = null
@@ -50,9 +53,48 @@ export default class BasicCamera {
       if (!this.listener) {
         this.listener = new AudioListener()
         this.instance.add(this.listener)
+
+        this.pendingAudios.forEach(({ audios, parent }) =>
+          this.addAudios(audios, parent)
+        )
+        this.pendingAudios = []
       }
       this.listener.setMasterVolume(1)
     })
+  }
+
+  /**
+   * Add a audio to the scene
+   * @param {*} audios Object of audios
+   * @param {*} parent Parent of the audio (if set)
+   */
+  addAudios(audios = {}, parent = null) {
+    if (!this.listener) {
+      this.pendingAudios = [...this.pendingAudios, { audios, parent }]
+      return
+    }
+
+    Object.keys(audios)?.forEach((name) => {
+      audios[name] = this.audioManager.add({
+        name,
+        ...audios[name],
+        ...(parent && audios[name].parent !== false && { parent }),
+        listener: this.listener,
+      })
+    })
+  }
+
+  /**
+   * Remove audios from the scene
+   * @param {*} audios Object of audios
+   */
+  removeAudios(audios = {}, force = false) {
+    // Filter by persist and no parents
+    const toRemove = Object.keys(audios).filter(
+      (name) => !audios[name].persist || force
+    )
+
+    toRemove?.forEach((name) => this.audioManager.remove(name))
   }
 
   /**
@@ -125,7 +167,13 @@ export default class BasicCamera {
   dispose() {
     if (!this.instance) return
 
+    // Audios
+    this.pendingAudios && this.removeAudios(this.pendingAudios)
+
+    // Debug
     this.debugFolder && this.debug.panel.remove(this.debugFolder)
+
+    // Instance & listener
     this.instance = null
     this.listener = null
   }

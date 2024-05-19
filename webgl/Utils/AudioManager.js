@@ -73,6 +73,7 @@ export default class AudioManager {
     listener = this.camera.listener,
   } = {}) {
     if (this.audios[name]) return this.audios[name]
+    if (!listener) return
 
     const source = this.resources.items[name]
     const sound = new (parent ? PositionalAudio : Audio)(listener)
@@ -128,7 +129,7 @@ export default class AudioManager {
     this.audios[name]?.parent?.remove(this.audios[name])
     delete this.audios[name]
 
-    if (Object.keys(this.audios).length == 0) {
+    if (Object.keys(this.audios).length == 0 && this.debugFolder) {
       this.debug?.panel.remove(this.debugFolder)
       this.debugFolder = null
     }

@@ -5,24 +5,31 @@
   bottom: 2.3rem;
   left: 50%;
   width: 60%;
-  height: 4rem;
-  border-image: url(/img/border.svg) 6 / 80px round;
+  height: auto;
+  border-image: url(/img/border.svg) 10 / auto round;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &__container {
+    background-color: $secondary;
+    margin: 10px;
+    width: 100%;
+  }
 
   &__wrapper {
     position: relative;
     top: 0;
     left: 0;
     font-size: 0.875rem;
+    padding: 1rem;
     text-align: center;
-    background-color: $secondary;
-    height: calc(100% - 1rem);
-    width: calc(100% - 1rem);
+    height: auto;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
   }
 
   &__item {

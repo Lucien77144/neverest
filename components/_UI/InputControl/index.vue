@@ -46,7 +46,7 @@ const { $bus }: any = useNuxtApp()
 // Store
 const disabled = computed(() => useSubtitlesStore().getDisabled)
 const setDisabled = (val: boolean) => useSubtitlesStore().setDisabled(val)
-const isMuted = ref(false)
+const isMuted = ref(true)
 
 $bus.on('audio:mute', () => {
   isMuted.value = true

@@ -13,7 +13,6 @@ export default class BasicScene {
     // Get elements from experience
     this.experience = new Experience()
     this.raycaster = this.experience.raycaster
-    this.audioManager = this.experience.audioManager
     this.$bus = this.experience.$bus
     this.debug = this.experience.debug
 
@@ -304,45 +303,16 @@ export default class BasicScene {
         c.item && res.add(c.item)
         childs.forEach((c) => res.add(getItems(c)))
 
-        this.addAudios(c.audios, res)
+        this.camera.addAudios(c.audios, res)
         c.item = res
         return c.item
       } else if (c.item) {
-        this.addAudios(c.audios, c.item)
+        this.camera.addAudios(c.audios, c.item)
         return c.item
       }
     }
 
     this.scene.add(getItems({ components: this.components }))
-  }
-
-  /**
-   * Add a audio to the scene
-   * @param {*} audios Object of audios
-   * @param {*} parent Parent of the audio (if set)
-   */
-  addAudios(audios = {}, parent = null) {
-    Object.keys(audios)?.forEach((name) => {
-      audios[name] = this.audioManager.add({
-        name,
-        ...audios[name],
-        ...(parent && audios[name].parent !== false && { parent }),
-        listener: this.camera.listener,
-      })
-    })
-  }
-
-  /**
-   * Remove audios from the scene
-   * @param {*} audios Object of audios
-   */
-  removeAudios(audios = {}, force = false) {
-    // Filter by persist and no parents
-    const toRemove = Object.keys(audios).filter(
-      (name) => !audios[name].persist || force
-    )
-
-    toRemove?.forEach((name) => this.audioManager.remove(name))
   }
 
   /**
@@ -409,10 +379,9 @@ export default class BasicScene {
     this.addItemsToScene()
 
     this.debug && this.setDebug()
+    this.audios && this.camera.addAudios(this.audios)
 
-    this.audios && this.addAudios(this.audios)
     this.scene.add(this.camera.instance)
-
     this.setEvents()
 
     Object.values(this.allComponents).forEach((c) => c.afterSceneInit?.())
@@ -467,11 +436,8 @@ export default class BasicScene {
     Object.values(this.allComponents).forEach((c) => {
       this.triggerFn(c, 'dispose')
       this.scene.remove(c.item)
-      this.removeAudios(c.audios, true)
+      this.camera.removeAudios(c.audios, true)
     })
-
-    // Audios
-    this.audios && this.removeAudios(this.audios)
 
     // Camera
     this.scene.remove(this.camera.instance)
