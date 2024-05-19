@@ -174,12 +174,13 @@ export default class BaseCampCamera extends BasicItem {
     // Set item
     this.setItem()
     this.baseCamRot = this.parentScene.camera.instance.rotation.clone()
+    this.playAnimation(0)
   }
 
   /**
    * Update
    */
   update() {
-    this.playAnimation(this.scrollManager.current)
+    this.parentScene?.playing && this.playAnimation(this.scrollManager.current)
   }
 }

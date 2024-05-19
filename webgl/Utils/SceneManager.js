@@ -102,9 +102,9 @@ export default class SceneManager {
     scroll && this.scrollManager.to(scroll)
     navigation && this.setNavigation(navigation)
 
-    navigation.scene && this.setScene(navigation.scene)
-    navigation.scale && this.setScale(navigation.scale)
-    navigation.start && this.setStart(navigation.start)
+    navigation?.scene && this.setScene(navigation.scene)
+    navigation?.scale && this.setScale(navigation.scale)
+    navigation?.start && this.setStart(navigation.start)
   }
 
   /**
@@ -175,7 +175,11 @@ export default class SceneManager {
       onComplete: () => {
         // Reset navigation values
         this.navigate({
-          navigation: { start: next.nav?.start, scale: next.nav?.scale },
+          navigation: {
+            start: next.nav?.start,
+            scale: next.nav?.scale,
+            scene: next,
+          },
           scroll: 0,
         })
 

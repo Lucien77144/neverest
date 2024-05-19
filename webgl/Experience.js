@@ -51,7 +51,7 @@ export default class Experience {
     this.$bus = useNuxtApp().$bus
 
     // Store
-    this.setCurrentScroll = useExperienceStore().setScroll
+    this.setScroll = useExperienceStore().setScroll
     this.setLandingPage = useExperienceStore().setLanding
     this.setActive = useExperienceStore().setActive
 
@@ -214,7 +214,7 @@ export default class Experience {
    * @param {TScrollEvent} event
    */
   scroll(event) {
-    this.setCurrentScroll(event.current)
+    this.setScroll(event.current)
   }
 
   /**
@@ -230,9 +230,12 @@ export default class Experience {
    * Dispose the experience
    */
   dispose() {
+    this.$bus.off('start', this.handleStart)
+    this.$bus.off('resize', this.handleResize)
+    this.$bus.off('tick', this.handleUpdate)
+    this.time.stop()
     this.viewport?.destroy()
     this.scrollManager?.destroy()
-    this.time.stop()
     this.renderer.dispose()
     this.resources.dispose()
     this.sceneManager.dispose()

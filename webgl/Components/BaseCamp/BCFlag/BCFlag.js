@@ -44,12 +44,15 @@ export default class BCFlag extends BasicItem {
    * Set sprite
    */
   setSprite() {
-    const mat = this.item.children[0].children[0]
+    const mat = this.item.children[0]
     const boundings = mat.geometry.boundingBox
 
     const position = new Vector3()
     mat.getWorldPosition(position)
-    position.y = boundings.min.y + (boundings.max.y - boundings.min.y)
+    position.y = boundings.min.y + 1
+    position.x += .4
+    position.z += .2
+    // + (boundings.max.y - boundings.min.y)
 
     this.components.modalSprite = new ModalSprite({
       position,

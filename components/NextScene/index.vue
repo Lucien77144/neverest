@@ -5,8 +5,7 @@
     class="next"
     :class="{
       active:
-        currentScroll > 100 - GAP &&
-        navigation.scene.nav.end !== scenes.nav.total,
+        scroll > 100 - GAP && navigation.scene.nav.end !== scenes.nav.total,
     }"
   >
     <UIDragBtn @navigate="navigate">
@@ -28,7 +27,7 @@ const GAP = 2
 const { $bus }: any = useNuxtApp()
 
 // Getters
-const currentScroll = computed(() => useExperienceStore().getScroll)
+const scroll = computed(() => useExperienceStore().getScroll)
 const navigation = computed(() => useExperienceStore().getNavigation)
 
 /**

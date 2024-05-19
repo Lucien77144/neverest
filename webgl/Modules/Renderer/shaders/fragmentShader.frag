@@ -113,7 +113,7 @@ void main() {
     vec2 focUV = uv;
     focUV -= .5;
     float focNoise = smoothstep(0., 1., cnoise(focUV * 15.));
-    float circle = length(focUV - uCursor * focNoise);
+    float circle = length(focUV - .35 * focNoise);
     focUV += .5;
     
     float focVal = 1. - smoothstep(circle, 0.0, uFocProgress);

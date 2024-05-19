@@ -82,6 +82,7 @@ export default class ScrollManager extends EventEmitter {
     if (instant) {
       this.current = val
     }
+    this._emit()
   }
 
   // ---------------------
