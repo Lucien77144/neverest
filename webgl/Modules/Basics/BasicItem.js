@@ -1,4 +1,4 @@
-import { Group } from 'three'
+import { Group, InstancedMesh, Object3D } from 'three'
 import Experience from '~/webgl/Experience'
 
 export default class BasicItem {
@@ -11,9 +11,6 @@ export default class BasicItem {
 
     // New elements
     this.parentScene = null // Parent scene of the item   /!/ - Null in the constructor - /!/
-
-    // Scope
-    this.scope = effectScope()
 
     // --------------------------------
     // Elements (to override in the child class)
@@ -74,6 +71,15 @@ export default class BasicItem {
      */
     this.addCSS3D
 
+    /**
+     * Build instanced mesh
+     * @param {TGeometry} geometry Geometry of the item
+     * @param {TMaterial} material Material of the item
+     * @param {any} list List of items to instance, with position and rotation
+     * @returns {InstancedMesh} Instanced mesh
+     */
+    this.buildInstancedMesh
+
     // --------------------------------
     // Lifecycle
     // --------------------------------
@@ -100,6 +106,11 @@ export default class BasicItem {
      * If false, the event will be ignored, even if parent is triggering it
      */
     this.update
+
+    /**
+     * Dispose function to remove the item
+     */
+    this.dispose
 
     /**
      * If set, this function will be called on click item
@@ -160,13 +171,46 @@ export default class BasicItem {
   }
 
   /**
+   * Build instanced mesh
+   * @param {TGeometry} geometry Geometry of the item
+   * @param {TMaterial} material Material of the item
+   * @param {any} list List of items to instance, with position and rotation
+   * @returns {InstancedMesh} Instanced mesh
+   */
+  buildInstancedMesh(geometry, material, list) {
+    const item = new InstancedMesh(geometry, material, list.length)
+
+    const obj = new Object3D()
+    list.forEach((el, i) => {
+      if (el.position) {
+        obj.position.set(el.position.x, el.position.y, el.position.z)
+      }
+
+      if (el.rotation) {
+        obj.rotation.set(el.rotation.x, el.rotation.y, el.rotation.z)
+      }
+
+      if (el.scale) {
+        obj.scale.set(el.scale.x, el.scale.y, el.scale.z)
+      }
+
+      obj.updateMatrix()
+      item.setMatrixAt(i, obj.matrix)
+    })
+
+    item.instanceMatrix.needsUpdate = true
+
+    return item
+  }
+
+  // --------------------------------
+  // Lifecycle
+  // --------------------------------
+
+  /**
    * Dispose the item
    */
   dispose() {
-    // Scope
-    this.scope.stop()
-    this.scope = null
-
     // Debug
     this.debugFolder && this.debug?.remove(this.debugFolder)
   }

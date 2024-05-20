@@ -75,7 +75,9 @@ export default class SceneManager {
    */
   setScene(scene) {
     this.scene = scene
-    this.debugScene.value = scene.name
+    if (this.debug) {
+      this.debugScene.value = scene.name
+    }
   }
 
   /**

@@ -21,7 +21,7 @@ type TExpStore = {
 export const useExperienceStore = defineStore('experience', {
   state: (): TExpStore => ({
     active: false,
-    landing: false,
+    landing: true,
     scroll: 0, // 0-100,
     navigation: {
       scene: undefined,
