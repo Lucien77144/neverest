@@ -180,7 +180,6 @@ export default class SceneManager {
           navigation: {
             start: next.nav?.start,
             scale: next.nav?.scale,
-            scene: next,
           },
           scroll: 0,
         })
