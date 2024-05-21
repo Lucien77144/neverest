@@ -30,6 +30,8 @@ import BCMountainRS from '../Components/BaseCamp/BCMountainRS/BCMountainRS'
 import BCFlag from '../Components/BaseCamp/BCFlag/BCFlag'
 import BCCailloux from '../Components/BaseCamp/BCCailloux/BCCailloux'
 
+import { ModalBC1953 } from '#components'
+
 export default class BaseCamp extends BasicScene {
   /**
    * Constructor
@@ -224,6 +226,7 @@ export default class BaseCamp extends BasicScene {
         rotation: new Vector3(0.005, 0.291, -0.289),
         model: this.resources.items.BCFlag,
         visibility: [0, 25.87],
+        modal: ModalBC1953,
       }),
       BCCailloux: new BCCailloux({
         name: 'TasCailloux',

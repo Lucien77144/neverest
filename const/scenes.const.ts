@@ -2,7 +2,6 @@ import Intro from '~/webgl/Scenes/Intro'
 import BaseCamp from '~/webgl/Scenes/BaseCamp'
 import IceFall from '~/webgl/Scenes/IceFall'
 import TestDA from '~/webgl/Scenes/TestDA'
-import { UIBtn } from '#components'
 import TransitionClouds from '~/webgl/Scenes/TransitionClouds'
 
 export type TSceneInterest = {
