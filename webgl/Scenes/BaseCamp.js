@@ -18,7 +18,10 @@ import BCTent_3_1953 from '../Components/BaseCamp/BCTent_3_1953/BCTent_3_1953'
 import BCTent_1_2024 from '../Components/BaseCamp/BCTent_1_2024/BCTent_1_2024'
 import BCTent_2_2024 from '../Components/BaseCamp/BCTent_2_2024/BCTent_2_2024'
 import BCTent_3_2024 from '../Components/BaseCamp/BCTent_3_2024/BCTent_3_2024'
+import BCTent_Main_2050 from '../Components/BaseCamp/BCTent_Main_2050/BCTent_Main_2050'
 import BCTent_1_2050 from '../Components/BaseCamp/BCTent_1_2050/BCTent_1_2050'
+import BCTent_2_2050 from '../Components/BaseCamp/BCTent_2_2050/BCTent_2_2050'
+import BCTent_3_2050 from '../Components/BaseCamp/BCTent_3_2050/BCTent_3_2050'
 import BCMountain from '../Components/BaseCamp/BCMountain/BCMountain'
 import BCMountainL from '../Components/BaseCamp/BCMountainL/BCMountainL'
 import BCMountainLS from '../Components/BaseCamp/BCMountainLS/BCMountainLS'
@@ -150,8 +153,26 @@ export default class BaseCamp extends BasicScene {
         rotation: new Vector3(0, 0, 0),
         visibility: [25.87, 75.97],
       }),
+      BCTent_Main_2050: new BCTent_Main_2050({
+        name: 'BCTent_Main_2050',
+        position: new Vector3(0, 0, 0),
+        rotation: new Vector3(0, 0, 0),
+        visibility: [75.97, 100],
+      }),
       BCTent_1_2050: new BCTent_1_2050({
         name: 'BCTent_1_2050',
+        position: new Vector3(0.328, 0, -35.809),
+        rotation: new Vector3(0, -0.3, 0),
+        visibility: [75.97, 100],
+      }),
+      BCTent_2_2050: new BCTent_2_2050({
+        name: 'BCTent_2_2050',
+        position: new Vector3(0, 0, 0),
+        rotation: new Vector3(0, 0, 0),
+        visibility: [75.97, 100],
+      }),
+      BCTent_3_2050: new BCTent_3_2050({
+        name: 'BCTent_3_2050',
         position: new Vector3(0, 0, 0),
         rotation: new Vector3(0, 0, 0),
         visibility: [75.97, 100],

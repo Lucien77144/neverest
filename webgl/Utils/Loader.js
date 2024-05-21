@@ -278,7 +278,7 @@ export default class Loader {
     this.$bus.emit('fileEnd', { resource, data })
 
     if (this.loaded === this.toLoad) {
-      this.$bus.emit('loadingEnd')
+      this.$bus.emit('loadingGroupEnd')
     }
   }
 }

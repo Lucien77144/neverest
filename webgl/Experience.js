@@ -47,6 +47,7 @@ export default class Experience {
     this.handleStart = this.start.bind(this)
     this.handleUpdate = this.update.bind(this)
     this.handleScroll = this.scroll.bind(this)
+    this.handleUniforms = this.setUniforms.bind(this)
 
     // Plugins
     this.$bus = useNuxtApp().$bus
@@ -139,9 +140,14 @@ export default class Experience {
    */
   setUniforms() {
     const items = this.resources.items
-    items.blob.wrapS = items.blob.wrapT = ClampToEdgeWrapping
-    items.blob.repeat.set(1, 1)
-    this.renderer.renderMesh.material.uniforms.uBlob.value = items.blob
+    const uniforms = this.renderer.renderMesh.material.uniforms
+
+    const blob = items.blob
+    if (blob) {
+      blob.wrapS = blob.wrapT = ClampToEdgeWrapping
+      blob.repeat.set(1, 1)
+      uniforms.uBlob.value = blob
+    }
   }
 
   /**
@@ -154,8 +160,6 @@ export default class Experience {
     ) {
       this.setActive(true)
       this.sceneManager.init(this.viewport.debug && this.baseScene)
-
-      this.setUniforms()
 
       this.update()
     }
@@ -211,6 +215,7 @@ export default class Experience {
     this.$bus.on('start', this.handleStart)
     this.$bus.on('resize', this.handleResize)
     this.$bus.on('tick', this.handleUpdate)
+    this.$bus.on('resources:done', this.handleUniforms)
     this.scrollManager.on('scroll', this.handleScroll)
   }
 
@@ -246,14 +251,18 @@ export default class Experience {
     this.$bus.off('start', this.handleStart)
     this.$bus.off('resize', this.handleResize)
     this.$bus.off('tick', this.handleUpdate)
+    this.$bus.off('resources:done', this.handleUniforms)
+
     this.time.stop()
+
     this.viewport?.destroy()
     this.scrollManager?.destroy()
+    this.cursor?.destroy()
+
     this.renderer.dispose()
     this.resources.dispose()
     this.sceneManager.dispose()
     this.audioManager.dispose()
     this.debug?.dispose()
-    this.cursor?.destroy()
   }
 }
