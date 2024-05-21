@@ -5,6 +5,7 @@ import {
   PlaneGeometry,
 } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
+import CraieMaterial from '../../Shared/CraieMaterial/CraieMaterial'
 
 export default class Floor extends BasicItem {
   /**
@@ -34,8 +35,7 @@ export default class Floor extends BasicItem {
     this.material.displacementMap = this.resources.items.ground1953
     this.material.displacementScale = 10
 
-    /*
-    new CraieMaterial({
+    this.material = new CraieMaterial({
       textureParams:{
         textureSize:2048,
         nbOfColumns:1,
@@ -54,7 +54,7 @@ export default class Floor extends BasicItem {
       color:'#93AAF2',
       bgColor:'#F8ECE8'
     }).instance
-    */
+    
   }
 
   /**

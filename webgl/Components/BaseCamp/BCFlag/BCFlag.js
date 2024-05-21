@@ -1,7 +1,9 @@
 import { Modal } from '#components'
-import { DoubleSide, MeshNormalMaterial, Vector3 } from 'three'
+import { DoubleSide, Mesh, MeshNormalMaterial, PlaneGeometry, ShaderMaterial, Uniform, Vector3 } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import ModalSprite from '../../Shared/ModalSprite/ModalSprite'
+import flagVert from './FlagShader/FlagShader.vert?raw'
+import flagFrag from './FlagShader/FlagShader.frag?raw'
 
 export default class BCFlag extends BasicItem {
   /**
@@ -22,9 +24,12 @@ export default class BCFlag extends BasicItem {
     this.name = name
     this.visibility = visibility
     this.modal = modal
+    this.flag = null
+    
 
     // New elements
     this.resources = this.experience.resources.items
+    this.time = this.experience.time
   }
 
   /**
@@ -60,11 +65,32 @@ export default class BCFlag extends BasicItem {
     })
   }
 
+  setFlag(){
+    const flagGeometry = new PlaneGeometry(3,2,32,32)
+    const flagMaterial = new ShaderMaterial({
+      vertexShader:flagVert,
+      fragmentShader:flagFrag,
+      uniforms:{
+        uTime:new Uniform(this.time.elapsed*0.001)
+      }
+    })
+    this.flag = new Mesh(flagGeometry,flagMaterial)
+    this.flag.position.x+=1.5
+    this.flag.position.y+=6.8
+    
+    this.item.add(this.flag)
+  }
+
   /**
    * Init
    */
   init() {
     this.setBCFlag()
     this.setSprite()
+    this.setFlag()
+  }
+
+  update(){
+    this.item.children[0].children[1].material.uniforms.uTime.value = this.time.elapsed * 0.001
   }
 }
