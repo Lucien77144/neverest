@@ -146,16 +146,17 @@ void main() {
     //        Modal         //
     // -------------------- //
 
+    float play = uModalProgress == 0. ? 0. : 1.;
+
     vec2 maskUv = getMaskUv(uv);
     applyRotation(maskUv, uTime * .001);
 
-    float play = 1. - (uModalProgress == 0. ? 0. : 1.);
     vec4 blob = texture2D(uBlob, maskUv);
     
-    float m = min(blob.r + blob.g + blob.b, 1.) - (play);
+    float m = min(blob.r + blob.g + blob.b, 1.);
     float mask = 1. - min(m, 1.);
 
-    frag = mix(frag, vec4(uModalColor, 1.), 1. - mask);
+    frag = mix(frag, vec4(uModalColor, 1.), (1. - mask) * play);
 
     gl_FragColor = frag;
 }

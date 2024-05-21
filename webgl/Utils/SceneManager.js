@@ -44,9 +44,10 @@ export default class SceneManager {
     })
 
     // Persist scene in local
-    this.debugFolder.addBinding({ value: false }, 'value', {
+    const persist = this.debugFolder.addBinding({ value: false }, 'value', {
       label: 'Persist Scene',
     })
+    this.debug.persist(persist)
 
     // Debug scene
     this.debugScene = this.debugFolder.addBlade({
@@ -60,12 +61,14 @@ export default class SceneManager {
     })
 
     // Persist the folder and enable it
-    this.debug.persist(this.debugFolder)
+    this.debug.persist(this.debugScene, persist.controller.value.rawValue)
     this.debugFolder.disabled = false
 
     // Add switch event on change scene
-    this.debugScene.on('change', ({ value }) =>
-      this.switch(this.getSceneFromList(value))
+    setTimeout(() =>
+      this.debugScene.on('change', ({ value }) =>
+        this.switch(this.getSceneFromList(value))
+      )
     )
   }
 
@@ -75,7 +78,9 @@ export default class SceneManager {
    */
   setScene(scene) {
     this.scene = scene
-    this.debugScene.value = scene.name
+    if (this.debug) {
+      this.debugScene.value = scene.name
+    }
   }
 
   /**
@@ -136,7 +141,7 @@ export default class SceneManager {
     this.active?.onDisposeStart?.()
 
     // Update the store (and localstorage) with the new scene :
-    this.navigate({ scene: next })
+    this.navigate({ navigation: { scene: next } })
 
     // Add render mesh if unset :
     const transition = next.transition
@@ -178,7 +183,6 @@ export default class SceneManager {
           navigation: {
             start: next.nav?.start,
             scale: next.nav?.scale,
-            scene: next,
           },
           scroll: 0,
         })
@@ -244,6 +248,7 @@ export default class SceneManager {
         current: this.scrollManager.factor,
       },
     })
+
     // Switch complete function on the new scene
     this.active?.onInitComplete?.()
 

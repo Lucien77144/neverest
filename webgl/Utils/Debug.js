@@ -4,17 +4,10 @@ import Experience from '../Experience'
 import Stats from './Stats'
 
 export default class Debug {
-  static _instance
-
   /**
    * Constructor
    */
   constructor() {
-    if (Debug._instance) {
-      return Debug._instance
-    }
-    Debug._instance = this
-
     // Get elements from experience
     this.experience = new Experience()
     this.viewport = this.experience.viewport
@@ -23,6 +16,7 @@ export default class Debug {
     this.panel = null
     this.preset = null
     this.stats = null
+    this.name = `debug-${this.experience.name}`
 
     // Init
     this.init()
@@ -72,13 +66,36 @@ export default class Debug {
   }
 
   /**
+   * Format the state of the debug
+   * This function refresh the options in each lists
+   */
+  formatState(debug, saved) {
+    if (debug.children) {
+      debug.children.forEach((child, i) =>
+        this.formatState(child, saved?.children[i])
+      )
+    } else if (saved?.options) {
+      saved.options = debug.options
+    }
+
+    return saved
+  }
+
+  /**
    * Make a binding or folder persistent in local storage
-   * @param {*} debug
+   * @param {*} debug Debug object
+   * @param {boolean} update Update the values on init
    * @returns {*} Preset values
    */
-  persist(debug) {
-    const label = debug.label
-    debug.importState(this.preset[label])
+  persist(debug, update = true) {
+    const label = (debug.key || debug.title || debug.label)
+      .toLowerCase()
+      .replace(' ', '-')
+
+    if (update) {
+      const state = this.formatState(debug.exportState(), this.preset[label])
+      debug.importState(state)
+    }
 
     debug.on('change', () => {
       this.preset[label] = debug.exportState()
@@ -92,14 +109,14 @@ export default class Debug {
    * Init local storage values
    */
   initPreset() {
-    this.preset = JSON.parse(localStorage.getItem('debug-pane') || '{}')
+    this.preset = JSON.parse(localStorage.getItem(this.name) || '{}')
   }
 
   /**
    * Save the preset in the local storage
    */
   savePreset() {
-    localStorage.setItem('debug-pane', JSON.stringify(this.preset))
+    localStorage.setItem(this.name, JSON.stringify(this.preset))
   }
 
   /**

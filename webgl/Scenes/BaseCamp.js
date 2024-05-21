@@ -377,7 +377,6 @@ export default class BaseCamp extends BasicScene {
 
     // Init the scene and components (basic scene)
     super.init()
-
     Object.values(this.components).forEach((c) => this.setComponentVis(c, 0))
   }
 
@@ -403,6 +402,7 @@ export default class BaseCamp extends BasicScene {
    */
   dispose() {
     this.setInterestVis(null, true)
+    this.scrollManager.off('scroll')
     super.dispose()
   }
 }

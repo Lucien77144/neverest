@@ -49,6 +49,7 @@ const { $bus }: any = useNuxtApp()
 // Events
 $bus.on('modal:open', (val: ModalData) => {
   data.value = val
+  console.log(val)
 })
 
 $bus.on('modal:close', () => {

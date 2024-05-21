@@ -125,15 +125,16 @@ export default class BaseCampCamera extends BasicItem {
 
   /**
    * Play animation on scroll
-   * @param {Number} value scroll value
+   * @param {Number} position scroll value
+   * @param {Boolean} force force play
    */
-  playAnimation(value) {
+  playAnimation(position, force = false) {
     if (!this.mixer || !this.item || !this.parentScene.camera.instance) return
 
-    if (!this.scrollManager.disabled) {
+    if (!this.scrollManager.disabled || force) {
       const animDuration = this.animationAction.getClip().duration
 
-      this.mixer.setTime((value * animDuration) / (100 / 2))
+      this.mixer.setTime((position * animDuration) / (100 / 2))
       this.animationAction.play()
       this.mixer.update(1 / 60)
     }
@@ -174,7 +175,7 @@ export default class BaseCampCamera extends BasicItem {
     // Set item
     this.setItem()
     this.baseCamRot = this.parentScene.camera.instance.rotation.clone()
-    this.playAnimation(0)
+    this.playAnimation(0, true)
   }
 
   /**
