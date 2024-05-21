@@ -227,6 +227,7 @@ export default class Experience {
    * @param {TScrollEvent} event
    */
   scroll(event) {
+    console.log(event.current);
     this.setScroll(event.current)
   }
 

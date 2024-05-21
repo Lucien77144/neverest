@@ -141,7 +141,7 @@ export default class SceneManager {
     this.active?.onDisposeStart?.()
 
     // Update the store (and localstorage) with the new scene :
-    this.navigate({ scene: next })
+    this.navigate({ navigation: { scene: next } })
 
     // Add render mesh if unset :
     const transition = next.transition
@@ -186,6 +186,9 @@ export default class SceneManager {
           },
           scroll: 0,
         })
+
+        console.log(this.scene)
+        console.log(next)
 
         // Reset transition uniform value :
         this.renderMesh.material.uniforms.uTransition.value = 0
