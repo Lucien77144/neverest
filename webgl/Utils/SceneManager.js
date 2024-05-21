@@ -47,6 +47,7 @@ export default class SceneManager {
     const persist = this.debugFolder.addBinding({ value: false }, 'value', {
       label: 'Persist Scene',
     })
+    this.debug.persist(persist)
 
     // Debug scene
     this.debugScene = this.debugFolder.addBlade({
@@ -60,7 +61,7 @@ export default class SceneManager {
     })
 
     // Persist the folder and enable it
-    this.debug.persist(this.debugFolder, persist.controller.value.rawValue)
+    this.debug.persist(this.debugScene, persist.controller.value.rawValue)
     this.debugFolder.disabled = false
 
     // Add switch event on change scene
