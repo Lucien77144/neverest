@@ -27,6 +27,21 @@
     ]
   },
   {
+    "name": "videos",
+    "data": {},
+    "items": [
+      {
+        "name": "tedTalkVideo",
+        "source": "/video/gniii.mp4",
+        "subtitles": {
+          "fr": "/subtitles/ted_talk/fr.vtt",
+          "en": "/subtitles/ted_talk/en.vtt",
+          "es": "/subtitles/ted_talk/es.vtt"
+        }
+      }
+    ]
+  }, 
+  {
     "name": "textures",
     "data": {},
     "items": [
@@ -78,6 +93,11 @@
       {
         "name": "CloudImg",
         "source": "/img/TestTransi/cloud.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "tent2_1953_texture",
+        "source": "/img/tent2_1953.webp",
         "type": "texture"
       },
       {

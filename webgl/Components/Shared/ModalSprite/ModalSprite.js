@@ -17,7 +17,7 @@ export default class ModalSprite extends BasicItem {
     this.renderUniforms = this.experience.renderer.renderMesh.material.uniforms
     this.$bus = this.experience.$bus
     this.position = position
-    this.data = data
+    this.template = data
 
     // New elements
     this.camera = null
@@ -61,7 +61,7 @@ export default class ModalSprite extends BasicItem {
       ),
       onStart: () => this.$bus.emit('modal:init'),
       onComplete: () => {
-        this.$bus.emit('modal:open', this.data)
+        this.$bus.emit('modal:open', this.template)
         this.camera.fov = base.value
         this.camera.updateProjectionMatrix()
       },

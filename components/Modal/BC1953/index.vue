@@ -1,5 +1,5 @@
 <template>
-  <div class="modal">
+  <div class="modal" style="overflow: scroll;">
     <section class="modal__scroll">
       <div class="modal__scroll__wrapper">
         <div class="modal__scroll__lottie">
@@ -29,9 +29,12 @@
       </div>
     </section>
     <section class="modal__content">
-      <article v-for="c in data">
+      <!-- <article v-for="c in data">
         {{ c.type }}
-      </article>
+      </article> -->
+      <div style="height: 300px; width: 200px;">
+        <UIVideoPlayer url="/video/gniii.mp4" />
+      </div>
     </section>
   </div>
 </template>
