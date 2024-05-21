@@ -4,7 +4,7 @@ import ShaderCraieFrag from './ShaderCraie/ShaderCraie.frag?raw'
 
 export default class CraieMaterial {
 
-    constructor({textureParams, side, color, bgColor, displacementMap, displacementMapIntensity}){
+    constructor({textureParams, side, color, bgColor, displacementMap, displacementMapIntensity, isMapEnable}){
 
         this.texture = null
         this.instance = null
@@ -73,30 +73,30 @@ export default class CraieMaterial {
                 const curve = new QuadraticBezierCurve(
                     new Vector2(
                         columnXStartPos+((Math.random()-0.5)*singleColumnWidth*maxBorderSideDecalage),
-                        canvas.height*i/nbOfCurvePerColumns
+                        borderSize * canvas.height + (canvas.height-2*borderSize*canvas.height )*i/nbOfCurvePerColumns
                     ),
                     new Vector2(
                         columnXStartPos + singleColumnWidth * 0.5 + curveHorizontalDecalage,
-                        canvas.height * ( i + 0.25 + (curveVerticalDirection * Math.random() * maxHeightCurve))/nbOfCurvePerColumns
+                        borderSize * canvas.height + (canvas.height-2*borderSize*canvas.height ) * ( i + 0.25 + (curveVerticalDirection * Math.random() * maxHeightCurve))/nbOfCurvePerColumns
                     ),
                     new Vector2(
                         columnXEndPos+((Math.random()-0.5)*singleColumnWidth*maxBorderSideDecalage),
-                        canvas.height * (i + 0.5) / nbOfCurvePerColumns
+                        borderSize * canvas.height + (canvas.height-2*borderSize*canvas.height) * (i + 0.5) / nbOfCurvePerColumns
                     )
                 )
 
                 const curveLeft = new QuadraticBezierCurve(
                     new Vector2(
                         columnXEndPos+((Math.random()-0.5)*singleColumnWidth*maxBorderSideDecalage),
-                        canvas.height * (i + 0.5) / nbOfCurvePerColumns
+                        borderSize * canvas.height + (canvas.height-2*borderSize*canvas.height) * (i + 0.5) / nbOfCurvePerColumns
                     ),
                     new Vector2(
                         columnXStartPos + singleColumnWidth * 0.5 + curveHorizontalDecalage,
-                        canvas.height * (i + 0.75 + (curveVerticalDirection * Math.random() * maxHeightCurve)) / nbOfCurvePerColumns
+                        borderSize * canvas.height + (canvas.height-2*borderSize*canvas.height) * (i + 0.75 + (curveVerticalDirection * Math.random() * maxHeightCurve)) / nbOfCurvePerColumns
                     ),
                     new Vector2(
                         columnXStartPos+((Math.random()-0.5)*singleColumnWidth*maxBorderSideDecalage),
-                        canvas.height * (i + 1) / nbOfCurvePerColumns
+                        borderSize * canvas.height + (canvas.height-2*borderSize*canvas.height) * (i + 1) / nbOfCurvePerColumns
                     )
                 )
 
@@ -157,6 +157,12 @@ export default class CraieMaterial {
 
         }
 
+        //var imageDataURL = canvas.toDataURL();
+        //var link = document.createElement('a');
+        //link.href = imageDataURL;
+        //link.download = 'canvas_texture.png';
+        //link.click();
+
         this.texture = new CanvasTexture(canvas)
 
         if(this.instance){
@@ -166,7 +172,7 @@ export default class CraieMaterial {
 
     }
 
-    createMaterial(side, color, bgColor, displacementMap, displacementMapIntensity){
+    createMaterial(side, color, bgColor, displacementMap, displacementMapIntensity, isMapEnable){
         this.instance = new ShaderMaterial({
             side,
             vertexShader:ShaderCraieVert,
@@ -181,6 +187,7 @@ export default class CraieMaterial {
                 uDecalageBorderLeftRight: new Uniform(0),
                 uTextureRepetitions : new Uniform(0),
                 uDisplacementMap: new Uniform(displacementMap),
+                uIsMapEnable:new Uniform(isMapEnable),
                 uDisplacementMapIntensity: new Uniform(displacementMapIntensity)
             },
             transparent:false

@@ -55,7 +55,8 @@ export default class Floor extends BasicItem {
       color:'#93AAF2',
       bgColor:'#F8ECE8',
       displacementMap:this.resources.items.ground2024,
-      displacementMapIntensity:2
+      isMapEnable:1,
+      displacementMapIntensity:2,
     }).instance
     
   }
@@ -68,7 +69,7 @@ export default class Floor extends BasicItem {
   setMesh() {
     this.item = new Mesh(this.geometry, this.material)
     this.item.position.z = -30
-    this.item.position.y = 1.4
+    //this.item.position.y = 1.4
     this.item.rotation.x = -Math.PI / 2
   }
 
