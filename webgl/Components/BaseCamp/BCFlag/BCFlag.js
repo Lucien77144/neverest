@@ -55,8 +55,8 @@ export default class BCFlag extends BasicItem {
     const position = new Vector3()
     mat.getWorldPosition(position)
     position.y = boundings.min.y + 1
-    position.x += .4
-    position.z += .2
+    position.x += 0.4
+    position.z += 0.2
     // + (boundings.max.y - boundings.min.y)
 
     this.components.modalSprite = new ModalSprite({

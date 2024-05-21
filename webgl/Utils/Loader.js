@@ -38,7 +38,7 @@ export default class Loader {
   init() {
     // Images
     this.loaders.push({
-      extensions: ['jpg', 'png', 'svg'],
+      extensions: ['jpg', 'png', 'svg', 'webp'],
       action: (resource) => {
         const image = new Image()
         image.name = resource.name
@@ -127,8 +127,11 @@ export default class Loader {
       action: (resource) => {
         const video = document.createElement('video')
         video.src = resource.source
+        
+        // Subtitles
+        resource.subtitles && this.setSubtitles(video, resource.subtitles)
+        
         video.load()
-
         video.addEventListener('loadeddata', () => {
           this.fileLoadEnd(resource, video)
         })

@@ -1,6 +1,6 @@
 import gsap from 'gsap'
 import { CustomEase } from 'gsap/all'
-import { ClampToEdgeWrapping, Sprite, SpriteMaterial, Vector3 } from 'three'
+import { Sprite, SpriteMaterial, Vector3 } from 'three'
 import { clamp } from 'three/src/math/MathUtils'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 gsap.registerPlugin(CustomEase)
@@ -12,11 +12,12 @@ export default class ModalSprite extends BasicItem {
   constructor({ position, data }) {
     super()
     // Elements
+    this.scrollManager = this.experience.scrollManager
     this.resources = this.experience.resources.items
     this.renderUniforms = this.experience.renderer.renderMesh.material.uniforms
     this.$bus = this.experience.$bus
     this.position = position
-    this.data = data
+    this.template = data
 
     // New elements
     this.camera = null
@@ -47,6 +48,8 @@ export default class ModalSprite extends BasicItem {
    * On click item
    */
   onClick() {
+    this.scrollManager.disabled = true
+
     const base = { value: this.camera.fov }
     const fov = { value: this.camera.fov }
     gsap.to(this.renderUniforms.uModalProgress, {
@@ -58,7 +61,7 @@ export default class ModalSprite extends BasicItem {
       ),
       onStart: () => this.$bus.emit('modal:init'),
       onComplete: () => {
-        this.$bus.emit('modal:open', this.data)
+        this.$bus.emit('modal:open', this.template)
         this.camera.fov = base.value
         this.camera.updateProjectionMatrix()
       },
