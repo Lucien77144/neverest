@@ -1,0 +1,8 @@
+.modal_dialog {
+  transition: 0.25s ease-in-out;
+  will-change: opacity;
+  
+  &--close {
+    opacity: 0;
+  }
+}

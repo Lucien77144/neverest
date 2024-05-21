@@ -13,6 +13,12 @@ export default {
       LABEL: 'Espagnol',
     },
   },
+  CLOSE: 'Fermer',
+  SCROLL_TO_EXPLORE: 'Scrollez pour explorer',
+  TITLE_1953:
+    'Participer à la première ascension à travers les archives de 1953',
+  PREPARE_1953: 'Préparation de la première ascension',
+  EXPEDITION_1953: 'Une expédition de 400 hommes se lance à la conquête du sommet de l’Everest',
   START: 'Démarrer',
   NEXT: 'Suivant',
   PREV: 'Précédent',

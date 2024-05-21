@@ -34,6 +34,7 @@ export default class Experience {
     this.debug = null
     this.audioManager = null
     this.scrollManager = null
+    this.keysManager = null
     this.dragManager = null
     this.sceneManager = null
     this.raycaster = null
@@ -202,6 +203,7 @@ export default class Experience {
 
     // Set elements
     this.scrollManager = new ScrollManager({ limit: { min: 0, max: 100 } })
+    this.keysManager = new KeysManager()
     this.sceneManager = new SceneManager()
     this.raycaster = new Raycaster()
     this.resources = new Resources()

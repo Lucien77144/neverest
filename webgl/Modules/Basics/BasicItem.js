@@ -148,6 +148,12 @@ export default class BasicItem {
      * @param {number} delta - Delta of the scroll
      */
     this.onScroll
+
+    /**
+     * On key pressed
+     * @param {number} key - Key code
+     */
+    this.onKey
   }
 
   // --------------------------------

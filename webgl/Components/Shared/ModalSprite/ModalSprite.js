@@ -13,6 +13,7 @@ export default class ModalSprite extends BasicItem {
     super()
     // Elements
     this.scrollManager = this.experience.scrollManager
+    this.keysManager = this.experience.keysManager
     this.resources = this.experience.resources.items
     this.renderUniforms = this.experience.renderer.renderMesh.material.uniforms
     this.$bus = this.experience.$bus
@@ -45,37 +46,59 @@ export default class ModalSprite extends BasicItem {
   }
 
   /**
+   * Open modal
+   * @param {boolean} open - Open or close the modal
+   */
+  openModal(open) {
+    this.scrollManager.disabled = true
+    gsap.to(this.renderUniforms.uModalProgress, {
+      value: open ? 1 : 0,
+      duration: open ? .75 : 0.5,
+      // ease: CustomEase.create(
+      //   'custom',
+      //   'M0,0 C0.799,0 0.72,0.004 0.8,0.683 0.826,0.91 0.849,1 1,1 '
+      // ),
+      ease: open ? 'power2.in' : 'power2.out',
+      onStart: () => this.$bus.emit('modal:init'),
+      onUpdate: () => {
+        if (this.renderUniforms.uModalProgress.value > 0.25) {
+          if (open) {
+            this.$bus.emit('modal:open', this.data)
+          } else {
+            this.$bus.emit('modal:close')
+          }
+        }
+      },
+    })
+
+    if (open) {
+      const base = { value: this.camera.fov }
+      const fov = { value: this.camera.fov }
+
+      gsap.to(fov, {
+        value: base.value * 0.75,
+        duration: .5,
+        ease: CustomEase.create(
+          'custom',
+          'M0,0 C0.097,0.602 0.139,1 0.5,1 0.847,1 0.9,0.6 1,0 '
+        ),
+        onUpdate: () => {
+          this.camera.fov = fov.value
+          this.camera.updateProjectionMatrix()
+        },
+        onComplete: () => {
+          this.camera.fov = base.value
+          this.camera.updateProjectionMatrix()
+        },
+      })
+    }
+  }
+
+  /**
    * On click item
    */
   onClick() {
-    this.scrollManager.disabled = true
-
-    const base = { value: this.camera.fov }
-    const fov = { value: this.camera.fov }
-    gsap.to(this.renderUniforms.uModalProgress, {
-      value: 1,
-      duration: 1.5,
-      ease: CustomEase.create(
-        'custom',
-        'M0,0 C0.799,0 0.72,0.004 0.8,0.683 0.826,0.91 0.849,1 1,1 '
-      ),
-      onStart: () => this.$bus.emit('modal:init'),
-      onComplete: () => {
-        this.$bus.emit('modal:open', this.data)
-        this.camera.fov = base.value
-        this.camera.updateProjectionMatrix()
-      },
-    })
-
-    gsap.to(fov, {
-      value: base.value * 0.5,
-      duration: 0.5,
-      ease: 'power1.inOut',
-      onUpdate: () => {
-        this.camera.fov = fov.value
-        this.camera.updateProjectionMatrix()
-      },
-    })
+    this.openModal(true)
   }
 
   /**
@@ -99,6 +122,12 @@ export default class ModalSprite extends BasicItem {
    * Init
    */
   init() {
+    this.keysManager.on('keydown', (e) => {
+      if (e.keyCode === 27 && this.renderUniforms.uModalProgress.value > 0) {
+        this.openModal(false)
+      }
+    })
+
     this.camera = this.parentScene.camera.instance
     this.setMaterial()
     this.setSprite()

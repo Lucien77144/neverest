@@ -13,6 +13,12 @@ export default {
       LABEL: 'Spanish',
     },
   },
+  CLOSE: 'Close',
+  SCROLL_TO_EXPLORE: 'Scroll to explore',
+  TITLE_1953: 'Participate in the first ascent through the 1953 archives',
+  PREPARE_1953: 'Prepare for the first ascent',
+  EXPEDITION_1953:
+    'An expedition of 400 men sets out to conquer the summit of Everest',
   START: 'Start',
   NEXT: 'Next',
   PREV: 'Previous',

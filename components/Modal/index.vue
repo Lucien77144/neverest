@@ -1,10 +1,13 @@
 <template>
-  <div class="modal_dialog" v-if="template">
+  <div ref="modalRef" class="modal_dialog" v-if="template">
     <component :is="{ ...template }"></component>
   </div>
 </template>
 
 <script lang="ts" setup>
+// Refs
+const modalRef = ref<HTMLElement | null>(null)
+
 // Props
 const template = ref<any>(null)
 
@@ -17,7 +20,10 @@ $bus.on('modal:open', (tpl: any) => {
 })
 
 $bus.on('modal:close', () => {
-  template.value = null
+  modalRef.value?.classList.add('modal_dialog--close')
+  setTimeout(() => {
+    template.value = null
+  }, 250)
 })
 </script>
 
