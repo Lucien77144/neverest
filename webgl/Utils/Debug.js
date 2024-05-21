@@ -84,15 +84,19 @@ export default class Debug {
   /**
    * Make a binding or folder persistent in local storage
    * @param {*} debug Debug object
+   * @param {boolean} update Update the values on init
    * @returns {*} Preset values
    */
-  persist(debug) {
+  persist(debug, update = true) {
     const label = (debug.key || debug.title || debug.label)
       .toLowerCase()
       .replace(' ', '-')
-    const state = this.formatState(debug.exportState(), this.preset[label])
 
-    debug.importState(state)
+    if (update) {
+      const state = this.formatState(debug.exportState(), this.preset[label])
+      debug.importState(state)
+    }
+
     debug.on('change', () => {
       this.preset[label] = debug.exportState()
       this.savePreset()

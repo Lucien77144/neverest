@@ -44,7 +44,7 @@ export default class SceneManager {
     })
 
     // Persist scene in local
-    this.debugFolder.addBinding({ value: false }, 'value', {
+    const persist = this.debugFolder.addBinding({ value: false }, 'value', {
       label: 'Persist Scene',
     })
 
@@ -60,7 +60,7 @@ export default class SceneManager {
     })
 
     // Persist the folder and enable it
-    this.debug.persist(this.debugFolder)
+    this.debug.persist(this.debugFolder, persist.controller.value.rawValue)
     this.debugFolder.disabled = false
 
     // Add switch event on change scene
