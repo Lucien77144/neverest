@@ -99,7 +99,7 @@ export default class Resources {
 
     this.toLoad
       ? this.loadNextGroup()
-      : setTimeout(() => this.$bus.emit('loadingEng'))
+      : setTimeout(() => this.$bus.emit('loadingGroupEnd'))
   }
 
   /**
@@ -142,7 +142,7 @@ export default class Resources {
     })
 
     // Loader all end event
-    this.$bus.on('loadingEnd', () => {
+    this.$bus.on('loadingGroupEnd', () => {
       this.groups.loaded.push(this.groups.current)
 
       // Trigger
@@ -150,8 +150,8 @@ export default class Resources {
 
       if (this.sources.length > 0) {
         this.loadNextGroup()
-      } else if (this.sources.length) {
-        this.$bus.emit('loadingEnd')
+      } else {
+        this.$bus.emit('resources:done')
       }
     })
   }
