@@ -4,7 +4,7 @@ import Resources from './Utils/Resources'
 import SceneManager from './Utils/SceneManager'
 import CursorManager from '../utils/CursorManager'
 import DragManager from '~/utils/DragManager'
-import { ClampToEdgeWrapping, Raycaster, Uniform } from 'three'
+import { ClampToEdgeWrapping, Raycaster } from 'three'
 import AudioManager from './Utils/AudioManager'
 import Debug from './Utils/Debug'
 
@@ -252,14 +252,17 @@ export default class Experience {
     this.$bus.off('resize', this.handleResize)
     this.$bus.off('tick', this.handleUpdate)
     this.$bus.off('resources:done', this.handleUniforms)
+
     this.time.stop()
+
     this.viewport?.destroy()
     this.scrollManager?.destroy()
+    this.cursor?.destroy()
+
     this.renderer.dispose()
     this.resources.dispose()
     this.sceneManager.dispose()
     this.audioManager.dispose()
     this.debug?.dispose()
-    this.cursor?.destroy()
   }
 }
