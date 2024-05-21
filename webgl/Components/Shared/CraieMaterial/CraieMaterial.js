@@ -4,14 +4,14 @@ import ShaderCraieFrag from './ShaderCraie/ShaderCraie.frag?raw'
 
 export default class CraieMaterial {
 
-    constructor({textureParams, side, color, bgColor}){
+    constructor({textureParams, side, color, bgColor, displacementMap, displacementMapIntensity}){
 
         this.texture = null
         this.instance = null
 
 
         this.generateTexture(textureParams)
-        this.createMaterial(side, color, bgColor)
+        this.createMaterial(side, color, bgColor, displacementMap, displacementMapIntensity)
     }
 
 
@@ -29,7 +29,8 @@ export default class CraieMaterial {
             maxCurveHorizontalDecalage,
             maxHeightCurve,
             maxThicknessCurve,
-            nbOfPointsPerCurve
+            nbOfPointsPerCurve,
+            maxBorderSideDecalage
         } = textureParams
 
 
@@ -71,7 +72,7 @@ export default class CraieMaterial {
 
                 const curve = new QuadraticBezierCurve(
                     new Vector2(
-                        columnXStartPos,
+                        columnXStartPos+((Math.random()-0.5)*singleColumnWidth*maxBorderSideDecalage),
                         canvas.height*i/nbOfCurvePerColumns
                     ),
                     new Vector2(
@@ -79,14 +80,14 @@ export default class CraieMaterial {
                         canvas.height * ( i + 0.25 + (curveVerticalDirection * Math.random() * maxHeightCurve))/nbOfCurvePerColumns
                     ),
                     new Vector2(
-                        columnXEndPos,
+                        columnXEndPos+((Math.random()-0.5)*singleColumnWidth*maxBorderSideDecalage),
                         canvas.height * (i + 0.5) / nbOfCurvePerColumns
                     )
                 )
 
                 const curveLeft = new QuadraticBezierCurve(
                     new Vector2(
-                        columnXEndPos,
+                        columnXEndPos+((Math.random()-0.5)*singleColumnWidth*maxBorderSideDecalage),
                         canvas.height * (i + 0.5) / nbOfCurvePerColumns
                     ),
                     new Vector2(
@@ -94,7 +95,7 @@ export default class CraieMaterial {
                         canvas.height * (i + 0.75 + (curveVerticalDirection * Math.random() * maxHeightCurve)) / nbOfCurvePerColumns
                     ),
                     new Vector2(
-                        columnXStartPos,
+                        columnXStartPos+((Math.random()-0.5)*singleColumnWidth*maxBorderSideDecalage),
                         canvas.height * (i + 1) / nbOfCurvePerColumns
                     )
                 )
@@ -165,7 +166,7 @@ export default class CraieMaterial {
 
     }
 
-    createMaterial(side, color, bgColor){
+    createMaterial(side, color, bgColor, displacementMap, displacementMapIntensity){
         this.instance = new ShaderMaterial({
             side,
             vertexShader:ShaderCraieVert,
@@ -178,7 +179,9 @@ export default class CraieMaterial {
                 uMaskNoiseIntensity: new Uniform(0),
                 uMaskNoiseWidth: new Uniform(0),
                 uDecalageBorderLeftRight: new Uniform(0),
-                uTextureRepetitions : new Uniform(0)
+                uTextureRepetitions : new Uniform(0),
+                uDisplacementMap: new Uniform(displacementMap),
+                uDisplacementMapIntensity: new Uniform(displacementMapIntensity)
             },
             transparent:false
         })

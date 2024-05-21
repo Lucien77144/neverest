@@ -24,7 +24,7 @@ export default class Floor extends BasicItem {
    * Get geometry
    */
   setGeometry() {
-    this.geometry = new PlaneGeometry(300, 400, 10, 10)
+    this.geometry = new PlaneGeometry(60, 60, 512, 512)
   }
 
   /**
@@ -38,32 +38,37 @@ export default class Floor extends BasicItem {
     this.material = new CraieMaterial({
       textureParams:{
         textureSize:2048,
-        nbOfColumns:1,
+        nbOfColumns:7,
         borderSize:0.05,
-        columnsOffset:0,
-        nbOfCurvePerColumns:50,
+        columnsOffset:-0.01,
+        nbOfCurvePerColumns:15,
         areCurveOnSameDirection:true,
         curveDirection:'up',
         curveDirectionAmountFactor:0.4,
         maxCurveHorizontalDecalage:0.3,
         maxHeightCurve:1,
-        maxThicknessCurve:1,
-        nbOfPointsPerCurve:2
+        maxThicknessCurve:3,
+        nbOfPointsPerCurve:10,
+        maxBorderSideDecalage:0.5
       },
       side:0,
       color:'#93AAF2',
-      bgColor:'#F8ECE8'
+      bgColor:'#F8ECE8',
+      displacementMap:this.resources.items.ground2024,
+      displacementMapIntensity:2
     }).instance
     
   }
+
+  
 
   /**
    * Get mesh
    */
   setMesh() {
     this.item = new Mesh(this.geometry, this.material)
-    this.item.position.z = -100
-    this.item.position.y = -2.8
+    this.item.position.z = -30
+    this.item.position.y = 1.4
     this.item.rotation.x = -Math.PI / 2
   }
 
