@@ -122,7 +122,7 @@ export default class CraieMaterial {
                     ctx.beginPath()
                     ctx.arc(
                         point.x,
-                        point.y+Math.random()*10,
+                        point.y+Math.random()*8,
                         thicknessCurve*Math.random(),
                         0,
                         Math.PI * 2
@@ -148,7 +148,7 @@ export default class CraieMaterial {
                     ctx.beginPath()
                     ctx.arc(
                       point.x,
-                      point.y+Math.random()*10,
+                      point.y+Math.random()*8,
                       thicknessCurve*Math.random(),
                       0,
                       Math.PI * 2
@@ -166,7 +166,7 @@ export default class CraieMaterial {
         var link = document.createElement('a');
         link.href = imageDataURL;
         link.download = 'canvas_texture.jpg';
-        link.click();
+        //link.click();
 
         this.texture = new CanvasTexture(canvas)
 

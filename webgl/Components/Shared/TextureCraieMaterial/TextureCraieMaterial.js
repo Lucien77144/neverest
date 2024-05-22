@@ -23,7 +23,7 @@ export default class TextureCraieMaterial {
         //    },
         //    transparent:false
         //})
-        const material = new MeshBasicMaterial({map:texture})
+        const material = new MeshBasicMaterial({map:texture, side:side})
         material.onBeforeCompile = (shader)=>{
             shader.uniforms.uColor = new Uniform(new Color(color))
             shader.uniforms.uTexture = new Uniform(texture)
@@ -52,8 +52,6 @@ export default class TextureCraieMaterial {
                     gl_FragColor = vec4(isColoried+isBackground,1.0);
                 }
             `
-            
-            console.log(shader)
         }
         this.instance = material
     }

@@ -1,7 +1,7 @@
 import { DoubleSide, InstancedMesh, MeshNormalMaterial, Object3D } from 'three'
 import { BCMEDIUMBOX_1953 } from '~/const/blocking/baseCamp.const'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
-import CraieMaterial from '../../Shared/CraieMaterial/CraieMaterial'
+
 import TextureCraieMaterial from '../../Shared/TextureCraieMaterial/TextureCraieMaterial'
 
 export default class BCMediumBox_1953 extends BasicItem {

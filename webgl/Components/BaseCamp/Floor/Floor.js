@@ -6,6 +6,7 @@ import {
 } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import CraieMaterial from '../../Shared/CraieMaterial/CraieMaterial'
+import TextureCraieMaterial from '../../Shared/TextureCraieMaterial/TextureCraieMaterial'
 
 export default class Floor extends BasicItem {
   /**
@@ -15,7 +16,7 @@ export default class Floor extends BasicItem {
     super()
 
     // New elements
-    this.resources = this.experience.resources
+    this.resources = this.experience.resources.items
     this.geometry = null
     this.material = null
   }
@@ -24,40 +25,47 @@ export default class Floor extends BasicItem {
    * Get geometry
    */
   setGeometry() {
-    this.geometry = new PlaneGeometry(60, 60, 512, 512)
+    this.geometry = new PlaneGeometry(100, 100, 512, 512)
   }
 
   /**
    * Get material
    */
   setMaterial() {
-    this.material = new MeshNormalMaterial({})
-    this.material.displacementMap = this.resources.items.ground1953
-    this.material.displacementScale = 10
-
+    //this.material = new MeshNormalMaterial({})
+    //this.material.displacementMap = this.resources.items.ground1953
+    //this.material.displacementScale = 10
+//
     //this.material = new CraieMaterial({
     //  textureParams:{
-    //    textureSize:2048,
-    //    nbOfColumns:7,
-    //    borderSize:0.05,
-    //    columnsOffset:-0.01,
-    //    nbOfCurvePerColumns:15,
+    //    textureSize:1024,
+    //    nbOfColumns:3,
+    //    borderSize:0.1,
+    //    columnsOffset:0.04,
+    //    nbOfCurvePerColumns:4,
     //    areCurveOnSameDirection:true,
     //    curveDirection:'up',
     //    curveDirectionAmountFactor:0.4,
     //    maxCurveHorizontalDecalage:0.3,
     //    maxHeightCurve:1,
-    //    maxThicknessCurve:3,
-    //    nbOfPointsPerCurve:10,
-    //    maxBorderSideDecalage:0.5
+    //    maxThicknessCurve:4,
+    //    nbOfPointsPerCurve:20,
+    //    maxBorderSideDecalage:0.1
     //  },
     //  side:0,
-    //  color:'#93AAF2',
+    //  color:'#b1c4d8',
     //  bgColor:'#F8ECE8',
     //  displacementMap:this.resources.items.ground2024,
-    //  isMapEnable:1,
-    //  displacementMapIntensity:2,
+    //  isMapEnable:0,
+    //  displacementMapIntensity:0,
     //}).instance
+
+    this.material = new TextureCraieMaterial({
+      side:0,
+      color:'#b1c4d8',
+      bgColor:'#F8ECE8',
+      texture:this.resources.BCFloorTexture
+    }).instance
     
   }
 
@@ -68,8 +76,7 @@ export default class Floor extends BasicItem {
    */
   setMesh() {
     this.item = new Mesh(this.geometry, this.material)
-    this.item.position.z = -25
-    this.item.position.y = -3
+    this.item.position.z = -45
     this.item.rotation.x = -Math.PI / 2
   }
 
