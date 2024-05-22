@@ -15,10 +15,12 @@
     color: $white;
     text-align: justify;
     line-height: 1.3;
+    opacity: 0;
   }
 
   &__footer {
     color: $white;
+    opacity: 0;
 
     &__content {
       display: flex;

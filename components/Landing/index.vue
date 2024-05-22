@@ -1,11 +1,11 @@
 <template>
   <div ref="landingRef" v-if="landing" class="start">
-    <div class="start__content">
+    <div ref="contentRef" class="start__content">
       <p>
         {{ $t('LANDING') }}
       </p>
     </div>
-    <div class="start__footer">
+    <div ref="footerRef" class="start__footer">
       <p>{{ $t('LANDING_START') }}</p>
       <div class="start__footer__content">
         <UIBtn @click="start(false)">
@@ -27,9 +27,23 @@ const { $bus }: any = useNuxtApp()
 
 // Refs
 const landingRef = ref<HTMLElement | null>(null)
+const contentRef = ref<HTMLElement | null>(null)
+const footerRef = ref<HTMLElement | null>(null)
 
 // Store
 const landing = computed(() => useExperienceStore().getLanding)
+
+$bus.on('loaded', () => {
+  gsap.to(contentRef.value, {
+    duration: 0.75,
+    opacity: 1,
+  })
+  gsap.to(footerRef.value, {
+    duration: 0.75,
+    delay: 0.5,
+    opacity: 1,
+  })
+})
 
 /**
  * Start the experience
