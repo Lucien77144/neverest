@@ -229,3 +229,54 @@
 .w-100 {
   width: 100%;
 }
+
+.content3 {
+  &__wrapper {
+    position: absolute;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    .border {
+      position: absolute;
+      transform: rotate(4.09deg);
+    }
+
+    .img__container {
+      padding: 2.5rem;
+      margin: 0;
+    }
+  }
+}
+
+.content4 {
+  &__wrapper {
+    margin-left: 15rem;
+    display: grid;
+    gap: 10vh;
+
+    .border {
+      position: absolute;
+      transform: rotate(-16.23deg);
+      width: 35%;
+      left: 31%;
+      top: 0%;
+    }
+
+    .img__container {
+      margin: 0;
+    }
+
+    .svg__gaz_mask {
+      transform: rotate(-10.72deg);
+
+      &__container {
+        width: 350px;
+        position: absolute;
+        top: 5rem;
+        left: -75%;
+      }
+    }
+  }
+}

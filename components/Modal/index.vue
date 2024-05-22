@@ -19,7 +19,7 @@ $bus.on('modal:open', (tpl: any) => {
   template.value = tpl
 })
 
-$bus.on('modal:close', () => {
+$bus.on('modal:destroy', () => {
   modalRef.value?.classList.add('modal_dialog--close')
   setTimeout(() => {
     template.value = null

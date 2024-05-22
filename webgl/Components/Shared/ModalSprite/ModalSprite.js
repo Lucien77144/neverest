@@ -50,14 +50,10 @@ export default class ModalSprite extends BasicItem {
    * @param {boolean} open - Open or close the modal
    */
   openModal(open) {
-    this.scrollManager.disabled = true
+    this.scrollManager.disabled = open
     gsap.to(this.renderUniforms.uModalProgress, {
       value: open ? 1 : 0,
-      duration: open ? .75 : 0.5,
-      // ease: CustomEase.create(
-      //   'custom',
-      //   'M0,0 C0.799,0 0.72,0.004 0.8,0.683 0.826,0.91 0.849,1 1,1 '
-      // ),
+      duration: 0.75,
       ease: open ? 'power2.in' : 'power2.out',
       onStart: () => this.$bus.emit('modal:init'),
       onUpdate: () => {
@@ -65,7 +61,7 @@ export default class ModalSprite extends BasicItem {
           if (open) {
             this.$bus.emit('modal:open', this.data)
           } else {
-            this.$bus.emit('modal:close')
+            this.$bus.emit('modal:destroy')
           }
         }
       },
@@ -77,7 +73,7 @@ export default class ModalSprite extends BasicItem {
 
       gsap.to(fov, {
         value: base.value * 0.75,
-        duration: .5,
+        duration: 0.5,
         ease: CustomEase.create(
           'custom',
           'M0,0 C0.097,0.602 0.139,1 0.5,1 0.847,1 0.9,0.6 1,0 '
@@ -128,8 +124,18 @@ export default class ModalSprite extends BasicItem {
       }
     })
 
+    this.$bus.on('modal:close', () => this.openModal(false))
+
     this.camera = this.parentScene.camera.instance
     this.setMaterial()
     this.setSprite()
+  }
+
+  /**
+   * Dispose
+   */
+  dispose() {
+    this.keysManager.destroy()
+    this.$bus.off('modal:close')
   }
 }

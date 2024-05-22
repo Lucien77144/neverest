@@ -18,7 +18,11 @@ export default {
   TITLE_1953:
     'Participer à la première ascension à travers les archives de 1953',
   PREPARE_1953: 'Préparation de la première ascension',
-  EXPEDITION_1953: 'Une expédition de 400 hommes se lance à la conquête du sommet de l’Everest',
+  EXPEDITION_1953:
+    'Une expédition de 400 hommes se lance à la conquête du sommet de l’Everest',
+  ACTORS_1953: 'Edmund Hillary et Tensing Norgay',
+  MATERIAL_1953:
+    'L’ascension nécessitait du matériel comme des masques à gaz pour supporter la haute altitude ',
   START: 'Démarrer',
   NEXT: 'Suivant',
   PREV: 'Précédent',
