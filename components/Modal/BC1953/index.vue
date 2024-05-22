@@ -216,7 +216,9 @@
             <div style="width: 600px">
               <UIVideoPlayer :value="values?.archives1953" />
             </div>
-            <p class="text-right w-100 translatableR">{{ $t('ACTORS_1953') }}</p>
+            <p class="text-right w-100 translatableR">
+              {{ $t('ACTORS_1953') }}
+            </p>
           </div>
         </div>
       </article>
@@ -297,8 +299,7 @@ onMounted(() => {
       scrollRef.value.style.transform = `translateX(-${val.current}px)`
 
       if (progressRef.value && maxScroll) {
-        const progress = val.current / (maxScroll - viewport.width) * 100
-        // Math.round((val.current / (maxScroll - viewport.width)) * 10000) / 100
+        const progress = (val.current / (maxScroll - viewport.width)) * 100
         progressRef.value.style.width = `${progress}%`
       }
     }
