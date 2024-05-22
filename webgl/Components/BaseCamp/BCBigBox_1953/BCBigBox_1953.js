@@ -32,7 +32,7 @@ export default class BCBigBox_1953 extends BasicItem {
    * Set Instances
    */
   setInstances() {
-    const instance = this.resources.BCBigBox_1953.scene.children[0]
+    const instance = this.resources.BCBigBox_1953.scene.clone().children[0]
     const material = new TextureCraieMaterial({
       side:0,
       color:'#0000FF',
@@ -40,7 +40,7 @@ export default class BCBigBox_1953 extends BasicItem {
       texture:this.resources.BCBigBox_1953Texture
     }).instance
 
-    console.log(this.resources)
+
     
     const dummy = new Object3D()
     this.item = new InstancedMesh(instance.geometry, material, BCBIGBOX_1953.length)

@@ -1,6 +1,7 @@
 import { DoubleSide, InstancedMesh, MeshBasicMaterial, MeshNormalMaterial, Object3D } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import { BCTENT_2_1953 } from '~/const/blocking/baseCamp.const'
+import CraieMaterial from '../../Shared/CraieMaterial/CraieMaterial'
 
 export default class BCTent_2_1953 extends BasicItem {
   /**
@@ -31,11 +32,34 @@ export default class BCTent_2_1953 extends BasicItem {
    */
   setInstances() {
     const instance = this.resources.BCTent_2_1953.scene.children[0]
+    //const material = new CraieMaterial({
+    //  textureParams:{
+    //    textureSize:2048,
+    //    nbOfColumns:7,
+    //    borderSize:0.05,
+    //    columnsOffset:-0.01,
+    //    nbOfCurvePerColumns:15,
+    //    areCurveOnSameDirection:true,
+    //    curveDirection:'up',
+    //    curveDirectionAmountFactor:0.4,
+    //    maxCurveHorizontalDecalage:0.3,
+    //    maxHeightCurve:1,
+    //    maxThicknessCurve:3,
+    //    nbOfPointsPerCurve:10,
+    //    maxBorderSideDecalage:0.5
+    //  },
+    //  side:0,
+    //  color:'#93AAF2',
+    //  bgColor:'#F8ECE8',
+    //  displacementMap:this.resources.ground2024,
+    //  isMapEnable:1,
+    //  displacementMapIntensity:0,
+    //}).instance
     const dummy = new Object3D()
-    console.log('instance', instance);
+
     this.item = new InstancedMesh(
       instance.geometry,
-      instance.material,
+      new MeshNormalMaterial(),
       BCTENT_2_1953.length
     )
 
@@ -63,8 +87,7 @@ export default class BCTent_2_1953 extends BasicItem {
    * Set material
    */
   setMaterial() {
-    this.item.children[0].material = new MeshNormalMaterial()
-    this.item.children[0].material.side = DoubleSide
+    
   }
 
   /**
