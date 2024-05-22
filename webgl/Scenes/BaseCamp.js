@@ -122,7 +122,7 @@ export default class BaseCamp extends BasicScene {
       BCTent_1_1953: new BCTent_1_1953({
         name: 'BCTENT_1_1953_1',
         position: new Vector3(0.328, 0, -35.809),
-        rotation: new Vector3(0, -0.3, 0),
+        rotation: new Vector3(0, -0.3 + Math.PI / 2, 0),
         visibility: [0, 25.87],
       }),
       BCTent_2_1953: new BCTent_2_1953({
@@ -133,14 +133,14 @@ export default class BaseCamp extends BasicScene {
       }),
       BCTent_3_1953: new BCTent_3_1953({
         name: 'BCTENT_3_1953_1',
-        position: new Vector3(-9.319, 0, -37.493),
-        rotation: new Vector3(0, 0.2, 0),
+        position: new Vector3(-9.319, 0, -38.493),
+        rotation: new Vector3(0, 0.2 + Math.PI / 2, 0),
         visibility: [0, 25.87],
       }),
       BCTent_1_2024: new BCTent_1_2024({
         name: 'BC_Tent_1_2024_1',
         position: new Vector3(0.328, 0, -35.809),
-        rotation: new Vector3(0, -0.3, 0),
+        rotation: new Vector3(0, -0.3  + Math.PI / 2, 0),
         visibility: [25.87, 75.97],
       }),
       BCTent_2_2024: new BCTent_2_2024({
@@ -157,8 +157,8 @@ export default class BaseCamp extends BasicScene {
       }),
       BCTent_Main_2050: new BCTent_Main_2050({
         name: 'BCTent_Main_2050',
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
+        position: new Vector3(0.328, 0, -35.809),
+        rotation: new Vector3(0, 0  + Math.PI / 2, 0),
         visibility: [75.97, 100],
       }),
       BCTent_1_2050: new BCTent_1_2050({
@@ -222,7 +222,7 @@ export default class BaseCamp extends BasicScene {
 
       BCFlag: new BCFlag({
         name: 'Flag',
-        position: new Vector3(6.2, -0.251, -18.331),
+        position: new Vector3(6.2, 0.251, -18.331),
         rotation: new Vector3(0.005, 0.291, -0.289),
         model: this.resources.items.BCFlag,
         visibility: [0, 25.87],
