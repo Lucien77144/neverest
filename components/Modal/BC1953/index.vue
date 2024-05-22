@@ -170,6 +170,14 @@
           </div>
         </div>
       </article>
+      <article class="modal__content__item content4">
+        <div class="content4__wrapper">
+          <!-- add the tedTalk video element from values -->
+          <div style="width: 600px">
+            <UIVideoPlayer :value="values?.tedTalk" />
+          </div>
+        </div>
+      </article>
     </section>
   </div>
   <div ref="progressRef" class="progress"></div>
@@ -180,6 +188,14 @@ import { ScrollManager, type TScrollEvent } from '#imports'
 import { Vue3Lottie } from 'vue3-lottie'
 import scrollAnimation from '~/assets/data/scroll.json'
 import clamp from '~/utils/functions/clamp'
+
+// Props
+const { values } = defineProps({
+  values: {
+    type: Object,
+    required: false,
+  },
+})
 
 // Bus
 const { $bus }: any = useNuxtApp()

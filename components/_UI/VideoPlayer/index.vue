@@ -1,41 +1,42 @@
 <template>
   <div class="video-player">
-    <video ref="video" class="video-player__video" loop></video>
-    <button v-if="!isPlaying" ref="play" class="video-player__play-button">Play</button>
-    <button v-if="isPlaying" ref="pause"class="video-player__pause-button">Pause</button>
+    <!-- <video ref="video" class="video-player__video" loop></video> -->
+    <div ref="videoWrapper" @click="togglePlay()"></div>
+
+    <button v-if="!isPlaying" ref="play" class="video-player__play-button">
+      Play
+    </button>
+    <button v-if="isPlaying" ref="pause" class="video-player__pause-button">
+      Pause
+    </button>
   </div>
 </template>
 
 <script lang="ts" setup>
-
 // Refs
-const video = ref<HTMLVideoElement | null>(null)
-const play = ref<HTMLButtonElement | null>(null)
-const pause = ref<HTMLButtonElement | null>(null)
+const videoWrapper = ref<HTMLDivElement>()
+const play = ref<HTMLButtonElement>()
+const pause = ref<HTMLButtonElement>()
 
 const isPlaying = ref(false)
 
+interface Props {
+  value: HTMLVideoElement
+}
+
 // Props
-const { value } = defineProps({
-  value: {
-    type: Object,
-    required: false,
-  },
-})
+const { value } = defineProps<Props>()
 
 // Methods
 const togglePlay = () => {
-  if (isPlaying.value) {
-    video.value?.pause()
-  } else {
-    video.value?.play()
-  }
+  isPlaying.value ? value?.pause() : value?.play()
   isPlaying.value = !isPlaying.value
 }
 
 // On mount
 onMounted(() => {
-  video.value?.addEventListener('click', togglePlay)
+  videoWrapper.value?.appendChild(value)
+  value.loop = true
 })
 </script>
 

@@ -1,6 +1,6 @@
 <template>
-  <div ref="modalRef" class="modal_dialog" v-if="template">
-    <component :is="{ ...template }"></component>
+  <div ref="modalRef" class="modal_dialog" v-if="data?.template">
+    <component :is="{ ...data.template }" :values="data.values"></component>
   </div>
 </template>
 
@@ -9,7 +9,10 @@
 const modalRef = ref<HTMLElement | null>(null)
 
 // Props
-const data = ref<any>(null)
+const data = ref<{
+  template?: any
+  values?: any
+} | null>(null)
 
 // Bus
 const { $bus }: any = useNuxtApp()
@@ -22,7 +25,7 @@ $bus.on('modal:open', (v: any) => {
 $bus.on('modal:destroy', () => {
   modalRef.value?.classList.add('modal_dialog--close')
   setTimeout(() => {
-    template.value = null
+    data.value = null
   }, 250)
 })
 </script>

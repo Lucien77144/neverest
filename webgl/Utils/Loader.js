@@ -201,17 +201,17 @@ export default class Loader {
   }
 
   /**
-   * Set subtitles for an audio
-   * @param {*} audio Audio element
+   * Set subtitles for an audio or video
+   * @param {*} element Audio / Video element
    * @param {*} subtitles Subtitles object
    */
-  setSubtitles(audio, subtitles) {
+  setSubtitles(element, subtitles) {
     const handleCueChange = (event) => {
       const cues = event.currentTarget.track.activeCues
       this.setSubtitlesCues(cues)
     }
 
-    // Init tracks of the audio
+    // Init tracks of the element
     Object.keys(subtitles).forEach((key) => {
       const trackEl = document.createElement('track')
       trackEl.src = subtitles[key]
@@ -221,28 +221,30 @@ export default class Loader {
       trackEl.default = this.i18n.locale.value == key
 
       trackEl.addEventListener('cuechange', handleCueChange)
-      audio.appendChild(trackEl)
+      element.appendChild(trackEl)
+
+      trackEl.track.mode = 'hidden'
     })
 
     // Update the track on locale change
-    this.$bus.on('lang:change', (locale) => this.onLangChange(audio, locale))
+    this.$bus.on('lang:change', (locale) => this.onLangChange(element, locale))
   }
 
   /**
    * On lang change, set the language of the subtitles
-   * @param {*} audio Audio element
+   * @param {*} element Audio / Video element
    * @param {*} locale New locale to use
    */
-  onLangChange(audio, locale) {
+  onLangChange(element, locale) {
     // Disable all text tracks that are currently active
-    Object.values(audio.textTracks)
+    Object.values(element.textTracks)
       .filter((x) => x.mode !== 'disabled')
       .forEach((x) => {
         x.mode = 'disabled'
       })
 
     // Enable the text track for a specific language
-    Object.values(audio.textTracks).filter(
+    Object.values(element.textTracks).filter(
       (x) => x.language == locale
     )[0].mode = 'showing'
   }
