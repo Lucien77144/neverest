@@ -40,9 +40,13 @@ interface Props {
 // Props
 const { value } = defineProps<Props>()
 
+// Store
+const setCues = useSubtitlesStore().setCues
+
 // Methods
 const togglePlay = () => {
   isPlaying.value ? value?.pause() : value?.play()
+  isPlaying.value && setCues([])
   isPlaying.value = !isPlaying.value
 }
 
@@ -86,6 +90,7 @@ onMounted(() => {
 
   value.addEventListener('ended', () => {
     isPlaying.value = false
+    setCues([])
   })
 })
 </script>

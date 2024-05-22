@@ -130,7 +130,6 @@ export default class Loader {
 
         video.load()
 
-        console.log({ video })
         video.addEventListener('loadeddata', () => {
           this.fileLoadEnd(resource, video)
         })
