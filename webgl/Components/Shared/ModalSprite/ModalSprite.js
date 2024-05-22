@@ -53,8 +53,8 @@ export default class ModalSprite extends BasicItem {
     this.scrollManager.disabled = open
     gsap.to(this.renderUniforms.uModalProgress, {
       value: open ? 1 : 0,
-      duration: 0.75,
-      ease: open ? 'power2.in' : 'power2.out',
+      duration: 1,
+      ease: open ? 'power2.in' : 'circ.out',
       onStart: () => this.$bus.emit('modal:init'),
       onUpdate: () => {
         if (this.renderUniforms.uModalProgress.value > 0.25) {

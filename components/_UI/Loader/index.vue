@@ -29,7 +29,8 @@ $bus.on('loading', (value: number) => {
   // On loading end
   if (loadValue.value === 100) {
     loader.value?.classList.add('disabled')
-    setTimeout(() => loader.value?.remove(), 500)
+    setTimeout(() => $bus.emit('loaded'), 300)
+    setTimeout(() => loader.value?.remove() , 500)
   }
 })
 </script>
