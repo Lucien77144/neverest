@@ -8,9 +8,11 @@
   >
     <div ref="videoWrapper" class="video-player__wrapper"></div>
     <div ref="glow" class="video-player__glow"></div>
+
     <button v-if="!isPlaying" ref="play" class="video-player__play-button">
       <img class="video-player__icon" src="/assets/img/Play.svg" alt="" />
     </button>
+
     <button v-if="isPlaying" ref="pause" class="video-player__pause-button">
       <img class="video-player__icon" src="/assets/img/Pause.svg" alt="" />
     </button>
