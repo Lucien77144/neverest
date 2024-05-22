@@ -9,7 +9,7 @@ export default class ModalSprite extends BasicItem {
   /**
    * Constructor
    */
-  constructor({ position, data }) {
+  constructor({ position, value }) {
     super()
     // Elements
     this.scrollManager = this.experience.scrollManager
@@ -17,7 +17,7 @@ export default class ModalSprite extends BasicItem {
     this.renderUniforms = this.experience.renderer.renderMesh.material.uniforms
     this.$bus = this.experience.$bus
     this.position = position
-    this.template = data
+    this.value = value
 
     // New elements
     this.camera = null
@@ -61,7 +61,7 @@ export default class ModalSprite extends BasicItem {
       ),
       onStart: () => this.$bus.emit('modal:init'),
       onComplete: () => {
-        this.$bus.emit('modal:open', this.template)
+        this.$bus.emit('modal:open', this.value)
         this.camera.fov = base.value
         this.camera.updateProjectionMatrix()
       },
