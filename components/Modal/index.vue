@@ -9,14 +9,14 @@
 const modalRef = ref<HTMLElement | null>(null)
 
 // Props
-const template = ref<any>(null)
+const data = ref<any>(null)
 
 // Bus
 const { $bus }: any = useNuxtApp()
 
 // Events
-$bus.on('modal:open', (tpl: any) => {
-  template.value = tpl
+$bus.on('modal:open', (v: any) => {
+  data.value = v
 })
 
 $bus.on('modal:destroy', () => {

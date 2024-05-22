@@ -9,7 +9,7 @@ export default class ModalSprite extends BasicItem {
   /**
    * Constructor
    */
-  constructor({ position, data }) {
+  constructor({ position, value }) {
     super()
     // Elements
     this.scrollManager = this.experience.scrollManager
@@ -18,7 +18,7 @@ export default class ModalSprite extends BasicItem {
     this.renderUniforms = this.experience.renderer.renderMesh.material.uniforms
     this.$bus = this.experience.$bus
     this.position = position
-    this.data = data
+    this.value = value
 
     // New elements
     this.camera = null

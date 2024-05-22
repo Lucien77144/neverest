@@ -1,4 +1,4 @@
-import { DoubleSide, InstancedMesh, MeshNormalMaterial, Object3D } from 'three'
+import { DoubleSide, InstancedMesh, MeshBasicMaterial, MeshNormalMaterial, Object3D } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import { BCTENT_2_1953 } from '~/const/blocking/baseCamp.const'
 
@@ -32,9 +32,10 @@ export default class BCTent_2_1953 extends BasicItem {
   setInstances() {
     const instance = this.resources.BCTent_2_1953.scene.children[0]
     const dummy = new Object3D()
+    console.log('instance', instance);
     this.item = new InstancedMesh(
       instance.geometry,
-      new MeshNormalMaterial(),
+      instance.material,
       BCTENT_2_1953.length
     )
 
