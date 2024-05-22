@@ -173,7 +173,7 @@ export default class BasicScene {
     ])
 
     // If mouse leave the hovered item, refresh the hovered item
-    if (this.hovered?.id !== hovered?.id) {
+    if (this.hovered?.item?.id !== hovered?.item?.id) {
       this.triggerFn(this.hovered, 'onMouseLeave')
       this.hovered = hovered
       this.triggerFn(this.hovered, 'onMouseEnter')
