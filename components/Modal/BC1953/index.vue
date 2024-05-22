@@ -163,7 +163,7 @@
                   />
                 </div>
               </div>
-              <p style="margin-left: 10rem; width: 500px">
+              <p style="margin-left: 7.5rem; width: 500px">
                 {{ $t('MATERIAL_1953') }}
               </p>
             </div>
@@ -172,9 +172,8 @@
       </article>
       <article class="modal__content__item content4">
         <div class="content4__wrapper">
-          <!-- add the tedTalk video element from values -->
-          <div style="width: 600px">
-            <UIVideoPlayer :value="values?.tedTalk" />
+          <div style="width: 781px">
+            <UIVideoPlayer :value="values?.return1953" />
           </div>
         </div>
       </article>

@@ -58,8 +58,9 @@ export default class BCFlag extends BasicItem {
       data: {
         template: this.modal,
         values: {
-          tedTalk: this.resources.tedTalkVideo
-        }
+          archives1953: this.resources.archives1953,
+          return1953: this.resources.return1953,
+        },
       },
     })
   }

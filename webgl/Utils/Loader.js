@@ -124,10 +124,10 @@ export default class Loader {
       action: (resource) => {
         const video = document.createElement('video')
         video.src = resource.source
-        
+
         // Subtitles
         resource.subtitles && this.setSubtitles(video, resource.subtitles)
-        
+
         video.load()
         video.addEventListener('loadeddata', () => {
           this.fileLoadEnd(resource, video)

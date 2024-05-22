@@ -1,7 +1,6 @@
 <template>
   <div class="video-player">
-    <!-- <video ref="video" class="video-player__video" loop></video> -->
-    <div ref="videoWrapper" @click="togglePlay()"></div>
+    <div ref="videoWrapper" class="video__wrapper" @click="togglePlay()"></div>
 
     <button v-if="!isPlaying" ref="play" class="video-player__play-button">
       Play
@@ -36,7 +35,11 @@ const togglePlay = () => {
 // On mount
 onMounted(() => {
   videoWrapper.value?.appendChild(value)
-  value.loop = true
+  value.style.width = '100%'
+
+  value.addEventListener('ended', () => {
+    isPlaying.value = false
+  })
 })
 </script>
 

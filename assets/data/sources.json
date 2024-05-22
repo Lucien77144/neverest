@@ -20,8 +20,7 @@
         "source": "/sounds/ted_talk.mp3",
         "subtitles": {
           "fr": "/subtitles/ted_talk/fr.vtt",
-          "en": "/subtitles/ted_talk/en.vtt",
-          "es": "/subtitles/ted_talk/es.vtt"
+          "en": "/subtitles/ted_talk/en.vtt"
         }
       }
     ]
@@ -31,16 +30,23 @@
     "data": {},
     "items": [
       {
-        "name": "tedTalkVideo",
-        "source": "/video/gniii.mp4",
+        "name": "archives1953",
+        "source": "/video/archives1953.mp4",
         "subtitles": {
-          "fr": "/subtitles/ted_talk/fr.vtt",
-          "en": "/subtitles/ted_talk/en.vtt",
-          "es": "/subtitles/ted_talk/es.vtt"
+          "fr": "/subtitles/archives1953/fr.vtt",
+          "en": "/subtitles/archives1953/en.vtt"
+        }
+      },
+      {
+        "name": "return1953",
+        "source": "/video/return1953.mp4",
+        "subtitles": {
+          "fr": "/subtitles/return1953/fr.vtt",
+          "en": "/subtitles/return1953/en.vtt"
         }
       }
     ]
-  }, 
+  },
   {
     "name": "textures",
     "data": {},
