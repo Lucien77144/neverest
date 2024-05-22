@@ -56,6 +56,11 @@
         "type": "texture"
       },
       {
+        "name": "BCMediumBox_1953Texture",
+        "source": "/img/texturesLoulou/textureBCMediumBox1953.jpg",
+        "type": "texture"
+      },
+      {
         "name": "dirt",
         "source": "/img/dirt.jpg",
         "type": "texture"
