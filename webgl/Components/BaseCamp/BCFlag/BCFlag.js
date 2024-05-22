@@ -55,7 +55,10 @@ export default class BCFlag extends BasicItem {
 
     this.components.modalSprite = new ModalSprite({
       position,
-      data: this.modal,
+      value: {
+        template: this.modal,
+        data: this.resources.tedTalkVideo
+      },
     })
   }
 
