@@ -45,6 +45,10 @@ export default class ModalSprite extends BasicItem {
     this.item.position.copy(this.position)
   }
 
+  onMouseEnter() {
+    console.log('enter');
+  }
+
   /**
    * Open modal
    * @param {boolean} open - Open or close the modal

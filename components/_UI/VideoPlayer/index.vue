@@ -35,10 +35,11 @@ const bounds = ref<DOMRect | null>(null)
 
 interface Props {
   value: HTMLVideoElement
+  poster: string
 }
 
 // Props
-const { value } = defineProps<Props>()
+const { value, poster } = defineProps<Props>()
 
 // Store
 const setCues = useSubtitlesStore().setCues
@@ -79,6 +80,7 @@ const animate = (e: any) => {
 onMounted(() => {
   videoWrapper.value?.appendChild(value)
   value.style.width = '100%'
+  value.poster = poster
 
   $bus.on('audio:mute', () => {
     value.muted = true

@@ -173,7 +173,10 @@
       <article class="modal__content__item content5">
         <div class="content5__wrapper">
           <div style="width: 781px">
-            <UIVideoPlayer :value="values?.return1953" />
+            <UIVideoPlayer
+              :value="values?.return1953"
+              poster="/img/preview_video1.jpg"
+            />
           </div>
           <p class="text translatable">
             {{ $t('RETURN_1953') }}
@@ -214,7 +217,10 @@
             style="max-width: 600px; margin-left: 20rem"
           >
             <div style="width: 600px">
-              <UIVideoPlayer :value="values?.archives1953" />
+              <UIVideoPlayer
+                :value="values?.archives1953"
+                poster="/img/preview_video2.jpg"
+              />
             </div>
             <p class="text-right w-100 translatableR">
               {{ $t('IMAGE_ARCHIVE') }}
