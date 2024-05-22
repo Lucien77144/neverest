@@ -26,6 +26,7 @@ export default class ModalSprite extends BasicItem {
     this.material = null
     this.active = false
     this.scale = 1
+    this.scaleFocus = 0
   }
 
   /**
@@ -46,7 +47,27 @@ export default class ModalSprite extends BasicItem {
   }
 
   onMouseEnter() {
-    console.log('enter');
+    const scale = { value: 0 }
+    gsap.to(scale, {
+      value: 0.3,
+      duration: 0.5,
+      ease: 'power1.out',
+      onUpdate: () => {
+        this.scaleFocus = scale.value
+      },
+    })
+  }
+
+  onMouseLeave() {
+    const scale = { value: this.scaleFocus }
+    gsap.to(scale, {
+      value: 0,
+      duration: 0.5,
+      ease: 'power1.out',
+      onUpdate: () => {
+        this.scaleFocus = scale.value
+      },
+    })
   }
 
   /**
@@ -95,6 +116,23 @@ export default class ModalSprite extends BasicItem {
   }
 
   /**
+   * Wiggle the sprite
+   */
+  wiggle() {
+    const scale = { value: this.scale }
+    this.wiggleAnimation = gsap.to(scale, {
+      value: 1.1,
+      duration: 1.25,
+      repeat: -1,
+      yoyo: true,
+      ease: 'power1.inOut',
+      onUpdate: () => {
+        this.scale = scale.value
+      },
+    })
+  }
+
+  /**
    * On click item
    */
   onClick() {
@@ -114,7 +152,7 @@ export default class ModalSprite extends BasicItem {
 
     const distance = camPos.distanceTo(pos)
 
-    const scale = clamp(distance / 40, 0.35, 1) * this.scale
+    const scale = clamp(distance / 40, 0.35, 1) * (this.scale + this.scaleFocus)
     this.item.scale.set(scale, scale, scale)
   }
 
@@ -133,6 +171,7 @@ export default class ModalSprite extends BasicItem {
     this.camera = this.parentScene.camera.instance
     this.setMaterial()
     this.setSprite()
+    this.wiggle()
   }
 
   /**
