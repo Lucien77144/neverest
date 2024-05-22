@@ -1,4 +1,4 @@
-import { Group, Scene } from 'three'
+import { FogExp2, Group, Scene } from 'three'
 import BasicCamera from './BasicCamera'
 import Experience from '~/webgl/Experience'
 import gsap from 'gsap'

@@ -41,6 +41,7 @@ export default class Loader {
       extensions: ['jpg', 'png', 'svg', 'webp'],
       action: (resource) => {
         const image = new Image()
+        image.name = resource.name
 
         image.addEventListener('load', () => {
           this.fileLoadEnd(resource, image)
@@ -50,7 +51,9 @@ export default class Loader {
           this.fileLoadEnd(resource, image)
         })
 
+      
         image.src = resource.source
+        
       },
     })
 

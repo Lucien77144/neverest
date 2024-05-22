@@ -18,29 +18,29 @@ export default class IFFloor extends BasicItem {
   setItem() {
     this.item = this.resources.IFFloor.scene.clone()
 
-    const testM = new CraieMaterial({
-      textureParams:{
-        textureSize:512,
-        nbOfColumns:1,
-        borderSize:0.05,
-        columnsOffset:0,
-        nbOfCurvePerColumns:50,
-        areCurveOnSameDirection:true,
-        curveDirection:'up',
-        curveDirectionAmountFactor:0.4,
-        maxCurveHorizontalDecalage:0.3,
-        maxHeightCurve:1,
-        maxThicknessCurve:1,
-        nbOfPointsPerCurve:2
-      },
-      side:0,
-      color:'#C8DFEA',
-      bgColor:'#F8ECE8'
-    }).instance
+    //const testM = new CraieMaterial({
+    //  textureParams:{
+    //    textureSize:512,
+    //    nbOfColumns:1,
+    //    borderSize:0.05,
+    //    columnsOffset:0,
+    //    nbOfCurvePerColumns:50,
+    //    areCurveOnSameDirection:true,
+    //    curveDirection:'up',
+    //    curveDirectionAmountFactor:0.4,
+    //    maxCurveHorizontalDecalage:0.3,
+    //    maxHeightCurve:1,
+    //    maxThicknessCurve:1,
+    //    nbOfPointsPerCurve:2
+    //  },
+    //  side:0,
+    //  color:'#C8DFEA',
+    //  bgColor:'#F8ECE8'
+    //}).instance
 
     this.item.traverse((e) => {
       if (!e.isMesh) return
-      e.material = testM
+      e.material = new MeshNormalMaterial()
     })
   }
 
