@@ -23,6 +23,8 @@ export default {
   MATERIAL_1953:
     'The ascent required equipment such as gas masks to withstand the high altitude',
   RETURN_1953: 'The return of the heroes to Kathmandu',
+  BASECAMP_1953: 'Base camp 1953',
+  IMAGE_ARCHIVE: 'Archive images',
   START: 'Start',
   NEXT: 'Next',
   PREV: 'Previous',

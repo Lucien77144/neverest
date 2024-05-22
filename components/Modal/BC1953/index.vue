@@ -217,7 +217,7 @@
               <UIVideoPlayer :value="values?.archives1953" />
             </div>
             <p class="text-right w-100 translatableR">
-              {{ $t('ACTORS_1953') }}
+              {{ $t('IMAGE_ARCHIVE') }}
             </p>
           </div>
         </div>
