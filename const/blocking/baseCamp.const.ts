@@ -41,7 +41,7 @@ export const BCMEDIUMBOX_1953: TBlockingInfos[] = [
     rotation: new Vector3(-Math.PI, 0.418, -Math.PI),
   },
   {
-    position: new Vector3(8.708, -0.028, -12.984),
+    position: new Vector3(7.708, -0.028, -9.984),
     rotation: new Vector3(Math.PI, -0.446, Math.PI),
   },
   {
@@ -95,7 +95,7 @@ export const BCBIGBOX_1953: TBlockingInfos[] = [
     rotation: new Vector3(0, -0.59, 0),
   },
   {
-    position: new Vector3(10.051, 0, -13.093),
+    position: new Vector3(9.051, 0, -11.093),
     rotation: new Vector3(0, 0.086, 0),
   },
   {
@@ -172,15 +172,15 @@ export const BCTENT_1_1953: TBlockingInfos[] = [
 export const BCTENT_2_1953: TBlockingInfos[] = [
   {
     position: new Vector3(-9.547, 0, -24.535),
-    rotation: new Vector3(0, 0.61, 0),
+    rotation: new Vector3(0, 0.61 - Math.PI / 2, 0),
   },
   {
-    position: new Vector3(5.046, 0, -21.257),
-    rotation: new Vector3(0, 0.23, 0),
+    position: new Vector3(4.046, 0, -21.257),
+    rotation: new Vector3(0, 0.23 - Math.PI / 2, 0),
   },
   {
     position: new Vector3(9.157, 0, -16.813),
-    rotation: new Vector3(0, 0.458, 0),
+    rotation: new Vector3(0, 0.558 - Math.PI / 2, 0),
   },
 ]
 
@@ -201,81 +201,81 @@ export const BCTENT_1_2024: TBlockingInfos[] = [
 export const BCTENT_2_2024: TBlockingInfos[] = [
   {
     position: new Vector3(-11.568, -0.522, -14.34),
-    rotation: new Vector3(Math.PI, -0.711 + Math.PI, Math.PI),
+    rotation: new Vector3(Math.PI, -0.711, Math.PI),
   },
   {
     position: new Vector3(-11.384, -0.522, -19.582),
-    rotation: new Vector3(Math.PI, -1.196 + Math.PI, Math.PI),
+    rotation: new Vector3(Math.PI, -1.196, Math.PI),
   },
   {
     position: new Vector3(-11.592, -0.522, -26.937),
-    rotation: new Vector3(Math.PI, -1.15 + Math.PI, Math.PI),
+    rotation: new Vector3(Math.PI, -1.15, Math.PI),
   },
   {
     position: new Vector3(-8.884, -0.522, -30.942),
-    rotation: new Vector3(Math.PI, -1.473 + Math.PI, Math.PI),
+    rotation: new Vector3(Math.PI, -1.473, Math.PI),
   },
   {
     position: new Vector3(-5.551, -0.522, -47.315),
-    rotation: new Vector3(Math.PI, -0.454 + Math.PI, Math.PI),
+    rotation: new Vector3(Math.PI, -0.454, Math.PI),
   },
   {
     position: new Vector3(1.486, -0.522, -56.101),
-    rotation: new Vector3(Math.PI, -1.105 + Math.PI, Math.PI),
+    rotation: new Vector3(Math.PI, -1.105, Math.PI),
   },
   {
     position: new Vector3(-8.468, -0.522, -59.765),
-    rotation: new Vector3(Math.PI, -0.452 + Math.PI, Math.PI),
+    rotation: new Vector3(Math.PI, -0.452, Math.PI),
   },
   {
     position: new Vector3(12.123, -0.288, -22.804),
-    rotation: new Vector3(-Math.PI, 1.109 + Math.PI, -Math.PI),
+    rotation: new Vector3(-Math.PI, 1.109, -Math.PI),
   },
   {
     position: new Vector3(-11.605, 0.108, -52.992),
-    rotation: new Vector3(Math.PI, -1.15 + Math.PI, Math.PI),
+    rotation: new Vector3(Math.PI, -1.15, Math.PI),
   },
   {
     position: new Vector3(15.217, -0.555, -37.222),
-    rotation: new Vector3(0, -1.269 + Math.PI, 0),
+    rotation: new Vector3(0, -1.269, 0),
   },
   {
     position: new Vector3(12.014, -0.555, -42.272),
-    rotation: new Vector3(0, -1.088 + Math.PI, 0),
+    rotation: new Vector3(0, -1.088, 0),
   },
   {
     position: new Vector3(8.533, -0.555, -46.167),
-    rotation: new Vector3(0, -0.937 + Math.PI, 0),
+    rotation: new Vector3(0, -0.937, 0),
   },
   {
     position: new Vector3(15.3, -0.555, -18.687),
-    rotation: new Vector3(0, -1.163 + Math.PI, 0),
+    rotation: new Vector3(0, -1.163, 0),
   },
   {
     position: new Vector3(4.134, -0.614, -28.875),
-    rotation: new Vector3(-Math.PI, 0.194 + Math.PI, -Math.PI),
+    rotation: new Vector3(-Math.PI, 0.194, -Math.PI),
   },
   {
     position: new Vector3(-3.518, -0.522, -71.106),
-    rotation: new Vector3(-Math.PI, 0.119 + Math.PI, -Math.PI),
+    rotation: new Vector3(-Math.PI, 0.119, -Math.PI),
   },
   {
     position: new Vector3(1.199, -0.522, -47.405),
-    rotation: new Vector3(-Math.PI, 0.161 + Math.PI, -Math.PI),
+    rotation: new Vector3(-Math.PI, 0.161, -Math.PI),
   },
   {
     position: new Vector3(10.874, -0.184, -31.476),
-    rotation: new Vector3(-Math.PI, 0.517 + Math.PI, -Math.PI),
+    rotation: new Vector3(-Math.PI, 0.517, -Math.PI),
   },
   {
     position: new Vector3(11.486, -0.428, -14.626),
-    rotation: new Vector3(-Math.PI, 1.514 + Math.PI, -Math.PI),
+    rotation: new Vector3(-Math.PI, 1.514, -Math.PI),
   },
 ]
 
 export const BCTENT_3_2024: TBlockingInfos[] = [
   {
-    position: new Vector3(-8.427, -0.336, -37.772),
+    position: new Vector3(-9.427, -0.336, -37.772),
     rotation: new Vector3(Math.PI, -1.43 + Math.PI, Math.PI),
   },
   {
@@ -340,11 +340,11 @@ export const BCTENT_1_2050: TBlockingInfos[] = [
 
 export const BCTENT_2_2050: TBlockingInfos[] = [
   {
-    position: new Vector3(2.056, -0.659, -13.835),
+    position: new Vector3(2.056, -0.1659, -13.835),
     rotation: new Vector3(-Math.PI, 0.589, -Math.PI),
   },
   {
-    position: new Vector3(11.486, -0.428, -14.626),
+    position: new Vector3(11.486, -0.1428, -14.626),
     rotation: new Vector3(-Math.PI, 1.514, -Math.PI),
   },
   {
@@ -356,7 +356,7 @@ export const BCTENT_2_2050: TBlockingInfos[] = [
     rotation: new Vector3(Math.PI, -1.196, Math.PI),
   },
   {
-    position: new Vector3(12.123, -0.51, -22.034),
+    position: new Vector3(12.123, -0.1, -22.034),
     rotation: new Vector3(0, 0.988, 0),
   },
   {
