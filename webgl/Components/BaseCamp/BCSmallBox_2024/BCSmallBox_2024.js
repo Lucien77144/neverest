@@ -1,6 +1,8 @@
 import { DoubleSide, InstancedMesh, MeshNormalMaterial, Object3D } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import { BCSMALLBOX_2024 } from '~/const/blocking/baseCamp.const'
+import CraieMaterial from '../../Shared/CraieMaterial/CraieMaterial'
+import TextureCraieMaterial from '../../Shared/TextureCraieMaterial/TextureCraieMaterial'
 
 export default class BCSmallBox_2024 extends BasicItem {
   /**
@@ -30,9 +32,38 @@ export default class BCSmallBox_2024 extends BasicItem {
    * Set Instances
    */
   setInstances() {
+    //const material = new CraieMaterial({
+    //  textureParams:{
+    //    textureSize:1024,
+    //    nbOfColumns:1,
+    //    borderSize:0.1,
+    //    columnsOffset:0.01,
+    //    nbOfCurvePerColumns:6,
+    //    areCurveOnSameDirection:true,
+    //    curveDirection:'down',
+    //    curveDirectionAmountFactor:0.5,
+    //    maxCurveHorizontalDecalage:0.5,
+    //    maxHeightCurve:1.5,
+    //    maxThicknessCurve:10,
+    //    nbOfPointsPerCurve:5,
+    //    maxBorderSideDecalage:0.03
+    //  },
+    //  side:0,
+    //  color:'#FFB2E6',
+    //  bgColor:'#F8ECE8',
+    //  displacementMap:this.resources.ground2024,
+    //  isMapEnable:1,
+    //  displacementMapIntensity:0,
+    //}).instance
+    const material = new TextureCraieMaterial({
+      side:0,
+      color:'#FFB2E6',
+      bgColor:'#F8ECE8',
+      texture:this.resources.BCSmallBox_2024Texture
+    }).instance
     const instance = this.resources.BCSmallBox_1953.scene.children[0]
     const dummy = new Object3D()
-    this.item = new InstancedMesh(instance.geometry, new MeshNormalMaterial(), BCSMALLBOX_2024.length)
+    this.item = new InstancedMesh(instance.geometry, material, BCSMALLBOX_2024.length)
 
     BCSMALLBOX_2024.forEach((el, i) => {
       dummy.position.set(el.position.x, el.position.y, el.position.z)

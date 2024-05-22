@@ -1,6 +1,8 @@
 import { DoubleSide, InstancedMesh, MeshNormalMaterial, Object3D } from 'three'
 import { BCTENT_3_2024 } from '~/const/blocking/baseCamp.const'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
+import CraieMaterial from '../../Shared/CraieMaterial/CraieMaterial'
+import TextureCraieMaterial from '../../Shared/TextureCraieMaterial/TextureCraieMaterial'
 
 export default class BCTent_3_2024 extends BasicItem {
   /**
@@ -30,11 +32,40 @@ export default class BCTent_3_2024 extends BasicItem {
    * Set Instances
    */
   setInstances() {
+    //const material = new CraieMaterial({
+    //  textureParams:{
+    //    textureSize:1024,
+    //    nbOfColumns:2,
+    //    borderSize:0,
+    //    columnsOffset:-0.02,
+    //    nbOfCurvePerColumns:25,
+    //    areCurveOnSameDirection:true,
+    //    curveDirection:'down',
+    //    curveDirectionAmountFactor:0.4,
+    //    maxCurveHorizontalDecalage:0.3,
+    //    maxHeightCurve:2,
+    //    maxThicknessCurve:1,
+    //    nbOfPointsPerCurve:13,
+    //    maxBorderSideDecalage:0.5
+    //  },
+    //  side:2,
+    //  color:'#556B2F',
+    //  bgColor:'#F8ECE8',
+    //  displacementMap:this.resources.ground2024,
+    //  isMapEnable:0,
+    //  displacementMapIntensity:2
+    //}).instance
+    const material = new TextureCraieMaterial({
+      side:0,
+      color:'#556B2F',
+      bgColor:'#F8ECE8',
+      texture:this.resources.BCTent3_2024Texture
+    }).instance
     const instance = this.resources.BCTent_3_2024.scene.children[0]
     const dummy = new Object3D()
     this.item = new InstancedMesh(
       instance.geometry,
-      new MeshNormalMaterial(),
+      material,
       BCTENT_3_2024.length
     )
 

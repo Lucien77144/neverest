@@ -1,5 +1,6 @@
 import { DoubleSide, MeshNormalMaterial } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
+import TextureCraieMaterial from '../../Shared/TextureCraieMaterial/TextureCraieMaterial'
 
 export default class BCTent_Main_2050 extends BasicItem {
   /**
@@ -37,8 +38,13 @@ export default class BCTent_Main_2050 extends BasicItem {
    * Set material
    */
   setMaterial() {
-    this.item.children[0].material = new MeshNormalMaterial()
-    this.item.children[0].material.side = DoubleSide
+    const material = new TextureCraieMaterial({
+      side:2,
+      color:'#FFD500',
+      bgColor:'#F8ECE8',
+      texture:this.resources.BCTent1_1953Texture
+    }).instance
+    this.item.children[0].material = material
   }
 
   /**
