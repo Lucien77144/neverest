@@ -41,6 +41,11 @@ export default class CraieMaterial {
 
         ctx.fillStyle = 'black'
         ctx.fillRect(0, 0, canvas.width, canvas.height)
+        ctx.fillStyle = 'rgba(255,255,0,1)'
+        ctx.fillRect(0,0,canvas.width,canvas.height*0.01)
+        ctx.fillRect(0,0,canvas.width*0.01,canvas.height)
+        ctx.fillRect(canvas.width*0.99,0,canvas.width*0.01,canvas.height)
+        ctx.fillRect(0,canvas.height*0.99,canvas.width,canvas.height*0.01)
 
         const nbOfGouttieres = nbOfColumns - 1
         const columnsWidth = canvas.width - (borderSize * canvas.width * 2)
@@ -157,11 +162,11 @@ export default class CraieMaterial {
 
         }
 
-        //var imageDataURL = canvas.toDataURL();
-        //var link = document.createElement('a');
-        //link.href = imageDataURL;
-        //link.download = 'canvas_texture.png';
-        //link.click();
+        var imageDataURL = canvas.toDataURL();
+        var link = document.createElement('a');
+        link.href = imageDataURL;
+        link.download = 'canvas_texture.jpg';
+        link.click();
 
         this.texture = new CanvasTexture(canvas)
 

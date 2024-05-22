@@ -1,6 +1,8 @@
 import { DoubleSide, InstancedMesh, MeshNormalMaterial, Object3D } from 'three'
 import { BCBIGBOX_1953 } from '~/const/blocking/baseCamp.const'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
+import CraieMaterial from '../../Shared/CraieMaterial/CraieMaterial'
+import TextureCraieMaterial from '../../Shared/TextureCraieMaterial/TextureCraieMaterial'
 
 export default class BCBigBox_1953 extends BasicItem {
   /**
@@ -31,8 +33,17 @@ export default class BCBigBox_1953 extends BasicItem {
    */
   setInstances() {
     const instance = this.resources.BCBigBox_1953.scene.children[0]
+    const material = new TextureCraieMaterial({
+      side:0,
+      color:'#0000FF',
+      bgColor:'#F8ECE8',
+      texture:this.resources.BCBigBox_1953Texture
+    }).instance
+
+    console.log(this.resources)
+    
     const dummy = new Object3D()
-    this.item = new InstancedMesh(instance.geometry, new MeshNormalMaterial(), BCBIGBOX_1953.length)
+    this.item = new InstancedMesh(instance.geometry, material, BCBIGBOX_1953.length)
 
     BCBIGBOX_1953.forEach((el, i) => {
       dummy.position.set(el.position.x, el.position.y, el.position.z)

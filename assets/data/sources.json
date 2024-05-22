@@ -51,6 +51,11 @@
         "type": "texture"
       },
       {
+        "name": "BCBigBox_1953Texture",
+        "source": "/img/texturesLoulou/textureBCBigBox1953.png",
+        "type": "texture"
+      },
+      {
         "name": "dirt",
         "source": "/img/dirt.jpg",
         "type": "texture"

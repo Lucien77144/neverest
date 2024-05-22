@@ -62,7 +62,6 @@ export default class BCTent_1_1953 extends BasicItem {
       displacementMapIntensity:2
     }).instance
     this.item.children[0].material.side = DoubleSide
-    console.log(this.resources.ground2024)
   }
 
   /**

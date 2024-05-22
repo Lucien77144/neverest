@@ -68,7 +68,7 @@ export default class Floor extends BasicItem {
    */
   setMesh() {
     this.item = new Mesh(this.geometry, this.material)
-    this.item.position.z = -30
+    this.item.position.z = -25
     //this.item.position.y = 1.4
     this.item.rotation.x = -Math.PI / 2
   }
