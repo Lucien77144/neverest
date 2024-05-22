@@ -1,5 +1,7 @@
 import { DoubleSide, MeshNormalMaterial } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
+import CraieMaterial from '../../Shared/CraieMaterial/CraieMaterial'
+import TextureCraieMaterial from '../../Shared/TextureCraieMaterial/TextureCraieMaterial'
 
 export default class BCMountain extends BasicItem {
   /**
@@ -37,8 +39,35 @@ export default class BCMountain extends BasicItem {
    * Set material
    */
   setMaterial() {
-    this.item.children[0].material = new MeshNormalMaterial()
-    this.item.children[0].material.side = DoubleSide
+    //this.item.children[0].material = new CraieMaterial({
+    //  textureParams:{
+    //    textureSize:1024,
+    //    nbOfColumns:1,
+    //    borderSize:0,
+    //    columnsOffset:0.04,
+    //    nbOfCurvePerColumns:8,
+    //    areCurveOnSameDirection:true,
+    //    curveDirection:'up',
+    //    curveDirectionAmountFactor:0.4,
+    //    maxCurveHorizontalDecalage:0.3,
+    //    maxHeightCurve:1,
+    //    maxThicknessCurve:1,
+    //    nbOfPointsPerCurve:20,
+    //    maxBorderSideDecalage:0.1
+    //  },
+    //  side:0,
+    //  color:'#EAEDFF',
+    //  bgColor:'#F8ECE8',
+    //  displacementMap:this.resources.ground2024,
+    //  isMapEnable:0,
+    //  displacementMapIntensity:0,
+    //}).instance
+    this.item.children[0].material  = new TextureCraieMaterial({
+      side:0,
+      color:'#EAEDFF',
+      bgColor:'#F8ECE8',
+      texture:this.resources.BCMountainTexture
+    }).instance
   }
 
   /**

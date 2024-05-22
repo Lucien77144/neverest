@@ -4,14 +4,14 @@ import ShaderCraieFrag from './ShaderCraie/ShaderCraie.frag?raw'
 
 export default class CraieMaterial {
 
-    constructor({textureParams, side, color, bgColor}){
+    constructor({textureParams, side, color, bgColor, displacementMap, displacementMapIntensity, isMapEnable}){
 
         this.texture = null
         this.instance = null
 
 
         this.generateTexture(textureParams)
-        this.createMaterial(side, color, bgColor)
+        this.createMaterial(side, color, bgColor, displacementMap, displacementMapIntensity)
     }
 
 
@@ -29,7 +29,8 @@ export default class CraieMaterial {
             maxCurveHorizontalDecalage,
             maxHeightCurve,
             maxThicknessCurve,
-            nbOfPointsPerCurve
+            nbOfPointsPerCurve,
+            maxBorderSideDecalage
         } = textureParams
 
 
@@ -40,6 +41,11 @@ export default class CraieMaterial {
 
         ctx.fillStyle = 'black'
         ctx.fillRect(0, 0, canvas.width, canvas.height)
+        ctx.fillStyle = 'rgba(255,255,0,1)'
+        ctx.fillRect(0,0,canvas.width,canvas.height*0.01)
+        ctx.fillRect(0,0,canvas.width*0.01,canvas.height)
+        ctx.fillRect(canvas.width*0.99,0,canvas.width*0.01,canvas.height)
+        ctx.fillRect(0,canvas.height*0.99,canvas.width,canvas.height*0.01)
 
         const nbOfGouttieres = nbOfColumns - 1
         const columnsWidth = canvas.width - (borderSize * canvas.width * 2)
@@ -71,31 +77,31 @@ export default class CraieMaterial {
 
                 const curve = new QuadraticBezierCurve(
                     new Vector2(
-                        columnXStartPos,
-                        canvas.height*i/nbOfCurvePerColumns
+                        columnXStartPos+((Math.random()-0.5)*singleColumnWidth*maxBorderSideDecalage),
+                        borderSize * canvas.height + (canvas.height-2*borderSize*canvas.height )*i/nbOfCurvePerColumns
                     ),
                     new Vector2(
                         columnXStartPos + singleColumnWidth * 0.5 + curveHorizontalDecalage,
-                        canvas.height * ( i + 0.25 + (curveVerticalDirection * Math.random() * maxHeightCurve))/nbOfCurvePerColumns
+                        borderSize * canvas.height + (canvas.height-2*borderSize*canvas.height ) * ( i + 0.25 + (curveVerticalDirection * Math.random() * maxHeightCurve))/nbOfCurvePerColumns
                     ),
                     new Vector2(
-                        columnXEndPos,
-                        canvas.height * (i + 0.5) / nbOfCurvePerColumns
+                        columnXEndPos+((Math.random()-0.5)*singleColumnWidth*maxBorderSideDecalage),
+                        borderSize * canvas.height + (canvas.height-2*borderSize*canvas.height) * (i + 0.5) / nbOfCurvePerColumns
                     )
                 )
 
                 const curveLeft = new QuadraticBezierCurve(
                     new Vector2(
-                        columnXEndPos,
-                        canvas.height * (i + 0.5) / nbOfCurvePerColumns
+                        columnXEndPos+((Math.random()-0.5)*singleColumnWidth*maxBorderSideDecalage),
+                        borderSize * canvas.height + (canvas.height-2*borderSize*canvas.height) * (i + 0.5) / nbOfCurvePerColumns
                     ),
                     new Vector2(
                         columnXStartPos + singleColumnWidth * 0.5 + curveHorizontalDecalage,
-                        canvas.height * (i + 0.75 + (curveVerticalDirection * Math.random() * maxHeightCurve)) / nbOfCurvePerColumns
+                        borderSize * canvas.height + (canvas.height-2*borderSize*canvas.height) * (i + 0.75 + (curveVerticalDirection * Math.random() * maxHeightCurve)) / nbOfCurvePerColumns
                     ),
                     new Vector2(
-                        columnXStartPos,
-                        canvas.height * (i + 1) / nbOfCurvePerColumns
+                        columnXStartPos+((Math.random()-0.5)*singleColumnWidth*maxBorderSideDecalage),
+                        borderSize * canvas.height + (canvas.height-2*borderSize*canvas.height) * (i + 1) / nbOfCurvePerColumns
                     )
                 )
 
@@ -116,7 +122,7 @@ export default class CraieMaterial {
                     ctx.beginPath()
                     ctx.arc(
                         point.x,
-                        point.y+Math.random()*10,
+                        point.y+Math.random()*8,
                         thicknessCurve*Math.random(),
                         0,
                         Math.PI * 2
@@ -142,7 +148,7 @@ export default class CraieMaterial {
                     ctx.beginPath()
                     ctx.arc(
                       point.x,
-                      point.y+Math.random()*10,
+                      point.y+Math.random()*8,
                       thicknessCurve*Math.random(),
                       0,
                       Math.PI * 2
@@ -156,6 +162,12 @@ export default class CraieMaterial {
 
         }
 
+        var imageDataURL = canvas.toDataURL();
+        var link = document.createElement('a');
+        link.href = imageDataURL;
+        link.download = 'canvas_texture.jpg';
+        //link.click();
+
         this.texture = new CanvasTexture(canvas)
 
         if(this.instance){
@@ -165,7 +177,7 @@ export default class CraieMaterial {
 
     }
 
-    createMaterial(side, color, bgColor){
+    createMaterial(side, color, bgColor, displacementMap, displacementMapIntensity, isMapEnable){
         this.instance = new ShaderMaterial({
             side,
             vertexShader:ShaderCraieVert,
@@ -178,7 +190,10 @@ export default class CraieMaterial {
                 uMaskNoiseIntensity: new Uniform(0),
                 uMaskNoiseWidth: new Uniform(0),
                 uDecalageBorderLeftRight: new Uniform(0),
-                uTextureRepetitions : new Uniform(0)
+                uTextureRepetitions : new Uniform(0),
+                uDisplacementMap: new Uniform(displacementMap),
+                uIsMapEnable:new Uniform(isMapEnable),
+                uDisplacementMapIntensity: new Uniform(displacementMapIntensity)
             },
             transparent:false
         })

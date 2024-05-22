@@ -122,6 +122,7 @@ export default class Resources {
       }
 
       this.items[file.resource.name] = data
+      
 
       // Progress and event
       this.groups.current.loaded++

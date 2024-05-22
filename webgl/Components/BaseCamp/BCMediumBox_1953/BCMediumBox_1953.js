@@ -2,6 +2,8 @@ import { DoubleSide, InstancedMesh, MeshNormalMaterial, Object3D } from 'three'
 import { BCMEDIUMBOX_1953 } from '~/const/blocking/baseCamp.const'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
+import TextureCraieMaterial from '../../Shared/TextureCraieMaterial/TextureCraieMaterial'
+
 export default class BCMediumBox_1953 extends BasicItem {
   /**
    * Constructor
@@ -31,8 +33,14 @@ export default class BCMediumBox_1953 extends BasicItem {
    */
   setInstances() {
     const instance = this.resources.BCMediumBox_1953.scene.children[0]
+    const material = new TextureCraieMaterial({
+      side:0,
+      color:'#FF0000',
+      bgColor:'#F8ECE8',
+      texture:this.resources.BCMediumBox_1953Texture
+    }).instance
     const dummy = new Object3D()
-    this.item = new InstancedMesh(instance.geometry, new MeshNormalMaterial(), BCMEDIUMBOX_1953.length)
+    this.item = new InstancedMesh(instance.geometry, material, BCMEDIUMBOX_1953.length)
 
     BCMEDIUMBOX_1953.forEach((el, i) => {
       dummy.position.set(el.position.x, el.position.y, el.position.z)

@@ -1,5 +1,7 @@
-import { DoubleSide, MeshNormalMaterial } from 'three'
+import { DoubleSide, MeshBasicMaterial, MeshNormalMaterial } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
+import CraieMaterial from '../../Shared/CraieMaterial/CraieMaterial'
+import TextureCraieMaterial from '../../Shared/TextureCraieMaterial/TextureCraieMaterial'
 
 export default class BCCailloux extends BasicItem {
   /**
@@ -37,8 +39,38 @@ export default class BCCailloux extends BasicItem {
    * Set material
    */
   setMaterial() {
-    this.item.children[0].material = new MeshNormalMaterial()
-    this.item.children[0].material.side = DoubleSide
+    //const material = new CraieMaterial({
+    //  textureParams:{
+    //    textureSize:1024,
+    //    nbOfColumns:1,
+    //    borderSize:0,
+    //    columnsOffset:-0.02,
+    //    nbOfCurvePerColumns:20,
+    //    areCurveOnSameDirection:true,
+    //    curveDirection:'down',
+    //    curveDirectionAmountFactor:0.4,
+    //    maxCurveHorizontalDecalage:0.3,
+    //    maxHeightCurve:2,
+    //    maxThicknessCurve:2,
+    //    nbOfPointsPerCurve:4,
+    //    maxBorderSideDecalage:0.5
+    //  },
+    //  side:0,
+    //  color:'#0F2310',
+    //  bgColor:'#F8ECE8',
+    //  displacementMap:this.resources.ground2024,
+    //  isMapEnable:0,
+    //  displacementMapIntensity:0
+    //}).instance
+
+    const material = new TextureCraieMaterial({
+      side:0,
+      color:'#0F2310',
+      bgColor:'#F8ECE8',
+      texture:this.resources.BCCaillouTexture
+    }).instance
+    this.item.children[0].material = material
+    
   }
 
   /**

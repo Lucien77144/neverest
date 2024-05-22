@@ -57,6 +57,71 @@
         "type": "texture"
       },
       {
+        "name": "BCBigBox_1953Texture",
+        "source": "/img/texturesLoulou/textureBCBigBox1953.png",
+        "type": "texture"
+      },
+      {
+        "name": "BCMediumBox_1953Texture",
+        "source": "/img/texturesLoulou/textureBCMediumBox1953.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "BCSmallBox_1953Texture",
+        "source": "/img/texturesLoulou/textureBCSmallBox1953.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "BCTent1_1953Texture",
+        "source": "/img/texturesLoulou/textureBCTent11953.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "BCTent2_1953Texture",
+        "source": "/img/texturesLoulou/textureBCTent21953.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "BCTent3_1953Texture",
+        "source": "/img/texturesLoulou/textureBCTent31953.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "BCCaillouTexture",
+        "source": "/img/texturesLoulou/textureBCCaillou.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "BCFloorTexture",
+        "source": "/img/texturesLoulou/textureBCFloor.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "BCMountainLSTexture",
+        "source": "/img/texturesLoulou/textureBCMountainLS.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "BCMountainLTexture",
+        "source": "/img/texturesLoulou/textureBCMountainL.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "BCMountainRSTexture",
+        "source": "/img/texturesLoulou/textureBCMountainRS.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "BCMountainRTexture",
+        "source": "/img/texturesLoulou/textureBCMountainR.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "BCMountainTexture",
+        "source": "/img/texturesLoulou/textureBCMountain.jpg",
+        "type": "texture"
+      },
+      {
         "name": "dirt",
         "source": "/img/dirt.jpg",
         "type": "texture"
@@ -98,7 +163,7 @@
       },
       {
         "name": "CloudImg",
-        "source": "/img/TestTransi/cloud.jpg",
+        "source": "/img/Degrade.jpg",
         "type": "texture"
       },
       {
