@@ -22,6 +22,7 @@ export default {
   ACTORS_1953: 'Edmund Hillary and Tensing Norgay',
   MATERIAL_1953:
     'The ascent required equipment such as gas masks to withstand the high altitude',
+  RETURN_1953: 'The return of the heroes to Kathmandu',
   START: 'Start',
   NEXT: 'Next',
   PREV: 'Previous',
