@@ -56,7 +56,7 @@
       >
         <img
           class="svg__container rotatable"
-          src="/assets/img/HS-Everest-1953_1.svg"
+          src="/assets/img/HS-Everest-1953_1_bg.png"
           alt=""
         />
         <img
@@ -158,7 +158,7 @@
                 <div class="translatable svg__gaz_mask__container">
                   <img
                     class="svg__container svg__gaz_mask"
-                    src="/assets/img/gaz_mask.svg"
+                    src="/assets/img/gaz_mask.png"
                     alt=""
                   />
                 </div>
@@ -170,10 +170,53 @@
           </div>
         </div>
       </article>
-      <article class="modal__content__item content4">
-        <div class="content4__wrapper">
+      <article class="modal__content__item content5">
+        <div class="content5__wrapper">
           <div style="width: 781px">
             <UIVideoPlayer :value="values?.return1953" />
+          </div>
+          <p class="text translatable">
+            {{ $t('RETURN_1953') }}
+          </p>
+        </div>
+      </article>
+      <article class="modal__content__item content6">
+        <div class="content6__wrapper">
+          <div class="position-relative">
+            <div
+              style="
+                transform: rotate(-1deg);
+                display: flex;
+                flex-direction: column;
+                width: 1000px;
+              "
+            >
+              <div class="position-relative" style="width: 375px">
+                <div class="translatable tent_1953__container">
+                  <img
+                    class="svg__container tent_1953"
+                    src="/assets/img/tent_1953.png"
+                    alt=""
+                  />
+                </div>
+                <img
+                  class="img__container translatable"
+                  src="/assets/img/HS-Everest-1953_6.jpg"
+                />
+              </div>
+              <p style="margin-left: -5rem; width: 500px">
+                {{ $t('BASECAMP_1953') }}
+              </p>
+            </div>
+          </div>
+          <div
+            class="position-relative"
+            style="max-width: 600px; margin-left: 20rem"
+          >
+            <div style="width: 600px">
+              <UIVideoPlayer :value="values?.archives1953" />
+            </div>
+            <p class="text-right w-100 translatableR">{{ $t('ACTORS_1953') }}</p>
           </div>
         </div>
       </article>
@@ -254,8 +297,8 @@ onMounted(() => {
       scrollRef.value.style.transform = `translateX(-${val.current}px)`
 
       if (progressRef.value && maxScroll) {
-        const progress =
-          Math.round((val.current / (maxScroll - viewport.width)) * 10000) / 100
+        const progress = val.current / (maxScroll - viewport.width) * 100
+        // Math.round((val.current / (maxScroll - viewport.width)) * 10000) / 100
         progressRef.value.style.width = `${progress}%`
       }
     }

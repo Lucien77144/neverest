@@ -30,19 +30,19 @@
     "data": {},
     "items": [
       {
-        "name": "archives1953",
-        "source": "/video/archives1953.mp4",
-        "subtitles": {
-          "fr": "/subtitles/archives1953/fr.vtt",
-          "en": "/subtitles/archives1953/en.vtt"
-        }
-      },
-      {
         "name": "return1953",
         "source": "/video/return1953.mp4",
         "subtitles": {
           "fr": "/subtitles/return1953/fr.vtt",
           "en": "/subtitles/return1953/en.vtt"
+        }
+      },
+      {
+        "name": "archives1953",
+        "source": "/video/archives1953.mp4",
+        "subtitles": {
+          "fr": "/subtitles/archives1953/fr.vtt",
+          "en": "/subtitles/archives1953/en.vtt"
         }
       }
     ]

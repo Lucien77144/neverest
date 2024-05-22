@@ -129,6 +129,8 @@ export default class Loader {
         resource.subtitles && this.setSubtitles(video, resource.subtitles)
 
         video.load()
+
+        console.log({ video })
         video.addEventListener('loadeddata', () => {
           this.fileLoadEnd(resource, video)
         })
@@ -246,7 +248,7 @@ export default class Loader {
     // Enable the text track for a specific language
     Object.values(element.textTracks).filter(
       (x) => x.language == locale
-    )[0].mode = 'showing'
+    )[0].mode = 'hidden'
   }
 
   /**

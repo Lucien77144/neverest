@@ -1,3 +1,8 @@
+img {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
 .modal {
   position: fixed;
   display: flex;
@@ -55,7 +60,7 @@
 
     &__wrapper {
       height: auto;
-      width: 40%;
+      width: min(40%, 450px);
       margin: auto;
       display: flex;
       flex-direction: column;
@@ -66,7 +71,7 @@
 
       .modal__scroll__bg {
         position: absolute;
-        height: 100%;
+        height: auto;
         width: 100%;
         top: 50%;
         left: 50%;
@@ -276,6 +281,48 @@
         position: absolute;
         top: 5rem;
         left: -75%;
+      }
+    }
+  }
+}
+
+.content5 {
+  &__wrapper {
+    margin-left: 15rem;
+
+    .text {
+      margin-top: 1rem;
+      margin-left: 7.5rem;
+      width: 750px;
+      text-align: end;
+    }
+  }
+}
+
+.content6 {
+  &__wrapper {
+    margin-left: 15rem;
+    display: grid;
+    gap: 15vh;
+
+    .border {
+      position: absolute;
+      transform: rotate(-16.23deg);
+      width: 35%;
+      left: 31%;
+      top: 0%;
+    }
+
+    .img__container {
+      margin: 0;
+    }
+
+    .tent_1953 {
+      &__container {
+        width: 650px;
+        position: absolute;
+        top: 0;
+        left: 17.5rem;
       }
     }
   }

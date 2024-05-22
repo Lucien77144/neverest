@@ -23,6 +23,9 @@ export default {
   ACTORS_1953: 'Edmund Hillary et Tensing Norgay',
   MATERIAL_1953:
     'L’ascension nécessitait du matériel comme des masques à gaz pour supporter la haute altitude ',
+  RETURN_1953: 'Le retour des héros à Katmandou',
+  BASECAMP_1953: 'Camp de base 1953',
+  IMAGE_ARCHIVE: 'Images d’archive',
   START: 'Démarrer',
   NEXT: 'Suivant',
   PREV: 'Précédent',
