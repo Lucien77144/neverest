@@ -1,5 +1,5 @@
 <template>
-  <Landing v-if="!active && landing" />
+  <Landing v-if="!activeStatus && landing" />
   <Interface />
   <div id="webgl-css-wrapper">
     <WebGLCSS2DRenderer />
@@ -31,6 +31,7 @@ const exp = shallowRef<Experience | null>(null)
 // Refs
 const canvasRef = ref<HTMLElement | null>(null)
 const startBtn = ref<HTMLElement | null>(null)
+const activeStatus = ref<boolean>(false)
 
 // Route
 const route = useRoute()
@@ -39,6 +40,12 @@ const route = useRoute()
 const active = computed(() => useExperienceStore().getActive)
 const landing = computed(() => useExperienceStore().getLanding)
 const navigation = computed(() => useExperienceStore().getNavigation)
+
+watch(active, (v: boolean) =>
+  setTimeout(() => {
+    activeStatus.value = v
+  }, 750)
+)
 
 watch(navigation, (v) => {
   if (v.scene?.name == 'intro') {
