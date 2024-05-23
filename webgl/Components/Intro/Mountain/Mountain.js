@@ -25,8 +25,8 @@ export default class Mountain extends BasicItem {
   setMaterial() {
     this.material = new CraieMaterial({
       textureParams:{
-        textureSize:2048,
-        nbOfColumns:7,
+        textureSize:1024,
+        nbOfColumns:1,
         borderSize:0.05,
         columnsOffset:-0.01,
         nbOfCurvePerColumns:15,
@@ -49,7 +49,8 @@ export default class Mountain extends BasicItem {
 
   setItem() {
     const item = this.resources.introMountain.scene.clone()
-    this.item = item.children[0].children[0].children[0].children[0]
+    console.log(item)
+    this.item = item.children[0]
     this.item.position.y-=2
     this.item.rotation.x = -Math.PI * 0.5
     this.item.scale.set(0.0028, 0.0028, 0.0028)

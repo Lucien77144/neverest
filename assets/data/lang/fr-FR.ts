@@ -37,6 +37,13 @@ export default {
   BASECAMP: 'Camp de base',
   ICEFALL: 'Chute de glace',
   SOUTHCOL: 'Col sud',
+  NEVERESTBUTTRESS: 'Contrefort Neverest',
+  AMERICANBUTTRESS:'Contrefort Américain',
+  NORTHEASTRIDGE:'Arête Nord-Est',
+  NORTHRIDGE:'Arête Nord',
+  GREATCOULOIR:'Grand Couloir',
+  JAPANESECOULOIR:'Couloir Japonais',
+  WESTRIDGE:'Arête Ouest',
   INTRO_TITLE_1: 'Ouvrez la voie',
   INTRO_TITLE_2: 'Neverest',
 }
