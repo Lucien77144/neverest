@@ -1,6 +1,6 @@
 <template>
   <div class="IC_text">
-    <div class="IC_text-secondary">
+    <!-- <div class="IC_text-secondary">
       <div class="IC_text-secondaryWrapper">
         <UIIconBtn
           :disable="false"
@@ -15,22 +15,22 @@
           {{ $t('LANG.EN.TAG') }}
         </UIIconBtn>
       </div>
-    </div>
+    </div> -->
     <UIIconBtn
-      :big="true"
+      :big="false"
       :is-disabled="disabled"
       @click="setDisabled(!disabled)"
       ><img class="icon-big" src="/img/icons/subtitle.svg" alt=""
     /></UIIconBtn>
   </div>
   <div class="IC_sound">
-    <div class="IC_sound-secondary">
+    <!-- <div class="IC_sound-secondary">
       <div class="IC_sound-secondaryWrapper">
         <UIIconBtn><img src="/img/icons/music.svg" alt="" /></UIIconBtn>
         <UIIconBtn><img src="/img/icons/voice.svg" alt="" /></UIIconBtn>
       </div>
-    </div>
-    <UIIconBtn :big="true" :is-disabled="isMuted" @click="toggleMute()"
+    </div> -->
+    <UIIconBtn :big="false" :is-disabled="isMuted" @click="toggleMute()"
       ><img class="icon-big" src="/img/icons/sound.svg" alt=""
     /></UIIconBtn>
   </div>

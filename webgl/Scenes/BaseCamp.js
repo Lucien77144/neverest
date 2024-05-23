@@ -130,7 +130,7 @@ export default class BaseCamp extends BasicScene {
         name: 'BCTent_2_1953',
         position: new Vector3(0, 0, 0),
         rotation: new Vector3(0, 0, 0),
-        visibility: [0, 17.15],
+        visibility: [0, 25.87],
       }),
       BCTent_3_1953: new BCTent_3_1953({
         name: 'BCTENT_3_1953_1',

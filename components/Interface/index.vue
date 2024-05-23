@@ -8,6 +8,7 @@
       <NextScene />
       <UIProgressBar />
       <UIInputControl />
+      <UILangPicker />
     </div>
   </div>
 </template>
