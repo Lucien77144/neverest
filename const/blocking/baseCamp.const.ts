@@ -179,7 +179,7 @@ export const BCTENT_2_1953: TBlockingInfos[] = [
     rotation: new Vector3(0, 0.23 - Math.PI / 2, 0),
   },
   {
-    position: new Vector3(9.157, 0, -16.813),
+    position: new Vector3(9.507, 0, -16.813),
     rotation: new Vector3(0, 0.558 - Math.PI / 2, 0),
   },
 ]

@@ -51,9 +51,7 @@ export default class Loader {
           this.fileLoadEnd(resource, image)
         })
 
-      
         image.src = resource.source
-        
       },
     })
 
@@ -130,6 +128,16 @@ export default class Loader {
 
         // Subtitles
         resource.subtitles && this.setSubtitles(video, resource.subtitles)
+
+        this.$bus.on('audio:mute', () => {
+          console.log('mute')
+
+          video.muted = true
+        })
+
+        this.$bus.on('audio:unmute', () => {
+          video.muted = false
+        })
 
         video.load()
 

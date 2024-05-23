@@ -6,11 +6,8 @@
     <div ref="footerRef" class="start__footer">
       <p>{{ $t('LANDING_START') }}</p>
       <div class="start__footer__content">
-        <UIBtn @click="start(false)">
-          {{ $t('YES') }}
-        </UIBtn>
-        <UIBtn @click="start(true)">
-          {{ $t('NO') }}
+        <UIBtn @click="start()">
+          {{ $t('ENTER') }}
         </UIBtn>
       </div>
     </div>
@@ -48,8 +45,8 @@ $bus.on('loaded', () => {
  * Start the experience
  * @param muted - If the audio should be muted
  */
-const start = (muted: boolean) => {
-  $bus.emit(muted ? 'audio:mute' : 'audio:unmute')
+const start = () => {
+  $bus.emit('audio:unmute')
   $bus.emit('start')
 
   if (landingRef.value) {
