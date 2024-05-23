@@ -47,27 +47,31 @@ export default class ModalSprite extends BasicItem {
   }
 
   onMouseEnter() {
-    const scale = { value: 0 }
-    gsap.to(scale, {
-      value: 0.3,
-      duration: 0.5,
-      ease: 'power1.out',
-      onUpdate: () => {
-        this.scaleFocus = scale.value
-      },
-    })
+    // const scale = { value: 0 }
+    // gsap.to(scale, {
+    //   value: 0.3,
+    //   duration: 0.5,
+    //   ease: 'power1.out',
+    //   onUpdate: () => {
+    //     this.scaleFocus = scale.value
+    //   },
+    // })
+
+    this.experience.canvas.style.cursor = 'pointer'
   }
 
   onMouseLeave() {
-    const scale = { value: this.scaleFocus }
-    gsap.to(scale, {
-      value: 0,
-      duration: 0.5,
-      ease: 'power1.out',
-      onUpdate: () => {
-        this.scaleFocus = scale.value
-      },
-    })
+    // const scale = { value: this.scaleFocus }
+    // gsap.to(scale, {
+    //   value: 0,
+    //   duration: 0.5,
+    //   ease: 'power1.out',
+    //   onUpdate: () => {
+    //     this.scaleFocus = scale.value
+    //   },
+    // })
+
+    this.experience.canvas.style.cursor = 'auto'
   }
 
   /**
@@ -115,22 +119,22 @@ export default class ModalSprite extends BasicItem {
     }
   }
 
-  /**
-   * Wiggle the sprite
-   */
-  wiggle() {
-    const scale = { value: this.scale }
-    this.wiggleAnimation = gsap.to(scale, {
-      value: 1.1,
-      duration: 1.25,
-      repeat: -1,
-      yoyo: true,
-      ease: 'power1.inOut',
-      onUpdate: () => {
-        this.scale = scale.value
-      },
-    })
-  }
+  // /**
+  //  * Wiggle the sprite
+  //  */
+  // wiggle() {
+  //   const scale = { value: this.scale }
+  //   this.wiggleAnimation = gsap.to(scale, {
+  //     value: 1.1,
+  //     duration: 1.25,
+  //     repeat: -1,
+  //     yoyo: true,
+  //     ease: 'power1.inOut',
+  //     onUpdate: () => {
+  //       this.scale = scale.value
+  //     },
+  //   })
+  // }
 
   /**
    * On click item
@@ -171,7 +175,7 @@ export default class ModalSprite extends BasicItem {
     this.camera = this.parentScene.camera.instance
     this.setMaterial()
     this.setSprite()
-    this.wiggle()
+    // this.wiggle()
   }
 
   /**

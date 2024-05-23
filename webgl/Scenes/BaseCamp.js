@@ -1,4 +1,4 @@
-import { Vector3 } from 'three'
+import { DirectionalLight, DirectionalLightHelper, Group, Vector3 } from 'three'
 import BaseCampCamera from '../Components/BaseCamp/BaseCampCamera/BaseCampCamera'
 import BasicScene from '../Modules/Basics/BasicScene'
 import Floor from '../Components/BaseCamp/Floor/Floor'
@@ -31,6 +31,7 @@ import BCFlag from '../Components/BaseCamp/BCFlag/BCFlag'
 import BCCailloux from '../Components/BaseCamp/BCCailloux/BCCailloux'
 
 import { ModalBC1953 } from '#components'
+import BaseCampLight from '../Components/BaseCamp/BaseCampLight/BaseCampLight'
 
 export default class BaseCamp extends BasicScene {
   /**
@@ -64,7 +65,7 @@ export default class BaseCamp extends BasicScene {
     // Components
     this.components = {
       floor: new Floor(),
-      lights: new Lights(),
+      lights: new BaseCampLight(),
 
       // BOX
 
@@ -140,7 +141,7 @@ export default class BaseCamp extends BasicScene {
       BCTent_1_2024: new BCTent_1_2024({
         name: 'BC_Tent_1_2024_1',
         position: new Vector3(0.328, 0, -35.809),
-        rotation: new Vector3(0, -0.5  + Math.PI / 2, 0),
+        rotation: new Vector3(0, -0.5 + Math.PI / 2, 0),
         visibility: [25.87, 75.97],
       }),
       BCTent_2_2024: new BCTent_2_2024({
@@ -158,7 +159,7 @@ export default class BaseCamp extends BasicScene {
       BCTent_Main_2050: new BCTent_Main_2050({
         name: 'BCTent_Main_2050',
         position: new Vector3(0.328, 0, -35.809),
-        rotation: new Vector3(0, -0.5  + Math.PI / 2, 0),
+        rotation: new Vector3(0, -0.5 + Math.PI / 2, 0),
         visibility: [75.97, 100],
       }),
       BCTent_1_2050: new BCTent_1_2050({

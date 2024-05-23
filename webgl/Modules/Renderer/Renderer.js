@@ -1,4 +1,5 @@
 import {
+  ACESFilmicToneMapping,
   Color,
   LinearFilter,
   Mesh,
@@ -179,7 +180,8 @@ export default class Renderer {
     // Options
     this.instance.physicallyCorrectLights = true
     this.instance.outputColorSpace = SRGBColorSpace
-    this.instance.toneMapping = NoToneMapping
+    // this.instance.toneMapping = NoToneMapping
+    this.instance.toneMapping = ACESFilmicToneMapping
     this.instance.toneMappingExposure = 1
 
     // Context

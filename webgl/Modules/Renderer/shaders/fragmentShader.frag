@@ -118,9 +118,9 @@ void main() {
     float focNoise = smoothstep(0., 1., cnoise(focUV * 15.));
     float circle = length(focUV - .35 * focNoise);
 
-    float bwTime = (cos(uTime * .001) + uTime * .5) * .00075;
+    float bwTime = (cos(uTime * .001) + uTime * .5) * -.001;
     vec2 bwUv = vec2(focUV.x * cos(bwTime) - focUV.y * sin(bwTime), focUV.x * sin(bwTime) + focUV.y * cos(bwTime));
-    float bwNoise = smoothstep(0., 1., cnoise(focUV * 4. + bwTime)) * .2;
+    float bwNoise = smoothstep(0., 1., cnoise(focUV * 4. + bwTime)) * .3;
 
     scene0BW = mix(vec4(0.), scene0BW, (1. - bwNoise));
     scene0BW.a = bwNoise;
