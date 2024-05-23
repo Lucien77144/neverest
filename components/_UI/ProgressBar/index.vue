@@ -153,6 +153,9 @@ function navigate(name: string) {
 
 // Events
 $bus.on('modal:init', () => progressRef.value?.classList.add('disabled'))
+$bus.on('modal:destroy', () =>
+  setTimeout(() => progressRef.value?.classList.remove('disabled'), 1000)
+)
 </script>
 
 <style src="./style.scss" lang="scss" scoped></style>
