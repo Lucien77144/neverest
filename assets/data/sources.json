@@ -238,7 +238,7 @@
       },
       {
         "name": "flagTexture",
-        "source": "/img/england_flag.jpg",
+        "source": "/img/en_flag.jpg",
         "type": "texture"
       }
     ]
