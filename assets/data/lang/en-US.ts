@@ -30,8 +30,9 @@ export default {
   PREV: 'Previous',
   YES: 'Yes',
   NO: 'No',
+  WELCOME: 'Welcome to Neverest',
   LANDING:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
+    'Climb Everest and immerse yourself in exciting tales of historic expeditions, discover the current challenges facing mountaineers and explore future visions of this legendary mountain.',
   LANDING_START: 'Turn on sound for a better experience',
   BASECAMP: 'Base camp',
   ICEFALL: 'Icefall',

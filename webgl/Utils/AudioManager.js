@@ -71,6 +71,7 @@ export default class AudioManager {
     volume = 1,
     play = false,
     listener = this.camera.listener,
+    isSingle = null,
   } = {}) {
     if (this.audios[name]) return this.audios[name]
     if (!listener) return
@@ -111,9 +112,11 @@ export default class AudioManager {
     parent && sound.setRefDistance(distance || 1)
     parent && parent.add(sound)
     parent && (sound.parent = parent)
+    isSingle && (sound.isSingle = isSingle)
 
     this.audios[name] = sound
     this.audios[name].debug = this.debug && this.setDebug(name, sound)
+    console.log(this.audios[name]);
 
     return sound
   }

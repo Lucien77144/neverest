@@ -1,9 +1,7 @@
 <template>
   <div ref="landingRef" v-if="landing" class="start">
     <div ref="contentRef" class="start__content">
-      <p>
-        {{ $t('LANDING') }}
-      </p>
+      <h1>{{ $t('WELCOME') }}</h1>
     </div>
     <div ref="footerRef" class="start__footer">
       <p>{{ $t('LANDING_START') }}</p>

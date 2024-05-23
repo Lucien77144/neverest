@@ -172,7 +172,7 @@
       </article>
       <article class="modal__content__item content5">
         <div class="content5__wrapper">
-          <div style="width: 781px">
+          <div style="width: 781px; height: 584px;">
             <UIVideoPlayer
               :value="values?.return1953"
               poster="/img/preview_video1.jpg"
