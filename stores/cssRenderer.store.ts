@@ -38,7 +38,7 @@ export const useCSSRendererStore = defineStore('cssRenderer', {
   actions: {
     // 2D
     setCSS2DList(css2DList: TCSSRenderer['css2DList']) {
-      this.css2DList = css2DList
+      this.css2DList = [...css2DList]
     },
     addToCSS2DList(el: ICSS2DRendererStore) {
       this.css2DList.push(el)

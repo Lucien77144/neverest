@@ -1,5 +1,5 @@
 <template>
-  <div class="introData">
+  <div ref="introRef" class="introData">
     {{ $t(data?.value) }}
   </div>
 </template>
@@ -8,6 +8,17 @@
 // Props
 const { data } = defineProps({
   data: Object,
+})
+
+// Refs
+const introRef = ref<HTMLElement>()
+
+// Bus
+const { $bus }: any = useNuxtApp()
+
+$bus.on('scene:switch', () => {
+  console.log('scene:switch')
+  introRef.value?.classList.add('disabled')
 })
 </script>
 
