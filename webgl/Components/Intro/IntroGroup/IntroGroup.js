@@ -27,11 +27,11 @@ export default class IntroGroup extends BasicItem {
     this.components = {
       mountain: new Mountain(),
       infoLine1: new InfoLine(
-        [new Vector3(0, 0, 0), new Vector3(0, 15, 0), new Vector3(-5, 17, 0)],
-        new Vector3(-5, -9, 10),
+        [new Vector3(0, 0, 0), new Vector3(0, 6, 0), new Vector3(-2, 8, 0)],
+        new Vector3(-12, -9, 1),
         {
           id: 'label-camp-base',
-          position: new Vector3(-7, 19, 0),
+          position: new Vector3(-3, 9, 0),
           data: {
             value: 'BASECAMP',
           },
@@ -39,12 +39,100 @@ export default class IntroGroup extends BasicItem {
       ),
       infoLine2: new InfoLine(
         [new Vector3(0, 0, 0), new Vector3(0, 4, 0), new Vector3(1, 5, 0)],
-        new Vector3(2, 0, 0),
+        new Vector3(2, -5, 6),
         {
           id: 'label-col-sud',
-          position: new Vector3(2, 5.5, 0),
+          position: new Vector3(3, 3, 1),
           data: {
             value: 'SOUTHCOL',
+          },
+        }
+      ),
+      infoLine3: new InfoLine(
+        [new Vector3(0, 0, 0), new Vector3(0, 4, 0), new Vector3(1, 5, 0)],
+        new Vector3(4, -5 , 5),
+        {
+          id: 'label-neverest-buttress',
+          position: new Vector3(3, 3, 1),
+          data: {
+            value: 'NEVERESTBUTTRESS',
+          },
+        }
+      ),
+      infoLine4: new InfoLine(
+        [new Vector3(0, 0, 0), new Vector3(0, 4, 0), new Vector3(1, 5, 0)],
+        new Vector3(5, -6 , 2.5),
+        {
+          id: 'label-american-buttres',
+          position: new Vector3(3, 3, 1),
+          data: {
+            value: 'AMERICANBUTTRESS',
+          },
+        }
+      ),
+      infoLine5: new InfoLine(
+        [new Vector3(0, 0, 0), new Vector3(0, 4, 0), new Vector3(1, 5, 0)],
+        new Vector3(5, -4 , -5.5),
+        {
+          id: 'label-northeast-ridge',
+          position: new Vector3(3, 3, 1),
+          data: {
+            value: 'NORTHEASTRIDGE',
+          },
+        }
+      ),
+      infoLine6: new InfoLine(
+        [new Vector3(0, 0, 0), new Vector3(0, 4, 0), new Vector3(1, 5, 0)],
+        new Vector3(2, -6 , -6),
+        {
+          id: 'label-north-ridge',
+          position: new Vector3(3, 3, 1),
+          data: {
+            value: 'NORTHRIDGE',
+          },
+        }
+      ),
+      infoLine7: new InfoLine(
+        [new Vector3(0, 0, 0), new Vector3(0, 4, 0), new Vector3(1, 5, 0)],
+        new Vector3(0, -6 , -5),
+        {
+          id: 'label-great-couloir',
+          position: new Vector3(3, 3, 1),
+          data: {
+            value: 'GREATCOULOIR',
+          },
+        }
+      ),
+      infoLine8: new InfoLine(
+        [new Vector3(0, 0, 0), new Vector3(0, 4, 0), new Vector3(1, 5, 0)],
+        new Vector3(-1, -6 , -3.5),
+        {
+          id: 'label-japanese-couloir',
+          position: new Vector3(3, 3, 1),
+          data: {
+            value: 'JAPANESECOULOIR',
+          },
+        }
+      ),
+      infoLine9: new InfoLine(
+        [new Vector3(0, 0, 0), new Vector3(0, 4, 0), new Vector3(1, 5, 0)],
+        new Vector3(-3, -6 , -2.5),
+        {
+          id: 'label-west-ridge',
+          position: new Vector3(3, 3, 1),
+          data: {
+            value: 'WESTRIDGE',
+          },
+        }
+      ),
+      infoLine10: new InfoLine(
+        [new Vector3(0, 0, 0), new Vector3(0, 15, 0), new Vector3(-5, 17, 0)],
+        new Vector3(-5, -9, 4),
+        {
+          id: 'label-icefall',
+          position: new Vector3(-7, 19, 0),
+          data: {
+            value: 'ICEFALL',
           },
         }
       ),
@@ -65,7 +153,7 @@ export default class IntroGroup extends BasicItem {
    */
   update() {
     if (this.item) {
-      this.item.rotation.y += 0.005
+      this.item.rotation.y +=0.005
     }
     if (this.cssRenderer) {
       this.cssRenderer.update()
