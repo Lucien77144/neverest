@@ -56,9 +56,7 @@ export default class Intro extends BasicScene {
   }
 
   setCam(){
-    
-    console.log(this.camera)
-    this.camera.instance.position.set(0,20,70)
+    this.camera.instance.position.set(0,25,50)
     this.camera.instance.lookAt(0,0,0)
   }
 }
