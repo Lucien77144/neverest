@@ -50,6 +50,7 @@ export default class Mountain extends BasicItem {
   setItem() {
     const item = this.resources.introMountain.scene.clone()
     this.item = item.children[0].children[0].children[0].children[0]
+    this.item.position.y-=2
     this.item.rotation.x = -Math.PI * 0.5
     this.item.scale.set(0.0028, 0.0028, 0.0028)
     this.item.material = this.material
