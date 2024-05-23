@@ -12,6 +12,7 @@ import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import ModalSprite from '../../Shared/ModalSprite/ModalSprite'
 import flagVert from './FlagShader/FlagShader.vert?raw'
 import flagFrag from './FlagShader/FlagShader.frag?raw'
+import CraieMaterial from '../../Shared/CraieMaterial/CraieMaterial'
 import TextureCraieMaterial from '../../Shared/TextureCraieMaterial/TextureCraieMaterial'
 
 export default class BCFlag extends BasicItem {
@@ -49,12 +50,38 @@ export default class BCFlag extends BasicItem {
     this.item.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
     this.item.name = this.name
 
-    this.item.children[0].material = new TextureCraieMaterial({
-      side: 2,
-      color: '#96551d',
-      bgColor: '#F8ECE8',
-      texture: this.resources.BCTent1_1953Texture,
+    //this.item.children[0].material =  new CraieMaterial({
+    //    textureParams:{
+    //      textureSize:1024,
+    //      nbOfColumns:1,
+    //      borderSize:0,
+    //      columnsOffset:0.04,
+    //      nbOfCurvePerColumns:30,
+    //      areCurveOnSameDirection:false,
+    //      curveDirection:'up',
+    //      curveDirectionAmountFactor:0.4,
+    //      maxCurveHorizontalDecalage:0.3,
+    //      maxHeightCurve:5,
+    //      maxThicknessCurve:2,
+    //      nbOfPointsPerCurve:10,
+    //      maxBorderSideDecalage:0.1
+    //    },
+    //    side:0,
+    //    color:'#D6E0EA',
+    //    bgColor:'#F8ECE8',
+    //    displacementMap:this.resources.ground2024,
+    //    isMapEnable:0,
+    //    displacementMapIntensity:0,
+    //  }).instance
+    this.item.children[0].material  = new TextureCraieMaterial({
+      side:0,
+      color:'#FF0000',
+      bgColor:'#F8ECE8',
+      texture:this.resources.BCFlagPoleTexture
     }).instance
+
+    
+    
   }
 
   /**
