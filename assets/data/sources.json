@@ -235,6 +235,11 @@
         "name": "blob",
         "source": "/img/transitions/blob.svg",
         "type": "texture"
+      },
+      {
+        "name": "flagTexture",
+        "source": "/img/england_flag.jpg",
+        "type": "texture"
       }
     ]
   },
