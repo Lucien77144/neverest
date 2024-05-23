@@ -80,6 +80,7 @@ const animate = (e: any) => {
 onMounted(() => {
   videoWrapper.value?.appendChild(value)
   value.style.width = '100%'
+  value.style.objectFit = 'cover'
   value.poster = poster
 
   $bus.on('audio:mute', () => {

@@ -21,6 +21,7 @@ export default class Intro extends BasicScene {
 
     // Init the scene
     this.init()
+    this.setCam()
   }
 
   // --------------------------------
@@ -31,9 +32,9 @@ export default class Intro extends BasicScene {
    * On scroll
    * @param {*} delta
    */
-  onScroll(delta) {
-    this.camera.instance.position.z += delta / 100
-  }
+  //onScroll(delta) {
+  //  this.camera.instance.position.z += delta / 100
+  //}
 
   // --------------------------------
   // Lifecycle
@@ -52,5 +53,12 @@ export default class Intro extends BasicScene {
    */
   onDisposeStart() {
     this.$bus.emit('title:disable', true)
+  }
+
+  setCam(){
+    
+    console.log(this.camera)
+    this.camera.instance.position.set(0,15,80)
+    this.camera.instance.lookAt(0,3,0)
   }
 }
