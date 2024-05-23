@@ -1,7 +1,6 @@
 import gsap from 'gsap'
 import { CustomEase } from 'gsap/all'
-import { Sprite, SpriteMaterial, Vector3 } from 'three'
-import { clamp } from 'three/src/math/MathUtils'
+import { MathUtils, Sprite, SpriteMaterial, Vector3 } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 gsap.registerPlugin(CustomEase)
 
@@ -156,7 +155,7 @@ export default class ModalSprite extends BasicItem {
 
     const distance = camPos.distanceTo(pos)
 
-    const scale = clamp(distance / 40, 0.35, 1) * (this.scale + this.scaleFocus)
+    const scale = MathUtils.clamp(distance / 40, 0.35, 1) * (this.scale + this.scaleFocus)
     this.item.scale.set(scale, scale, scale)
   }
 
