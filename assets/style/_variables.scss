@@ -1,6 +1,6 @@
 body,
 html {
-  --primary: #5E313C;
+  --primary: #020103;
   --secondary: #f5e5e0;
   --beige: #efdbd4;
   --beige-sky: #f1dad2;
@@ -20,12 +20,12 @@ $outfit: 'Outfit', sans-serif;
 $darken-amount: 10%;
 $lighten-amount: 10%;
 
-$primary: #5E313C;
-$primary-darker: #372933;
+$primary: #020103;
+$primary-darker: #000000;
 $primary-dark: darken($primary, $darken-amount);
 $primary-light: lighten($primary, $lighten-amount);
 
-$secondary: #f5e5e0;
+$secondary: #fafafa;
 $secondary-dark: darken($secondary, $darken-amount);
 $secondary-light: lighten($secondary, $lighten-amount);
 

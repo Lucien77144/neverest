@@ -1,7 +1,7 @@
-import { DoubleSide, MeshNormalMaterial } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
-import CraieMaterial from '../../Shared/CraieMaterial/CraieMaterial'
 import TextureCraieMaterial from '../../Shared/TextureCraieMaterial/TextureCraieMaterial'
+import { UIAudioPlayer } from '#components'
+import { Vector3 } from 'three'
 
 export default class BCTent_1_1953 extends BasicItem {
   /**
@@ -39,13 +39,13 @@ export default class BCTent_1_1953 extends BasicItem {
    * Set material
    */
   setMaterial() {
-    this.item.children[0].material  = new TextureCraieMaterial({
-      side:2,
-      color:'#FFD500',
-      bgColor:'#F8ECE8',
-      texture:this.resources.BCTent1_1953Texture
+    this.item.children[0].material = new TextureCraieMaterial({
+      side: 2,
+      color: '#FFD500',
+      bgColor: '#F8ECE8',
+      texture: this.resources.BCTent1_1953Texture,
     }).instance
-    
+
     //new CraieMaterial({
     //  textureParams:{
     //    textureSize:1024,
@@ -69,8 +69,6 @@ export default class BCTent_1_1953 extends BasicItem {
     //  isMapEnable:0,
     //  displacementMapIntensity:2
     //}).instance
-    
-    
   }
 
   /**
@@ -79,5 +77,15 @@ export default class BCTent_1_1953 extends BasicItem {
   init() {
     this.setItem()
     this.setMaterial()
+
+    this.addCSS2D({
+      id: this.name + '_audio',
+      template: UIAudioPlayer,
+      data: {
+        source: this.resources.tedTalk,
+      },
+      parent: this.item,
+      position: new Vector3(0, 1, 0),
+    })
   }
 }
