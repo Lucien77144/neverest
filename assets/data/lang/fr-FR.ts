@@ -31,8 +31,9 @@ export default {
   PREV: 'Précédent',
   YES: 'Oui',
   NO: 'Non',
+  WELCOME: 'Bienvenue sur Neverest',
   LANDING:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
+    "Escaladez l'Everest et plongez dans les récits passionnants des expéditions historiques, découvrez les défis actuels des alpinistes et explorez les visions futures de cette montagne légendaire.",
   LANDING_START: 'Activer le son pour une meilleure expérience',
   BASECAMP: 'Camp de base',
   ICEFALL: 'Chute de glace',
