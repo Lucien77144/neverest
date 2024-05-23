@@ -83,14 +83,6 @@ onMounted(() => {
   value.style.objectFit = 'cover'
   value.poster = poster
 
-  $bus.on('audio:mute', () => {
-    value.muted = true
-  })
-
-  $bus.on('audio:unmute', () => {
-    value.muted = false
-  })
-
   value.addEventListener('ended', () => {
     isPlaying.value = false
     setCues([])
