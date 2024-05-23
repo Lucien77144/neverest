@@ -12,6 +12,7 @@ import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import ModalSprite from '../../Shared/ModalSprite/ModalSprite'
 import flagVert from './FlagShader/FlagShader.vert?raw'
 import flagFrag from './FlagShader/FlagShader.frag?raw'
+import TextureCraieMaterial from '../../Shared/TextureCraieMaterial/TextureCraieMaterial'
 
 export default class BCFlag extends BasicItem {
   /**
@@ -48,8 +49,12 @@ export default class BCFlag extends BasicItem {
     this.item.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
     this.item.name = this.name
 
-    this.item.children[0].material = new MeshNormalMaterial()
-    this.item.children[0].material.side = DoubleSide
+    this.item.children[0].material = new TextureCraieMaterial({
+      side: 2,
+      color: '#96551d',
+      bgColor: '#F8ECE8',
+      texture: this.resources.BCTent1_1953Texture,
+    }).instance
   }
 
   /**

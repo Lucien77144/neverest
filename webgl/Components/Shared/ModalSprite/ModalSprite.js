@@ -25,7 +25,7 @@ export default class ModalSprite extends BasicItem {
     this.item = null
     this.material = null
     this.active = false
-    this.scale = 1
+    this.scale = 1.3
     this.scaleFocus = 0
   }
 
