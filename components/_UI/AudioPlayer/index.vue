@@ -27,6 +27,7 @@ const audio = data?.source
 
 // Refs
 const lottieRef = ref<InstanceType<typeof Vue3Lottie>>()
+const audioEnd = ref(true)
 
 // Reset the lottie animation
 const resetLottie = () => {
@@ -41,12 +42,15 @@ const resetLottie = () => {
 
 // Audio Events
 audio.addEventListener('play', () => {
-  // go to frame 1
-  if(audio.currentTime == 0) lottieRef.value?.goToAndStop(1)
-  
+  if (audioEnd.value) lottieRef.value?.goToAndStop(1)
+  audioEnd.value = false
+
   lottieRef.value?.play()
 })
 audio.addEventListener('pause', () => lottieRef.value?.pause())
+audio.addEventListener('ended', () => {
+  audioEnd.value = true
+})
 
 // Toggle audio
 const toggle = () => (audio?.paused ? audio?.play() : audio?.pause())

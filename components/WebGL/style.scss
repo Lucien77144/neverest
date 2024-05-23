@@ -25,3 +25,14 @@
 .active {
   display: block;
 }
+
+.webGlCSS {
+  will-change: opacity;
+  transition: 0.35s ease-in-out;
+
+  &--disabled {
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.25s ease-in-out;
+  }
+}

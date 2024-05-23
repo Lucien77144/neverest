@@ -109,18 +109,36 @@ void main() {
 
     vec2 scene0UV = vec2(uv.x,uv.y+uTransition);
     vec4 scene0 = texture2D(uScene0, scene0UV);
+    vec4 scene0BW = vec4(applyBlackAndWhite(scene0.rgb), 1.);
+
+    float sceneMask = smoothstep(.9, 1., (1. - scene0BW.r) * 5.);
 
     vec2 focUV = uv;
     focUV -= .5;
     float focNoise = smoothstep(0., 1., cnoise(focUV * 15.));
     float circle = length(focUV - .35 * focNoise);
+
+    float bwTime = (cos(uTime * .001) + uTime * .5) * .00075;
+    vec2 bwUv = vec2(focUV.x * cos(bwTime) - focUV.y * sin(bwTime), focUV.x * sin(bwTime) + focUV.y * cos(bwTime));
+    float bwNoise = smoothstep(0., 1., cnoise(focUV * 4. + bwTime)) * .2;
+
+    scene0BW = mix(vec4(0.), scene0BW, (1. - bwNoise));
+    scene0BW.a = bwNoise;
+    scene0.rgb = mix(scene0.rgb, scene0BW.rgb, uFocProgress * .5);
+    
+    // float sceneMask = scene0.r * length(focUV);
+    // float circle = sceneMask;
+
     focUV += .5;
     
-    float focVal = 1. - smoothstep(circle, 0.0, uFocProgress);
-    float focVal2 = 1. - smoothstep(circle, 0.0, uFocProgress - .35);
+    // float focVal = 1. - smoothstep(circle, 0.0, uFocProgress);
+    // float focVal2 = 1. - smoothstep(circle, 0.0, uFocProgress - .35);
+    
+    float focVal = 1. - smoothstep(circle, 0.0, 1. - uFocProgress - sceneMask);
+    float focVal2 = 1. - smoothstep(circle, 0.0, 1. - uFocProgress + .35);
 
     vec3 sceneRGB = scene0.rgb; 
-    vec3 coveredScene = mix(sceneRGB, vec3(luminance(sceneRGB, uFocColor)), focVal);
+    vec3 coveredScene = mix(sceneRGB, vec3(.98), focVal);
     scene0.rgb = mix(sceneRGB, coveredScene, focVal);
     scene0.rgb = mix(scene0.rgb, mix(sceneRGB, coveredScene, .5), focVal2 + .25);
 

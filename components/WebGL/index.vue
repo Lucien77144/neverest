@@ -1,7 +1,7 @@
 <template>
   <Landing v-if="!activeStatus && landing" />
   <Interface />
-  <div id="webgl-css-wrapper">
+  <div ref="webGlCSSRef" id="webgl-css-wrapper" class="webGlCSS">
     <WebGLCSS2DRenderer />
     <WebGLCSS3DRenderer />
   </div>
@@ -30,6 +30,7 @@ const exp = shallowRef<Experience | null>(null)
 
 // Refs
 const canvasRef = ref<HTMLElement | null>(null)
+const webGlCSSRef = ref<HTMLElement | null>(null)
 const startBtn = ref<HTMLElement | null>(null)
 const activeStatus = ref<boolean>(false)
 
@@ -76,6 +77,18 @@ function start() {
 
   scene && $bus.emit('scene:switch', scene)
 }
+
+// Events
+$bus.on('modal:init', (v: any) => {
+  webGlCSSRef.value?.classList.add('webGlCSS--disabled')
+})
+
+$bus.on('modal:destroy', () => {
+  setTimeout(
+    () => webGlCSSRef.value?.classList.remove('webGlCSS--disabled'),
+    1000
+  )
+})
 
 // On component mounted, create the experience
 onMounted(() => {
