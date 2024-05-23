@@ -122,7 +122,7 @@ export default class CraieMaterial {
                     ctx.beginPath()
                     ctx.arc(
                         point.x,
-                        point.y+Math.random()*8,
+                        point.y+Math.random()*2,
                         thicknessCurve*Math.random(),
                         0,
                         Math.PI * 2
@@ -148,7 +148,7 @@ export default class CraieMaterial {
                     ctx.beginPath()
                     ctx.arc(
                       point.x,
-                      point.y+Math.random()*8,
+                      point.y+Math.random()*2,
                       thicknessCurve*Math.random(),
                       0,
                       Math.PI * 2

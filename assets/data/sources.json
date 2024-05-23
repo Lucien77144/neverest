@@ -57,6 +57,11 @@
         "type": "texture"
       },
       {
+        "name": "introMountainTexture",
+        "source": "/img/texturesLoulou/textureIntroMountain.jpg",
+        "type": "texture"
+      },
+      {
         "name": "BCBigBox_1953Texture",
         "source": "/img/texturesLoulou/textureBCBigBox1953.png",
         "type": "texture"
