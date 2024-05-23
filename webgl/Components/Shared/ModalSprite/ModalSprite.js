@@ -2,7 +2,6 @@ import gsap from 'gsap'
 import { CustomEase } from 'gsap/all'
 import { MathUtils, Sprite, SpriteMaterial, Vector3 } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
-gsap.registerPlugin(CustomEase)
 
 export default class ModalSprite extends BasicItem {
   /**
