@@ -9,13 +9,12 @@
   height: 2.3rem;
   width: 2.3rem;
   background-color: $secondary;
-  border: 2px solid $primary;
-  transform: scale(1);
-  transition: transform 0.1s ease;
+  border: 1px solid $primary;
+  transition: all 0.1s ease-in-out;
   cursor: pointer;
 
   &:hover {
-    transform: scale(1.1);
+    border-width: 2px;
   }
 
   &::before {

@@ -1,16 +1,17 @@
 button {
-  padding: 10px 20px;
-  border: 1px solid $primary;
-  border-radius: 5px;
-  background-color: $white;
+  padding: 15px 25px;
+  border: none;
+  background-color: transparent;
   cursor: pointer;
   transition: background-color 0.3s;
   pointer-events: all;
   font-family: $azeret;
-  color: $primary;
+  color: $secondary;
+  text-transform: uppercase;
+  background-image: url('/assets/img/btnBg.svg');
+  transition: all 0.1s ease-in-out;
 
   &:hover {
-    background-color: $primary;
-    color: $white;
+    transform: scale(1.05);
   }
 }

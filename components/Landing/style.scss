@@ -1,33 +1,33 @@
 .start {
   position: fixed;
   z-index: 100;
-  background-color: $primary-darker;
+  background-color: $secondary;
   height: 100vh;
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 1.5rem;
   opacity: 1;
 
   &__content {
-    max-width: 40%;
-    color: $white;
+    color: $primary;
     text-align: justify;
     line-height: 1.5;
     opacity: 0;
 
     & h1 {
-      text-align: center; 
-      // margin-bottom: 3rem;
-      font-size: 2.5rem;
-      margin: 0;
+      text-transform: uppercase;
+      text-align: center;
+      font-family: $open-sans;
+      font-size: 6rem;
+      font-style: italic;
+      line-height: 3rem;
     }
   }
 
   &__footer {
-    color: $white;
+    color: $primary;
     opacity: 0;
 
     &__content {
@@ -35,7 +35,7 @@
       justify-content: center;
       align-items: center;
       gap: 2rem;
-      padding-top: 0.5rem;
+      padding-top: 4.5rem;
     }
   }
 }

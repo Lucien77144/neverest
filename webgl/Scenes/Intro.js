@@ -55,8 +55,8 @@ export default class Intro extends BasicScene {
     this.$bus.emit('title:disable', true)
   }
 
-  setCam(){    
-    this.camera.instance.position.set(0,15,80)
-    this.camera.instance.lookAt(0,3,0)
+  setCam(){
+    this.camera.instance.position.set(0,25,50)
+    this.camera.instance.lookAt(0,0,0)
   }
 }
