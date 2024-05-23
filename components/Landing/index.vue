@@ -34,6 +34,7 @@ const footerRef = ref<HTMLElement | null>(null)
 const landing = computed(() => useExperienceStore().getLanding)
 
 $bus.on('loaded', () => {
+  if (!contentRef.value || !footerRef.value) return
   gsap.to(contentRef.value, {
     duration: 0.75,
     opacity: 1,
@@ -50,14 +51,13 @@ $bus.on('loaded', () => {
  * @param muted - If the audio should be muted
  */
 const start = (muted: boolean) => {
-  $bus.emit('start')
   $bus.emit(muted ? 'audio:mute' : 'audio:unmute')
+  $bus.emit('start')
 
   if (landingRef.value) {
     gsap.to(landingRef.value, {
-      duration: 0.75,
+      duration: 0.5,
       opacity: 0,
-      onComplete: () => landingRef.value?.remove(),
     })
   }
 }
