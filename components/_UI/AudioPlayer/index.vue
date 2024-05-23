@@ -40,7 +40,12 @@ const resetLottie = () => {
 }
 
 // Audio Events
-audio.addEventListener('play', () => lottieRef.value?.play())
+audio.addEventListener('play', () => {
+  // go to frame 1
+  if(audio.currentTime == 0) lottieRef.value?.goToAndStop(1)
+  
+  lottieRef.value?.play()
+})
 audio.addEventListener('pause', () => lottieRef.value?.pause())
 
 // Toggle audio
