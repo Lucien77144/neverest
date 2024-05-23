@@ -62,8 +62,23 @@
         "type": "texture"
       },
       {
+        "name": "BCBigBox_2024Texture",
+        "source": "/img/texturesLoulou/textureBCBigBox2024.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "BCBigBox_2050Texture",
+        "source": "/img/texturesLoulou/textureBCBigBox2050.jpg",
+        "type": "texture"
+      },
+      {
         "name": "BCMediumBox_1953Texture",
         "source": "/img/texturesLoulou/textureBCMediumBox1953.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "BCMediumBox_2024Texture",
+        "source": "/img/texturesLoulou/textureBCMediumBox2024.jpg",
         "type": "texture"
       },
       {
@@ -72,8 +87,23 @@
         "type": "texture"
       },
       {
+        "name": "BCSmallBox_2050Texture",
+        "source": "/img/texturesLoulou/textureBCSmallBox2050.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "BCSmallBox_2024Texture",
+        "source": "/img/texturesLoulou/textureBCSmallBox2024.jpg",
+        "type": "texture"
+      },
+      {
         "name": "BCTent1_1953Texture",
         "source": "/img/texturesLoulou/textureBCTent11953.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "BCTent1_2050Texture",
+        "source": "/img/texturesLoulou/textureBCTent12050.jpg",
         "type": "texture"
       },
       {
@@ -82,8 +112,28 @@
         "type": "texture"
       },
       {
+        "name": "BCTent2_2024Texture",
+        "source": "/img/texturesLoulou/textureBCTent22024.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "BCTent2_2050Texture",
+        "source": "/img/texturesLoulou/textureBCTent22050.jpg",
+        "type": "texture"
+      },
+      {
         "name": "BCTent3_1953Texture",
         "source": "/img/texturesLoulou/textureBCTent31953.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "BCTent3_2024Texture",
+        "source": "/img/texturesLoulou/textureBCTent32024.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "BCTent3_2050Texture",
+        "source": "/img/texturesLoulou/textureBCTent32050.jpg",
         "type": "texture"
       },
       {
