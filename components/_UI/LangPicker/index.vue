@@ -1,9 +1,23 @@
 <template>
-  <select @input="change($event)" v-model="I18n.locale.value">
+  <!-- <select @input="change($event)" v-model="I18n.locale.value">
     <option v-for="i in options" :value="i">
-      {{ $t('LANG.' + i.toUpperCase()) + '.LABEL' }}
+      {{ $t('LANG.' + i.toUpperCase() + '.LABEL') }}
     </option>
-  </select>
+  </select> -->
+  <div class="LP">
+    <UIIconBtn
+      :disable="false"
+      @click="I18n.setLocale('fr'), $bus.emit('lang:change', 'fr')"
+    >
+      {{ $t('LANG.FR.TAG') }}
+    </UIIconBtn>
+    <UIIconBtn
+      :disable="false"
+      @click="I18n.setLocale('en'), $bus.emit('lang:change', 'en')"
+    >
+      {{ $t('LANG.EN.TAG') }}
+    </UIIconBtn>
+  </div>
 </template>
 
 <script lang="ts" setup>

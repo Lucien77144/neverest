@@ -1,6 +1,6 @@
 <template>
-  <div ref="btn" :class="big && 'big', disable && isDisabled && 'disabled'" class="iconBtn">
-    <button :type="type" :disable="disable" :isDisabled="isDisabled" @click="$emit('click', $props.value)">
+  <div ref="btn" :class="big && 'big', disable && isDisabled && 'disabled'" class="iconBtn" @click="$emit('click', $props.value)">
+    <button :type="type" :disable="disable" :isDisabled="isDisabled">
       <slot />
     </button>
   </div>
