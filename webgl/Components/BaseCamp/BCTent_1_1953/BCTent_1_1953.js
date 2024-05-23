@@ -14,6 +14,11 @@ export default class BCTent_1_1953 extends BasicItem {
     visibility = [0, 100],
   }) {
     super()
+    this.debug = this.experience.debug
+    this.debugFolder = this.debug.panel.addFolder({
+      expanded: false,
+      title: this.name,
+    })
 
     // Elements
     this.position = position
@@ -39,12 +44,25 @@ export default class BCTent_1_1953 extends BasicItem {
    * Set material
    */
   setMaterial() {
-    this.item.children[0].material = new TextureCraieMaterial({
+    const params = {
       side: 2,
       color: '#FFD500',
       bgColor: '#F8ECE8',
       texture: this.resources.BCTent1_1953Texture,
-    }).instance
+    }
+
+    const buildMat = () => {
+      this.item.children[0].material = new TextureCraieMaterial(params).instance
+    }
+    buildMat()
+
+    this.debugFolder
+      .addBinding(params, 'color', { view: 'color' })
+      .on('change', buildMat)
+
+    this.debugFolder
+      .addBinding(params, 'bgColor', { view: 'color' })
+      .on('change', buildMat)
 
     //new CraieMaterial({
     //  textureParams:{

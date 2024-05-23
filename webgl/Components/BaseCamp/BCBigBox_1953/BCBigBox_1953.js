@@ -40,8 +40,6 @@ export default class BCBigBox_1953 extends BasicItem {
       texture:this.resources.BCBigBox_1953Texture
     }).instance
 
-
-    
     const dummy = new Object3D()
     this.item = new InstancedMesh(instance.geometry, material, BCBIGBOX_1953.length)
 
