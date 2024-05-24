@@ -116,7 +116,6 @@ export default class AudioManager {
 
     this.audios[name] = sound
     this.audios[name].debug = this.debug && this.setDebug(name, sound)
-    console.log(this.audios[name]);
 
     return sound
   }

@@ -14,6 +14,7 @@ export default {
     },
   },
   CLOSE: 'Close',
+  DRAG: 'Drag',
   SCROLL_TO_EXPLORE: 'Scroll to explore',
   TITLE_1953: 'Participate in the first ascent through the 1953 archives',
   PREPARE_1953: 'Prepare for the first ascent',

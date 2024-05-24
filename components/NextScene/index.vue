@@ -9,7 +9,7 @@
     }"
   >
     <UIDragBtn @navigate="navigate">
-      {{ $t('NEXT') }}
+      {{ $t('DRAG') }}
     </UIDragBtn>
   </div>
 </template>
