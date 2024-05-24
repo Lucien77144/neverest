@@ -3,7 +3,7 @@
     ref="audioPlayerRef"
     :key="data?.id"
     class="audio-player"
-    @click="toggle()"
+    @click="toggle(), $bus.emit('audio:click')"
   >
     <client-only>
       <Vue3Lottie
@@ -21,6 +21,9 @@
 import gsap from 'gsap'
 import { Vue3Lottie } from 'vue3-lottie'
 import audioPlayer from '~/assets/data/audioplayer.json'
+
+// Store
+const setCues = useSubtitlesStore().setCues
 
 // Props
 const { data } = defineProps({
@@ -58,9 +61,13 @@ audio.addEventListener('play', () => {
 
   lottieRef.value?.play()
 })
-audio.addEventListener('pause', () => lottieRef.value?.pause())
+audio.addEventListener('pause', () => {
+  lottieRef.value?.pause()
+  setCues([])
+})
 audio.addEventListener('ended', () => {
   audioEnd.value = true
+  setCues([])
 })
 
 // Toggle audio

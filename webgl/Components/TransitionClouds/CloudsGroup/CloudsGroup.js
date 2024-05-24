@@ -7,12 +7,9 @@ export default class CloudsGroup extends BasicItem {
     constructor(){
         super()
 
-
         this.experience = new Experience()
         
         this.resources = this.experience.resources
-        console.log(this.resources)
-
 
         this.item = null
         this.geometry = null
