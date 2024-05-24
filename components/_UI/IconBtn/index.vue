@@ -1,5 +1,5 @@
 <template>
-  <div ref="btn" :class="big && 'big', disable && isDisabled && 'disabled'" class="iconBtn" @click="$emit('click', $props.value)">
+  <div ref="btn" :class="big && 'big', disable && isDisabled && 'disabled'" class="iconBtn" @click="$emit('click', $props.value), $bus.emit('audio:click')">
     <button :type="type" :disable="disable" :isDisabled="isDisabled">
       <slot />
     </button>
@@ -9,6 +9,9 @@
 <script lang="ts" setup>
 // Emits
 const $emit = defineEmits(['click'])
+
+// Bus
+const { $bus }: any = useNuxtApp()
 
 // Refs
 const btn = ref<HTMLButtonElement | null>(null)

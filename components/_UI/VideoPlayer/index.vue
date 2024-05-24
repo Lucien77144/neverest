@@ -46,6 +46,7 @@ const setCues = useSubtitlesStore().setCues
 
 // Methods
 const togglePlay = () => {
+  $bus.emit('audio:click')
   isPlaying.value ? value?.pause() : value?.play()
   isPlaying.value && setCues([])
   isPlaying.value = !isPlaying.value

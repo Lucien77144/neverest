@@ -7,6 +7,7 @@ export default class AudioManager {
     this.experience = new Experience()
     this.resources = this.experience.resources
     this.debug = this.experience.debug
+    this.$bus = this.experience.$bus
     this.sources = {}
 
     // New elements
@@ -57,6 +58,28 @@ export default class AudioManager {
       })
 
     return sub
+  }
+
+  /**
+   * Set events
+   */
+  setEvents() {
+    const sounds = {
+      click: this.resources.items.click,
+    }
+    
+    this.$bus.on('audio:click', () => this.resources.items.click.play())
+
+    this.$bus.on('audio:mute', () => {
+      Object.values(sounds).forEach((sound) => {
+        sound.volume = 0
+      })
+    })
+    this.$bus.on('audio:unmute', () => {
+      Object.values(sounds).forEach((sound) => {
+        sound.volume = 1
+      })
+    })
   }
 
   /**

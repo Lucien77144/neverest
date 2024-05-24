@@ -22,6 +22,10 @@
           "fr": "/subtitles/ted_talk/fr.vtt",
           "en": "/subtitles/ted_talk/en.vtt"
         }
+      },
+      {
+        "name": "click",
+        "source": "/sounds/click.mp3"
       }
     ]
   },

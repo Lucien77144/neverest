@@ -153,6 +153,7 @@ export default class Resources {
         this.loadNextGroup()
       } else {
         this.$bus.emit('resources:done')
+        this.experience.audioManager.setEvents()
       }
     })
   }

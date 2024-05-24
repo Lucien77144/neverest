@@ -62,6 +62,11 @@ export default class BaseCamp extends BasicScene {
       this.watchCurrentScroll(current)
     )
 
+    // Audios
+    // this.audios = {
+    //   flag_1953: { group: 'Ambient', loop: true, volume: 0.3, persist: true, play: true },
+    // }
+
     // Components
     this.components = {
       floor: new Floor(),

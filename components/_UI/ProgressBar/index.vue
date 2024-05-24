@@ -47,7 +47,7 @@
       <g
         class="grp"
         :class="{ 'grp--active': scroll >= 51 }"
-        @click.stop="navigate('icefall')"
+        @click.stop="navigate('icefall'), $bus.emit('audio:click')"
         clip-path="url(#b)"
         stroke-width="2"
       >
@@ -82,7 +82,7 @@
       <g
         class="grp"
         :class="{ 'grp--active': scroll >= 0 }"
-        @click.stop="navigate('basecamp')"
+        @click.stop="navigate('basecamp'), $bus.emit('audio:click')"
         clip-path="url(#c)"
         stroke-width="2"
       >
