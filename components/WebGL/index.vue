@@ -9,18 +9,17 @@
   <div id="webgl-interface">
     <UIInterestData />
     <UITitle />
-    <div ref="startBtn" class="start__btn">
+    <div class="start__btn" :class="sceneRef && 'hidden'">
       <UIBtn @click="start()">{{ $t('START') }}</UIBtn>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import gsap from 'gsap'
 import Experience from '~/webgl/Experience'
 
 // Scene
-import scenes from '~/const/scenes.const'
+import scenes, { type TSceneInfos } from '~/const/scenes.const'
 
 // Plugins
 const { $bus }: any = useNuxtApp()
@@ -31,8 +30,8 @@ const exp = shallowRef<Experience | null>(null)
 // Refs
 const canvasRef = ref<HTMLElement | null>(null)
 const webGlCSSRef = ref<HTMLElement | null>(null)
-const startBtn = ref<HTMLElement | null>(null)
 const activeStatus = ref<boolean>(false)
+const sceneRef = ref<TSceneInfos>()
 
 // Route
 const route = useRoute()
@@ -40,7 +39,6 @@ const route = useRoute()
 // get active scene
 const active = computed(() => useExperienceStore().getActive)
 const landing = computed(() => useExperienceStore().getLanding)
-const navigation = computed(() => useExperienceStore().getNavigation)
 
 watch(active, (v: boolean) =>
   setTimeout(() => {
@@ -48,34 +46,9 @@ watch(active, (v: boolean) =>
   }, 750)
 )
 
-watch(navigation, (v) => {
-  if (v.scene?.name == 'intro') {
-    gsap.to(startBtn.value, {
-      duration: 0,
-      y: 0,
-      opacity: 1,
-      ease: 'power2.inOut',
-      onComplete: () => {
-        startBtn.value?.classList.add('active')
-      },
-    })
-  } else {
-    gsap.to(startBtn.value, {
-      duration: 1,
-      y: 100,
-      opacity: 0,
-      ease: 'power2.inOut',
-      onComplete: () => {
-        startBtn.value?.classList.remove('active')
-      },
-    })
-  }
-})
-
 function start() {
-  const scene = scenes.nav.list.find((s) => s.name === 'basecamp')
-
-  scene && $bus.emit('scene:switch', scene)
+  sceneRef.value = scenes.nav.list.find((s) => s.name === 'basecamp')
+  sceneRef.value && $bus.emit('scene:switch', sceneRef.value)
 }
 
 // Events

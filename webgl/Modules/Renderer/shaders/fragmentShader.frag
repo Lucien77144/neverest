@@ -110,7 +110,6 @@ void main() {
     vec2 scene0UV = vec2(uv.x,uv.y+uTransition);
     vec4 scene0 = texture2D(uScene0, scene0UV);
     vec4 scene0BW = vec4(applyBlackAndWhite(scene0.rgb), 1.);
-
     float sceneMask = smoothstep(.9, 1., (1. - scene0BW.r) * 5.);
 
     vec2 focUV = uv;
@@ -138,9 +137,9 @@ void main() {
     float focVal2 = 1. - smoothstep(circle, 0.0, 1. - uFocProgress + .35);
 
     vec3 sceneRGB = scene0.rgb; 
-    vec3 coveredScene = mix(sceneRGB, vec3(.98), focVal);
-    scene0.rgb = mix(sceneRGB, coveredScene, focVal);
-    scene0.rgb = mix(scene0.rgb, mix(sceneRGB, coveredScene, .5), focVal2 + .25);
+    vec3 coveredScene = mix(sceneRGB, vec3(.98), focVal * uFocProgress);
+    scene0.rgb = mix(sceneRGB, coveredScene, focVal * uFocProgress);
+    scene0.rgb = mix(scene0.rgb, mix(sceneRGB, coveredScene, .5), (focVal2 + .25) * uFocProgress);
 
     vec2 scene1UV = vec2(uv.x,uv.y-(1.0-uTransition));
     vec4 scene1 = texture2D(uScene1, scene1UV);

@@ -1,5 +1,10 @@
 <template>
-  <div :key="data?.id" class="audio-player" @click="toggle(), $bus.emit('audio:click')">
+  <div
+    ref="audioPlayerRef"
+    :key="data?.id"
+    class="audio-player"
+    @click="toggle(), $bus.emit('audio:click')"
+  >
     <client-only>
       <Vue3Lottie
         ref="lottieRef"
@@ -31,6 +36,12 @@ const audio = data?.source
 // Refs
 const lottieRef = ref<InstanceType<typeof Vue3Lottie>>()
 const audioEnd = ref(true)
+const audioPlayerRef = ref<HTMLElement>()
+
+// Bus
+const { $bus }: any = useNuxtApp()
+
+$bus.on('scene:switch', () => audioPlayerRef.value?.classList.add('hidden'))
 
 // Reset the lottie animation
 const resetLottie = () => {

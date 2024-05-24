@@ -52,6 +52,7 @@ export default class BasicCamera {
     this.$bus.on('audio:unmute', () => {
       if (!this.listener) {
         this.listener = new AudioListener()
+        !this.instance && this.setInstance()
         this.instance.add(this.listener)
 
         this.pendingAudios.forEach(({ audios, parent }) =>

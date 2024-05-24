@@ -1,43 +1,43 @@
-import { Color, MeshBasicMaterial, ShaderMaterial, Uniform } from "three"
+import { Color, MeshBasicMaterial, ShaderMaterial, Uniform } from 'three'
 import TextureCraieMaterialVert from './TextureCraieMaterialShader/TextureCraieMaterialShader.vert?raw'
 import TextureCraieMaterialFrag from './TextureCraieMaterialShader/TextureCraieMaterialShader.frag?raw'
+import Experience from '~/webgl/Experience'
 
 export default class TextureCraieMaterial {
+  constructor({ side, color, bgColor, texture }) {
+    this.experience = new Experience()
+    this.debug = this.experience.debug
 
-    constructor({side, color, bgColor, texture}){
-        this.instance = null
-        this.createMaterial(side, color, bgColor, texture)
-    }
+    this.instance = this.createMaterial(side, color, bgColor, texture)
+  }
 
+  createMaterial(side, color, bgColor, texture) {
+    //this.instance = new ShaderMaterial({
+    //    side,
+    //    vertexShader:TextureCraieMaterialVert,
+    //    fragmentShader:TextureCraieMaterialFrag,
+    //    uniforms:{
+    //        uTexture: new Uniform(texture),
+    //        uColor: new Uniform(new Color(color)),
+    //        uBgColor: new Uniform(new Color(bgColor)),
+    //    },
+    //    transparent:false
+    //})
 
-
-    createMaterial(side, color, bgColor, texture){
-        //this.instance = new ShaderMaterial({
-        //    side,
-        //    vertexShader:TextureCraieMaterialVert,
-        //    fragmentShader:TextureCraieMaterialFrag,
-        //    uniforms:{
-        //        uTexture: new Uniform(texture),
-        //        uColor: new Uniform(new Color(color)),
-        //        uBgColor: new Uniform(new Color(bgColor)),
-        //    },
-        //    transparent:false
-        //})
-        const material = new MeshBasicMaterial({map:texture, side:side})
-        material.onBeforeCompile = (shader)=>{
-            shader.uniforms.uColor = new Uniform(new Color(color))
-            shader.uniforms.uTexture = new Uniform(texture)
-            shader.uniforms.uBgColor = new Uniform(new Color(bgColor))
-            shader.vertexShader = shader.vertexShader.replace(
-                'void main() {',
-                `
+    const material = new MeshBasicMaterial({ map: texture, side: side })
+    material.onBeforeCompile = (shader) => {
+      shader.uniforms.uColor = new Uniform(new Color(color))
+      shader.uniforms.uTexture = new Uniform(texture)
+      shader.uniforms.uBgColor = new Uniform(new Color(bgColor))
+      shader.vertexShader = shader.vertexShader.replace(
+        'void main() {',
+        `
                     varying vec2 vUv;
                     void main() {
                     vUv = uv;
                 `
-            )
-            shader.fragmentShader = 
-            `
+      )
+      shader.fragmentShader = `
                 varying vec2 vUv;
 
                 uniform sampler2D uTexture;
@@ -52,8 +52,7 @@ export default class TextureCraieMaterial {
                     gl_FragColor = vec4(isColoried+isBackground,1.0);
                 }
             `
-        }
-        this.instance = material
     }
-
+    return material
+  }
 }
