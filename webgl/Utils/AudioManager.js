@@ -66,9 +66,15 @@ export default class AudioManager {
   setEvents() {
     const sounds = {
       click: this.resources.items.click,
+      vent2050: this.resources.items.vent2050,
     }
     
     this.$bus.on('audio:click', () => this.resources.items.click.play())
+    this.$bus.on('audio:vent2050', () => {
+      this.resources.items.vent2050.play()
+      this.resources.items.vent2050.loop = true
+      this.resources.items.vent2050.volume = 0.2
+    })
 
     this.$bus.on('audio:mute', () => {
       Object.values(sounds).forEach((sound) => {
@@ -79,6 +85,7 @@ export default class AudioManager {
       Object.values(sounds).forEach((sound) => {
         sound.volume = 1
       })
+      this.resources.items.vent2050.volume = 0.2
     })
   }
 
@@ -93,7 +100,7 @@ export default class AudioManager {
     loop = false,
     volume = 1,
     play = false,
-    listener = this.camera.listener,
+    listener,
     isSingle = null,
   } = {}) {
     if (this.audios[name]) return this.audios[name]
@@ -139,7 +146,6 @@ export default class AudioManager {
 
     this.audios[name] = sound
     this.audios[name].debug = this.debug && this.setDebug(name, sound)
-    console.log(this.audios[name]);
 
     return sound
   }

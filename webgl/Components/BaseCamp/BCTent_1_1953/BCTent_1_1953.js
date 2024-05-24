@@ -107,7 +107,6 @@ export default class BCTent_1_1953 extends BasicItem {
    * On init complete
    */
   onInitComplete() {
-    console.log(this.item)
     this.addCSS2D({
       id: this.name + '_audio',
       template: UIAudioPlayer,

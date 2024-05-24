@@ -26,6 +26,14 @@
       {
         "name": "click",
         "source": "/sounds/click.mp3"
+      },
+      {
+        "name": "flag1953",
+        "source": "/sounds/flag_1953.mp3"
+      },
+      {
+        "name": "vent2050",
+        "source": "/sounds/vent_2050.mp3"
       }
     ]
   },

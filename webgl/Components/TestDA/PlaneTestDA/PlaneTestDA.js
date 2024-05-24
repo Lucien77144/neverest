@@ -368,7 +368,6 @@ export default class PlaneTestDA extends BasicItem {
 
   setGeometry() {
     this.geometry = new PlaneGeometry(3, 3, 256, 256)
-    console.log(this.resources.TESTDAMountain.scene.children[0].geometry)
     this.geometry = this.resources.TESTDAMountain.scene.children[0].geometry
   }
 

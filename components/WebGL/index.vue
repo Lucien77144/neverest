@@ -10,7 +10,7 @@
     <UIInterestData />
     <UITitle />
     <div class="start__btn" :class="sceneRef && 'hidden'">
-      <UIBtn @click="start()">{{ $t('START') }}</UIBtn>
+      <UIBtn @click="start(), $bus.emit('audio:unmute'), $bus.emit('audio:vent2050')">{{ $t('START') }}</UIBtn>
     </div>
   </div>
 </template>
@@ -47,6 +47,7 @@ watch(active, (v: boolean) =>
 )
 
 function start() {
+  $bus.emit('audio:unmute')
   sceneRef.value = scenes.nav.list.find((s) => s.name === 'basecamp')
   sceneRef.value && $bus.emit('scene:switch', sceneRef.value)
 }
