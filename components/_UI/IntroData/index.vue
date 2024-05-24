@@ -1,5 +1,5 @@
 <template>
-  <div class="introData">
+  <div ref="introRef" class="introData">
     {{ $t(data?.value) }}
   </div>
 </template>
@@ -9,6 +9,14 @@
 const { data } = defineProps({
   data: Object,
 })
+
+// Refs
+const introRef = ref<HTMLElement>()
+
+// Bus
+const { $bus }: any = useNuxtApp()
+
+$bus.on('scene:switch', () => introRef.value?.classList.add('disabled'))
 </script>
 
 <style src="./style.scss" lang="scss" scoped></style>

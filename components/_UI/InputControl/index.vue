@@ -20,7 +20,7 @@
       :big="false"
       :is-disabled="disabled"
       @click="setDisabled(!disabled)"
-      ><img class="icon-big" src="/img/icons/subtitle.svg" alt=""
+      ><img class="icon-big" src="/assets/img/subtitle.svg" alt=""
     /></UIIconBtn>
   </div>
   <div class="IC_sound">
@@ -31,7 +31,7 @@
       </div>
     </div> -->
     <UIIconBtn :big="false" :is-disabled="isMuted" @click="toggleMute()"
-      ><img class="icon-big" src="/img/icons/sound.svg" alt=""
+      ><img class="icon-big" src="/assets/img/sound.svg" alt=""
     /></UIIconBtn>
   </div>
 </template>

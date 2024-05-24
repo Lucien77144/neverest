@@ -23,7 +23,7 @@ export default class ModalSprite extends BasicItem {
     this.item = null
     this.material = null
     this.active = false
-    this.scale = 1
+    this.scale = 1.3
     this.scaleFocus = 0
   }
 
@@ -77,6 +77,7 @@ export default class ModalSprite extends BasicItem {
    * @param {boolean} open - Open or close the modal
    */
   openModal(open) {
+    this.$bus.emit('audio:click')
     this.scrollManager.disabled = open
     gsap.to(this.renderUniforms.uModalProgress, {
       value: open ? 1 : 0,

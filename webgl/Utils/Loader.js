@@ -130,8 +130,6 @@ export default class Loader {
         resource.subtitles && this.setSubtitles(video, resource.subtitles)
 
         this.$bus.on('audio:mute', () => {
-          console.log('mute')
-
           video.muted = true
         })
 

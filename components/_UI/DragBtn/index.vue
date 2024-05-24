@@ -7,7 +7,9 @@
       :data-position="position"
       class="DragBtn__button"
     >
-      <slot />
+      <div class="label">
+        <slot />
+      </div>
     </div>
   </div>
 </template>
@@ -19,7 +21,7 @@ import clamp from '~/utils/functions/clamp'
 // Refs
 const dragger = ref<HTMLElement>()
 const drag = ref<HTMLElement>()
-const position = ref<number>(0)
+const position = ref<number>(10)
 
 // Emits
 const $emit = defineEmits(['navigate'])
@@ -35,7 +37,7 @@ onMounted(() => {
     reset?.kill()
     const max =
       (drag.value?.clientHeight || 0) - (dragger.value?.clientHeight || 0) / 2
-    position.value = clamp(0, max, position.value + e.delta.y * -1)
+    position.value = clamp(10, max, position.value + e.delta.y * -1)
 
     if (position.value === max) {
       $emit('navigate')
@@ -44,7 +46,7 @@ onMounted(() => {
 
   dragManager.on('dragend', (e: any) => {
     reset = gsap.to(position, {
-      value: 0,
+      value: 10,
       duration: 0.5,
     })
   })

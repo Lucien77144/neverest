@@ -22,6 +22,18 @@
           "fr": "/subtitles/ted_talk/fr.vtt",
           "en": "/subtitles/ted_talk/en.vtt"
         }
+      },
+      {
+        "name": "click",
+        "source": "/sounds/click.mp3"
+      },
+      {
+        "name": "flag1953",
+        "source": "/sounds/flag_1953.mp3"
+      },
+      {
+        "name": "vent2050",
+        "source": "/sounds/vent_2050.mp3"
       }
     ]
   },
@@ -59,6 +71,11 @@
       {
         "name": "introMountainTexture",
         "source": "/img/texturesLoulou/textureIntroMountain.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "BCFlagPoleTexture",
+        "source": "/img/texturesLoulou/textureBCFlagPole.jpg",
         "type": "texture"
       },
       {

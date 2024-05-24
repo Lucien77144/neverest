@@ -15,7 +15,7 @@
     transform: translateX(-50%);
     width: 5px;
     height: 100%;
-    background-color: #ff0000;
+    background-color: $black;
     border-radius: 2px;
   }
 
@@ -25,12 +25,12 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    width: 70px;
-    height: 30px;
-    background-color: #ffffff;
+    width: 60px;
+    height: 60px;
+    background-image: url(assets/img/drag.png);
+    background-size: contain;
 
-    // Style margin top = 0px
-    &[data-position='0'] {
+    &[data-position='10'] {
       animation: callToDrag 4s infinite;
     }
   }

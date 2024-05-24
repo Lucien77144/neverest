@@ -1,5 +1,5 @@
 <template>
-  <div :key="data?.id" class="audio-player" @click="toggle()">
+  <div :key="data?.id" class="audio-player" @click="toggle(), $bus.emit('audio:click')">
     <client-only>
       <Vue3Lottie
         ref="lottieRef"
@@ -16,6 +16,9 @@
 import gsap from 'gsap'
 import { Vue3Lottie } from 'vue3-lottie'
 import audioPlayer from '~/assets/data/audioplayer.json'
+
+// Bus
+const { $bus }: any = useNuxtApp()
 
 // Props
 const { data } = defineProps({

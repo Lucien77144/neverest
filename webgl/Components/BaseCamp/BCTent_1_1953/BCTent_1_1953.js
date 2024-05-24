@@ -48,21 +48,27 @@ export default class BCTent_1_1953 extends BasicItem {
     }
     this.item.children[0].material = new TextureCraieMaterial(params).instance
 
-    this.debugFolder = this.debug.panel.addFolder({
-      expanded: false,
-      title: this.name,
-    })
-    this.debugFolder
-      .addBinding(params, 'color', { view: 'color' })
-      .on('change', () => {
-        this.item.children[0].material = new TextureCraieMaterial(params).instance
+    if (this.debug) {
+      this.debugFolder = this.debug.panel.addFolder({
+        expanded: false,
+        title: this.name,
       })
+      this.debugFolder
+        .addBinding(params, 'color', { view: 'color' })
+        .on('change', () => {
+          this.item.children[0].material = new TextureCraieMaterial(
+            params
+          ).instance
+        })
 
-    this.debugFolder
-      .addBinding(params, 'bgColor', { view: 'color' })
-      .on('change', () => {
-        this.item.children[0].material = new TextureCraieMaterial(params).instance
-      })
+      this.debugFolder
+        .addBinding(params, 'bgColor', { view: 'color' })
+        .on('change', () => {
+          this.item.children[0].material = new TextureCraieMaterial(
+            params
+          ).instance
+        })
+    }
 
     //new CraieMaterial({
     //  textureParams:{
@@ -95,7 +101,12 @@ export default class BCTent_1_1953 extends BasicItem {
   init() {
     this.setItem()
     this.setMaterial()
+  }
 
+  /**
+   * On init complete
+   */
+  onInitComplete() {
     this.addCSS2D({
       id: this.name + '_audio',
       template: UIAudioPlayer,
@@ -105,5 +116,14 @@ export default class BCTent_1_1953 extends BasicItem {
       parent: this.item,
       position: new Vector3(0, 1, 0),
     })
+  }
+
+  /**
+   *
+   */
+  dispose() {
+    super.dispose()
+    this.removeCSS2D(this.name + '_audio')
+    this.item = null
   }
 }

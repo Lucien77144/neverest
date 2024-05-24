@@ -14,6 +14,7 @@ export default {
     },
   },
   CLOSE: 'Fermer',
+  DRAG: 'Tirer',
   SCROLL_TO_EXPLORE: 'Scrollez pour explorer',
   TITLE_1953:
     'Participer à la première ascension à travers les archives de 1953',

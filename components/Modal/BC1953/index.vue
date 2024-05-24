@@ -1,5 +1,5 @@
 <template>
-  <div class="close__btn" @click="$bus.emit('modal:close')">
+  <div class="close__btn" @click="$bus.emit('modal:close'), $bus.emit('audio:click')">
     <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
       <path
         d="M1.34 2.66A1.5 1.5 0 0 1 3.46.54l21.8 19.81 21.3-19.29a1.5 1.5 0 1 1 2.12 2.12l-19.3 21.3 19.58 21.56a1.5 1.5 0 1 1-2.13 2.12L25.27 28.6 3.18 48.68a1.5 1.5 0 1 1-2.12-2.12l20.09-22.09L1.34 2.67Z"

@@ -40,6 +40,8 @@ export default class BasicScene {
     this.setProgressHold = useHoldStore().setProgress
     this.addToCSS2DList = useCSSRendererStore().addToCSS2DList
     this.addToCSS3DList = useCSSRendererStore().addToCSS3DList
+    this.removeFromCSS2DList = useCSSRendererStore().removeFromCSS2DList
+    this.removeFromCSS2DList = useCSSRendererStore().removeFromCSS2DList
 
     // Getters
     this.progressHold = computed(() => useHoldStore().getProgress)
@@ -358,6 +360,22 @@ export default class BasicScene {
   addCSS3D(item) {
     this.css3d ??= new CSS3DManager(this.scene, this.camera.instance)
     this.addToCSS3DList(item)
+  }
+
+  /**
+   * remove CSS2D element
+   * @param {string} id
+   */
+  removeCSS2D(id) {
+    this.removeFromCSS2DList(id)
+  }
+
+  /**
+   * remove CSS3D element
+   * @param {string} id
+   */
+  removeCSS3D(id) {
+    this.removeFromCSS3DList(id)
   }
 
   // --------------------------------

@@ -72,6 +72,18 @@ export default class BasicItem {
     this.addCSS3D
 
     /**
+     * Remove CSS2D to the item
+     * @param {string} id
+     */
+    this.removeCSS2D
+
+    /**
+     * Remove CSS3D to the item
+     * @param {string} id
+     */
+    this.removeCSS3D
+
+    /**
      * Build instanced mesh
      * @param {TGeometry} geometry Geometry of the item
      * @param {TMaterial} material Material of the item
@@ -174,6 +186,22 @@ export default class BasicItem {
    */
   addCSS3D(item) {
     this.parentScene.addCSS3D(item)
+  }
+
+  /**
+   * Remove CSS2D element
+   * @param {string} id
+   */
+  removeCSS2D(id) {
+    this.parentScene.removeCSS2D(id)
+  }
+
+  /**
+   * Remove CSS3D element
+   * @param {string} id
+   */
+  removeCSS3D(id) {
+    this.parentScene.removeCSS3D(id)
   }
 
   /**

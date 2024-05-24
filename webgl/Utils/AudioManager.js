@@ -7,6 +7,7 @@ export default class AudioManager {
     this.experience = new Experience()
     this.resources = this.experience.resources
     this.debug = this.experience.debug
+    this.$bus = this.experience.$bus
     this.sources = {}
 
     // New elements
@@ -60,6 +61,37 @@ export default class AudioManager {
   }
 
   /**
+   * Set events
+   */
+  setEvents() {
+    const sounds = {
+      click: this.resources.items.click,
+      vent2050: this.resources.items.vent2050,
+    }
+    
+    this.$bus.on('audio:click', () => this.resources.items.click.play())
+    this.$bus.on('audio:vent2050', () => {
+      this.resources.items.vent2050.play()
+      this.resources.items.vent2050.loop = true
+      this.resources.items.vent2050.volume = 0.2
+    })
+
+    this.$bus.on('audio:mute', () => {
+      Object.values(sounds).forEach((sound) => {
+        sound.volume = 0
+      })
+    })
+    this.$bus.on('audio:unmute', () => {
+      Object.values(sounds).forEach((sound) => {
+        sound.volume = 1
+      })
+      this.resources.items.vent2050.volume = 0.2
+    })
+    this.$bus.on('modal:open', () => this.resources.items.vent2050.volume = 0.05)
+    this.$bus.on('modal:close', () => this.resources.items.vent2050.volume = 0.2)
+  }
+
+  /**
    * Add an audio
    * @return {Audio|PositionalAudio}
    */
@@ -70,7 +102,7 @@ export default class AudioManager {
     loop = false,
     volume = 1,
     play = false,
-    listener = this.camera.listener,
+    listener,
     isSingle = null,
   } = {}) {
     if (this.audios[name]) return this.audios[name]
@@ -116,7 +148,6 @@ export default class AudioManager {
 
     this.audios[name] = sound
     this.audios[name].debug = this.debug && this.setDebug(name, sound)
-    console.log(this.audios[name]);
 
     return sound
   }

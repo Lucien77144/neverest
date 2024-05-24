@@ -1,8 +1,13 @@
 .introData {
+  will-change: opacity;
   transition: opacity 0.35s ease;
   opacity: 0;
   background-color: transparent;
   font-family: $outfit;
   text-transform: uppercase;
-  color: $white;
+  color: $primary;
+}
+
+.disabled {
+  opacity: 0 !important;
 }
