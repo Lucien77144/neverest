@@ -87,6 +87,8 @@ export default class AudioManager {
       })
       this.resources.items.vent2050.volume = 0.2
     })
+    this.$bus.on('modal:open', () => this.resources.items.vent2050.volume = 0.05)
+    this.$bus.on('modal:close', () => this.resources.items.vent2050.volume = 0.2)
   }
 
   /**
