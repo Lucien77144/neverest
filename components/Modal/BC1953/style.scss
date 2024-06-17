@@ -3,6 +3,10 @@ img {
   -webkit-user-drag: none;
 }
 
+.transformable {
+  will-change: transform;
+}
+
 .modal {
   position: fixed;
   display: flex;
@@ -86,7 +90,6 @@ img {
 
     &__item {
       position: relative;
-      display: grid;
       gap: 12rem;
     }
   }
@@ -221,6 +224,7 @@ img {
   background-color: $white;
   height: 6px;
   width: 0;
+  will-change: width;
 }
 
 .rotatable {
@@ -231,54 +235,129 @@ img {
   text-align: right;
 }
 
-.w-100 {
-  width: 100%;
+.d {
+  &-grid {
+    display: grid;
+  }
+
+  &-flex {
+    display: flex;
+
+    &-column {
+      flex-direction: column;
+    }
+  }
 }
 
-.content3 {
-  &__wrapper {
-    position: absolute;
-    transform: translateY(-50%);
+.align-center {
+  align-items: center;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.w {
+  &-100 {
     width: 100%;
-    display: flex;
-    align-items: center;
+  }
+
+  &-px {
+    &-375 {
+      width: 375px;
+    }
+    &-500 {
+      width: 500px;
+    }
+    &-600 {
+      width: 600px;
+    }
+    &-1000 {
+      width: 1000px;
+    }
+  }
+
+  &-min {
+    &-500 {
+      min-width: 500px;
+    }
+  }
+
+  &-max {
+    &-500 {
+      max-width: 500px;
+    }
+    &-600 {
+      max-width: 600px;
+    }
+  }
+}
+
+.m {
+  &-0 {
+    margin: 0;
+  }
+
+  &l {
+    &-5 {
+      margin-left: 5rem;
+    }
+    &-n5 {
+      margin-left: -5rem;
+    }
+    &-10 {
+      margin-left: 10rem;
+    }
+    &-15 {
+      margin-left: 15rem;
+    }
+    &-20 {
+      margin-left: 20rem;
+    }
+  }
+}
+
+.rotate {
+  &-1 {
+    transform: rotate(-1deg);
+  }
+  &-n1 {
+    transform: rotate(-1deg);
+  }
+}
+
+#content-1 {
+  min-width: 692px;
+  height: 835px;
+  transform: rotate(13.63deg);
+}
+
+#content-2 {
+  gap: 10vh;
+}
+
+#content-3 {
+  .wrapper {
+    transform: translateY(-50%);
 
     .border {
-      position: absolute;
       transform: rotate(4.09deg);
     }
 
     .img__container {
       padding: 2.5rem;
-      margin: 0;
     }
   }
 }
 
-.content4 {
-  &__wrapper {
-    margin-left: 15rem;
-    display: grid;
+#content-4 {
+  .wrapper {
     gap: 10vh;
-
-    .border {
-      position: absolute;
-      transform: rotate(-16.23deg);
-      width: 35%;
-      left: 31%;
-      top: 0%;
-    }
-
-    .img__container {
-      margin: 0;
-    }
 
     .svg__gaz_mask {
       transform: rotate(-10.72deg);
 
       &__container {
-        width: 350px;
-        position: absolute;
         top: 5rem;
         left: -75%;
       }
@@ -286,10 +365,8 @@ img {
   }
 }
 
-.content5 {
-  &__wrapper {
-    margin-left: 15rem;
-
+#content-5 {
+  .wrapper {
     .text {
       margin-top: 1rem;
       margin-left: 7.5rem;
@@ -299,28 +376,13 @@ img {
   }
 }
 
-.content6 {
-  &__wrapper {
-    margin-left: 15rem;
-    display: grid;
+#content-6 {
+  .wrapper {
     gap: 15vh;
-
-    .border {
-      position: absolute;
-      transform: rotate(-16.23deg);
-      width: 35%;
-      left: 31%;
-      top: 0%;
-    }
-
-    .img__container {
-      margin: 0;
-    }
 
     .tent_1953 {
       &__container {
         width: 650px;
-        position: absolute;
         top: 0;
         left: 17.5rem;
       }
