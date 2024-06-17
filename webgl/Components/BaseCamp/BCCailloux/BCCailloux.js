@@ -78,6 +78,6 @@ export default class BCCailloux extends BasicItem {
    */
   init() {
     this.setItem()
-    this.setMaterial()
+    // this.setMaterial()
   }
 }

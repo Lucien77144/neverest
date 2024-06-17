@@ -106,7 +106,7 @@ export default class BCTent_3_1953 extends BasicItem {
    */
   init() {
     this.setItem()
-    this.setMaterial()
+    // this.setMaterial()
     this.setFlag()
   }
 

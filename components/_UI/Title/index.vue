@@ -21,7 +21,7 @@ const { $bus }: any = useNuxtApp()
 
 // Toggle title
 $bus.on('title:disable', (val: boolean) => {
-  disabled.value = val
+  disabled.value = val  
 })
 </script>
 

@@ -75,6 +75,6 @@ export default class BCMountainRS extends BasicItem {
    */
   init() {
     this.setItem()
-    this.setMaterial()
+    // this.setMaterial()
   }
 }
