@@ -176,4 +176,6 @@ void main() {
     frag = mix(frag, mix(frag, vec4(uModalColor, 1.), (1. - mask) * play), .95);
 
     gl_FragColor = frag;
+    #include <colorspace_fragment> // To fix colors problems when using render targets
+    // #include <tonemapping_fragment> // To fix tonemapping problems when using render targets (only if tone mapping is enabled)
 }

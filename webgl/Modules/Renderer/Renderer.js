@@ -99,13 +99,12 @@ export default class Renderer {
   setRenderTargets() {
     const size = this.instance.getDrawingBufferSize(new Vector2())
     this.rt0 = new WebGLRenderTarget(size.width, size.height, {
+      generateMipmaps: false,
       minFilter: LinearFilter,
       magFilter: LinearFilter,
       format: RGBAFormat,
-      stencilBuffer: false,
-      samples: 4,
+      samples: 1,
     })
-
     this.rt1 = this.rt0.clone()
   }
 
@@ -180,7 +179,6 @@ export default class Renderer {
     // Options
     this.instance.physicallyCorrectLights = true
     this.instance.outputColorSpace = SRGBColorSpace
-    // this.instance.toneMapping = NoToneMapping
     this.instance.toneMapping = ACESFilmicToneMapping
     this.instance.toneMappingExposure = 1
 
@@ -213,13 +211,13 @@ export default class Renderer {
       this.instance.render(active.scene, active.camera.instance)
     }
 
-    // Transition
+    // // Transition
     if (next?.camera?.instance) {
       this.instance.setRenderTarget(this.rt1)
       this.instance.render(next.scene, next.camera.instance)
     }
 
-    // RenderMesh
+    // // RenderMesh
     this.instance.setRenderTarget(null)
     this.instance.render(this.renderMesh, this.camera)
   }

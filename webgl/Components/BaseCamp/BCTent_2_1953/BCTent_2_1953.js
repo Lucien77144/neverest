@@ -1,8 +1,6 @@
-import { DoubleSide, InstancedMesh, MeshBasicMaterial, MeshNormalMaterial, Object3D } from 'three'
+import { InstancedMesh, Object3D } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import { BCTENT_2_1953 } from '~/const/blocking/baseCamp.const'
-import CraieMaterial from '../../Shared/CraieMaterial/CraieMaterial'
-import TextureCraieMaterial from '../../Shared/TextureCraieMaterial/TextureCraieMaterial'
 
 export default class BCTent_2_1953 extends BasicItem {
   /**
@@ -32,7 +30,7 @@ export default class BCTent_2_1953 extends BasicItem {
    * Set Instances
    */
   setInstances() {
-    const instance = this.resources.BCTent_2_1953.scene.children[0]
+    // const instance = this.resources.BCTent_2_1953.scene.children[0].clone()
     //const material = new CraieMaterial({
     //  textureParams:{
     //    textureSize:1024,
@@ -64,6 +62,7 @@ export default class BCTent_2_1953 extends BasicItem {
     // }).instance
     const dummy = new Object3D()
 
+    const instance = this.resources.BCTent_2_1953.scene.children[0].clone()
     this.item = new InstancedMesh(
       instance.geometry,
       instance.material,
@@ -91,18 +90,10 @@ export default class BCTent_2_1953 extends BasicItem {
   }
 
   /**
-   * Set material
-   */
-  setMaterial() {
-    
-  }
-
-  /**
    * Init
    */
   init() {
     this.isInstances && this.setInstances()
     !this.isInstances && this.setItem()
-    !this.isInstances && this.setMaterial()
   }
 }

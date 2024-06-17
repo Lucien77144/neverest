@@ -327,6 +327,8 @@ export default class BasicScene {
     const flatComponents = (c) => {
       Object.keys(c).forEach((key) => {
         const value = c[key]
+        if (!value) return console.warn(`Component ${key} is not defined`, c)
+
         value.parentScene = this
 
         res[key] = value
