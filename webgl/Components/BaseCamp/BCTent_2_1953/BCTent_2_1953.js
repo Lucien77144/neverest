@@ -30,7 +30,6 @@ export default class BCTent_2_1953 extends BasicItem {
    * Set Instances
    */
   setInstances() {
-    const instance = this.resources.BCTent_2_1953.scene.children[0]
     const dummy = new Object3D()
 
     const instance = this.resources.BCTent_2_1953.scene.children[0].clone()
