@@ -39,8 +39,6 @@ export default class BCTent_2_1953 extends BasicItem {
       BCTENT_2_1953.length
     )
 
-    console.log(this.item);
-
     BCTENT_2_1953.forEach((el, i) => {
       dummy.position.set(el.position.x, el.position.y, el.position.z)
       dummy.rotation.set(el.rotation.x, el.rotation.y, el.rotation.z)
