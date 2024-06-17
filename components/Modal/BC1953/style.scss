@@ -187,7 +187,7 @@ img {
   display: flex;
   align-items: center;
 
-  .close__btn__text {
+  &__text {
     padding-left: 0.75rem;
     opacity: 0;
     will-change: opacity, transform;
@@ -195,6 +195,11 @@ img {
     transition: 0.35s ease-in-out;
     color: $secondary;
     font-weight: 300;
+  }
+
+  &_icon {
+    width: 50px;
+    height: 50px;
   }
 
   &:hover {
@@ -272,6 +277,9 @@ img {
     &-600 {
       width: 600px;
     }
+    &-750 {
+      width: 600px;
+    }
     &-1000 {
       width: 1000px;
     }
@@ -327,9 +335,17 @@ img {
 }
 
 #content-1 {
-  min-width: 692px;
-  height: 835px;
   transform: rotate(13.63deg);
+
+  .svg__container {
+    position: relative;
+  }
+
+  .img__container {
+    position: absolute;
+    top: 5%;
+    left: 0;
+  }
 }
 
 #content-2 {
@@ -337,9 +353,9 @@ img {
 }
 
 #content-3 {
-  .wrapper {
-    transform: translateY(-50%);
+  height: 800px;
 
+  .wrapper {
     .border {
       transform: rotate(4.09deg);
     }

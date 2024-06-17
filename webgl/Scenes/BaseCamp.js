@@ -351,7 +351,6 @@ export default class BaseCamp extends BasicScene {
   setScrollFactor(value) {
     if (this.factorChange) return
     this.factorChange = true
-
     this.interest.curr = value
 
     const factor = this.scrollManager.factor

@@ -3,7 +3,7 @@
     class="close__btn"
     @click="$bus.emit('modal:close'), $bus.emit('audio:click')"
   >
-    <img src="/assets/img/cross.svg" alt="close" />
+    <img class="close__btn__icon" src="/assets/img/cross.svg" alt="close" />
     <p class="close__btn__text">
       {{ $t('CLOSE') }}
     </p>
@@ -48,32 +48,37 @@
       </div>
     </section>
     <section class="modal__content">
-      <article id="content-1" class="modal__content__item d-grid">
-        <img
-          :ref="
-            (ref) =>
-              addAnimRef(ref, {
-                rotate: {
-                  direction: 1,
-                },
-              })
-          "
-          class="svg__container"
-          src="/assets/img/HS-Everest-1953_1_bg.png"
-          alt=""
-        />
-        <img
-          :ref="
-            (ref) =>
-              addAnimRef(ref, {
-                translate: {
-                  direction: 1,
-                },
-              })
-          "
-          class="img__container"
-          src="/assets/img/HS-Everest-1953_1.jpg"
-        />
+      <article
+        id="content-1"
+        class="modal__content__item d-flex d-flex-column w-px-750"
+      >
+        <div>
+          <img
+            :ref="
+              (ref) =>
+                addAnimRef(ref, {
+                  rotate: {
+                    direction: 1,
+                  },
+                })
+            "
+            class="svg__container"
+            src="/assets/img/HS-Everest-1953_1_bg.png"
+            alt=""
+          />
+          <img
+            :ref="
+              (ref) =>
+                addAnimRef(ref, {
+                  translate: {
+                    direction: 1,
+                  },
+                })
+            "
+            class="img__container m-0"
+            src="/assets/img/HS-Everest-1953_1.jpg"
+          />
+        </div>
       </article>
       <article id="content-2" class="modal__content__item d-grid ml-15">
         <div class="position-relative w-max-500">
@@ -125,46 +130,49 @@
           </div>
         </div>
       </article>
-      <article id="content-3" class="modal__content__item d-grid">
-        <div class="position-relative v-min-500 ml-15">
-          <div class="wrapper w-100 d-flex align-center absolute">
-            <img
-              :ref="
-                (ref) =>
-                  addAnimRef(ref, {
-                    translate: {
-                      direction: -1,
-                    },
-                  })
-              "
-              class="border absolute"
-              src="/assets/img/HS-Everest-1953_3.svg"
-              alt=""
-            />
-            <div
-              :ref="
-                (ref) =>
-                  addAnimRef(ref, {
-                    rotate: {
-                      direction: 1,
-                    },
-                  })
-              "
-            >
+      <article id="content-3" class="modal__content__item d-grid ml-5 w-px-375">
+        <div class="position-relative d-flex align-center">
+          <div class="wrapper w-100 absolute">
+            <div class="position-relative">
               <img
                 :ref="
                   (ref) =>
                     addAnimRef(ref, {
                       translate: {
+                        direction: -1,
+                      },
+                    })
+                "
+                class="border absolute"
+                src="/assets/img/HS-Everest-1953_3.svg"
+                alt=""
+              />
+              <div
+                :ref="
+                  (ref) =>
+                    addAnimRef(ref, {
+                      rotate: {
                         direction: 1,
                       },
                     })
                 "
-                class="img__container m-0"
-                src="/assets/img/HS-Everest-1953_3.jpg"
-                alt=""
-              />
+              >
+                <img
+                  :ref="
+                    (ref) =>
+                      addAnimRef(ref, {
+                        translate: {
+                          direction: 1,
+                        },
+                      })
+                  "
+                  class="img__container m-0"
+                  src="/assets/img/HS-Everest-1953_3.jpg"
+                  alt=""
+                />
+              </div>
             </div>
+            <p class="text-right w-100">{{ $t('HEROS_1953') }}</p>
           </div>
         </div>
       </article>
