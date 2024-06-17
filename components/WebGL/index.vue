@@ -44,8 +44,8 @@ const active = computed(() => useExperienceStore().getActive)
 const landing = computed(() => useExperienceStore().getLanding)
 
 watch(active, (v: boolean) =>
-  setTimeout(() => {
-    activeStatus.value = v
+  setTimeout(() => {        
+    activeStatus.value = v    
   }, 750)
 )
 
@@ -55,7 +55,7 @@ watch(active, (v: boolean) =>
 function start() {
   $bus.emit('audio:unmute')
   sceneRef.value = scenes.nav.list.find((s) => s.name === 'basecamp')
-  sceneRef.value && $bus.emit('scene:switch', sceneRef.value)
+  sceneRef.value && $bus.emit('scene:switch', sceneRef.value)  
 }
 
 // Events
@@ -77,11 +77,6 @@ onMounted(() => {
     baseScene: route.query.scene,
     name: 'template',
   })
-
-  setTimeout(() => {
-    console.log(exp.value)
-  }, 1000)
-
   // On component unmounted, dispose the experience
   onUnmounted(() => {
     exp.value?.dispose()
