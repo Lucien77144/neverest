@@ -56,17 +56,17 @@ export default class BCTent_2_1953 extends BasicItem {
     //  isMapEnable:1,
     //  displacementMapIntensity:0,
     //}).instance
-    const material = new TextureCraieMaterial({
-      side:0,
-      color:'#FF7F00',
-      bgColor:'#F8ECE8',
-      texture:this.resources.BCTent2_1953Texture
-    }).instance
+    // const material = new TextureCraieMaterial({
+    //   side:0,
+    //   color:'#FF7F00',
+    //   bgColor:'#F8ECE8',
+    //   texture:this.resources.BCTent2_1953Texture
+    // }).instance
     const dummy = new Object3D()
 
     this.item = new InstancedMesh(
       instance.geometry,
-      material,
+      instance.material,
       BCTENT_2_1953.length
     )
 
