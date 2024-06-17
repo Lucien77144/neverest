@@ -9,11 +9,12 @@
   <div id="webgl-interface">
     <UIInterestData />
     <UITitle />
-    <div class="start__btn" :class="sceneRef && 'hidden'">
+    <div ref="startBtnRef" class="start__btn" :class="sceneRef && 'hidden'">
       <UIBtn
         @click="start(), $bus.emit('audio:unmute'), $bus.emit('audio:vent2050')"
-        >{{ $t('START') }}</UIBtn
       >
+        {{ $t('START') }}
+      </UIBtn>
     </div>
   </div>
 </template>
@@ -35,6 +36,7 @@ const canvasRef = ref<HTMLElement | null>(null)
 const webGlCSSRef = ref<HTMLElement | null>(null)
 const activeStatus = ref<boolean>(false)
 const sceneRef = ref<TSceneInfos>()
+const startBtnRef = ref<HTMLElement | null>(null)
 
 // Route
 const route = useRoute()
@@ -44,8 +46,8 @@ const active = computed(() => useExperienceStore().getActive)
 const landing = computed(() => useExperienceStore().getLanding)
 
 watch(active, (v: boolean) =>
-  setTimeout(() => {        
-    activeStatus.value = v    
+  setTimeout(() => {
+    activeStatus.value = v
   }, 750)
 )
 
@@ -55,7 +57,7 @@ watch(active, (v: boolean) =>
 function start() {
   $bus.emit('audio:unmute')
   sceneRef.value = scenes.nav.list.find((s) => s.name === 'basecamp')
-  sceneRef.value && $bus.emit('scene:switch', sceneRef.value)  
+  sceneRef.value && $bus.emit('scene:switch', sceneRef.value)
 }
 
 // Events
@@ -68,6 +70,10 @@ $bus.on('modal:destroy', () => {
     () => webGlCSSRef.value?.classList.remove('webGlCSS--disabled'),
     1000
   )
+})
+
+$bus.on('debug:scene', (name: string) => {
+  if (name !== 'intro') startBtnRef.value?.remove()
 })
 
 // On component mounted, create the experience

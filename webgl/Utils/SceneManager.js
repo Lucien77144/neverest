@@ -64,6 +64,8 @@ export default class SceneManager {
     this.debug.persist(this.debugScene, persist.controller.value.rawValue)
     this.debugFolder.disabled = false
 
+    this.$bus.emit('debug:scene', this.debugScene.value)
+
     // Add switch event on change scene
     setTimeout(() =>
       this.debugScene.on('change', ({ value }) =>
