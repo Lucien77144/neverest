@@ -10,7 +10,10 @@
     <UIInterestData />
     <UITitle />
     <div class="start__btn" :class="sceneRef && 'hidden'">
-      <UIBtn @click="start(), $bus.emit('audio:unmute'), $bus.emit('audio:vent2050')">{{ $t('START') }}</UIBtn>
+      <UIBtn
+        @click="start(), $bus.emit('audio:unmute'), $bus.emit('audio:vent2050')"
+        >{{ $t('START') }}</UIBtn
+      >
     </div>
   </div>
 </template>
@@ -46,6 +49,9 @@ watch(active, (v: boolean) =>
   }, 750)
 )
 
+/**
+ * Start the experience
+ */
 function start() {
   $bus.emit('audio:unmute')
   sceneRef.value = scenes.nav.list.find((s) => s.name === 'basecamp')
@@ -71,6 +77,10 @@ onMounted(() => {
     baseScene: route.query.scene,
     name: 'template',
   })
+
+  setTimeout(() => {
+    console.log(exp.value)
+  }, 1000)
 
   // On component unmounted, dispose the experience
   onUnmounted(() => {

@@ -7,6 +7,7 @@ uniform float uFocProgress;
 uniform sampler2D uBlob;
 uniform vec3 uModalColor;
 uniform vec3 uFocColor;
+uniform vec3 uFocTransitionColor;
 uniform vec2 uResolution;
 uniform vec2 uCursor;
 uniform vec2 uRatio;
@@ -110,16 +111,18 @@ void main() {
     vec2 scene0UV = vec2(uv.x,uv.y+uTransition);
     vec4 scene0 = texture2D(uScene0, scene0UV);
     vec4 scene0BW = vec4(applyBlackAndWhite(scene0.rgb), 1.);
-    float sceneMask = smoothstep(.9, 1., (1. - scene0BW.r) * 5.);
+    float sceneMask = smoothstep(.8, 1., (1. - scene0BW.r) * 5.);
 
-    vec2 focUV = uv;
-    focUV -= .5;
-    float focNoise = smoothstep(0., 1., cnoise(focUV * 15.));
-    float circle = length(focUV - .35 * focNoise);
+    vec2 focTime = vec2(cos(uTime * .001) * .1, sin(uTime * .001) * .1);
+    vec2 focUV = uv + focTime;
+    focUV -= (.5 + focTime * .5);
+
+    float focNoise = smoothstep(0., 1., cnoise(focUV * uFocProgress));
+    float circle = length((focUV - .35 * focNoise));
 
     float bwTime = (cos(uTime * .001) + uTime * .5) * -.001;
     vec2 bwUv = vec2(focUV.x * cos(bwTime) - focUV.y * sin(bwTime), focUV.x * sin(bwTime) + focUV.y * cos(bwTime));
-    float bwNoise = smoothstep(0., 1., cnoise(focUV * 4. + bwTime)) * .3;
+    float bwNoise = smoothstep(0., 1., cnoise(focUV * 4. + bwTime)) * .6;
 
     scene0BW = mix(vec4(0.), scene0BW, (1. - bwNoise));
     scene0BW.a = bwNoise;
@@ -128,18 +131,24 @@ void main() {
     // float sceneMask = scene0.r * length(focUV);
     // float circle = sceneMask;
 
-    focUV += .5;
+    focUV += (.5 + focTime * .5);
     
     // float focVal = 1. - smoothstep(circle, 0.0, uFocProgress);
     // float focVal2 = 1. - smoothstep(circle, 0.0, uFocProgress - .35);
     
     float focVal = 1. - smoothstep(circle, 0.0, 1. - uFocProgress - sceneMask);
-    float focVal2 = 1. - smoothstep(circle, 0.0, 1. - uFocProgress + .35);
+    float focVal2 = 1. - smoothstep(circle, 0.0, 1. - uFocProgress + .35 - (sceneMask * .5));
 
     vec3 sceneRGB = scene0.rgb; 
-    vec3 coveredScene = mix(sceneRGB, vec3(.98), focVal * uFocProgress);
+    vec3 coveredScene = mix(sceneRGB, uFocTransitionColor, uFocProgress);
     scene0.rgb = mix(sceneRGB, coveredScene, focVal * uFocProgress);
-    scene0.rgb = mix(scene0.rgb, mix(sceneRGB, coveredScene, .5), (focVal2 + .25) * uFocProgress);
+    scene0.rgb = mix(scene0.rgb, mix(sceneRGB, coveredScene, .5), focVal2 * uFocProgress);
+
+    // scene0.rgb = mix(sceneRGB, coveredScene, focVal * uFocProgress);
+    // scene0.rgb = mix(scene0.rgb, mix(sceneRGB, coveredScene, .35), uFocProgress);
+
+    // scene0.rgb = mix(sceneRGB, coveredScene, focVal * uFocProgress);
+    // scene0.rgb = mix(scene0.rgb, mix(sceneRGB, coveredScene, .5), (focVal2 + .25) * uFocProgress);
 
     vec2 scene1UV = vec2(uv.x,uv.y-(1.0-uTransition));
     vec4 scene1 = texture2D(uScene1, scene1UV);
@@ -173,7 +182,7 @@ void main() {
     float m = min(blob.r + blob.g + blob.b, 1.);
     float mask = 1. - min(m, 1.);
 
-    frag = mix(frag, mix(frag, vec4(uModalColor, 1.), (1. - mask) * play), .95);
+    frag = mix(frag, mix(frag, vec4(uModalColor, 1.), (1. - mask) * play), .995);
 
     gl_FragColor = frag;
     #include <colorspace_fragment> // To fix colors problems when using render targets

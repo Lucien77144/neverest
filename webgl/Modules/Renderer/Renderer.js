@@ -3,7 +3,6 @@ import {
   Color,
   LinearFilter,
   Mesh,
-  NoToneMapping,
   PerspectiveCamera,
   PlaneGeometry,
   RGBAFormat,
@@ -133,11 +132,12 @@ export default class Renderer {
           uDirection: new Uniform(1),
 
           // Focus
-          uFocColor: new Uniform(new Color('#f1dad2')),
+          uFocTransitionColor: new Uniform(new Color('#0d1113')),
+          uFocColor: new Uniform(new Color('#6c6ca7')),
           uFocProgress: new Uniform(0),
 
           // Data modal
-          uModalColor: new Uniform(new Color('#0d1a48')),
+          uModalColor: new Uniform(new Color('#00061a')),
           uModalProgress: new Uniform(0),
           uBlob: new Uniform(),
 
