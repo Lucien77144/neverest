@@ -29,9 +29,10 @@ void main() {
     float minV = 1.;
     float speed = 1.75;
 
+    float rdm = ((1. + uRandom) / 2.);
     float maxColor = max(color.r, max(color.g, color.b));
-    float clamped = sin(uTime + round(uRandom * 10.) * speed) + 1.;
-    float rounded = round(clamped * uRandom * 2.5) * .2;
+    float clamped = sin(uTime + round(rdm * 10.) * speed) + 1.;
+    float rounded = round(clamped * rdm * 2.5) * .2;
     float diff = dist * rounded + minV;
     float mask = abs(1. - round(clamp(maxColor * diff, 0., 1.)));
     
