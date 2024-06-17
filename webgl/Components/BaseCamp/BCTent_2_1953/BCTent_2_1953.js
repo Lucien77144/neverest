@@ -30,36 +30,7 @@ export default class BCTent_2_1953 extends BasicItem {
    * Set Instances
    */
   setInstances() {
-    // const instance = this.resources.BCTent_2_1953.scene.children[0].clone()
-    //const material = new CraieMaterial({
-    //  textureParams:{
-    //    textureSize:1024,
-    //    nbOfColumns:1,
-    //    borderSize:0.03,
-    //    columnsOffset:0.01,
-    //    nbOfCurvePerColumns:60,
-    //    areCurveOnSameDirection:false,
-    //    curveDirection:'up',
-    //    curveDirectionAmountFactor:0.5,
-    //    maxCurveHorizontalDecalage:0.5,
-    //    maxHeightCurve:6,
-    //    maxThicknessCurve:1,
-    //    nbOfPointsPerCurve:15,
-    //    maxBorderSideDecalage:0.03
-    //  },
-    //  side:0,
-    //  color:'#FF7F00',
-    //  bgColor:'#F8ECE8',
-    //  displacementMap:this.resources.ground2024,
-    //  isMapEnable:1,
-    //  displacementMapIntensity:0,
-    //}).instance
-    // const material = new TextureCraieMaterial({
-    //   side:0,
-    //   color:'#FF7F00',
-    //   bgColor:'#F8ECE8',
-    //   texture:this.resources.BCTent2_1953Texture
-    // }).instance
+    const instance = this.resources.BCTent_2_1953.scene.children[0]
     const dummy = new Object3D()
 
     const instance = this.resources.BCTent_2_1953.scene.children[0].clone()
@@ -68,6 +39,8 @@ export default class BCTent_2_1953 extends BasicItem {
       instance.material,
       BCTENT_2_1953.length
     )
+
+    console.log(this.item);
 
     BCTENT_2_1953.forEach((el, i) => {
       dummy.position.set(el.position.x, el.position.y, el.position.z)

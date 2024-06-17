@@ -1,7 +1,9 @@
-import { DoubleSide, MeshNormalMaterial } from 'three'
+import { DoubleSide, Mesh, MeshNormalMaterial, PlaneGeometry, ShaderMaterial, Uniform } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import CraieMaterial from '../../Shared/CraieMaterial/CraieMaterial'
 import TextureCraieMaterial from '../../Shared/TextureCraieMaterial/TextureCraieMaterial'
+import flagVert from './FlagShader/FlagShader.vert?raw'
+import flagFrag from './FlagShader/FlagShader.frag?raw'
 
 export default class BCTent_3_1953 extends BasicItem {
   /**
@@ -20,9 +22,11 @@ export default class BCTent_3_1953 extends BasicItem {
     this.rotation = rotation
     this.name = name
     this.visibility = visibility
+    this.flag = null
 
     // New elements
     this.resources = this.experience.resources.items
+    this.time = this.experience.time
   }
 
   /**
@@ -69,7 +73,32 @@ export default class BCTent_3_1953 extends BasicItem {
       bgColor:'#F8ECE8',
       texture:this.resources.BCTent3_1953Texture
     }).instance
-    
+  }
+
+  setFlag() {
+    const flagGeometry = new PlaneGeometry(3, 1.5, 32, 32)
+    const flagMaterial = new ShaderMaterial({
+      vertexShader: flagVert,
+      fragmentShader: flagFrag,
+      side: DoubleSide,
+      uniforms: {
+        uTime: new Uniform(this.time.elapsed * 0.001),
+        uTexture: new Uniform(this.resources.flagTexture),
+      },
+    })
+    this.flag = new Mesh(flagGeometry, flagMaterial)
+
+    this.flag.scale.set(0.3, 0.3, 0.3)
+
+    this.flag.position.x -= 2.2
+    this.flag.position.y += 3.2
+    this.flag.position.z -= 1.25
+
+    this.flag.rotation.y = -Math.PI / 2
+    this.flag.rotation.x = -Math.PI / 20
+    this.flag.rotation.z = Math.PI / 20
+
+    this.item.add(this.flag)
   }
 
   /**
@@ -78,5 +107,13 @@ export default class BCTent_3_1953 extends BasicItem {
   init() {
     this.setItem()
     this.setMaterial()
+    this.setFlag()
+
+    console.log(this.item);
+  }
+
+  update() {
+    this.item.children[1].material.uniforms.uTime.value =
+      this.time.elapsed * 0.001
   }
 }
