@@ -1,5 +1,6 @@
 import {
   Mesh,
+  MeshBasicMaterial,
   MeshNormalMaterial,
   MeshStandardMaterial,
   PlaneGeometry,
@@ -60,15 +61,18 @@ export default class Floor extends BasicItem {
     //  displacementMapIntensity:0,
     //}).instance
 
-    this.material = new TextureCraieMaterial({
-      side:0,
-      color:'#b1c4d8',
-      bgColor:'#F8ECE8',
-      texture:this.resources.BCFloorTexture
-    }).instance
+    // this.material = new TextureCraieMaterial({
+    //   side:0,
+    //   color:'#b1c4d8',
+    //   bgColor:'#F8ECE8',
+    //   texture:this.resources.BCFloorTexture
+    // }).instance
     
+    this.material = new MeshBasicMaterial({
+      color: 0xffffff,
+      side: 2,
+    })
   }
-
   
 
   /**

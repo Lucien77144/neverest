@@ -75,12 +75,12 @@ export default class BCFlag extends BasicItem {
     //    isMapEnable:0,
     //    displacementMapIntensity:0,
     //  }).instance
-    this.item.children[0].material  = new TextureCraieMaterial({
-      side:0,
-      color:'#96551d',
-      bgColor:'#F8ECE8',
-      texture:this.resources.BCFlagPoleTexture
-    }).instance
+    // this.item.children[0].material  = new TextureCraieMaterial({
+    //   side:0,
+    //   color:'#96551d',
+    //   bgColor:'#F8ECE8',
+    //   texture:this.resources.BCFlagPoleTexture
+    // }).instance
   }
 
   /**

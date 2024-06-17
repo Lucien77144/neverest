@@ -33,15 +33,15 @@ export default class BCBigBox_1953 extends BasicItem {
    */
   setInstances() {
     const instance = this.resources.BCBigBox_1953.scene.clone().children[0]
-    const material = new TextureCraieMaterial({
-      side:0,
-      color:'#0000FF',
-      bgColor:'#F8ECE8',
-      texture:this.resources.BCBigBox_1953Texture
-    }).instance
+    // const material = new TextureCraieMaterial({
+    //   side:0,
+    //   color:'#0000FF',
+    //   bgColor:'#F8ECE8',
+    //   texture:this.resources.BCBigBox_1953Texture
+    // }).instance
 
     const dummy = new Object3D()
-    this.item = new InstancedMesh(instance.geometry, material, BCBIGBOX_1953.length)
+    this.item = new InstancedMesh(instance.geometry, instance.material, BCBIGBOX_1953.length)
 
     BCBIGBOX_1953.forEach((el, i) => {
       dummy.position.set(el.position.x, el.position.y, el.position.z)
@@ -77,6 +77,6 @@ export default class BCBigBox_1953 extends BasicItem {
   init() {
     this.isInstances && this.setInstances()
     !this.isInstances && this.setItem()
-    !this.isInstances && this.setMaterial()
+    // !this.isInstances && this.setMaterial()
   }
 }

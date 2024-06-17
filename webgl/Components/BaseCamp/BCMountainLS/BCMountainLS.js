@@ -69,8 +69,6 @@ export default class BCMountainLS extends BasicItem {
       bgColor:'#F8ECE8',
       texture:this.resources.BCMountainLSTexture
     }).instance
-
-    
   }
 
   /**
@@ -78,6 +76,6 @@ export default class BCMountainLS extends BasicItem {
    */
   init() {
     this.setItem()
-    this.setMaterial()
+    // this.setMaterial()
   }
 }
