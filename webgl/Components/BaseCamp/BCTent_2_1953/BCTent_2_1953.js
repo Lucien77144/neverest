@@ -98,7 +98,7 @@ export default class BCTent_2_1953 extends BasicItem {
 
     this.item = new InstancedMesh(
       instance.geometry,
-      material,
+      instance.material,
       BCTENT_2_1953.length
     )
 
@@ -131,6 +131,6 @@ export default class BCTent_2_1953 extends BasicItem {
   }
 
   update() {
-    this.item.material.uniforms.uTime.value = this.time.elapsed * 0.001
+    // this.item.material.uniforms.uTime.value = this.time.elapsed * 0.001
   }
 }
