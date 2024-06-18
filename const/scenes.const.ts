@@ -91,7 +91,7 @@ const SCENES: TSceneInfos[] = [
       ],
     },
     transition: {
-      duration: 2000,
+      duration: 4000,
     },
   },
   {

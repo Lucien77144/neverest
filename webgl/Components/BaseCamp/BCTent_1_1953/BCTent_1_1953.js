@@ -1,7 +1,7 @@
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import TextureCraieMaterial from '../../Shared/TextureCraieMaterial/TextureCraieMaterial'
 import { UIAudioPlayer } from '#components'
-import { Vector3 } from 'three'
+import { MeshNormalMaterial, Vector3 } from 'three'
 
 export default class BCTent_1_1953 extends BasicItem {
   /**
@@ -34,6 +34,7 @@ export default class BCTent_1_1953 extends BasicItem {
     this.item.position.copy(this.position)
     this.item.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
     this.item.name = this.name
+    console.log(this.item.children[0].material)
   }
 
   /**

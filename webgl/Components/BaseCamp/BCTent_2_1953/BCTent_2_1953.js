@@ -1,4 +1,4 @@
-import { InstancedMesh, Object3D, ShaderMaterial } from 'three'
+import { InstancedMesh, MeshNormalMaterial, Object3D, ShaderMaterial } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import { BCTENT_2_1953 } from '~/const/blocking/baseCamp.const'
 
@@ -38,9 +38,12 @@ export default class BCTent_2_1953 extends BasicItem {
     // Vertex Shader
     this.vert = `
     varying vec2 vUv;
+    varying vec3 vNormal; 
 
     void main() {
       vUv = uv;
+      vec4 modelNormal = modelMatrix * vec4(normal, 0.0);
+      vNormal = modelNormal.xyz;
       gl_Position = projectionMatrix * modelViewMatrix * instanceMatrix * vec4(position, 1.0);
     }
     `
@@ -50,6 +53,7 @@ export default class BCTent_2_1953 extends BasicItem {
     uniform float uTime;
     uniform sampler2D uTexture;
     varying vec2 vUv;
+    varying vec3 vNormal; 
 
     float random(vec2 st) {
       return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
@@ -70,14 +74,20 @@ export default class BCTent_2_1953 extends BasicItem {
 
     void main() {
       vec2 uv = vUv;
-      uv.x += noise(vUv + uTime * 0.1) * 0.1;
-      uv.y += noise(vUv + uTime * 0.1) * 0.1;
+      vec3 nrml = normalize(vNormal);
+      vec3 windDirection = vec3(1.0,0.0,0.0);
+      //uv.x += noise(vUv + uTime * 0.1) * 0.1;
+      //uv.y += noise(vUv + uTime * 0.1) * 0.1;
       vec4 color = texture2D(uTexture, uv);
+      float dotProduct = dot(nrml,windDirection);
+      color = vec4(vec3(nrml),1.0);
       gl_FragColor = color;
     }
     `;
     
     const instance = this.resources.BCTent_2_1953.scene.children[0].clone()
+    //console.log(instance.geometry)
+    instance.geometry.computeVertexNormals()
     const material = new ShaderMaterial({
       uniforms: {
         uTime: { value: 1.0 },
@@ -86,6 +96,7 @@ export default class BCTent_2_1953 extends BasicItem {
       vertexShader: this.vert,
       fragmentShader: this.frag,
     })
+     
 
     this.item = new InstancedMesh(
       instance.geometry,

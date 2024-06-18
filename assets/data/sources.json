@@ -69,6 +69,11 @@
         "type": "texture"
       },
       {
+        "name": "introImg",
+        "source": "/img/EcranAccueil.jpg",
+        "type": "texture" 
+      },
+      {
         "name": "introMountainTexture",
         "source": "/img/texturesLoulou/textureIntroMountain.jpg",
         "type": "texture"

@@ -168,6 +168,31 @@ void main() {
     frag *= (-isInCloudBand+1.0);
     frag += isInCloudBand * cloud;
 
+
+
+    // -------------------- //
+    //     Transition V2    //
+    // -------------------- //
+
+    float zoomInTransiTiming = clamp(abs(pow(uTransition/0.6,3.0)),0.0,1.0);
+    float fadeOutTransiTiming = clamp(-(uTransition-1.0)*5.0,0.0,1.0);
+
+    vec2 centeredUv = uv - 0.5;
+
+    // Appliquer le zoom
+    vec2 zoomedUv = centeredUv * (1.0 - zoomInTransiTiming);
+
+    // Recentrer les coordonnées UV
+    zoomedUv += 0.5;
+
+    // Obtenir la couleur de la texture à la nouvelle position UV
+    vec4 scene0Texture = texture2D(uScene0, zoomedUv);
+    vec4 scene1Texture = texture2D(uScene1,uv);
+    
+
+    scene0Texture = mix(scene0Texture, vec4(1.0), zoomInTransiTiming);
+    frag = mix(scene1Texture,scene0Texture,fadeOutTransiTiming);
+
     // -------------------- //
     //        Modal         //
     // -------------------- //
@@ -185,6 +210,7 @@ void main() {
     frag = mix(frag, mix(frag, vec4(uModalColor, 1.), (1. - mask) * play), .995);
 
     gl_FragColor = frag;
+   
     #include <colorspace_fragment> // To fix colors problems when using render targets
     // #include <tonemapping_fragment> // To fix tonemapping problems when using render targets (only if tone mapping is enabled)
 }
