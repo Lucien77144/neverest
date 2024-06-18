@@ -275,7 +275,7 @@ export const BCTENT_2_2024: TBlockingInfos[] = [
 
 export const BCTENT_3_2024: TBlockingInfos[] = [
   {
-    position: new Vector3(-9.427, -0.336, -37.772),
+    position: new Vector3(-9.727, -0.336, -37.772),
     rotation: new Vector3(Math.PI, -1.43 + Math.PI, Math.PI),
   },
   {
@@ -305,11 +305,11 @@ export const BCTENT_MAIN_2050: TBlockingInfos[] = [
 
 export const BCTENT_1_2050: TBlockingInfos[] = [
   {
-    position: new Vector3(-7.222, -0.522, -4.038),
+    position: new Vector3(-7.222, 0.122, -4.038),
     rotation: new Vector3(Math.PI, -0.711 + Math.PI, Math.PI),
   },
   {
-    position: new Vector3(5.228, -0.32, -5.648),
+    position: new Vector3(5.228, 0.12, -5.648),
     rotation: new Vector3(0, -1.088 + Math.PI, 0),
   },
   {
@@ -348,11 +348,11 @@ export const BCTENT_2_2050: TBlockingInfos[] = [
     rotation: new Vector3(-Math.PI, 1.514, -Math.PI),
   },
   {
-    position: new Vector3(-3.669, -1.103, -10.932),
+    position: new Vector3(-3.669, -0.503, -10.932),
     rotation: new Vector3(3.099, -0.765, 2.812),
   },
   {
-    position: new Vector3(-11.384, -0.522, -19.582),
+    position: new Vector3(-11.384, -0.222, -19.582),
     rotation: new Vector3(Math.PI, -1.196, Math.PI),
   },
   {
@@ -360,15 +360,15 @@ export const BCTENT_2_2050: TBlockingInfos[] = [
     rotation: new Vector3(0, 0.988, 0),
   },
   {
-    position: new Vector3(4.134, -0.672, -28.875),
+    position: new Vector3(4.134, -0.272, -28.875),
     rotation: new Vector3(0, 0.982, 0),
   },
   {
-    position: new Vector3(-11.592, -0.522, -26.937),
+    position: new Vector3(-11.592, -0.222, -26.937),
     rotation: new Vector3(Math.PI, -1.15, Math.PI),
   },
   {
-    position: new Vector3(-8.884, -0.522, -30.942),
+    position: new Vector3(-8.884, -0.222, -30.942),
     rotation: new Vector3(Math.PI, -1.473, Math.PI),
   },
   {
@@ -380,7 +380,7 @@ export const BCTENT_2_2050: TBlockingInfos[] = [
     rotation: new Vector3(Math.PI, -0.187, Math.PI),
   },
   {
-    position: new Vector3(-5.551, -0.522, -47.315),
+    position: new Vector3(-5.551, -0.222, -47.315),
     rotation: new Vector3(Math.PI, -0.454, Math.PI),
   },
   {
@@ -400,7 +400,7 @@ export const BCTENT_2_2050: TBlockingInfos[] = [
     rotation: new Vector3(Math.PI, -0.452, Math.PI),
   },
   {
-    position: new Vector3(-11.568, -0.522, -14.34),
+    position: new Vector3(-11.568, -0.222, -14.34),
     rotation: new Vector3(Math.PI, -0.711, Math.PI),
   },
 ]

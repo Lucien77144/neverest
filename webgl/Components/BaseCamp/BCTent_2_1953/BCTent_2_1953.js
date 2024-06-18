@@ -1,4 +1,4 @@
-import { Object3D, ShaderMaterial } from 'three'
+import { DoubleSide, Object3D, ShaderMaterial } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import vertexShader from './shaders/vertexShader.vert?raw'
 import fragmentShader from './shaders/fragmentShader.frag?raw'
@@ -24,8 +24,6 @@ export default class BCTent_2_1953 extends BasicItem {
     this.name = name
     this.visibility = visibility
     this.isInstances = isInstances
-    this.frag = null
-    this.vert = null
 
     // New elements
     this.resources = this.experience.resources.items
@@ -48,6 +46,7 @@ export default class BCTent_2_1953 extends BasicItem {
       },
       vertexShader,
       fragmentShader,
+      side: DoubleSide,
     })
 
     this.item = new InstancedUniformsMesh(
@@ -66,7 +65,6 @@ export default class BCTent_2_1953 extends BasicItem {
       this.item.setUniformAt('uRandom', i, Math.random())
     })
 
-    console.log(this.item)
     this.item.instanceMatrix.needsUpdate = true
   }
 

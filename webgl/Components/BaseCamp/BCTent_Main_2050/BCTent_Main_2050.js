@@ -52,6 +52,6 @@ export default class BCTent_Main_2050 extends BasicItem {
    */
   init() {
     this.setItem()
-    this.setMaterial()
+    // this.setMaterial()
   }
 }

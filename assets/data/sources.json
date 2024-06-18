@@ -257,6 +257,36 @@
         "name": "flagTexture",
         "source": "/img/england_flag.jpg",
         "type": "texture"
+      },
+      {
+        "name": "BCMountainLS_1953_texture",
+        "source": "/img/Mountains/mountainLS_1953.webp",
+        "type": "texture"
+      },
+      {
+        "name": "BCMountainRS_1953_texture",
+        "source": "/img/Mountains/mountainRS_1953.webp",
+        "type": "texture"
+      },
+      {
+        "name": "BCMountainLS_2024_texture",
+        "source": "/img/Mountains/mountainLS_2024.webp",
+        "type": "texture"
+      },
+      {
+        "name": "BCMountainRS_2024_texture",
+        "source": "/img/Mountains/mountainRS_2024.webp",
+        "type": "texture"
+      },
+      {
+        "name": "BCMountainLS_2050_texture",
+        "source": "/img/Mountains/mountainLS_2050.webp",
+        "type": "texture"
+      },
+      {
+        "name": "BCMountainRS_2050_texture",
+        "source": "/img/Mountains/mountainRS_2050.webp",
+        "type": "texture"
       }
     ]
   },
@@ -343,6 +373,22 @@
         "source": "/models/BaseCamp/Box/bigBox_1953.glb"
       },
       {
+        "name": "BCSmallBox_2024",
+        "source": "/models/BaseCamp/Box/smallBox_2024.glb"
+      },
+      {
+        "name": "BCMediumBox_2024",
+        "source": "/models/BaseCamp/Box/mediumBox_2024.glb"
+      },
+      {
+        "name": "BCBigBox_2024",
+        "source": "/models/BaseCamp/Box/bigBox_2024.glb"
+      },
+      {
+        "name": "BCBigBox_2050",
+        "source": "/models/BaseCamp/Box/bigBox_2050.glb"
+      },
+      {
         "name": "BCTent2024",
         "source": "/models/BaseCamp/tent2024.glb"
       },
@@ -359,28 +405,56 @@
         "source": "/models/BaseCamp/bloc2024.glb"
       },
       {
-        "name": "BCMountain",
-        "source": "/models/BaseCamp/Mountains/mountain.glb"
+        "name": "BCMountain_1953",
+        "source": "/models/BaseCamp/Mountains/mountain_1953.glb"
       },
       {
-        "name": "BCMountainL",
-        "source": "/models/BaseCamp/Mountains/mountainL.glb"
+        "name": "BCMountain_2024",
+        "source": "/models/BaseCamp/Mountains/mountain_2024.glb"
       },
       {
-        "name": "BCMountainLS",
-        "source": "/models/BaseCamp/Mountains/mountainLS.glb"
+        "name": "BCMountain_2050",
+        "source": "/models/BaseCamp/Mountains/mountain_2050.glb"
       },
       {
-        "name": "BCMountainR",
-        "source": "/models/BaseCamp/Mountains/mountainR.glb"
+        "name": "BCMountainL_1953",
+        "source": "/models/BaseCamp/Mountains/mountainL_1953.glb"
       },
       {
-        "name": "BCMountainRS",
-        "source": "/models/BaseCamp/Mountains/mountainRS.glb"
+        "name": "BCMountainL_2024",
+        "source": "/models/BaseCamp/Mountains/mountainL_2024.glb"
+      },
+      {
+        "name": "BCMountainL_2050",
+        "source": "/models/BaseCamp/Mountains/mountainL_2050.glb"
+      },
+      {
+        "name": "BCMountainLS_1953",
+        "source": "/models/BaseCamp/Mountains/mountainLS_1953.glb"
+      },
+      {
+        "name": "BCMountainR_1953",
+        "source": "/models/BaseCamp/Mountains/mountainR_1953.glb"
+      },
+      {
+        "name": "BCMountainR_2024",
+        "source": "/models/BaseCamp/Mountains/mountainR_2024.glb"
+      },
+      {
+        "name": "BCMountainR_2050",
+        "source": "/models/BaseCamp/Mountains/mountainR_2050.glb"
+      },
+      {
+        "name": "BCMountainRS_1953",
+        "source": "/models/BaseCamp/Mountains/mountainRS_1953.glb"
       },
       {
         "name": "BCFlag",
         "source": "/models/BaseCamp/1953/flag_1953.glb"
+      },
+      {
+        "name": "BCAntenne_2024",
+        "source": "/models/BaseCamp/2024/antenne_2024.glb"
       },
       {
         "name": "BCCailloux",

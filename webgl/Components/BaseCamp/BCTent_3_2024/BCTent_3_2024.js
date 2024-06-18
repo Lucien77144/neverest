@@ -55,17 +55,18 @@ export default class BCTent_3_2024 extends BasicItem {
     //  isMapEnable:0,
     //  displacementMapIntensity:2
     //}).instance
-    const material = new TextureCraieMaterial({
-      side:0,
-      color:'#556B2F',
-      bgColor:'#F8ECE8',
-      texture:this.resources.BCTent3_2024Texture
-    }).instance
+    // const material = new TextureCraieMaterial({
+    //   side:0,
+    //   color:'#556B2F',
+    //   bgColor:'#F8ECE8',
+    //   texture:this.resources.BCTent3_2024Texture
+    // }).instance
+    
     const instance = this.resources.BCTent_3_2024.scene.children[0]
     const dummy = new Object3D()
     this.item = new InstancedMesh(
       instance.geometry,
-      material,
+      instance.material,
       BCTENT_3_2024.length
     )
 
@@ -103,6 +104,6 @@ export default class BCTent_3_2024 extends BasicItem {
   init() {
     this.isInstances && this.setInstances()
     !this.isInstances && this.setItem()
-    !this.isInstances && this.setMaterial()
+    // !this.isInstances && this.setMaterial()
   }
 }

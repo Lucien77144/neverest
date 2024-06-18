@@ -1,16 +1,17 @@
-import { DoubleSide, MeshNormalMaterial } from 'three'
+import { DoubleSide, MeshBasicMaterial, MeshNormalMaterial } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import CraieMaterial from '../../Shared/CraieMaterial/CraieMaterial'
 import TextureCraieMaterial from '../../Shared/TextureCraieMaterial/TextureCraieMaterial'
+import { log } from 'three/examples/jsm/nodes/Nodes.js'
 
-export default class BCMountainRS extends BasicItem {
+export default class BCMountainRS_2050 extends BasicItem {
   /**
    * Constructor
    */
   constructor({
     position = new Vector3(0, 0, 0),
     rotation = new Vector3(0, 0, 0),
-    name = 'BCMountainRS',
+    name = 'BCMountainRS_2050',
     visibility = [0, 100],
   }) {
     super()
@@ -29,7 +30,7 @@ export default class BCMountainRS extends BasicItem {
    * Set item
    */
   setItem() {
-    this.item = this.resources.BCMountainRS.scene.clone()
+    this.item = this.resources.BCMountainRS_1953.scene.clone()
     this.item.position.copy(this.position)
     this.item.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
     this.item.name = this.name
@@ -62,12 +63,19 @@ export default class BCMountainRS extends BasicItem {
     //  isMapEnable:0,
     //  displacementMapIntensity:0,
     //}).instance
-    this.item.children[0].material  = new TextureCraieMaterial({
-      side:0,
-      color:'#D6E0EA',
-      bgColor:'#F8ECE8',
-      texture:this.resources.BCMountainRSTexture
-    }).instance
+    // this.item.children[0].material  = new TextureCraieMaterial({
+    //   side:0,
+    //   color:'#D6E0EA',
+    //   bgColor:'#F8ECE8',
+    //   texture:this.resources.BCMountainRSTexture
+    // }).instance
+    this.item.children[0].material = new MeshBasicMaterial({
+      side: DoubleSide,
+      map: this.resources.BCMountainRS_2050_texture,
+    })
+
+    // flip the texture
+    this.item.children[0].material.map.flipY = false
   }
 
   /**
@@ -75,6 +83,6 @@ export default class BCMountainRS extends BasicItem {
    */
   init() {
     this.setItem()
-    // this.setMaterial()
+    this.setMaterial()
   }
 }
