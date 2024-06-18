@@ -1,5 +1,5 @@
 <template>
-  <div ref="modalRef" class="modal_dialog" v-if="data?.template">
+  <div v-if="data" ref="modalRef" class="modal_dialog modal_dialog--close">
     <div
       class="close__btn"
       @click="$bus.emit('modal:close'), $bus.emit('audio:click')"
@@ -86,6 +86,7 @@ $bus.on('modal:open', (v: any) => {
   data.value = v
   progressValue.value = 0
   titleMaskRef.value?.style.setProperty('width', '0%')
+  modalRef.value?.classList.remove('modal_dialog--close')
 
   if (scrollManager?.value?.limit?.max) {
     scrollManager.value.target = 0
@@ -117,10 +118,14 @@ onMounted(() => {
     if (!scrollRef.value || !data.value) return
     //-[START] Scroll content of the modal
     progressValue.value = val.current / viewport.value.width
-    titleMaskRef.value?.style.setProperty(
-      'width',
-      `${clamp(0, 100, progressValue.value * 300)}%`
-    )
+
+    if (titleMaskRef.value) {
+      titleMaskRef.value.style.animation = 'none'
+      titleMaskRef.value.style.setProperty(
+        'width',
+        `${clamp(0, 100, progressValue.value * 300)}%`
+      )
+    }
 
     scrollRef.value.style.transform = `translateX(-${val.current}px)`
     if (progressRef.value && maxScrollValue.value) {

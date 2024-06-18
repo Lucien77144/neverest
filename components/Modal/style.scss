@@ -5,6 +5,10 @@
   &--close {
     opacity: 0;
   }
+
+  &:not(&--close) {
+    animation: 0.25s fadeIn ease-in-out;
+  }
 }
 
 .lottie {
@@ -30,7 +34,6 @@
   left: 0;
   height: 100vh;
   color: white;
-  animation: 0.25s fadeIn ease-in-out;
 
   &__container {
     display: flex;
@@ -162,6 +165,15 @@
 
 .transformable {
   will-change: transform;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes callToScroll {

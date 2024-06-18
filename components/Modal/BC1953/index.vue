@@ -6,6 +6,7 @@
           addAnimRef(ref, {
             rotate: {
               direction: 1,
+              power: 3,
             },
           })
       "
@@ -174,7 +175,7 @@
             >
               <img
                 class="svg__container svg__gaz_mask"
-                src="/assets/img/gaz_mask.png"
+                src="/assets/img/gaz_mask.svg"
                 alt=""
               />
             </div>
@@ -227,7 +228,7 @@
             >
               <img
                 class="svg__container tent_1953"
-                src="/assets/img/tent_1953.png"
+                src="/assets/img/tent_1953.svg"
                 alt=""
               />
             </div>
@@ -245,7 +246,18 @@
               alt=""
             />
           </div>
-          <p class="w-px-500 ml-n5">
+          <p
+            :ref="
+              (ref) =>
+                addAnimRef(ref, {
+                  translate: {
+                    direction: -1,
+                    power: 50,
+                  },
+                })
+            "
+            class="w-px-500 ml-n5"
+          >
             {{ $t('BASECAMP_1953') }}
           </p>
         </div>
@@ -263,6 +275,7 @@
               addAnimRef(ref, {
                 translate: {
                   direction: -1,
+                  power: 30,
                 },
               })
           "
@@ -297,7 +310,7 @@ const animRefs = ref<TAnimateRef[]>([])
 const addAnimRef = (
   el: Element | ComponentPublicInstance | null,
   options: Omit<TAnimateRef['options'], 'rect'>
-) => animRefs.value.push({ el: el as HTMLElement, options })
+) => animRefs.value.push({ el: el as HTMLElement, options }) ?? el
 
 // On mount
 onMounted(() => {
