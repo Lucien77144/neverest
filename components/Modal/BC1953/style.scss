@@ -7,92 +7,9 @@ img {
   will-change: transform;
 }
 
-.modal {
-  position: fixed;
-  display: flex;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  color: white;
-  animation: 0.25s fadeIn ease-in-out;
-
-  &__container {
-    display: flex;
-    width: max-content;
-  }
-
-  &__scroll {
-    height: 100%;
-    min-width: 100vw;
-    display: flex;
-
-    .title {
-      font-family: $outfit;
-      font-size: 1.2rem;
-      font-weight: bolder;
-      opacity: 0.25;
-      margin: 0;
-
-      &__wrapper {
-        position: relative;
-        margin-top: 1rem;
-        margin-bottom: 3.5rem;
-      }
-
-      &__mask {
-        position: absolute;
-        text-wrap: nowrap;
-        top: 0;
-        left: 0;
-        height: 100%;
-        overflow: hidden;
-        will-change: width;
-        animation: callToScroll 1s ease-in-out 0.15s;
-
-        .title {
-          opacity: 1;
-        }
-      }
-    }
-
-    &__text {
-      font-family: $azeret;
-      font-size: 0.9rem;
-      font-weight: 200;
-      text-align: center;
-    }
-
-    &__wrapper {
-      height: auto;
-      width: min(40%, 450px);
-      margin: auto;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      padding: 3rem 6rem;
-
-      .modal__scroll__bg {
-        position: absolute;
-        height: auto;
-        width: 100%;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-    }
-  }
-
-  &__content {
-    display: flex;
-    align-items: center;
-
-    &__item {
-      position: relative;
-      gap: 12rem;
-    }
-  }
+.content {
+  position: relative;
+  gap: 12rem;
 }
 
 .position-relative {
@@ -135,22 +52,6 @@ img {
   }
 }
 
-.lottie {
-  position: relative;
-  width: 80px;
-  height: 80px;
-  padding: 1rem;
-
-  &__bg {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-}
-
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -158,78 +59,6 @@ img {
   100% {
     opacity: 1;
   }
-}
-
-@keyframes callToScroll {
-  0% {
-    width: 0;
-  }
-  25% {
-    width: 20%;
-  }
-  50% {
-    width: 0;
-  }
-  75% {
-    width: 10%;
-  }
-  100% {
-    width: 0;
-  }
-}
-
-.close__btn {
-  cursor: pointer;
-  position: fixed;
-  z-index: 10;
-  top: 2rem;
-  left: 2rem;
-  display: flex;
-  align-items: center;
-
-  &__text {
-    padding-left: 0.75rem;
-    opacity: 0;
-    will-change: opacity, transform;
-    transform: translateX(10px);
-    transition: 0.35s ease-in-out;
-    color: $secondary;
-    font-weight: 300;
-  }
-
-  &__icon {
-    width: 50px;
-    height: 50px;
-  }
-
-  &:hover {
-    svg {
-      transform: scale(0.95);
-    }
-
-    .close__btn__text {
-      opacity: 1;
-      transform: translateX(0px);
-    }
-  }
-
-  svg {
-    width: 36px;
-    height: 36px;
-    will-change: transform;
-    transition: 0.25s ease-in-out;
-
-    path {
-      fill: $secondary;
-    }
-  }
-}
-
-.progress {
-  background-color: $white;
-  height: 6px;
-  width: 0;
-  will-change: width;
 }
 
 .rotatable {
