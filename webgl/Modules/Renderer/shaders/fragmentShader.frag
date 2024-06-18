@@ -108,11 +108,23 @@ void main() {
     vec2 uv = vUv;
     vec4 frag = vec4(0.);
 
-    vec2 scene0UV = vec2(uv.x,uv.y+uTransition);
-    vec4 scene0 = texture2D(uScene0, scene0UV);
+    // -------------------- //
+    //       Scene 0        //
+    // -------------------- //
+    float zoomInTransiTiming = clamp(abs(pow(uTransition/0.6,3.0)),0.0,1.0);
+    float fadeOutTransiTiming = clamp(-(uTransition-1.0)*5.0,0.0,1.0);
+    
+    vec2 centeredUv = uv - 0.5;
+    vec2 zoomedUv = centeredUv * (1.0 - zoomInTransiTiming); // Appliquer le zoom
+    zoomedUv += 0.5; // Recentrer les coordonnées UV
+
+    vec4 scene0 = texture2D(uScene0, zoomedUv);
     vec4 scene0BW = vec4(applyBlackAndWhite(scene0.rgb), 1.);
     float sceneMask = smoothstep(.8, 1., (1. - scene0BW.r) * 5.);
 
+    // -------------------- //
+    //        Focus         //
+    // -------------------- //
     vec2 focTime = vec2(cos(uTime * .001) * .1, sin(uTime * .001) * .1);
     vec2 focUV = uv + focTime;
     focUV -= (.5 + focTime * .5);
@@ -150,6 +162,9 @@ void main() {
     // scene0.rgb = mix(sceneRGB, coveredScene, focVal * uFocProgress);
     // scene0.rgb = mix(scene0.rgb, mix(sceneRGB, coveredScene, .5), (focVal2 + .25) * uFocProgress);
 
+    // -------------------- //
+    //       Scene 1        //
+    // -------------------- //
     vec2 scene1UV = vec2(uv.x,uv.y-(1.0-uTransition));
     vec4 scene1 = texture2D(uScene1, scene1UV);
 
@@ -168,30 +183,13 @@ void main() {
     frag *= (-isInCloudBand+1.0);
     frag += isInCloudBand * cloud;
 
-
-
-    // -------------------- //
-    //     Transition V2    //
-    // -------------------- //
-
-    float zoomInTransiTiming = clamp(abs(pow(uTransition/0.6,3.0)),0.0,1.0);
-    float fadeOutTransiTiming = clamp(-(uTransition-1.0)*5.0,0.0,1.0);
-
-    vec2 centeredUv = uv - 0.5;
-
-    // Appliquer le zoom
-    vec2 zoomedUv = centeredUv * (1.0 - zoomInTransiTiming);
-
-    // Recentrer les coordonnées UV
-    zoomedUv += 0.5;
-
     // Obtenir la couleur de la texture à la nouvelle position UV
     vec4 scene0Texture = texture2D(uScene0, zoomedUv);
     vec4 scene1Texture = texture2D(uScene1,uv);
     
 
-    scene0Texture = mix(scene0Texture, vec4(1.0), zoomInTransiTiming);
-    frag = mix(scene1Texture,scene0Texture,fadeOutTransiTiming);
+    scene0 = mix(scene0, vec4(1.0), zoomInTransiTiming);
+    frag = mix(scene1,scene0,fadeOutTransiTiming);
 
     // -------------------- //
     //        Modal         //
