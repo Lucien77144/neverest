@@ -80,7 +80,7 @@ export default class ModalSprite extends BasicItem {
    */
   openModal(open) {
     this.$bus.emit('audio:click')
-    this.scrollManager.disabled = open
+    this.scrollManager.setDisable(open)
     gsap.to(this.renderUniforms.uModalProgress, {
       value: open ? 1 : 0,
       duration: 1,

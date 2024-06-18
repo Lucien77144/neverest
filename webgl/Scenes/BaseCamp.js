@@ -1,9 +1,8 @@
-import { DirectionalLight, DirectionalLightHelper, Group, Vector3 } from 'three'
+import { Vector3 } from 'three'
 import BaseCampCamera from '../Components/BaseCamp/BaseCampCamera/BaseCampCamera'
 import BasicScene from '../Modules/Basics/BasicScene'
 import Floor from '../Components/BaseCamp/Floor/Floor'
 import gsap from 'gsap'
-import Lights from '../Components/Shared/Lights/Lights'
 import BCSmallBox_1953 from '../Components/BaseCamp/BCSmallBox_1953/BCSmallBox_1953'
 import BCMediumBox_1953 from '../Components/BaseCamp/BCMediumBox_1953/BCMediumBox_1953'
 import BCBigBox_1953 from '../Components/BaseCamp/BCBigBox_1953/BCBigBox_1953'
@@ -24,7 +23,6 @@ import BCTent_2_2050 from '../Components/BaseCamp/BCTent_2_2050/BCTent_2_2050'
 import BCTent_3_2050 from '../Components/BaseCamp/BCTent_3_2050/BCTent_3_2050'
 import BCMountain from '../Components/BaseCamp/BCMountain/BCMountain'
 import BCMountainL from '../Components/BaseCamp/BCMountainL/BCMountainL'
-import BCMountainLS from '../Components/BaseCamp/BCMountainLS/BCMountainLS'
 import BCMountainR from '../Components/BaseCamp/BCMountainR/BCMountainR'
 import BCMountainRS from '../Components/BaseCamp/BCMountainRS/BCMountainRS'
 import BCFlag from '../Components/BaseCamp/BCFlag/BCFlag'
@@ -351,7 +349,6 @@ export default class BaseCamp extends BasicScene {
   setScrollFactor(value) {
     if (this.factorChange) return
     this.factorChange = true
-
     this.interest.curr = value
 
     const factor = this.scrollManager.factor

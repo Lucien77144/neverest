@@ -1,322 +1,309 @@
 <template>
-  <div class="close__btn" @click="$bus.emit('modal:close'), $bus.emit('audio:click')">
-    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
-      <path
-        d="M1.34 2.66A1.5 1.5 0 0 1 3.46.54l21.8 19.81 21.3-19.29a1.5 1.5 0 1 1 2.12 2.12l-19.3 21.3 19.58 21.56a1.5 1.5 0 1 1-2.13 2.12L25.27 28.6 3.18 48.68a1.5 1.5 0 1 1-2.12-2.12l20.09-22.09L1.34 2.67Z"
-        fill="#F5E5E0"
+  <article id="content-1" class="content d-flex d-flex-column w-px-750">
+    <div>
+      <img
+        :ref="
+          (ref) =>
+            addAnimRef(ref, {
+              rotate: {
+                direction: 1,
+              },
+            })
+        "
+        class="svg__container"
+        src="/assets/img/HS-Everest-1953_1_bg.png"
+        alt=""
       />
-    </svg>
-    <p class="close__btn__text">
-      {{ $t('CLOSE') }}
-    </p>
-  </div>
-  <div class="modal" ref="scrollRef">
-    <section class="modal__scroll">
-      <div class="modal__scroll__wrapper">
-        <div class="lottie">
-          <client-only>
-            <Vue3Lottie
-              ref="lottieRef"
-              :animationData="scrollAnimation"
-              :autoPlay="true"
-              :loop="true"
-            />
-          </client-only>
+      <img
+        :ref="
+          (ref) =>
+            addAnimRef(ref, {
+              translate: {
+                direction: 1,
+              },
+            })
+        "
+        class="img__container m-0"
+        src="/assets/img/HS-Everest-1953_1.jpg"
+      />
+    </div>
+  </article>
+  <article id="content-2" class="content d-grid ml-15">
+    <div class="position-relative w-max-500">
+      <img
+        class="svg__container svg__scotch svg__scotch__left"
+        src="/assets/img/scotch.svg"
+        alt=""
+      />
+      <div class="rotate-1">
+        <img
+          :ref="
+            (ref) =>
+              addAnimRef(ref, {
+                translate: {
+                  direction: -1,
+                },
+              })
+          "
+          class="img__container w-px-375"
+          src="/assets/img/HS-Everest-1953_2.jpg"
+        />
+        <p class="text-right w-100">{{ $t('PREPARE_1953') }}</p>
+      </div>
+    </div>
+    <div class="position-relative ml-20">
+      <div class="rotate-n1 w-px-500 d-flex d-flex-column">
+        <div class="position-relative w-px-375">
           <img
-            class="lottie__bg"
-            src="/assets/img/call_scroll_border.svg"
+            class="svg__container svg__scotch svg__scotch__right"
+            src="/assets/img/scotch.svg"
             alt=""
           />
+          <img
+            :ref="
+              (ref) =>
+                addAnimRef(ref, {
+                  translate: {
+                    direction: -1,
+                  },
+                })
+            "
+            class="img__container"
+            src="/assets/img/HS-Everest-1953_2.jpg"
+          />
         </div>
-        <div class="title__wrapper">
-          <div
-            class="title__mask"
-            :style="{
-              width: `${scrollTitleValue || 0}%`,
-            }"
-          >
-            <h2 class="title">{{ $t('SCROLL_TO_EXPLORE') }}</h2>
-          </div>
-          <h2 class="title">{{ $t('SCROLL_TO_EXPLORE') }}</h2>
-        </div>
-        <p class="modal__scroll__text">
-          {{ $t('TITLE_1953') }}
+        <p class="w-px-500 ml-5">
+          {{ $t('EXPEDITION_1953') }}
         </p>
-        <img
-          class="modal__scroll__bg"
-          src="/assets/img/text_scroll_border.svg"
-          alt=""
-        />
       </div>
-    </section>
-    <section class="modal__content">
-      <article
-        class="modal__content__item"
-        style="min-width: 692px; height: 835px; transform: rotate(13.63deg)"
-      >
-        <img
-          class="svg__container rotatable"
-          src="/assets/img/HS-Everest-1953_1_bg.png"
-          alt=""
-        />
-        <img
-          class="img__container translatable"
-          src="/assets/img/HS-Everest-1953_1.jpg"
-        />
-      </article>
-      <article class="modal__content__item">
-        <div style="margin-left: 15rem; display: grid; gap: 10vh">
-          <div class="position-relative" style="max-width: 500px">
+    </div>
+  </article>
+  <article id="content-3" class="content d-grid ml-5 w-px-375">
+    <div class="position-relative d-flex align-center">
+      <div class="wrapper w-100 absolute">
+        <div class="position-relative">
+          <img
+            :ref="
+              (ref) =>
+                addAnimRef(ref, {
+                  translate: {
+                    direction: -1,
+                  },
+                })
+            "
+            class="border absolute"
+            src="/assets/img/HS-Everest-1953_3.svg"
+            alt=""
+          />
+          <div
+            :ref="
+              (ref) =>
+                addAnimRef(ref, {
+                  rotate: {
+                    direction: 1,
+                  },
+                })
+            "
+          >
             <img
-              class="svg__container svg__scotch svg__scotch__left"
-              src="/assets/img/scotch.svg"
+              :ref="
+                (ref) =>
+                  addAnimRef(ref, {
+                    translate: {
+                      direction: 1,
+                    },
+                  })
+              "
+              class="img__container m-0"
+              src="/assets/img/HS-Everest-1953_3.jpg"
               alt=""
             />
-            <div style="transform: rotate(1deg)">
-              <img
-                style="width: 375px"
-                class="img__container translatableR"
-                src="/assets/img/HS-Everest-1953_2.jpg"
-              />
-              <p class="text-right w-100">{{ $t('PREPARE_1953') }}</p>
-            </div>
-          </div>
-          <div class="position-relative" style="margin-left: 20rem">
-            <div
-              style="
-                transform: rotate(-1deg);
-                display: flex;
-                flex-direction: column;
-                width: 500px;
-              "
-            >
-              <div class="position-relative" style="width: 375px">
-                <img
-                  class="svg__container svg__scotch svg__scotch__right"
-                  src="/assets/img/scotch.svg"
-                  alt=""
-                />
-                <img
-                  class="img__container translatableR"
-                  src="/assets/img/HS-Everest-1953_2.jpg"
-                />
-              </div>
-              <p style="margin-left: 5rem; width: 500px">
-                {{ $t('EXPEDITION_1953') }}
-              </p>
-            </div>
           </div>
         </div>
-      </article>
-      <article class="modal__content__item content3">
-        <div
-          class="position-relative"
-          style="min-width: 500px; margin-left: 15rem"
-        >
-          <div class="content3__wrapper">
+        <p class="text-right w-100">{{ $t('HEROS_1953') }}</p>
+      </div>
+    </div>
+  </article>
+  <article id="content-4" class="content d-grid">
+    <div class="wrapper d-grid ml-15">
+      <div class="position-relative w-max-500">
+        <div class="rotate-1">
+          <p class="text-right w-100">{{ $t('ACTORS_1953') }}</p>
+          <img
+            :ref="
+              (ref) =>
+                addAnimRef(ref, {
+                  translate: {
+                    direction: -1,
+                  },
+                })
+            "
+            class="img__container m-0 w-px-375"
+            src="/assets/img/HS-Everest-1953_4.jpg"
+          />
+        </div>
+      </div>
+      <div class="position-relative ml-20">
+        <div class="rotate-n1 w-px-500 d-flex d-flex-column">
+          <div class="position-relative w-px-375">
             <img
-              class="translatableR border"
-              src="/assets/img/HS-Everest-1953_3.svg"
-              alt=""
+              :ref="
+                (ref) =>
+                  addAnimRef(ref, {
+                    translate: {
+                      direction: -1,
+                    },
+                  })
+              "
+              class="img__container m-0"
+              src="/assets/img/HS-Everest-1953_5.jpg"
             />
-            <div class="rotatable">
+            <div
+              :ref="
+                (ref) =>
+                  addAnimRef(ref, {
+                    translate: {
+                      direction: 1,
+                    },
+                  })
+              "
+              class="svg__gaz_mask__container w-px-375 absolute"
+            >
               <img
-                class="img__container translatable"
-                src="/assets/img/HS-Everest-1953_3.jpg"
+                class="svg__container svg__gaz_mask"
+                src="/assets/img/gaz_mask.png"
                 alt=""
               />
             </div>
           </div>
-        </div>
-      </article>
-      <article class="modal__content__item content4">
-        <div class="content4__wrapper">
-          <div class="position-relative" style="max-width: 500px">
-            <div style="transform: rotate(1deg)">
-              <p class="text-right w-100">{{ $t('ACTORS_1953') }}</p>
-              <img
-                style="width: 375px"
-                class="img__container translatableR"
-                src="/assets/img/HS-Everest-1953_4.jpg"
-              />
-            </div>
-          </div>
-          <div class="position-relative" style="margin-left: 20rem">
-            <div
-              style="
-                transform: rotate(-1deg);
-                display: flex;
-                flex-direction: column;
-                width: 500px;
-              "
-            >
-              <div class="position-relative" style="width: 375px">
-                <img
-                  class="img__container translatableR"
-                  src="/assets/img/HS-Everest-1953_5.jpg"
-                />
-                <div class="translatable svg__gaz_mask__container">
-                  <img
-                    class="svg__container svg__gaz_mask"
-                    src="/assets/img/gaz_mask.png"
-                    alt=""
-                  />
-                </div>
-              </div>
-              <p style="margin-left: 7.5rem; width: 500px">
-                {{ $t('MATERIAL_1953') }}
-              </p>
-            </div>
-          </div>
-        </div>
-      </article>
-      <article class="modal__content__item content5">
-        <div class="content5__wrapper">
-          <div style="width: 781px; height: 584px;">
-            <UIVideoPlayer
-              :value="values?.return1953"
-              poster="/img/preview_video1.jpg"
-            />
-          </div>
-          <p class="text translatable">
-            {{ $t('RETURN_1953') }}
+          <p class="w-px-500 ml-10">
+            {{ $t('MATERIAL_1953') }}
           </p>
         </div>
-      </article>
-      <article class="modal__content__item content6">
-        <div class="content6__wrapper">
-          <div class="position-relative">
+      </div>
+    </div>
+  </article>
+  <article id="content-5" class="content d-grid">
+    <div class="wrapper ml-15">
+      <div style="width: 781px; height: 584px">
+        <UIVideoPlayer
+          :value="values?.return1953"
+          poster="/img/preview_video1.jpg"
+        />
+      </div>
+      <p
+        :ref="
+          (ref) =>
+            addAnimRef(ref, {
+              translate: {
+                direction: 1,
+              },
+            })
+        "
+        class="text"
+      >
+        {{ $t('RETURN_1953') }}
+      </p>
+    </div>
+  </article>
+  <article id="content-6" class="content d-grid">
+    <div class="wrapper ml-15 d-grid">
+      <div class="position-relative">
+        <div class="rotate-n1 w-px-1000 d-flex d-flex-column">
+          <div class="position-relative w-px-375">
             <div
-              style="
-                transform: rotate(-1deg);
-                display: flex;
-                flex-direction: column;
-                width: 1000px;
+              :ref="
+                (ref) =>
+                  addAnimRef(ref, {
+                    translate: {
+                      direction: 1,
+                    },
+                  })
               "
+              class="tent_1953__container absolute"
             >
-              <div class="position-relative" style="width: 375px">
-                <div class="translatable tent_1953__container">
-                  <img
-                    class="svg__container tent_1953"
-                    src="/assets/img/tent_1953.png"
-                    alt=""
-                  />
-                </div>
-                <img
-                  class="img__container translatable"
-                  src="/assets/img/HS-Everest-1953_6.jpg"
-                />
-              </div>
-              <p style="margin-left: -5rem; width: 500px">
-                {{ $t('BASECAMP_1953') }}
-              </p>
-            </div>
-          </div>
-          <div
-            class="position-relative"
-            style="max-width: 600px; margin-left: 20rem"
-          >
-            <div style="width: 600px">
-              <UIVideoPlayer
-                :value="values?.archives1953"
-                poster="/img/preview_video2.jpg"
+              <img
+                class="svg__container tent_1953"
+                src="/assets/img/tent_1953.png"
+                alt=""
               />
             </div>
-            <p class="text-right w-100 translatableR">
-              {{ $t('IMAGE_ARCHIVE') }}
-            </p>
+            <img
+              :ref="
+                (ref) =>
+                  addAnimRef(ref, {
+                    translate: {
+                      direction: 1,
+                    },
+                  })
+              "
+              class="img__container m-0"
+              src="/assets/img/HS-Everest-1953_6.jpg"
+            />
           </div>
+          <p class="w-px-500 ml-n5">
+            {{ $t('BASECAMP_1953') }}
+          </p>
         </div>
-      </article>
-    </section>
-  </div>
-  <div ref="progressRef" class="progress"></div>
+      </div>
+      <div class="position-relative ml-20 w-px-600">
+        <div class="w-px-600">
+          <UIVideoPlayer
+            :value="values?.archives1953"
+            poster="/img/preview_video2.jpg"
+          />
+        </div>
+        <p
+          :ref="
+            (ref) =>
+              addAnimRef(ref, {
+                translate: {
+                  direction: -1,
+                },
+              })
+          "
+          class="text-right w-100"
+        >
+          {{ $t('IMAGE_ARCHIVE') }}
+        </p>
+      </div>
+    </div>
+  </article>
 </template>
 
 <script lang="ts" setup>
-import { ScrollManager, type TScrollEvent } from '#imports'
-import { Vue3Lottie } from 'vue3-lottie'
-import scrollAnimation from '~/assets/data/scroll.json'
-import clamp from '~/utils/functions/clamp'
-
 // Props
-const { values } = defineProps({
+const { values, scrollManager, viewport } = defineProps({
   values: {
     type: Object,
     required: false,
   },
+  scrollManager: {
+    type: ScrollManager,
+    required: true,
+  },
+  viewport: {
+    type: Object,
+    required: true,
+  },
 })
 
-// Bus
-const { $bus }: any = useNuxtApp()
-
-// Refs
-const progressRef = ref<HTMLElement | null>(null)
-const scrollRef = ref<HTMLElement | null>(null)
-const skewValue = ref<number>(0)
-const progressValue = ref<number>(0)
-const scrollManager = ref<ScrollManager | null>(null)
-const scrollTitleValue = ref<number>(0)
-
-// On mount
-onMounted(() => {
-  const viewport = new Viewport()
-  const maxScroll = (scrollRef.value?.clientWidth || 0) + 1
-
-  scrollManager.value = new ScrollManager({
-    factor: 25,
-    ...(maxScroll && {
-      limit: {
-        min: 0,
-        max: maxScroll - viewport.width,
-      },
-    }),
+const animRefs = ref<TAnimateRef[]>([])
+const addAnimRef = (
+  ref: Element | ComponentPublicInstance | null,
+  options: Omit<TAnimateRef['options'], 'rect'>
+) => {
+  setTimeout(() => {
+    const val = setAnimateRef(ref, options)
+    val && animRefs.value.push(val)
   })
-  scrollManager.value.on('scroll', (val: TScrollEvent) => {
-    progressValue.value = val.current / viewport.width
-    scrollTitleValue.value = clamp(0, 100, progressValue.value * 300)
+}
 
-    skewValue.value = Math.floor((val.current - val.target) * 10) * 0.002
-    skewValue.value -= skewValue.value / 2
+scrollManager.on('scroll', (val: TScrollEvent) =>
+  animateRefs(animRefs.value, val.current, viewport.width)
+)
 
-    document.querySelectorAll('.translatable').forEach((el: any) => {
-      const pos = el.getBoundingClientRect().left
-      if (pos < 0 || pos > viewport.width) return
-
-      el.style.transform = `translateX(${(pos / viewport.width - 0.5) * 50}px)`
-    })
-
-    document.querySelectorAll('.translatableR').forEach((el: any) => {
-      const pos = el.getBoundingClientRect().left
-      if (pos < 0 || pos > viewport.width) return
-
-      el.style.transform = `translateX(-${(pos / viewport.width - 0.5) * 50}px)`
-    })
-
-    document.querySelectorAll('.rotatable').forEach((el: any) => {
-      const pos = el.getBoundingClientRect().left
-      if (pos < 0 || pos > viewport.width) return
-
-      el.style.transform = `rotate(${Math.abs(pos / viewport.width - 0.5)}deg)`
-    })
-
-    // Scroll :
-    if (scrollRef.value) {
-      scrollRef.value.style.transform = `translateX(-${val.current}px)`
-
-      if (progressRef.value && maxScroll) {
-        const progress = (val.current / (maxScroll - viewport.width)) * 100
-        progressRef.value.style.width = `${progress}%`
-      }
-    }
-  })
-})
-
-// On unmount
-onUnmounted(() => {
-  scrollManager.value?.off('scroll')
-  scrollManager.value?.destroy()
-})
+onMounted(() => animateRefs(animRefs.value, 0, viewport.width))
 </script>
 
 <style src="./style.scss" lang="scss" scoped></style>

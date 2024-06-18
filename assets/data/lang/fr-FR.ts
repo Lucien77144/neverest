@@ -22,6 +22,7 @@ export default {
   EXPEDITION_1953:
     'Une expédition de 400 hommes se lance à la conquête du sommet de l’Everest',
   ACTORS_1953: 'Edmund Hillary et Tensing Norgay',
+  HEROS_1953: 'Les héros de la première ascension',
   MATERIAL_1953:
     'L’ascension nécessitait du matériel comme des masques à gaz pour supporter la haute altitude ',
   RETURN_1953: 'Le retour des héros à Katmandou',
@@ -41,12 +42,12 @@ export default {
   ICEFALL: 'Chute de glace',
   SOUTHCOL: 'Col sud',
   NEVERESTBUTTRESS: 'Contrefort Neverest',
-  AMERICANBUTTRESS:'Contrefort Américain',
-  NORTHEASTRIDGE:'Arête Nord-Est',
-  NORTHRIDGE:'Arête Nord',
-  GREATCOULOIR:'Grand Couloir',
-  JAPANESECOULOIR:'Couloir Japonais',
-  WESTRIDGE:'Arête Ouest',
+  AMERICANBUTTRESS: 'Contrefort Américain',
+  NORTHEASTRIDGE: 'Arête Nord-Est',
+  NORTHRIDGE: 'Arête Nord',
+  GREATCOULOIR: 'Grand Couloir',
+  JAPANESECOULOIR: 'Couloir Japonais',
+  WESTRIDGE: 'Arête Ouest',
   INTRO_TITLE_1: 'Ouvrez la voie',
   INTRO_TITLE_2: 'Neverest',
 }

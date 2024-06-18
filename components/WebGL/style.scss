@@ -29,6 +29,10 @@
   margin-top: 5rem;
 }
 
+.d-none {
+  display: none !important;
+}
+
 .webGlCSS {
   will-change: opacity;
   transition: 0.35s ease-in-out;
