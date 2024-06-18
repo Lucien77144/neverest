@@ -355,23 +355,7 @@ const animRefs = ref<TAnimateRef[]>([])
 const addAnimRef = (
   ref: Element | ComponentPublicInstance | null,
   options: Omit<TAnimateRef['options'], 'rect'>
-) => {
-  const el = ref as HTMLElement
-  if (!el) return
-
-  const rect = el.getBoundingClientRect()
-  const opt = {
-    ...options,
-    rect: {
-      left: rect.left,
-      right: rect.right,
-      width: rect.width,
-    },
-  }
-
-  el.classList.add('transformable')
-  animRefs.value.push({ el, options: opt })
-}
+) => setAnimRef(animRefs, ref, options)
 
 // On mount
 onMounted(() => {

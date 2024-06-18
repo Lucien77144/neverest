@@ -39,6 +39,28 @@ const getRatioValue = (ref: TAnimateRef, scroll: number, vpWidth: number) => {
   } else return null
 }
 
+export function setAnimRef(
+  array: Ref<TAnimateRef[]>,
+  ref: Element | ComponentPublicInstance | null,
+  options: Omit<TAnimateRef['options'], 'rect'>
+) {
+  const el = ref as HTMLElement
+  if (!el) return
+
+  const rect = el.getBoundingClientRect()
+  const opt = {
+    ...options,
+    rect: {
+      left: rect.left,
+      right: rect.right,
+      width: rect.width,
+    },
+  }
+
+  el.classList.add('transformable')
+  array.value.push({ el, options: opt })
+}
+
 /**
  * Animate the refs
  * @param refs Array of animate refs

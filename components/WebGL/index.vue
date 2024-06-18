@@ -35,7 +35,7 @@ const exp = shallowRef<Experience | null>(null)
 const canvasRef = ref<HTMLElement | null>(null)
 const webGlCSSRef = ref<HTMLElement | null>(null)
 const activeStatus = ref<boolean>(false)
-const sceneRef = ref<TSceneInfos>()
+const sceneRef = ref<TSceneInfos | null>()
 const startBtnRef = ref<HTMLElement | null>(null)
 
 // Route
@@ -72,9 +72,16 @@ $bus.on('modal:destroy', () => {
   )
 })
 
-$bus.on('debug:scene', (name: string) => {
-  if (name !== 'intro') startBtnRef.value?.remove()
-})
+const setVisibility = (name: string) => {
+  if (name !== 'intro') {
+    startBtnRef.value?.classList.add('hidden')
+    setTimeout(() => startBtnRef.value?.classList.add('d-none'), 500)
+  } else {
+    startBtnRef.value?.classList.remove('hidden')
+    setTimeout(() => startBtnRef.value?.classList.remove('d-none'), 500)
+  }
+}
+$bus.on('debug:scene', (name: string) => setVisibility(name))
 
 // On component mounted, create the experience
 onMounted(() => {
@@ -84,9 +91,7 @@ onMounted(() => {
     name: 'template',
   })
   // On component unmounted, dispose the experience
-  onUnmounted(() => {
-    exp.value?.dispose()
-  })
+  onUnmounted(() => exp.value?.dispose())
 })
 </script>
 

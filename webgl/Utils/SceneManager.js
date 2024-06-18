@@ -68,9 +68,10 @@ export default class SceneManager {
 
     // Add switch event on change scene
     setTimeout(() =>
-      this.debugScene.on('change', ({ value }) =>
+      this.debugScene.on('change', ({ value }) => {
         this.switch(this.getSceneFromList(value))
-      )
+        this.$bus.emit('debug:scene', value)
+      })
     )
   }
 
