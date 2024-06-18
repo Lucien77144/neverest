@@ -63,10 +63,8 @@ export default class BCTent_2_1953 extends BasicItem {
 
       this.item.setMatrixAt(i, dummy.matrix)
       this.item.setUniformAt('uIndex', i, i)
-      this.item.setUniformAt('uRandom', i, Math.random())
     })
 
-    console.log(this.item)
     this.item.instanceMatrix.needsUpdate = true
   }
 

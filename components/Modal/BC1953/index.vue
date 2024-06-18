@@ -327,10 +327,10 @@
 </template>
 
 <script lang="ts" setup>
+import type { TAnimateRef } from '~/utils/animateRefs'
 import { ScrollManager, type TScrollEvent } from '#imports'
 import { Vue3Lottie } from 'vue3-lottie'
 import scrollAnimation from '~/assets/data/scroll.json'
-import type { TAnimateRef } from '~/utils/animateRefs'
 import clamp from '~/utils/functions/clamp'
 
 // Props
@@ -357,6 +357,7 @@ const addAnimRef = (
   options: Omit<TAnimateRef['options'], 'rect'>
 ) => {
   const el = ref as HTMLElement
+  if (!el) return
 
   const rect = el.getBoundingClientRect()
   const opt = {
@@ -406,10 +407,7 @@ onMounted(() => {
 })
 
 // On unmount
-onUnmounted(() => {
-  scrollManager.value?.off('scroll')
-  scrollManager.value?.destroy()
-})
+onUnmounted(() => scrollManager.value?.destroy())
 </script>
 
 <style src="./style.scss" lang="scss" scoped></style>
