@@ -2,7 +2,7 @@ export type TAnimateRef = {
   el: HTMLElement
   options: {
     transform?: string
-    rect: {
+    rect?: {
       left: number
       right: number
       width: number
@@ -28,36 +28,36 @@ export type TAnimateRef = {
  * @param scroll Scroll position (in px)
  * @param vpWidth Viewport width
  */
-const getRatioValue = (ref: TAnimateRef, scroll: number, vpWidth: number) => {
+function getRatioValue(ref: TAnimateRef, scroll: number, vpWidth: number) {
   const rect = ref.options.rect
+  if (!rect) return null
+
   const left = rect.left - scroll
   const right = rect.right - scroll
   const width = rect.width
 
-  if (left < vpWidth && right > 0) {
-    return (left - width) / (vpWidth + width)
+  if (right > 0 && left < vpWidth) {
+    const ratio = (left + width) / (vpWidth + width)
+    return Math.abs(1 - Math.round(ratio * 1000) / 1000)
   } else return null
 }
 
-export function setAnimateRef(
-  ref: Element | ComponentPublicInstance | null,
-  options: Omit<TAnimateRef['options'], 'rect'>
-): TAnimateRef | null {
-  const el = ref as HTMLElement
-  if (!el) return null
+/**
+ * Set the animate rects infos
+ */
+export function setAnimateRects(ref: Ref<TAnimateRef[]>): TAnimateRef[] {
+  ref.value.forEach(({ el, options }) => {
+    el.classList.add('transformable')
 
-  const rect = el.getBoundingClientRect()
-  const opt = {
-    ...options,
-    rect: {
+    const rect = el.getBoundingClientRect()
+    options.rect = {
       left: rect.left,
       right: rect.right,
       width: rect.width,
-    },
-  }
+    }
+  })
 
-  el.classList.add('transformable')
-  return { el, options: opt }
+  return ref.value
 }
 
 /**
@@ -77,24 +77,24 @@ export function animateRefs(
 
     const transform = { value: `${v.options.transform ?? ''} ` }
     if (v.options.translate) {
-      const power = v.options.translate.power ?? 50
-      const dir = v.options.translate.direction
+      const power = v.options.translate.power ?? 20
+      const dir = v.options.translate.direction ?? 1
 
-      const value = Math.round(ratio * power * dir)
-      transform.value += `translateX(${value - value * 0.5}px)`
+      const value = (ratio - 0.5) * power * dir
+      transform.value += `translateX(${value}px)`
     }
     if (v.options.rotate) {
       const power = v.options.rotate.power ?? 5
-      const dir = v.options.rotate.direction
+      const dir = v.options.rotate.direction ?? 1
 
-      const value = Math.round(ratio * power * dir * 100) * 0.01
-      transform.value += `rotate(${value - value * 0.5}deg)`
+      const value = (ratio - 0.5) * power * dir
+      transform.value += `rotate(${Math.round(value * 100) / 100}deg)`
     }
     if (v.options.skew) {
-      const power = v.options.skew.power ?? 50
+      const power = v.options.skew.power ?? 20
       const dir = v.options.skew.direction
 
-      const value = Math.round(ratio * power * dir * 100) * 0.01
+      const value = (ratio - 0.5) * power * dir
       transform.value += `skewX(${value}deg)`
     }
 

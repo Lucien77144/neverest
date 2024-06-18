@@ -28,12 +28,7 @@
             />
           </div>
           <div class="title__wrapper">
-            <div
-              class="title__mask"
-              :style="{
-                width: `${scrollTitleValue || 0}%`,
-              }"
-            >
+            <div ref="titleMaskRef" class="title__mask">
               <h2 class="title">{{ $t('SCROLL_TO_EXPLORE') }}</h2>
             </div>
             <h2 class="title">{{ $t('SCROLL_TO_EXPLORE') }}</h2>
@@ -52,8 +47,8 @@
         <component
           :is="{ ...data.template }"
           :values="data.values"
-          :viewport="viewportRef"
           :scrollManager="scrollManager"
+          :viewport="viewport"
         ></component>
       </section>
     </div>
@@ -70,12 +65,12 @@ import clamp from '~/utils/functions/clamp'
 // Refs
 const modalRef = ref<HTMLElement | null>(null)
 const progressRef = ref<HTMLElement | null>(null)
+const titleMaskRef = ref<HTMLElement | null>(null)
 const scrollRef = ref<HTMLElement | null>(null)
-const viewportRef = ref<Viewport>(new Viewport())
+const viewport = ref<Viewport>(new Viewport())
 const scrollManager = ref<ScrollManager | null>(null)
 const maxScrollValue = ref<number>(0)
 const progressValue = ref<number>(0)
-const scrollTitleValue = ref<number>(0)
 
 // Props
 const data = ref<{
@@ -90,13 +85,15 @@ const { $bus }: any = useNuxtApp()
 $bus.on('modal:open', (v: any) => {
   data.value = v
   progressValue.value = 0
-  scrollTitleValue.value = 0
+  titleMaskRef.value?.style.setProperty('width', '0%')
 
   if (scrollManager?.value?.limit?.max) {
-    const max = (scrollRef.value?.clientWidth || 0) + 1
+    scrollManager.value.target = 0
+    scrollManager.value.current = 0
 
+    const max = (scrollRef.value?.clientWidth || 0) + 1
     maxScrollValue.value = max
-    scrollManager.value.limit.max = max - viewportRef.value.width
+    scrollManager.value.limit.max = max - viewport.value.width
   }
 })
 
@@ -114,19 +111,22 @@ onMounted(() => {
     decimal: 100,
     limit: {
       min: 0,
-      max: viewportRef.value.width,
+      max: viewport.value.width,
     },
   }).on('scroll', (val: TScrollEvent) => {
     if (!scrollRef.value || !data.value) return
     //-[START] Scroll content of the modal
-    progressValue.value = val.current / viewportRef.value.width
-    scrollTitleValue.value = clamp(0, 100, progressValue.value * 300) // white animation of the modal
+    progressValue.value = val.current / viewport.value.width
+    titleMaskRef.value?.style.setProperty(
+      'width',
+      `${clamp(0, 100, progressValue.value * 300)}%`
+    )
 
     scrollRef.value.style.transform = `translateX(-${val.current}px)`
     if (progressRef.value && maxScrollValue.value) {
       const progress =
-        (val.current / (maxScrollValue.value - viewportRef.value.width)) * 100
-      progressRef.value.style.width = `${progress}%`
+        (val.current / (maxScrollValue.value - viewport.value.width)) * 100
+      progressRef.value.style.setProperty('width', `${progress}%`)
     }
     //-[END] Scroll content of the modal
   })

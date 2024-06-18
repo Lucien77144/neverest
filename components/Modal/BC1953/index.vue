@@ -1,32 +1,31 @@
 <template>
   <article id="content-1" class="content d-flex d-flex-column w-px-750">
-    <div>
-      <img
-        :ref="
-          (ref) =>
-            addAnimRef(ref, {
-              rotate: {
-                direction: 1,
-              },
-            })
-        "
-        class="svg__container"
-        src="/assets/img/HS-Everest-1953_1_bg.png"
-        alt=""
-      />
-      <img
-        :ref="
-          (ref) =>
-            addAnimRef(ref, {
-              translate: {
-                direction: 1,
-              },
-            })
-        "
-        class="img__container m-0"
-        src="/assets/img/HS-Everest-1953_1.jpg"
-      />
-    </div>
+    <img
+      :ref="
+        (ref) =>
+          addAnimRef(ref, {
+            rotate: {
+              direction: 1,
+            },
+          })
+      "
+      class="svg__container"
+      src="/assets/img/HS-Everest-1953_1.svg"
+      alt=""
+    />
+    <img
+      :ref="
+        (ref) =>
+          addAnimRef(ref, {
+            translate: {
+              direction: 1,
+            },
+          })
+      "
+      class="img__container m-0"
+      src="/assets/img/HS-Everest-1953_1.jpg"
+      alt=""
+    />
   </article>
   <article id="content-2" class="content d-grid ml-15">
     <div class="position-relative w-max-500">
@@ -70,6 +69,7 @@
             "
             class="img__container"
             src="/assets/img/HS-Everest-1953_2.jpg"
+            alt=""
           />
         </div>
         <p class="w-px-500 ml-5">
@@ -101,6 +101,7 @@
                 addAnimRef(ref, {
                   rotate: {
                     direction: 1,
+                    power: 3,
                   },
                 })
             "
@@ -140,6 +141,7 @@
             "
             class="img__container m-0 w-px-375"
             src="/assets/img/HS-Everest-1953_4.jpg"
+            alt=""
           />
         </div>
       </div>
@@ -157,6 +159,7 @@
               "
               class="img__container m-0"
               src="/assets/img/HS-Everest-1953_5.jpg"
+              alt=""
             />
             <div
               :ref="
@@ -239,6 +242,7 @@
               "
               class="img__container m-0"
               src="/assets/img/HS-Everest-1953_6.jpg"
+              alt=""
             />
           </div>
           <p class="w-px-500 ml-n5">
@@ -283,27 +287,29 @@ const { values, scrollManager, viewport } = defineProps({
     required: true,
   },
   viewport: {
-    type: Object,
+    type: Viewport,
     required: true,
   },
 })
 
+// Refs
 const animRefs = ref<TAnimateRef[]>([])
 const addAnimRef = (
-  ref: Element | ComponentPublicInstance | null,
+  el: Element | ComponentPublicInstance | null,
   options: Omit<TAnimateRef['options'], 'rect'>
-) => {
-  setTimeout(() => {
-    const val = setAnimateRef(ref, options)
-    val && animRefs.value.push(val)
+) => animRefs.value.push({ el: el as HTMLElement, options })
+
+// On mount
+onMounted(() => {
+  setAnimateRects(animRefs)
+  animateRefs(animRefs.value, 10, viewport.width)
+
+  scrollManager.on('scroll', (val: TScrollEvent) => {
+    if (val.current) {
+      animateRefs(animRefs.value, val.current, viewport.width)
+    }
   })
-}
-
-scrollManager.on('scroll', (val: TScrollEvent) =>
-  animateRefs(animRefs.value, val.current, viewport.width)
-)
-
-onMounted(() => animateRefs(animRefs.value, 0, viewport.width))
+})
 </script>
 
 <style src="./style.scss" lang="scss" scoped></style>

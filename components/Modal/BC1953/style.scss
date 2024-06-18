@@ -5,6 +5,7 @@ img {
 
 .transformable {
   will-change: transform;
+  transform-origin: center;
 }
 
 .content {
@@ -164,7 +165,7 @@ img {
 }
 
 #content-1 {
-  transform: rotate(13.63deg);
+  transform: rotate(13deg);
 
   .svg__container {
     position: relative;
