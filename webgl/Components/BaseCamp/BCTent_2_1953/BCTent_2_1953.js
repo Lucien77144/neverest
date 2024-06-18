@@ -21,8 +21,6 @@ export default class BCTent_2_1953 extends BasicItem {
     this.name = name
     this.visibility = visibility
     this.isInstances = isInstances
-    this.frag = null
-    this.vert = null
 
     // New elements
     this.resources = this.experience.resources.items

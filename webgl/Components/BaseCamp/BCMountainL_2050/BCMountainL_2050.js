@@ -1,16 +1,16 @@
 import { DoubleSide, MeshNormalMaterial } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
-import CraieMaterial from '../../Shared/CraieMaterial/CraieMaterial'
 import TextureCraieMaterial from '../../Shared/TextureCraieMaterial/TextureCraieMaterial'
+import CraieMaterial from '../../Shared/CraieMaterial/CraieMaterial'
 
-export default class BCMountainR extends BasicItem {
+export default class BCMountainL_2050 extends BasicItem {
   /**
    * Constructor
    */
   constructor({
     position = new Vector3(0, 0, 0),
     rotation = new Vector3(0, 0, 0),
-    name = 'BCMountainR',
+    name = 'BCMountainL_2050',
     visibility = [0, 100],
   }) {
     super()
@@ -29,7 +29,7 @@ export default class BCMountainR extends BasicItem {
    * Set item
    */
   setItem() {
-    this.item = this.resources.BCMountainR.scene.clone()
+    this.item = this.resources.BCMountainL_2050.scene.clone()
     this.item.position.copy(this.position)
     this.item.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
     this.item.name = this.name
@@ -51,7 +51,7 @@ export default class BCMountainR extends BasicItem {
     //    curveDirectionAmountFactor:0.4,
     //    maxCurveHorizontalDecalage:0.3,
     //    maxHeightCurve:1,
-    //    maxThicknessCurve:2,
+    //    maxThicknessCurve:1.5,
     //    nbOfPointsPerCurve:20,
     //    maxBorderSideDecalage:0.1
     //  },
@@ -62,12 +62,11 @@ export default class BCMountainR extends BasicItem {
     //  isMapEnable:0,
     //  displacementMapIntensity:0,
     //}).instance
-
     this.item.children[0].material  = new TextureCraieMaterial({
       side:0,
       color:'#E4EAF1',
       bgColor:'#F8ECE8',
-      texture:this.resources.BCMountainRTexture
+      texture:this.resources.BCMountainLTexture
     }).instance
   }
 

@@ -55,15 +55,16 @@ export default class BCBigBox_2050 extends BasicItem {
     //  isMapEnable:1,
     //  displacementMapIntensity:0,
     //}).instance
-    const material = new TextureCraieMaterial({
-      side:0,
-      color:'#E1B07E',
-      bgColor:'#F8ECE8',
-      texture:this.resources.BCBigBox_2050Texture
-    }).instance
-    const instance = this.resources.BCBigBox_1953.scene.children[0]
+    // const material = new TextureCraieMaterial({
+    //   side:0,
+    //   color:'#E1B07E',
+    //   bgColor:'#F8ECE8',
+    //   texture:this.resources.BCBigBox_2050Texture
+    // }).instance
+
+    const instance = this.resources.BCBigBox_2050.scene.children[0]
     const dummy = new Object3D()
-    this.item = new InstancedMesh(instance.geometry, material, BCBIGBOX_2050.length)
+    this.item = new InstancedMesh(instance.geometry, instance.material, BCBIGBOX_2050.length)
 
     BCBIGBOX_2050.forEach((el, i) => {
       dummy.position.set(el.position.x, el.position.y, el.position.z)
@@ -79,7 +80,7 @@ export default class BCBigBox_2050 extends BasicItem {
    * Set item
    */
   setItem() {
-    this.item = this.resources.BCBigBox_1953.scene.clone()
+    this.item = this.resources.BCBigBox_2050.scene.clone()
     this.item.position.copy(this.position)
     this.item.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
     this.item.name = this.name
@@ -122,6 +123,6 @@ export default class BCBigBox_2050 extends BasicItem {
   init() {
     this.isInstances && this.setInstances()
     !this.isInstances && this.setItem()
-    !this.isInstances && this.setMaterial()
+    // !this.isInstances && this.setMaterial()
   }
 }

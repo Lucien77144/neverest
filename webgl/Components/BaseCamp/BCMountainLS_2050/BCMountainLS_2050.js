@@ -1,16 +1,16 @@
-import { DoubleSide, MeshNormalMaterial } from 'three'
+import { DoubleSide, MeshBasicMaterial, MeshNormalMaterial } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import CraieMaterial from '../../Shared/CraieMaterial/CraieMaterial'
 import TextureCraieMaterial from '../../Shared/TextureCraieMaterial/TextureCraieMaterial'
 
-export default class BCMountain extends BasicItem {
+export default class BCMountainLS_2050 extends BasicItem {
   /**
    * Constructor
    */
   constructor({
     position = new Vector3(0, 0, 0),
     rotation = new Vector3(0, 0, 0),
-    name = 'BCMountain',
+    name = 'BCMountainLS_2050',
     visibility = [0, 100],
   }) {
     super()
@@ -29,7 +29,7 @@ export default class BCMountain extends BasicItem {
    * Set item
    */
   setItem() {
-    this.item = this.resources.BCMountain.scene.clone()
+    this.item = this.resources.BCMountainLS_1953.scene.clone()
     this.item.position.copy(this.position)
     this.item.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
     this.item.name = this.name
@@ -42,32 +42,41 @@ export default class BCMountain extends BasicItem {
     //this.item.children[0].material = new CraieMaterial({
     //  textureParams:{
     //    textureSize:1024,
-    //    nbOfColumns:1,
+    //    nbOfColumns:5,
     //    borderSize:0,
     //    columnsOffset:0.04,
-    //    nbOfCurvePerColumns:15,
+    //    nbOfCurvePerColumns:13,
     //    areCurveOnSameDirection:false,
     //    curveDirection:'up',
     //    curveDirectionAmountFactor:0.4,
     //    maxCurveHorizontalDecalage:0.3,
-    //    maxHeightCurve:6,
-    //    maxThicknessCurve:5,
+    //    maxHeightCurve:2.5,
+    //    maxThicknessCurve:4,
     //    nbOfPointsPerCurve:20,
     //    maxBorderSideDecalage:0.1
     //  },
     //  side:0,
-    //  color:'#EAEDFF',
+    //  color:'#D6E0EA',
     //  bgColor:'#F8ECE8',
     //  displacementMap:this.resources.ground2024,
     //  isMapEnable:0,
     //  displacementMapIntensity:0,
     //}).instance
-    this.item.children[0].material  = new TextureCraieMaterial({
-      side:0,
-      color:'#EAEDFF',
-      bgColor:'#F8ECE8',
-      texture:this.resources.BCMountainTexture
-    }).instance
+
+    // this.item.children[0].material  = new TextureCraieMaterial({
+    //   side:0,
+    //   color:'#D6E0EA',
+    //   bgColor:'#F8ECE8',
+    //   texture:this.resources.BCMountainLSTexture
+    // }).instance
+
+    this.item.children[0].material = new MeshBasicMaterial({
+      side: DoubleSide,
+      map: this.resources.BCMountainLS_2050_texture,
+    })
+
+    // flip the texture
+    this.item.children[0].material.map.flipY = false
   }
 
   /**
@@ -75,6 +84,6 @@ export default class BCMountain extends BasicItem {
    */
   init() {
     this.setItem()
-    // this.setMaterial()
+    this.setMaterial()
   }
 }

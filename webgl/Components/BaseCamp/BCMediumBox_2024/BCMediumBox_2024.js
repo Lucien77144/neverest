@@ -55,15 +55,16 @@ export default class BCMediumBox_2024 extends BasicItem {
     //  isMapEnable:1,
     //  displacementMapIntensity:0,
     //}).instance
-    const material = new TextureCraieMaterial({
-      side:0,
-      color:'#A453B1',
-      bgColor:'#F8ECE8',
-      texture:this.resources.BCMediumBox_2024Texture
-    }).instance
-    const instance = this.resources.BCMediumBox_1953.scene.children[0]
+    // const material = new TextureCraieMaterial({
+    //   side:0,
+    //   color:'#A453B1',
+    //   bgColor:'#F8ECE8',
+    //   texture:this.resources.BCMediumBox_2024Texture
+    // }).instance
+
+    const instance = this.resources.BCMediumBox_2024.scene.children[0]
     const dummy = new Object3D()
-    this.item = new InstancedMesh(instance.geometry, material, BCMEDIUMBOX_2024.length)
+    this.item = new InstancedMesh(instance.geometry, instance.material, BCMEDIUMBOX_2024.length)
 
     BCMEDIUMBOX_2024.forEach((el, i) => {
       dummy.position.set(el.position.x, el.position.y, el.position.z)
@@ -79,7 +80,7 @@ export default class BCMediumBox_2024 extends BasicItem {
    * Set item
    */
   setItem() {
-    this.item = this.resources.BCMediumBox_1953.scene.clone()
+    this.item = this.resources.BCMediumBox_2024.scene.clone()
     this.item.position.copy(this.position)
     this.item.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
     this.item.name = this.name
@@ -99,6 +100,6 @@ export default class BCMediumBox_2024 extends BasicItem {
   init() {
     this.isInstances && this.setInstances()
     !this.isInstances && this.setItem()
-    !this.isInstances && this.setMaterial()
+    // !this.isInstances && this.setMaterial()
   }
 }
