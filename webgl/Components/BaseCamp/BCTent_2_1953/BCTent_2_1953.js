@@ -73,12 +73,12 @@ export default class BCTent_2_1953 extends BasicItem {
     void main() {
       vec2 uv = vUv;
       vec3 nrml = normalize(vNormal);
-      vec3 windDirection = vec3(1.0,0.0,0.0);
+      vec3 windDirection = normalize(vec3(1.0,0.0,0.0));
       //uv.x += noise(vUv + uTime * 0.1) * 0.1;
       //uv.y += noise(vUv + uTime * 0.1) * 0.1;
       vec4 color = texture2D(uTexture, uv);
       float dotProduct = dot(nrml,windDirection);
-      color = vec4(vec3(nrml),1.0);
+      color = vec4(vec3(dotProduct),1.0);
       gl_FragColor = color;
     }
     `;
@@ -110,6 +110,7 @@ export default class BCTent_2_1953 extends BasicItem {
     })
 
     this.item.instanceMatrix.needsUpdate = true
+   
   }
 
   /**
