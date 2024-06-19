@@ -122,7 +122,7 @@ export default class Renderer {
    */
   setRenderMesh() {
     this.renderMesh = new Mesh(
-      new PlaneGeometry(2, 2),
+      new PlaneGeometry(2, 2, 100, 100),
       new ShaderMaterial({
         uniforms: {
           // Scene gesture
