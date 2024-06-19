@@ -1,6 +1,7 @@
 import { InstancedMesh, MeshNormalMaterial, Object3D, ShaderMaterial } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import { BCTENT_2_1953 } from '~/const/blocking/baseCamp.const'
+import { InstancedUniformsMesh } from 'three-instanced-uniforms-mesh'
 
 export default class BCTent_2_1953 extends BasicItem {
   /**
@@ -37,12 +38,35 @@ export default class BCTent_2_1953 extends BasicItem {
     this.vert = `
     varying vec2 vUv;
     varying vec3 vNormal; 
+    uniform float uRot;
+    uniform float uTime;
+    uniform sampler2D uVentTexture;
+
+    mat3 rotationY(float angle) {
+    float s = sin(angle);
+    float c = cos(angle);
+    return mat3(
+        c, 0.0, s,
+        0.0, 1.0, 0.0,
+        -s, 0.0, c
+    );
+  }
+  
 
     void main() {
       vUv = uv;
+      float ventTexture = texture2D(uVentTexture, uv).r;
       vec4 modelNormal = modelMatrix * vec4(normal, 0.0);
       vNormal = modelNormal.xyz;
-      gl_Position = projectionMatrix * modelViewMatrix * instanceMatrix * vec4(position, 1.0);
+      vec3 nrml = normalize(modelNormal.xyz);
+      vec3 windDirection = normalize(vec3(1.0,0.0,0.0));
+      windDirection = rotationY(uRot) * windDirection;
+      float dotProduct = dot(nrml,windDirection);
+      dotProduct=-dotProduct;
+      dotProduct = pow(dotProduct,3.0);
+      vec4 modelPosition =  instanceMatrix * vec4(position, 1.0);
+      modelPosition.x+=dotProduct*sin(uTime)*0.3*ventTexture;
+      gl_Position = projectionMatrix * modelViewMatrix * modelPosition;
     }
     `
 
@@ -50,6 +74,8 @@ export default class BCTent_2_1953 extends BasicItem {
     this.frag = `
     uniform float uTime;
     uniform sampler2D uTexture;
+    uniform sampler2D uVentTexture;
+    uniform float uRot;
     varying vec2 vUv;
     varying vec3 vNormal; 
 
@@ -70,35 +96,51 @@ export default class BCTent_2_1953 extends BasicItem {
            (d - b) * u.x * u.y;
     }
 
+    mat3 rotationY(float angle) {
+    float s = sin(angle);
+    float c = cos(angle);
+    return mat3(
+        c, 0.0, s,
+        0.0, 1.0, 0.0,
+        -s, 0.0, c
+    );
+  }
+
     void main() {
       vec2 uv = vUv;
       vec3 nrml = normalize(vNormal);
       vec3 windDirection = normalize(vec3(1.0,0.0,0.0));
+      windDirection = rotationY(uRot) * windDirection;
       //uv.x += noise(vUv + uTime * 0.1) * 0.1;
       //uv.y += noise(vUv + uTime * 0.1) * 0.1;
       vec4 color = texture2D(uTexture, uv);
       float dotProduct = dot(nrml,windDirection);
-      color = vec4(vec3(dotProduct),1.0);
+      dotProduct=-dotProduct;
+      //color = vec4(vec3(dotProduct),1.0);
       gl_FragColor = color;
     }
     `;
     
     const instance = this.resources.BCTent_2_1953.scene.children[0].clone()
+    const testVenttexture = this.resources.testVent
+    testVenttexture.flipY = false
     //console.log(instance.geometry)
     instance.geometry.computeVertexNormals()
     const material = new ShaderMaterial({
       uniforms: {
         uTime: { value: 1.0 },
         uTexture: { value: instance.material.map },
+        uVentTexture:{value:testVenttexture},
+        uRot:{value:0.0}
       },
       vertexShader: this.vert,
       fragmentShader: this.frag,
     })
      
 
-    this.item = new InstancedMesh(
+    this.item = new InstancedUniformsMesh(
       instance.geometry,
-      instance.material,
+      material,
       BCTENT_2_1953.length
     )
 
@@ -106,7 +148,9 @@ export default class BCTent_2_1953 extends BasicItem {
       dummy.position.set(el.position.x, el.position.y, el.position.z)
       dummy.rotation.set(el.rotation.x, el.rotation.y, el.rotation.z)
       dummy.updateMatrix()
+
       this.item.setMatrixAt(i, dummy.matrix)
+      this.item.setUniformAt('uRot', i, el.rotation.y)
     })
 
     this.item.instanceMatrix.needsUpdate = true
@@ -132,6 +176,6 @@ export default class BCTent_2_1953 extends BasicItem {
   }
 
   update() {
-    // this.item.material.uniforms.uTime.value = this.time.elapsed * 0.001
+    this.item.material.uniforms.uTime.value = this.time.elapsed * 0.001
   }
 }
