@@ -1,4 +1,4 @@
-import { Vector3 } from 'three'
+import { MeshStandardMaterial, Vector3 } from 'three'
 import BaseCampCamera from '../Components/BaseCamp/BaseCampCamera/BaseCampCamera'
 import BasicScene from '../Modules/Basics/BasicScene'
 import Floor from '../Components/BaseCamp/Floor/Floor'
@@ -77,7 +77,6 @@ export default class BaseCamp extends BasicScene {
       lights: new BaseCampLight(),
 
       // BOX
-
       BCSmallBox_1953: new BCSmallBox_1953({
         position: new Vector3(0, 0, 0),
         rotation: new Vector3(0, 0, 0),
@@ -255,7 +254,7 @@ export default class BaseCamp extends BasicScene {
       }),
       BCAntenne_2024: new BCAntenne_2024({
         position: new Vector3(6.52, -0.2, -25.785),
-        rotation: new Vector3(0.000, 0, 0),
+        rotation: new Vector3(0.0, 0, 0),
         visibility: [25.87, 75.97],
         modal: ModalBC1953,
       }),

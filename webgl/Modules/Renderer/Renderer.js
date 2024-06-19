@@ -3,10 +3,10 @@ import {
   Color,
   LinearFilter,
   Mesh,
+  PCFShadowMap,
   PerspectiveCamera,
   PlaneGeometry,
   RGBAFormat,
-  SRGBColorSpace,
   ShaderMaterial,
   Uniform,
   Vector2,
@@ -74,6 +74,24 @@ export default class Renderer {
         )
       })
 
+    this.debugFolder.addBinding(this.instance, 'toneMappingExposure', {
+      label: 'Tone Mapping Exposure',
+      min: 0,
+      max: 10,
+      step: 0.01,
+    })
+
+    this.debugFolder.addBinding(this.instance, 'toneMapping', {
+      label: 'Tone Mapping',
+      options: {
+        None: 0,
+        Linear: 1,
+        Reinhard: 2,
+        Cineon: 3,
+        ACESFilmic: 4,
+      },
+    })
+
     // Panels
     if (this.stats) {
       this.stats.setRenderPanel(this.context)
@@ -90,21 +108,6 @@ export default class Renderer {
       0.1,
       100
     )
-  }
-
-  /**
-   * Set render targets and mesh
-   */
-  setRenderTargets() {
-    const size = this.instance.getDrawingBufferSize(new Vector2())
-    this.rt0 = new WebGLRenderTarget(size.width, size.height, {
-      generateMipmaps: false,
-      minFilter: LinearFilter,
-      magFilter: LinearFilter,
-      format: RGBAFormat,
-      samples: 1,
-    })
-    this.rt1 = this.rt0.clone()
   }
 
   /**
@@ -167,7 +170,6 @@ export default class Renderer {
       antialias: true,
       stencil: false,
       alpha: false,
-      depth: true,
       powerPreference: 'high-performance',
     })
 
@@ -177,13 +179,27 @@ export default class Renderer {
     this.instance.setPixelRatio(this.viewport.dpr)
 
     // Options
-    this.instance.physicallyCorrectLights = true
-    this.instance.outputColorSpace = SRGBColorSpace
     this.instance.toneMapping = ACESFilmicToneMapping
-    this.instance.toneMappingExposure = 1
+    this.instance.toneMappingExposure = 1.1
 
     // Context
     this.context = this.instance.getContext()
+  }
+
+  /**
+   * Set render targets and mesh
+   */
+  setRenderTargets() {
+    const size = this.instance.getDrawingBufferSize(new Vector2())
+    this.rt0 = new WebGLRenderTarget(size.width, size.height, {
+      generateMipmaps: false,
+      minFilter: LinearFilter,
+      magFilter: LinearFilter,
+      format: RGBAFormat,
+      samples: 1,
+      
+    })
+    this.rt1 = this.rt0.clone()
   }
 
   /**
@@ -211,7 +227,7 @@ export default class Renderer {
       this.instance.render(active.scene, active.camera.instance)
     }
 
-    // // Transition
+    // Transition
     if (next?.camera?.instance) {
       this.instance.setRenderTarget(this.rt1)
       this.instance.render(next.scene, next.camera.instance)

@@ -28,6 +28,8 @@ void main() {
     //uv.y += noise(vUv + uTime * 0.1) * 0.1;
     vec4 color = texture2D(uTexture, uv);
     float dotProduct = dot(nrml,windDirection);
-    color = vec4(vec3(nrml),1.0);
+    // color = vec4(vec3(nrml),1.0);
+
     gl_FragColor = color;
+    #include <colorspace_fragment> // To fix colors problems when using render targets
 }

@@ -7,19 +7,50 @@ export default class BaseCampLight extends BasicItem {
    */
   constructor() {
     super()
+    // Get elements from experience
+    this.debug = this.experience.debug
 
     // New elements
     this.item = new Group()
+    this.ambient = null
+  }
+
+  /**
+   * Set debug
+   */
+  setDebug() {
+    this.debugFolder = this.debug.panel.addFolder({
+      expanded: false,
+      title: 'BC Lights',
+    })
+
+    this.debugFolder.addBinding(this.ambient, 'intensity', {
+      label: 'Ambient Light',
+    })
+
+    const color = {
+      value: this.ambient.color.getHex(),
+    }
+    this.debugFolder
+      .addBinding(color, 'value', {
+        label: 'Ambient Color',
+        view: 'color',
+      })
+      .on('change', () => {
+        this.ambient.color.setHex(color.value)
+      })
   }
 
   /**
    * Set the ambient light
    */
   setAmbientLight() {
-    const ambient = new AmbientLight(0xffffff, 2)
-    ambient.position.set(0, 3, 0)
+    this.ambient = new AmbientLight(0xffffff, 3)
+    // const ambient = new AmbientLight(0xff0000, 3)
+    this.ambient.position.set(0, 3, 0)
+    this.ambient.castShadow = false
 
-    this.item.add(ambient)
+    this.item.add(this.ambient)
   }
 
   /**
@@ -27,5 +58,6 @@ export default class BaseCampLight extends BasicItem {
    */
   init() {
     this.setAmbientLight()
+    this.debug && this.setDebug()
   }
 }
