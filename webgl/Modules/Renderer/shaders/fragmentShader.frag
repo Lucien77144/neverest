@@ -11,7 +11,9 @@ uniform vec3 uFocTransitionColor;
 uniform vec2 uResolution;
 uniform vec2 uCursor;
 uniform vec2 uRatio;
+
 varying vec2 vUv;
+varying vec2 vUvNoise;
 
 // Renvoie un nombre entre 0 et 1, la magnitude multiplie ce nombre
 float clampedSine(float t, float magnitude) {
@@ -104,6 +106,20 @@ vec2 getMaskUv(vec2 uv) {
     return maskUv;
 }
 
+vec2 getZoomedUv(vec2 uv, float timing) {    
+    vec2 centeredUv = vUvNoise - 0.5;
+    vec2 zoomedUv = centeredUv * (1.0 - timing); // Appliquer le zoom
+    zoomedUv += 0.5; // Recentrer les coordonnées UV
+
+    return zoomedUv;
+}
+
+vec4 getMountainAmbiant() {
+    vec3 res = vec3(0.);
+
+    return vec4(res, 1.);
+}
+
 void main() {
     vec2 uv = vUv;
     vec4 frag = vec4(0.);
@@ -113,12 +129,12 @@ void main() {
     // -------------------- //
     float zoomInTransiTiming = clamp(abs(pow(uTransition/0.6,3.0)),0.0,1.0);
     float fadeOutTransiTiming = clamp(-(uTransition-1.0)*5.0,0.0,1.0);
-    
-    vec2 centeredUv = uv - 0.5;
-    vec2 zoomedUv = centeredUv * (1.0 - zoomInTransiTiming); // Appliquer le zoom
-    zoomedUv += 0.5; // Recentrer les coordonnées UV
 
+    vec2 zoomedUv = getZoomedUv(uv, zoomInTransiTiming);
     vec4 scene0 = texture2D(uScene0, zoomedUv);
+
+    // vec4 ambiantScene0 = getMountainAmbiant();
+
     vec4 scene0BW = vec4(applyBlackAndWhite(scene0.rgb), 1.);
     float sceneMask = smoothstep(.8, 1., (1. - scene0BW.r) * 5.);
 
@@ -197,6 +213,7 @@ void main() {
     frag = mix(frag, mix(frag, vec4(uModalColor, 1.), (1. - mask) * play), .995);
 
     gl_FragColor = frag;
+    // gl_FragColor = getMountainAmbiant();
    
     #include <colorspace_fragment> // To fix colors problems when using render targets
     // #include <tonemapping_fragment> // To fix tonemapping problems when using render targets (only if tone mapping is enabled)

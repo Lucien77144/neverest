@@ -1,8 +1,7 @@
 uniform float uTime;
-uniform float uIndex;
-uniform float uRandom;
 uniform sampler2D uTexture;
 varying vec2 vUv;
+varying vec3 vNormal;
 
 float random(vec2 st) {
     return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
@@ -23,20 +22,12 @@ float noise(vec2 st) {
 
 void main() {
     vec2 uv = vUv;
+    vec3 nrml = normalize(vNormal);
+    vec3 windDirection = vec3(1.0,0.0,0.0);
+    //uv.x += noise(vUv + uTime * 0.1) * 0.1;
+    //uv.y += noise(vUv + uTime * 0.1) * 0.1;
     vec4 color = texture2D(uTexture, uv);
-
-    float dist = 1.25;
-    float minV = 1.;
-    float speed = 1.75;
-
-    float rdm = ((1. + uRandom) / 2.);
-    float maxColor = max(color.r, max(color.g, color.b));
-    float clamped = sin(uTime + round(rdm * 10.) * speed) + 1.;
-    float rounded = round(clamped * rdm * 2.5) * .2;
-    float diff = dist * rounded + minV;
-    float mask = abs(1. - round(clamp(maxColor * diff, 0., 1.)));
-    
-    vec3 bgColor = clamp(color.rgb * .5, .5, 1.);
-    gl_FragColor.rgb = mix(bgColor, color.rgb, mask);
-    gl_FragColor.a = 1.;
+    float dotProduct = dot(nrml,windDirection);
+    color = vec4(vec3(nrml),1.0);
+    gl_FragColor = color;
 }
