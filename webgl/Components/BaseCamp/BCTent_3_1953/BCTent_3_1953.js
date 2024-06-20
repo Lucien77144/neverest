@@ -1,9 +1,7 @@
-import { DoubleSide, Mesh, MeshNormalMaterial, PlaneGeometry, ShaderMaterial, Uniform } from 'three'
+import { DoubleSide, Mesh, PlaneGeometry, ShaderMaterial, Uniform } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
-import CraieMaterial from '../../Shared/CraieMaterial/CraieMaterial'
-import TextureCraieMaterial from '../../Shared/TextureCraieMaterial/TextureCraieMaterial'
-import flagVert from './FlagShader/FlagShader.vert?raw'
-import flagFrag from './FlagShader/FlagShader.frag?raw'
+import vertexShader from './FlagShader/FlagShader.vert?raw'
+import fragmentShader from './FlagShader/FlagShader.frag?raw'
 
 export default class BCTent_3_1953 extends BasicItem {
   /**
@@ -37,13 +35,15 @@ export default class BCTent_3_1953 extends BasicItem {
     this.item.position.copy(this.position)
     this.item.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
     this.item.name = this.name
+
+    console.log(this.item.children[0].material)
   }
 
   /**
    * Set material
    */
   setMaterial() {
-    this.item.children[0].material = 
+    // this.item.children[0].material =
     //new CraieMaterial({
     //  textureParams:{
     //    textureSize:1024,
@@ -67,19 +67,19 @@ export default class BCTent_3_1953 extends BasicItem {
     //  isMapEnable:0,
     //  displacementMapIntensity:0
     //}).instance
-    new TextureCraieMaterial({
-      side:2,
-      color:'#03AC13',
-      bgColor:'#F8ECE8',
-      texture:this.resources.BCTent3_1953Texture
-    }).instance
+    // new TextureCraieMaterial({
+    //   side:2,
+    //   color:'#03AC13',
+    //   bgColor:'#F8ECE8',
+    //   texture:this.resources.BCTent3_1953Texture
+    // }).instance
   }
 
   setFlag() {
     const flagGeometry = new PlaneGeometry(3, 1.5, 32, 32)
     const flagMaterial = new ShaderMaterial({
-      vertexShader: flagVert,
-      fragmentShader: flagFrag,
+      vertexShader,
+      fragmentShader,
       side: DoubleSide,
       uniforms: {
         uTime: new Uniform(this.time.elapsed * 0.001),
@@ -106,8 +106,8 @@ export default class BCTent_3_1953 extends BasicItem {
    */
   init() {
     this.setItem()
-    // this.setMaterial()
     this.setFlag()
+    // this.setMaterial()
   }
 
   update() {
