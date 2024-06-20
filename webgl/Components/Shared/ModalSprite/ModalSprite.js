@@ -66,7 +66,9 @@ export default class ModalSprite extends BasicItem {
 
     // If current scroll is between visibility values
     if (start <= scroll && scroll <= end) {
-      this.item.visible = true
+      if (!this.item.visible) {
+        this.item.visible = true
+      }
     } else {
       if (this.item.visible) {
         this.item.visible = false
@@ -179,6 +181,12 @@ export default class ModalSprite extends BasicItem {
    * Update
    */
   update() {
+    if (!this.item.visible) {
+      this.item.scale.set(0, 0, 0)
+    }
+
+    if (!this.item.visible) return
+
     // update the sprite scale
     const target = new Vector3()
     const camTarget = new Vector3()

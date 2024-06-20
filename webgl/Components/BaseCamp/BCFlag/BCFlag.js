@@ -26,7 +26,6 @@ export default class BCFlag extends BasicItem {
     rotation = new Vector3(0, 0, 0),
     name = 'BCFlag',
     visibility = [0, 100],
-    modal,
   }) {
     super()
 
@@ -35,7 +34,6 @@ export default class BCFlag extends BasicItem {
     this.rotation = rotation
     this.name = name
     this.visibility = visibility
-    this.modal = modal
     this.flag = null
 
     // New elements
@@ -83,33 +81,6 @@ export default class BCFlag extends BasicItem {
     // }).instance
   }
 
-  /**
-   * Set sprite
-   */
-  setSprite() {
-    const mat = this.item.children[0]
-    const boundings = mat.geometry.boundingBox
-
-    const position = new Vector3()
-    mat.getWorldPosition(position)
-    position.y = boundings.min.y + 1
-    position.x += 0.4
-    position.z += 0.2
-    // + (boundings.max.y - boundings.min.y)
-
-    this.components.modalSprite1953 = new ModalSprite({
-      visibility: this.visibility,
-      position,
-      data: {
-        template: this.modal,
-        values: {
-          archives1953: this.resources.archives1953,
-          return1953: this.resources.return1953,
-        },
-      },
-    })
-  }
-
   setFlag() {
     const flagGeometry = new PlaneGeometry(3, 2, 32, 32)
     const flagMaterial = new ShaderMaterial({
@@ -132,12 +103,11 @@ export default class BCFlag extends BasicItem {
    */
   init() {
     this.setBCFlag()
-    this.setSprite()
     this.setFlag()
   }
 
   update() {
-    this.item.children[0].children[1].material.uniforms.uTime.value =
+    this.item.children[1].material.uniforms.uTime.value =
       this.time.elapsed * 0.001
   }
 }

@@ -43,7 +43,7 @@ import BCTent_Main_2050 from '../Components/BaseCamp/BCTent_Main_2050/BCTent_Mai
 import BaseCampCamera from '../Components/BaseCamp/BaseCampCamera/BaseCampCamera'
 import BasicScene from '../Modules/Basics/BasicScene'
 
-import { ModalBC1953, ModalBC2024 } from '#components'
+import { ModalBC1953, ModalBC2024, ModalBC2050 } from '#components'
 import BaseCampLight from '../Components/BaseCamp/BaseCampLight/BaseCampLight'
 
 export default class BaseCamp extends BasicScene {
@@ -122,6 +122,7 @@ export default class BaseCamp extends BasicScene {
         position: new Vector3(0.328, 0, -35.809),
         rotation: new Vector3(0, -0.5 + Math.PI / 2, 0),
         visibility: [0, 25.87],
+        modal: ModalBC1953,
       }),
       BCTent_2_1953: new BCTent_2_1953({
         position: new Vector3(0, 0, 0),
@@ -137,6 +138,7 @@ export default class BaseCamp extends BasicScene {
         position: new Vector3(0.328, 0, -35.809),
         rotation: new Vector3(0, -0.5 + Math.PI / 2, 0),
         visibility: [25.87, 75.97],
+        modal: ModalBC2024,
       }),
       BCTent_2_2024: new BCTent_2_2024({
         position: new Vector3(0, 0, 0),
@@ -152,6 +154,7 @@ export default class BaseCamp extends BasicScene {
         position: new Vector3(0.328, 0, -35.809),
         rotation: new Vector3(0, -0.5 + Math.PI / 2, 0),
         visibility: [75.97, 100],
+        modal: ModalBC2050,
       }),
       BCTent_1_2050: new BCTent_1_2050({
         position: new Vector3(0.328, 0, -35.809),
@@ -280,13 +283,11 @@ export default class BaseCamp extends BasicScene {
         position: new Vector3(6.2, 0.251, -18.331),
         rotation: new Vector3(0.005, 0.291, -0.289),
         visibility: [0, 25.87],
-        modal: ModalBC1953,
       }),
       BCAntenne_2024: new BCAntenne_2024({
         position: new Vector3(6.52, -0.2, -25.785),
         rotation: new Vector3(0.0, 0, 0),
         visibility: [25.87, 75.97],
-        modal: ModalBC2024,
       }),
       BCCailloux: new BCCailloux({
         position: new Vector3(-9.567, 0, -32.582),

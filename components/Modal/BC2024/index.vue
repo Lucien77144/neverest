@@ -24,6 +24,7 @@
               addAnimRef(ref, {
                 translate: {
                   direction: -1,
+                  power: 50,
                 },
               })
           "
@@ -37,6 +38,7 @@
               addAnimRef(ref, {
                 translate: {
                   direction: 1,
+                  power: 50,
                 },
               })
           "
@@ -75,13 +77,14 @@
             addAnimRef(ref, {
               translate: {
                 direction: -1,
+                power: 50,
               },
             })
         "
         style="width: 903px; height: 507px"
       >
         <UIVideoPlayer
-          :value="values?.return1953"
+          :value="values?.video2024_1"
           poster="/img/HS-Everest-2024_2.jpg"
         />
       </div>
@@ -91,6 +94,7 @@
             addAnimRef(ref, {
               translate: {
                 direction: 1,
+                power: 50,
               },
             })
         "
@@ -103,24 +107,14 @@
   <article id="content-4" class="content d-grid">
     <div class="wrapper d-grid ml-15">
       <div class="position-relative d-flex" style="gap: 100px">
-        <div
-          :ref="
-            (ref) =>
-              addAnimRef(ref, {
-                rotate: {
-                  direction: -1,
-                  power: 3,
-                },
-              })
-          "
-          class="rotate-1"
-        >
+        <div>
           <p
             :ref="
               (ref) =>
                 addAnimRef(ref, {
                   translate: {
-                    direction: -1,
+                    direction: 1,
+                    power: 50,
                   },
                 })
             "
@@ -128,9 +122,20 @@
           >
             {{ $t('RITUAL_2024') }}
           </p>
-          <div style="width: 387px; height: 387px; margin-right: 60px">
+          <div
+            :ref="
+              (ref) =>
+                addAnimRef(ref, {
+                  translate: {
+                    direction: -1,
+                    power: 50,
+                  },
+                })
+            "
+            style="width: 387px; height: 387px; margin-right: 60px"
+          >
             <UIVideoPlayer
-              :value="values?.archives1953"
+              :value="values?.video2024_2"
               poster="/img/HS-Everest-2024_3.jpg"
             />
           </div>
@@ -142,6 +147,7 @@
                 addAnimRef(ref, {
                   translate: {
                     direction: -1,
+                    power: 50,
                   },
                 })
             "
@@ -164,6 +170,7 @@
                 addAnimRef(ref, {
                   translate: {
                     direction: 1,
+                    power: 50,
                   },
                 })
             "
@@ -180,9 +187,8 @@
               :ref="
                 (ref) =>
                   addAnimRef(ref, {
-                    rotate: {
-                      direction: 1,
-                      power: 3,
+                    translate: {
+                      direction: -1,
                     },
                   })
               "
@@ -196,6 +202,7 @@
                   addAnimRef(ref, {
                     translate: {
                       direction: 1,
+                      power: 50,
                     },
                   })
               "
@@ -219,6 +226,7 @@
                   addAnimRef(ref, {
                     translate: {
                       direction: 1,
+                      power: 50,
                     },
                   })
               "
@@ -237,6 +245,7 @@
                   addAnimRef(ref, {
                     translate: {
                       direction: 1,
+                      power: 50,
                     },
                   })
               "

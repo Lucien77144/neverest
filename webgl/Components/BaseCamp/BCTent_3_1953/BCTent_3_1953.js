@@ -35,8 +35,6 @@ export default class BCTent_3_1953 extends BasicItem {
     this.item.position.copy(this.position)
     this.item.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
     this.item.name = this.name
-
-    console.log(this.item.children[0].material)
   }
 
   /**

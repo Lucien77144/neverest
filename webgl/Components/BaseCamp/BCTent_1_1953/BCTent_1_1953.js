@@ -2,6 +2,7 @@ import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import TextureCraieMaterial from '../../Shared/TextureCraieMaterial/TextureCraieMaterial'
 import { UIAudioPlayer } from '#components'
 import { MeshNormalMaterial, Vector3 } from 'three'
+import ModalSprite from '../../Shared/ModalSprite/ModalSprite'
 
 export default class BCTent_1_1953 extends BasicItem {
   /**
@@ -12,6 +13,7 @@ export default class BCTent_1_1953 extends BasicItem {
     rotation = new Vector3(0, 0, 0),
     name = 'BCTent_1_1953',
     visibility = [0, 100],
+    modal,
   }) {
     super()
     this.debug = this.experience.debug
@@ -21,6 +23,7 @@ export default class BCTent_1_1953 extends BasicItem {
     this.rotation = rotation
     this.name = name
     this.visibility = visibility
+    this.modal = modal
 
     // New elements
     this.resources = this.experience.resources.items
@@ -72,10 +75,37 @@ export default class BCTent_1_1953 extends BasicItem {
   }
 
   /**
+   * Set sprite
+   */
+  setSprite() {
+    const mat = this.item.children[0]
+    const boundings = mat.geometry.boundingBox
+
+    const position = new Vector3()
+    mat.getWorldPosition(position)
+    position.y = boundings.min.y + 1
+    position.z += 3.3
+    // + (boundings.max.y - boundings.min.y)
+
+    this.components.modalSprite1953 = new ModalSprite({
+      visibility: this.visibility,
+      position,
+      data: {
+        template: this.modal,
+        values: {
+          archives1953: this.resources.archives1953,
+          return1953: this.resources.return1953,
+        },
+      },
+    })
+  }
+
+  /**
    * Init
    */
   init() {
     this.setItem()
+    this.setSprite()
     // this.setMaterial()
   }
 
@@ -83,15 +113,15 @@ export default class BCTent_1_1953 extends BasicItem {
    * On init complete
    */
   onInitComplete() {
-    this.addCSS2D({
-      id: this.name + '_audio',
-      template: UIAudioPlayer,
-      data: {
-        source: this.resources.tedTalk,
-      },
-      parent: this.item,
-      position: new Vector3(0, 1, 0),
-    })
+    // this.addCSS2D({
+    //   id: this.name + '_audio',
+    //   template: UIAudioPlayer,
+    //   data: {
+    //     source: this.resources.tedTalk,
+    //   },
+    //   parent: this.item,
+    //   position: new Vector3(0, 1, 0),
+    // })
   }
 
   /**
@@ -99,7 +129,7 @@ export default class BCTent_1_1953 extends BasicItem {
    */
   dispose() {
     super.dispose()
-    this.removeCSS2D(this.name + '_audio')
+    // this.removeCSS2D(this.name + '_audio')
     this.item = null
   }
 }
