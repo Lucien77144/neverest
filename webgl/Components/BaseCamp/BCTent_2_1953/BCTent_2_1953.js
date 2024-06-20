@@ -1,4 +1,4 @@
-import { InstancedMesh, Object3D, ShaderMaterial } from 'three'
+import { Color, InstancedMesh, Object3D, ShaderMaterial } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import { BCTENT_2_1953 } from '~/const/blocking/baseCamp.const'
 import { InstancedUniformsMesh } from 'three-instanced-uniforms-mesh'
@@ -94,14 +94,16 @@ export default class BCTent_2_1953 extends BasicItem {
     uniform sampler2D uTexture;
     varying vec2 vUv;
 
-
     void main() {
       vec2 uv = vUv;
       vec4 color = texture2D(uTexture, uv);
       gl_FragColor = color;
+      
+      #include <colorspace_fragment> // To fix colors problems when using render targets
+      #include <tonemapping_fragment> // To fix tonemapping problems when using render targets (only if tone mapping is enabled)
     }
-    `;
-    
+    `
+
     const instance = this.resources.BCTent_2_1953.scene.children[0].clone()
     const testVenttexture = this.resources.testVent
     testVenttexture.flipY = false
@@ -111,11 +113,11 @@ export default class BCTent_2_1953 extends BasicItem {
       uniforms: {
         uTime: { value: 1.0 },
         uTexture: { value: instance.material.map },
-        uVentTexture:{value:testVenttexture},
-        uRot:{value:0.0}
+        uVentTexture: { value: testVenttexture },
+        uRot: { value: 0.0 },
       },
-      vertexShader:this.vert,
-      fragmentShader:this.frag,
+      vertexShader: this.vert,
+      fragmentShader: this.frag,
     })
 
     this.item = new InstancedUniformsMesh(
@@ -134,7 +136,6 @@ export default class BCTent_2_1953 extends BasicItem {
     })
 
     this.item.instanceMatrix.needsUpdate = true
-   
   }
 
   /**

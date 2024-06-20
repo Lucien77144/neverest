@@ -32,4 +32,8 @@ void main() {
 
     gl_FragColor = color;
     #include <colorspace_fragment> // To fix colors problems when using render targets
+    #include <tonemapping_fragment> // To fix tonemapping problems when using render targets (only if tone mapping is enabled)
+    #include <encodings_fragment> // To fix tonemapping problems when using render targets (only if tone mapping is enabled)
+    #include <fog_fragment> // To fix fog problems when using render targets
+    #include <premultiplied_alpha_fragment> // To fix colors problems when using render targets
 }
