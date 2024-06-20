@@ -80,7 +80,6 @@ export default class BaseCamp extends BasicScene {
     this.components = {
       lights: new BaseCampLight(),
 
-      // Particles
       // floorAnimation: new FloorAnimation(),
 
       // BOX
@@ -366,7 +365,7 @@ export default class BaseCamp extends BasicScene {
 
     // If current scroll is between visibility values
     if (start <= scroll && scroll <= end) {
-      if (c.item.visible === false) {
+      if (!c.item.visible) {
         c.item.visible = true
       }
     } else {
