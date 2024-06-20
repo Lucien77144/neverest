@@ -97,7 +97,8 @@ export default class BCFlag extends BasicItem {
     position.z += 0.2
     // + (boundings.max.y - boundings.min.y)
 
-    this.components.modalSprite = new ModalSprite({
+    this.components.modalSprite1953 = new ModalSprite({
+      visibility: this.visibility,
       position,
       data: {
         template: this.modal,
@@ -133,18 +134,6 @@ export default class BCFlag extends BasicItem {
     this.setBCFlag()
     this.setSprite()
     this.setFlag()
-
-    // Code Spaghetti pour test
-    this.listener = new AudioListener()
-    this.parentScene.camera.instance.add(this.listener)
-    this.sound = new PositionalAudio(this.listener)
-    this.sound.setMediaElementSource(this.resources.flag1953).source
-    this.sound.source.mediaElement.loop = true
-    this.sound.loop = true
-    this.sound.source.mediaElement.volume = 1
-    this.sound.volume = 1
-    this.sound.source.mediaElement.play()
-    this.item.add(this.sound)
   }
 
   update() {

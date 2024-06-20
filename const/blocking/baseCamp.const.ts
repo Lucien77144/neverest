@@ -22,7 +22,7 @@ export const BCSMALLBOX_1953: TBlockingInfos[] = [
 
 export const BCSMALLBOX_2024: TBlockingInfos[] = [
   {
-    position: new Vector3(-1.866, 1.006, -19.711),
+    position: new Vector3(-3.866, 1.006, 1.711),
     rotation: new Vector3(Math.PI, -1.155, Math.PI),
   },
   {
@@ -61,6 +61,10 @@ export const BCMEDIUMBOX_1953: TBlockingInfos[] = [
 export const BCMEDIUMBOX_2024: TBlockingInfos[] = [
   {
     position: new Vector3(9.429, 0.3, -17.631),
+    rotation: new Vector3(Math.PI / 2, 0, -0.155),
+  },
+  {
+    position: new Vector3(4.029, 0.3, -2.431),
     rotation: new Vector3(Math.PI / 2, 0, -0.155),
   },
   {
@@ -110,8 +114,12 @@ export const BCBIGBOX_1953: TBlockingInfos[] = [
 
 export const BCBIGBOX_2024: TBlockingInfos[] = [
   {
-    position: new Vector3(-2.085, 0.500, -20.207),
+    position: new Vector3(-3.085, 0.500, 1.507),
     rotation: new Vector3(Math.PI / 2, 0, 0.797),
+  },
+  {
+    position: new Vector3(3.085, 0.500, -2.07),
+    rotation: new Vector3(-Math.PI / 2, 0, 0.797),
   },
   {
     position: new Vector3(10.242, 0.5, -11.112),
@@ -201,6 +209,10 @@ export const BCTENT_1_2024: TBlockingInfos[] = [
 export const BCTENT_2_2024: TBlockingInfos[] = [
   {
     position: new Vector3(-11.568, -0.522, -14.34),
+    rotation: new Vector3(Math.PI, -0.711, Math.PI),
+  },
+  {
+    position: new Vector3(-6.568, -0.522, -2.34),
     rotation: new Vector3(Math.PI, -0.711, Math.PI),
   },
   {
@@ -305,11 +317,11 @@ export const BCTENT_MAIN_2050: TBlockingInfos[] = [
 
 export const BCTENT_1_2050: TBlockingInfos[] = [
   {
-    position: new Vector3(-7.222, 0.122, -4.038),
+    position: new Vector3(-7.222, -0.122, -4.038),
     rotation: new Vector3(Math.PI, -0.711 + Math.PI, Math.PI),
   },
   {
-    position: new Vector3(5.228, 0.12, -5.648),
+    position: new Vector3(5.228, -0.12, -5.648),
     rotation: new Vector3(0, -1.088 + Math.PI, 0),
   },
   {
@@ -408,6 +420,10 @@ export const BCTENT_2_2050: TBlockingInfos[] = [
 export const BCTENT_3_2050: TBlockingInfos[] = [
   {
     position: new Vector3(-16.077, -0.216, -33.902),
+    rotation: new Vector3(0, -0.24, 0),
+  },
+  {
+    position: new Vector3(-12.728, -0.3, -1.809),
     rotation: new Vector3(0, -0.24, 0),
   },
   {
