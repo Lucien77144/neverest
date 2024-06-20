@@ -459,6 +459,26 @@
         "source": "/models/BaseCamp/Mountains/mountainRS_1953.glb"
       },
       {
+        "name": "BCFloor_1953",
+        "source": "/models/BaseCamp/1953/Sol_1953.glb"
+      },
+      {
+        "name": "BCFloor_2024",
+        "source": "/models/BaseCamp/2024/Sol_2024.glb"
+      },
+      {
+        "name": "BCRiver_2024",
+        "source": "/models/BaseCamp/2024/Riviere_2024.glb"
+      },
+      {
+        "name": "BCFloor_2050",
+        "source": "/models/BaseCamp/2050/Sol_2050.glb"
+      },
+      {
+        "name": "BCRiver_2050",
+        "source": "/models/BaseCamp/2050/Riviere_2050.glb"
+      },
+      {
         "name": "BCFlag",
         "source": "/models/BaseCamp/1953/flag_1953.glb"
       },

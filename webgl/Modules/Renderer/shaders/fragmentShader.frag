@@ -136,7 +136,6 @@ void main() {
     // vec4 ambiantScene0 = getMountainAmbiant();
 
     vec4 scene0BW = vec4(applyBlackAndWhite(scene0.rgb), 1.);
-    float sceneMask = smoothstep(.8, 1., (1. - scene0BW.r) * 5.);
 
     // -------------------- //
     //        Focus         //
@@ -150,27 +149,24 @@ void main() {
 
     float bwTime = (cos(uTime * .001) + uTime * .5) * -.001;
     vec2 bwUv = vec2(focUV.x * cos(bwTime) - focUV.y * sin(bwTime), focUV.x * sin(bwTime) + focUV.y * cos(bwTime));
-    float bwNoise = smoothstep(0., 1., cnoise(focUV * 4. + bwTime)) * .6;
+    float bwNoise = smoothstep(0., 1., cnoise(focUV * 4. + bwTime)) * .75;
 
     scene0BW = mix(vec4(0.), scene0BW, (1. - bwNoise));
     scene0BW.a = bwNoise;
     scene0.rgb = mix(scene0.rgb, scene0BW.rgb, uFocProgress * .5);
-    
-    // float sceneMask = scene0.r * length(focUV);
-    // float circle = sceneMask;
 
     focUV += (.5 + focTime * .5);
     
     // float focVal = 1. - smoothstep(circle, 0.0, uFocProgress);
     // float focVal2 = 1. - smoothstep(circle, 0.0, uFocProgress - .35);
     
-    float focVal = 1. - smoothstep(circle, 0.0, 1. - uFocProgress - sceneMask);
-    float focVal2 = 1. - smoothstep(circle, 0.0, 1. - uFocProgress + .35 - (sceneMask * .5));
+    float focVal = 1. - smoothstep(circle, 0.0, 1. - uFocProgress);
+    float focVal2 = 1. - smoothstep(circle, 0.0, 1. - uFocProgress + .75);
 
     vec3 sceneRGB = scene0.rgb; 
     vec3 coveredScene = mix(sceneRGB, uFocTransitionColor, uFocProgress);
     scene0.rgb = mix(sceneRGB, coveredScene, focVal * uFocProgress);
-    scene0.rgb = mix(scene0.rgb, mix(sceneRGB, coveredScene, .5), focVal2 * uFocProgress);
+    scene0.rgb = mix(scene0.rgb, mix(sceneRGB, coveredScene, .6), focVal2 * uFocProgress);
 
     // scene0.rgb = mix(sceneRGB, coveredScene, focVal * uFocProgress);
     // scene0.rgb = mix(scene0.rgb, mix(sceneRGB, coveredScene, .35), uFocProgress);
@@ -187,17 +183,6 @@ void main() {
     // -------------------- //
     //     Transition       //
     // -------------------- //
-    float inverseuTransi = -uTransition + 1.;
-    float cloudSizeMultiplicator = pow((inverseuTransi-0.5) * 2., 8.) * -.35 + .35;
-    vec4 transiWithColor = vec4(step(inverseuTransi,uv.y),step(uv.y,inverseuTransi),0.0,1.0);
-
-    //vec4 test = vec4(step(uTransition,uv.y)*topImage.x+step(uv.y,uTransition)*bottomImage.x,step(uTransition,uv.y)*topImage.y+step(uv.y,uTransition)*bottomImage.y,step(uTransition,uv.y)*topImage.z+step(uv.y,uTransition)*bottomImage.z,1.0);
-    vec4 cloud = step(cnoise(uv*30.0),0.1) * vec4(0.81,0.87,0.96,1.0) + step(0.1,cnoise(uv*30.0)) * vec4(1.0);
-    frag = scene0 * step(uv.y,inverseuTransi) + step(inverseuTransi,uv.y) * scene1;
-
-    float isInCloudBand = max(sign(uv.y-(inverseuTransi-(cloudSizeMultiplicator+sin(uv.x*40.0)*cloudSizeMultiplicator*0.05))),0.0) * max(sign((inverseuTransi+cloudSizeMultiplicator+sin(uv.x*40.0)*cloudSizeMultiplicator*0.05)-uv.y),0.0);
-    frag *= (-isInCloudBand+1.0);
-    frag += isInCloudBand * cloud;
 
     // Obtenir la couleur de la texture à la nouvelle position UV
     vec4 scene0Texture = texture2D(uScene0, zoomedUv);
@@ -226,6 +211,6 @@ void main() {
     gl_FragColor = frag;
     // gl_FragColor = getMountainAmbiant();
    
+    #include <tonemapping_fragment> // To fix tonemapping problems when using render targets (only if tone mapping is enabled)
     #include <colorspace_fragment> // To fix colors problems when using render targets
-    // #include <tonemapping_fragment> // To fix tonemapping problems when using render targets (only if tone mapping is enabled)
 }
