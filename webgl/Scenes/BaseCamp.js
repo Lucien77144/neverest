@@ -1,51 +1,13 @@
 import { Vector3 } from 'three'
 import gsap from 'gsap'
-import BCAntenne_2024 from '../Components/BaseCamp/BCAntenne_2024/BCAntenne_2024'
-import BCCailloux from '../Components/BaseCamp/BCCailloux/BCCailloux'
-import BCFlag from '../Components/BaseCamp/BCFlag/BCFlag'
-import BCMountainLS_1953 from '../Components/BaseCamp/BCMountainLS_1953/BCMountainLS_1953'
-import BCMountainLS_2024 from '../Components/BaseCamp/BCMountainLS_2024/BCMountainLS_2024'
-import BCMountainLS_2050 from '../Components/BaseCamp/BCMountainLS_2050/BCMountainLS_2050'
-import BCMountainL_1953 from '../Components/BaseCamp/BCMountainL_1953/BCMountainL_1953'
-import BCMountainL_2024 from '../Components/BaseCamp/BCMountainL_2024/BCMountainL_2024'
-import BCMountainL_2050 from '../Components/BaseCamp/BCMountainL_2050/BCMountainL_2050'
-import BCMountainRS_1953 from '../Components/BaseCamp/BCMountainRS_1953/BCMountainRS_1953'
-import BCMountainRS_2024 from '../Components/BaseCamp/BCMountainRS_2024/BCMountainRS_2024'
-import BCMountainRS_2050 from '../Components/BaseCamp/BCMountainRS_2050/BCMountainRS_2050'
-import BCMountainR_1953 from '../Components/BaseCamp/BCMountainR_1953/BCMountainR_1953'
-import BCMountainR_2024 from '../Components/BaseCamp/BCMountainR_2024/BCMountainR_2024'
-import BCMountainR_2050 from '../Components/BaseCamp/BCMountainR_2050/BCMountainR_2050'
-import BCMountain_1953 from '../Components/BaseCamp/BCMountain_1953/BCMountain_1953'
-import BCMountain_2024 from '../Components/BaseCamp/BCMountain_2024/BCMountain_2024'
-import BCMountain_2050 from '../Components/BaseCamp/BCMountain_2050/BCMountain_2050'
-import BCFloor_1953 from '../Components/BaseCamp/BCFloor_1953/BCFloor_1953'
-import BCFloor_2024 from '../Components/BaseCamp/BCFloor_2024/BCFloor_2024'
-import BCFloor_2050 from '../Components/BaseCamp/BCFloor_2050/BCFloor_2050'
-import BCRiver_2024 from '../Components/BaseCamp/BCRiver_2024/BCRiver_2024'
-import BCRiver_2050 from '../Components/BaseCamp/BCRiver_2050/BCRiver_2050'
-import BCSmallBox_1953 from '../Components/BaseCamp/BCSmallBox_1953/BCSmallBox_1953'
-import BCSmallBox_2024 from '../Components/BaseCamp/BCSmallBox_2024/BCSmallBox_2024'
-import BCMediumBox_1953 from '../Components/BaseCamp/BCMediumBox_1953/BCMediumBox_1953'
-import BCMediumBox_2024 from '../Components/BaseCamp/BCMediumBox_2024/BCMediumBox_2024'
-import BCBigBox_1953 from '../Components/BaseCamp/BCBigBox_1953/BCBigBox_1953'
-import BCBigBox_2024 from '../Components/BaseCamp/BCBigBox_2024/BCBigBox_2024'
-import BCBigBox_2050 from '../Components/BaseCamp/BCBigBox_2050/BCBigBox_2050'
-import BCTent_1_1953 from '../Components/BaseCamp/BCTent_1_1953/BCTent_1_1953'
-import BCTent_1_2024 from '../Components/BaseCamp/BCTent_1_2024/BCTent_1_2024'
-import BCTent_1_2050 from '../Components/BaseCamp/BCTent_1_2050/BCTent_1_2050'
-import BCTent_2_1953 from '../Components/BaseCamp/BCTent_2_1953/BCTent_2_1953'
-import BCTent_2_2024 from '../Components/BaseCamp/BCTent_2_2024/BCTent_2_2024'
-import BCTent_2_2050 from '../Components/BaseCamp/BCTent_2_2050/BCTent_2_2050'
-import BCTent_3_1953 from '../Components/BaseCamp/BCTent_3_1953/BCTent_3_1953'
-import BCTent_3_2024 from '../Components/BaseCamp/BCTent_3_2024/BCTent_3_2024'
-import BCTent_3_2050 from '../Components/BaseCamp/BCTent_3_2050/BCTent_3_2050'
-import BCTent_Main_2050 from '../Components/BaseCamp/BCTent_Main_2050/BCTent_Main_2050'
 import BaseCampCamera from '../Components/BaseCamp/BaseCampCamera/BaseCampCamera'
 import BasicScene from '../Modules/Basics/BasicScene'
 
-import { ModalBC1953, ModalBC2024, ModalBC2050 } from '#components'
 import BaseCampLight from '../Components/BaseCamp/BaseCampLight/BaseCampLight'
 import FloorAnimation from '../Components/BaseCamp/FloorParticles/FloorAnimation'
+import BaseCamp1953 from '../Components/BaseCamp/BaseCamp1953/BaseCamp1953'
+import BaseCamp2024 from '../Components/BaseCamp/BaseCamp2024/BaseCamp2024'
+import BaseCamp2050 from '../Components/BaseCamp/BaseCamp2050/BaseCamp2050'
 
 export default class BaseCamp extends BasicScene {
   /**
@@ -81,222 +43,9 @@ export default class BaseCamp extends BasicScene {
       lights: new BaseCampLight(),
 
       // floorAnimation: new FloorAnimation(),
-
-      // BOX
-      BCSmallBox_1953: new BCSmallBox_1953({
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [0, 25.87],
-      }),
-      BCMediumBox_1953: new BCMediumBox_1953({
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [0, 25.87],
-      }),
-      BCBigBox_1953: new BCBigBox_1953({
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [0, 25.87],
-      }),
-      BCSmallBox_2024: new BCSmallBox_2024({
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [25.87, 75.97],
-      }),
-      BCMediumBox_2024: new BCMediumBox_2024({
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [25.87, 75.97],
-      }),
-      BCBigBox_2024: new BCBigBox_2024({
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [25.87, 75.97],
-      }),
-      BCBigBox_2050: new BCBigBox_2050({
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [75.97, 100],
-      }),
-
-      // TENT
-
-      BCTent_1_1953: new BCTent_1_1953({
-        position: new Vector3(0.328, 0, -35.809),
-        rotation: new Vector3(0, -0.5 + Math.PI / 2, 0),
-        visibility: [0, 25.87],
-        modal: ModalBC1953,
-      }),
-      BCTent_2_1953: new BCTent_2_1953({
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [0, 25.87],
-      }),
-      BCTent_3_1953: new BCTent_3_1953({
-        position: new Vector3(-9.319, 0, -38.493),
-        rotation: new Vector3(0, 0.2 + Math.PI / 2, 0),
-        visibility: [0, 25.87],
-      }),
-      BCTent_1_2024: new BCTent_1_2024({
-        position: new Vector3(0.328, 0, -35.809),
-        rotation: new Vector3(0, -0.5 + Math.PI / 2, 0),
-        visibility: [25.87, 75.97],
-        modal: ModalBC2024,
-      }),
-      BCTent_2_2024: new BCTent_2_2024({
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [25.87, 75.97],
-      }),
-      BCTent_3_2024: new BCTent_3_2024({
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [25.87, 75.97],
-      }),
-      BCTent_Main_2050: new BCTent_Main_2050({
-        position: new Vector3(0.328, 0, -35.809),
-        rotation: new Vector3(0, -0.5 + Math.PI / 2, 0),
-        visibility: [75.97, 100],
-        modal: ModalBC2050,
-      }),
-      BCTent_1_2050: new BCTent_1_2050({
-        position: new Vector3(0.328, 0, -35.809),
-        rotation: new Vector3(0, -0.3, 0),
-        visibility: [75.97, 100],
-      }),
-      BCTent_2_2050: new BCTent_2_2050({
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [75.97, 100],
-      }),
-      BCTent_3_2050: new BCTent_3_2050({
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [75.97, 100],
-      }),
-
-      // MOUNTAINS
-
-      BCMountain_1953: new BCMountain_1953({
-        position: new Vector3(0.192, 2, -200.766),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [0, 25.87],
-      }),
-      BCMountainL_1953: new BCMountainL_1953({
-        position: new Vector3(-61.506, 0, -140.15),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [0, 25.87],
-      }),
-      BCMountainLS_1953: new BCMountainLS_1953({
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [0, 25.87],
-      }),
-      BCMountainR_1953: new BCMountainR_1953({
-        position: new Vector3(40.752, 0, -162.061),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [0, 25.87],
-      }),
-      BCMountainRS_1953: new BCMountainRS_1953({
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [0, 25.87],
-      }),
-      BCMountain_2024: new BCMountain_2024({
-        position: new Vector3(0.192, 2, -200.766),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [25.87, 75.97],
-      }),
-      BCMountainL_2024: new BCMountainL_2024({
-        position: new Vector3(-61.506, 0, -140.15),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [25.87, 75.97],
-      }),
-      BCMountainLS_2024: new BCMountainLS_2024({
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [25.87, 75.97],
-      }),
-      BCMountainR_2024: new BCMountainR_2024({
-        position: new Vector3(40.752, 0, -162.061),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [25.87, 75.97],
-      }),
-      BCMountainRS_2024: new BCMountainRS_2024({
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [25.87, 75.97],
-      }),
-      BCMountain_2050: new BCMountain_2050({
-        position: new Vector3(0.192, 2, -200.766),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [75.97, 100],
-      }),
-      BCMountainL_2050: new BCMountainL_2050({
-        position: new Vector3(-61.506, 0, -140.15),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [75.97, 100],
-      }),
-      BCMountainLS_2050: new BCMountainLS_2050({
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [75.97, 100],
-      }),
-      BCMountainR_2050: new BCMountainR_2050({
-        position: new Vector3(40.752, 0, -162.061),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [75.97, 100],
-      }),
-      BCMountainRS_2050: new BCMountainRS_2050({
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [75.97, 100],
-      }),
-
-      // FLOOR
-      BCFloor_1953: new BCFloor_1953({
-        position: new Vector3(0.9, 0, -49.1),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [0, 25.87],
-      }),
-      BCFloor_2024: new BCFloor_2024({
-        position: new Vector3(0.9, 0, -49.1),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [25.87, 75.97],
-      }),
-      BCRiver_2024: new BCRiver_2024({
-        position: new Vector3(-6.8, 0, -64),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [25.87, 75.97],
-      }),
-      BCFloor_2050: new BCFloor_2050({
-        position: new Vector3(0.9, 0, -49.1),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [75.97, 100],
-      }),
-      BCRiver_2050: new BCRiver_2050({
-        position: new Vector3(-7.8, 0, -66),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [75.97, 100],
-      }),
-
-      // SINGLE ITEMS
-
-      BCFlag: new BCFlag({
-        position: new Vector3(6.2, 0.251, -18.331),
-        rotation: new Vector3(0.005, 0.291, -0.289),
-        visibility: [0, 25.87],
-      }),
-      BCAntenne_2024: new BCAntenne_2024({
-        position: new Vector3(6.52, -0.2, -25.785),
-        rotation: new Vector3(0.0, 0, 0),
-        visibility: [25.87, 75.97],
-      }),
-      BCCailloux: new BCCailloux({
-        position: new Vector3(-9.567, 0, -32.582),
-        rotation: new Vector3(0, 0.262, 0),
-        visibility: [0, 25.87],
-      }),
+      baseCamp1953: new BaseCamp1953({ visibility: [0, 25.87] }),
+      baseCamp2024: new BaseCamp2024({ visibility: [25.87, 75.97] }),
+      baseCamp2050: new BaseCamp2050({ visibility: [75.97, 100] }),
     }
 
     // Init the scene
@@ -360,8 +109,6 @@ export default class BaseCamp extends BasicScene {
     const scroll = force ?? this.scrollManager.current
     const start = c.visibility[0]
     const end = c.visibility[1]
-
-    // console.log(c.item);
 
     // If current scroll is between visibility values
     if (start <= scroll && scroll <= end) {
