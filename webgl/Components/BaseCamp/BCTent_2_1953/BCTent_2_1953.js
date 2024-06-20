@@ -37,7 +37,6 @@ export default class BCTent_2_1953 extends BasicItem {
     const dummy = new Object3D()
 
     const instance = this.resources.BCTent_2_1953.scene.children[0].clone()
-    //console.log(instance.geometry)
     instance.geometry.computeVertexNormals()
     const material = new ShaderMaterial({
       uniforms: {

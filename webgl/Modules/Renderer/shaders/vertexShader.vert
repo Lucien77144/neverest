@@ -28,7 +28,7 @@ float noise (in vec2 st) {
 void main() {
     vUv = uv;
     vUvNoise = vUv;
-    vUvNoise.y += random(vUv + round(uTime * .002)) * .002;
+    // vUvNoise.y += random(vUv + round(uTime * .002)) * .002;
 
     vec3 pos = position;
     gl_Position = vec4( pos, 1.0 );

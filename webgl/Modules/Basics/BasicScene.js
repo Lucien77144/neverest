@@ -144,11 +144,11 @@ export default class BasicScene {
    */
   onMouseDownEvt({ centered }) {
     // Clicked item
-    const clicked = this.getRaycastedItem(centered, ['onClick'])
+    const clicked = this.getRaycastedItem(centered, ['onClick'])?.item
     this.triggerFn(clicked, 'onClick')
 
     // Holded item
-    this.holded = this.getRaycastedItem(centered, ['onHold'])
+    this.holded = this.getRaycastedItem(centered, ['onHold'])?.item
     this.holded && this.handleHold()
   }
 
@@ -163,16 +163,18 @@ export default class BasicScene {
    * Raycast on mouse move
    */
   onMouseMoveEvt({ centered }) {
-    // Trigger mouse move on all components
-    Object.values(this.allComponents).forEach((c) =>
-      this.triggerFn(c, 'onMouseMove', centered)
-    )
-
     // Get hovered item
     const hovered = this.getRaycastedItem(centered, [
       'onMouseEnter',
       'onMouseLeave',
-    ])
+    ])?.item
+
+    // On mouse move event
+    const mouseMove = this.getRaycastedItem(centered, ['onMouseMove'])
+    this.triggerFn(mouseMove?.item, 'onMouseMove', {
+      centered,
+      target: mouseMove?.target,
+    })
 
     // If mouse leave the hovered item, refresh the hovered item
     if (this.hovered?.item?.id !== hovered?.item?.id) {
@@ -181,7 +183,7 @@ export default class BasicScene {
       this.triggerFn(this.hovered, 'onMouseEnter')
     }
     // Get holded item hovered
-    const holded = this.getRaycastedItem(centered, ['onHold'])
+    const holded = this.getRaycastedItem(centered, ['onHold'])?.item
     // If user leave the hold item, reset the holded item
     if (this.holded?.item?.id !== holded?.item?.id) {
       this.resetHolded()
@@ -256,7 +258,7 @@ export default class BasicScene {
    * Get raycasted item
    * @param {*} centered Coordinates of the cursor
    * @param {*} fn Check available functions in the item
-   * @returns Item triggered
+   * @returns Item triggered and target infos
    */
   getRaycastedItem(centered, fn = []) {
     if (!this.raycaster) return
@@ -290,7 +292,8 @@ export default class BasicScene {
       return ids.includes(target?.object?.id) && isSet
     })
 
-    return match[match.length - 1]
+    const item = match[match.length - 1]
+    return item && { item, target }
   }
 
   /**
@@ -324,7 +327,7 @@ export default class BasicScene {
   getRecursiveComponents(components = this.components) {
     const res = {}
 
-    const flatComponents = (c) => {
+    const flatComponents = (c, parent) => {
       Object.keys(c).forEach((key) => {
         const value = c[key]
 
@@ -342,11 +345,14 @@ export default class BasicScene {
         }
 
         value.parentScene = this
+        if (parent) {
+          value.parentComponent = parent
+        }
 
         res[key] = value
         value.init?.()
 
-        value?.components && flatComponents(value.components)
+        value?.components && flatComponents(value.components, value)
       })
     }
     flatComponents(components)
