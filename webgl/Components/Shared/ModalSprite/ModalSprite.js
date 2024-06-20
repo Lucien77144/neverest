@@ -9,7 +9,7 @@ export default class ModalSprite extends BasicItem {
   /**
    * Constructor
    */
-  constructor({ position, data }) {
+  constructor({ visibility, position, data }) {
     super()
     // Elements
     this.scrollManager = this.experience.scrollManager
@@ -17,6 +17,7 @@ export default class ModalSprite extends BasicItem {
     this.resources = this.experience.resources.items
     this.renderUniforms = this.experience.renderer.renderMesh.material.uniforms
     this.$bus = this.experience.$bus
+    this.visibility = visibility
     this.position = position
     this.data = data
 
@@ -27,6 +28,11 @@ export default class ModalSprite extends BasicItem {
     this.active = false
     this.scale = 1.3
     this.scaleFocus = 0
+
+    // Events
+    this.scrollManager.on('scroll', ({ current }) =>
+      this.setComponentVis(this.visibility, current)
+    )
   }
 
   /**
@@ -34,7 +40,7 @@ export default class ModalSprite extends BasicItem {
    */
   setMaterial() {
     this.material = new SpriteMaterial({
-      map: this.resources.circle,
+      map: this.resources.circle.clone(),
     })
   }
 
@@ -46,7 +52,32 @@ export default class ModalSprite extends BasicItem {
     this.item.position.copy(this.position)
   }
 
+  /**
+   * Set the visibility of the components if visibility range set
+   * @param {object} c Webgl component
+   * @param {number} force Force the visibility check to this value
+   */
+  setComponentVis(visibility, force) {
+    if (!visibility?.length) return
+
+    const scroll = force ?? this.scrollManager.current
+    const start = visibility[0]
+    const end = visibility[1]
+
+    // If current scroll is between visibility values
+    if (start <= scroll && scroll <= end) {
+      if (!this.item.visible) {
+        this.item.visible = true
+      }
+    } else {
+      if (this.item.visible) {
+        this.item.visible = false
+      }
+    }
+  }
+
   onMouseEnter() {
+    if (!this.item.visible) return
     // const scale = { value: 0 }
     // gsap.to(scale, {
     //   value: 0.3,
@@ -61,6 +92,7 @@ export default class ModalSprite extends BasicItem {
   }
 
   onMouseLeave() {
+    if (!this.item.visible) return
     // const scale = { value: this.scaleFocus }
     // gsap.to(scale, {
     //   value: 0,
@@ -141,6 +173,7 @@ export default class ModalSprite extends BasicItem {
    * On click item
    */
   onClick() {
+    if (!this.item.visible) return
     this.openModal(true)
   }
 
@@ -148,6 +181,12 @@ export default class ModalSprite extends BasicItem {
    * Update
    */
   update() {
+    if (!this.item.visible) {
+      this.item.scale.set(0, 0, 0)
+    }
+
+    if (!this.item.visible) return
+
     // update the sprite scale
     const target = new Vector3()
     const camTarget = new Vector3()

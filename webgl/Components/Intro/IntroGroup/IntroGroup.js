@@ -19,7 +19,8 @@ export default class IntroGroup extends BasicItem {
    */
   setCameraPos() {
 
-    this.parentScene.camera.instance.position.z=5
+    //this.parentScene.camera.instance.position.y=5
+    //this.parentScene.camera.instance.lookAt(new Vector3(0,0,0))
 
   }
 

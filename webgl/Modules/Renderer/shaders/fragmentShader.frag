@@ -183,17 +183,6 @@ void main() {
     // -------------------- //
     //     Transition       //
     // -------------------- //
-    float inverseuTransi = -uTransition + 1.;
-    float cloudSizeMultiplicator = pow((inverseuTransi-0.5) * 2., 8.) * -.35 + .35;
-    vec4 transiWithColor = vec4(step(inverseuTransi,uv.y),step(uv.y,inverseuTransi),0.0,1.0);
-
-    //vec4 test = vec4(step(uTransition,uv.y)*topImage.x+step(uv.y,uTransition)*bottomImage.x,step(uTransition,uv.y)*topImage.y+step(uv.y,uTransition)*bottomImage.y,step(uTransition,uv.y)*topImage.z+step(uv.y,uTransition)*bottomImage.z,1.0);
-    vec4 cloud = step(cnoise(uv*30.0),0.1) * vec4(0.81,0.87,0.96,1.0) + step(0.1,cnoise(uv*30.0)) * vec4(1.0);
-    frag = scene0 * step(uv.y,inverseuTransi) + step(inverseuTransi,uv.y) * scene1;
-
-    float isInCloudBand = max(sign(uv.y-(inverseuTransi-(cloudSizeMultiplicator+sin(uv.x*40.0)*cloudSizeMultiplicator*0.05))),0.0) * max(sign((inverseuTransi+cloudSizeMultiplicator+sin(uv.x*40.0)*cloudSizeMultiplicator*0.05)-uv.y),0.0);
-    frag *= (-isInCloudBand+1.0);
-    frag += isInCloudBand * cloud;
 
     // Obtenir la couleur de la texture à la nouvelle position UV
     vec4 scene0Texture = texture2D(uScene0, zoomedUv);

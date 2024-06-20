@@ -1,45 +1,49 @@
 import { Vector3 } from 'three'
-import BaseCampCamera from '../Components/BaseCamp/BaseCampCamera/BaseCampCamera'
-import BasicScene from '../Modules/Basics/BasicScene'
-import Floor from '../Components/BaseCamp/Floor/Floor'
 import gsap from 'gsap'
+import BCAntenne_2024 from '../Components/BaseCamp/BCAntenne_2024/BCAntenne_2024'
+import BCCailloux from '../Components/BaseCamp/BCCailloux/BCCailloux'
+import BCFlag from '../Components/BaseCamp/BCFlag/BCFlag'
+import BCMountainLS_1953 from '../Components/BaseCamp/BCMountainLS_1953/BCMountainLS_1953'
+import BCMountainLS_2024 from '../Components/BaseCamp/BCMountainLS_2024/BCMountainLS_2024'
+import BCMountainLS_2050 from '../Components/BaseCamp/BCMountainLS_2050/BCMountainLS_2050'
+import BCMountainL_1953 from '../Components/BaseCamp/BCMountainL_1953/BCMountainL_1953'
+import BCMountainL_2024 from '../Components/BaseCamp/BCMountainL_2024/BCMountainL_2024'
+import BCMountainL_2050 from '../Components/BaseCamp/BCMountainL_2050/BCMountainL_2050'
+import BCMountainRS_1953 from '../Components/BaseCamp/BCMountainRS_1953/BCMountainRS_1953'
+import BCMountainRS_2024 from '../Components/BaseCamp/BCMountainRS_2024/BCMountainRS_2024'
+import BCMountainRS_2050 from '../Components/BaseCamp/BCMountainRS_2050/BCMountainRS_2050'
+import BCMountainR_1953 from '../Components/BaseCamp/BCMountainR_1953/BCMountainR_1953'
+import BCMountainR_2024 from '../Components/BaseCamp/BCMountainR_2024/BCMountainR_2024'
+import BCMountainR_2050 from '../Components/BaseCamp/BCMountainR_2050/BCMountainR_2050'
+import BCMountain_1953 from '../Components/BaseCamp/BCMountain_1953/BCMountain_1953'
+import BCMountain_2024 from '../Components/BaseCamp/BCMountain_2024/BCMountain_2024'
+import BCMountain_2050 from '../Components/BaseCamp/BCMountain_2050/BCMountain_2050'
+import BCFloor_1953 from '../Components/BaseCamp/BCFloor_1953/BCFloor_1953'
+import BCFloor_2024 from '../Components/BaseCamp/BCFloor_2024/BCFloor_2024'
+import BCFloor_2050 from '../Components/BaseCamp/BCFloor_2050/BCFloor_2050'
+import BCRiver_2024 from '../Components/BaseCamp/BCRiver_2024/BCRiver_2024'
+import BCRiver_2050 from '../Components/BaseCamp/BCRiver_2050/BCRiver_2050'
 import BCSmallBox_1953 from '../Components/BaseCamp/BCSmallBox_1953/BCSmallBox_1953'
-import BCMediumBox_1953 from '../Components/BaseCamp/BCMediumBox_1953/BCMediumBox_1953'
-import BCBigBox_1953 from '../Components/BaseCamp/BCBigBox_1953/BCBigBox_1953'
 import BCSmallBox_2024 from '../Components/BaseCamp/BCSmallBox_2024/BCSmallBox_2024'
+import BCMediumBox_1953 from '../Components/BaseCamp/BCMediumBox_1953/BCMediumBox_1953'
 import BCMediumBox_2024 from '../Components/BaseCamp/BCMediumBox_2024/BCMediumBox_2024'
+import BCBigBox_1953 from '../Components/BaseCamp/BCBigBox_1953/BCBigBox_1953'
 import BCBigBox_2024 from '../Components/BaseCamp/BCBigBox_2024/BCBigBox_2024'
 import BCBigBox_2050 from '../Components/BaseCamp/BCBigBox_2050/BCBigBox_2050'
 import BCTent_1_1953 from '../Components/BaseCamp/BCTent_1_1953/BCTent_1_1953'
-import BCTent_2_1953 from '../Components/BaseCamp/BCTent_2_1953/BCTent_2_1953'
-import BCTent_3_1953 from '../Components/BaseCamp/BCTent_3_1953/BCTent_3_1953'
 import BCTent_1_2024 from '../Components/BaseCamp/BCTent_1_2024/BCTent_1_2024'
-import BCTent_2_2024 from '../Components/BaseCamp/BCTent_2_2024/BCTent_2_2024'
-import BCTent_3_2024 from '../Components/BaseCamp/BCTent_3_2024/BCTent_3_2024'
-import BCTent_Main_2050 from '../Components/BaseCamp/BCTent_Main_2050/BCTent_Main_2050'
 import BCTent_1_2050 from '../Components/BaseCamp/BCTent_1_2050/BCTent_1_2050'
+import BCTent_2_1953 from '../Components/BaseCamp/BCTent_2_1953/BCTent_2_1953'
+import BCTent_2_2024 from '../Components/BaseCamp/BCTent_2_2024/BCTent_2_2024'
 import BCTent_2_2050 from '../Components/BaseCamp/BCTent_2_2050/BCTent_2_2050'
+import BCTent_3_1953 from '../Components/BaseCamp/BCTent_3_1953/BCTent_3_1953'
+import BCTent_3_2024 from '../Components/BaseCamp/BCTent_3_2024/BCTent_3_2024'
 import BCTent_3_2050 from '../Components/BaseCamp/BCTent_3_2050/BCTent_3_2050'
-import BCMountain_1953 from '../Components/BaseCamp/BCMountain_1953/BCMountain_1953'
-import BCMountainL_1953 from '../Components/BaseCamp/BCMountainL_1953/BCMountainL_1953'
-import BCMountainLS_1953 from '../Components/BaseCamp/BCMountainLS_1953/BCMountainLS_1953'
-import BCMountainR_1953 from '../Components/BaseCamp/BCMountainR_1953/BCMountainR_1953'
-import BCMountainRS_1953 from '../Components/BaseCamp/BCMountainRS_1953/BCMountainRS_1953'
-import BCMountain_2024 from '../Components/BaseCamp/BCMountain_2024/BCMountain_2024'
-import BCMountainL_2024 from '../Components/BaseCamp/BCMountainL_2024/BCMountainL_2024'
-import BCMountainLS_2024 from '../Components/BaseCamp/BCMountainLS_2024/BCMountainLS_2024'
-import BCMountainR_2024 from '../Components/BaseCamp/BCMountainR_2024/BCMountainR_2024'
-import BCMountainRS_2024 from '../Components/BaseCamp/BCMountainRS_2024/BCMountainRS_2024'
-import BCMountain_2050 from '../Components/BaseCamp/BCMountain_2050/BCMountain_2050'
-import BCMountainL_2050 from '../Components/BaseCamp/BCMountainL_2050/BCMountainL_2050'
-import BCMountainLS_2050 from '../Components/BaseCamp/BCMountainLS_2050/BCMountainLS_2050'
-import BCMountainR_2050 from '../Components/BaseCamp/BCMountainR_2050/BCMountainR_2050'
-import BCMountainRS_2050 from '../Components/BaseCamp/BCMountainRS_2050/BCMountainRS_2050'
-import BCFlag from '../Components/BaseCamp/BCFlag/BCFlag'
-import BCCailloux from '../Components/BaseCamp/BCCailloux/BCCailloux'
-import BCAntenne_2024 from '../Components/BaseCamp/BCAntenne_2024/BCAntenne_2024'
+import BCTent_Main_2050 from '../Components/BaseCamp/BCTent_Main_2050/BCTent_Main_2050'
+import BaseCampCamera from '../Components/BaseCamp/BaseCampCamera/BaseCampCamera'
+import BasicScene from '../Modules/Basics/BasicScene'
 
-import { ModalBC1953 } from '#components'
+import { ModalBC1953, ModalBC2024, ModalBC2050 } from '#components'
 import BaseCampLight from '../Components/BaseCamp/BaseCampLight/BaseCampLight'
 import FloorAnimation from '../Components/BaseCamp/FloorParticles/FloorAnimation'
 
@@ -74,11 +78,10 @@ export default class BaseCamp extends BasicScene {
 
     // Components
     this.components = {
-      floor: new Floor(),
       lights: new BaseCampLight(),
 
       // Particles
-      floorAnimation: new FloorAnimation(),
+      // floorAnimation: new FloorAnimation(),
 
       // BOX
       BCSmallBox_1953: new BCSmallBox_1953({
@@ -123,6 +126,7 @@ export default class BaseCamp extends BasicScene {
         position: new Vector3(0.328, 0, -35.809),
         rotation: new Vector3(0, -0.5 + Math.PI / 2, 0),
         visibility: [0, 25.87],
+        modal: ModalBC1953,
       }),
       BCTent_2_1953: new BCTent_2_1953({
         position: new Vector3(0, 0, 0),
@@ -138,6 +142,7 @@ export default class BaseCamp extends BasicScene {
         position: new Vector3(0.328, 0, -35.809),
         rotation: new Vector3(0, -0.5 + Math.PI / 2, 0),
         visibility: [25.87, 75.97],
+        modal: ModalBC2024,
       }),
       BCTent_2_2024: new BCTent_2_2024({
         position: new Vector3(0, 0, 0),
@@ -153,6 +158,7 @@ export default class BaseCamp extends BasicScene {
         position: new Vector3(0.328, 0, -35.809),
         rotation: new Vector3(0, -0.5 + Math.PI / 2, 0),
         visibility: [75.97, 100],
+        modal: ModalBC2050,
       }),
       BCTent_1_2050: new BCTent_1_2050({
         position: new Vector3(0.328, 0, -35.809),
@@ -248,19 +254,44 @@ export default class BaseCamp extends BasicScene {
         visibility: [75.97, 100],
       }),
 
+      // FLOOR
+      BCFloor_1953: new BCFloor_1953({
+        position: new Vector3(0.9, 0, -49.1),
+        rotation: new Vector3(0, 0, 0),
+        visibility: [0, 25.87],
+      }),
+      BCFloor_2024: new BCFloor_2024({
+        position: new Vector3(0.9, 0, -49.1),
+        rotation: new Vector3(0, 0, 0),
+        visibility: [25.87, 75.97],
+      }),
+      BCRiver_2024: new BCRiver_2024({
+        position: new Vector3(-6.8, 0, -64),
+        rotation: new Vector3(0, 0, 0),
+        visibility: [25.87, 75.97],
+      }),
+      BCFloor_2050: new BCFloor_2050({
+        position: new Vector3(0.9, 0, -49.1),
+        rotation: new Vector3(0, 0, 0),
+        visibility: [75.97, 100],
+      }),
+      BCRiver_2050: new BCRiver_2050({
+        position: new Vector3(-7.8, 0, -66),
+        rotation: new Vector3(0, 0, 0),
+        visibility: [75.97, 100],
+      }),
+
       // SINGLE ITEMS
 
       BCFlag: new BCFlag({
         position: new Vector3(6.2, 0.251, -18.331),
         rotation: new Vector3(0.005, 0.291, -0.289),
         visibility: [0, 25.87],
-        modal: ModalBC1953,
       }),
       BCAntenne_2024: new BCAntenne_2024({
         position: new Vector3(6.52, -0.2, -25.785),
         rotation: new Vector3(0.0, 0, 0),
         visibility: [25.87, 75.97],
-        modal: ModalBC1953,
       }),
       BCCailloux: new BCCailloux({
         position: new Vector3(-9.567, 0, -32.582),
@@ -300,7 +331,7 @@ export default class BaseCamp extends BasicScene {
   /**
    * Watch the current scroll progression
    * @param {*} value Scroll value
-   * @param {*} instant If the transtiion should be instant
+   * @param {*} instant If the transition should be instant
    */
   watchCurrentScroll(value, instant = false) {
     if (this.scrollManager.disabled) return
@@ -331,11 +362,15 @@ export default class BaseCamp extends BasicScene {
     const start = c.visibility[0]
     const end = c.visibility[1]
 
+    // console.log(c.item);
+
     // If current scroll is between visibility values
     if (start <= scroll && scroll <= end) {
-      c.item.visible = true
+      if (c.item.visible === false) {
+        c.item.visible = true
+      }
     } else {
-      if (c.item.visible) {
+      if (c.item.visible === true) {
         c.item.visible = false
       }
     }
@@ -411,7 +446,9 @@ export default class BaseCamp extends BasicScene {
 
     // Init the scene and components (basic scene)
     super.init()
-    Object.values(this.components).forEach((c) => this.setComponentVis(c, 0))
+    Object.values(this.components).forEach((c) => {
+      c.item.visible = true
+    })
   }
 
   /**

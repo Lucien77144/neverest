@@ -21,7 +21,7 @@ export default class PlaneTextureIntro extends BasicItem {
     }
 
     setGeometry(){
-        this.geometry = new PlaneGeometry(3.205,1.8)
+        this.geometry = new PlaneGeometry(8.191,4.6)
     }  
     
     setMaterial(){
