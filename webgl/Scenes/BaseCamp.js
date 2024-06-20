@@ -1,4 +1,4 @@
-import { MeshStandardMaterial, Vector3 } from 'three'
+import { Vector3 } from 'three'
 import gsap from 'gsap'
 import BCAntenne_2024 from '../Components/BaseCamp/BCAntenne_2024/BCAntenne_2024'
 import BCCailloux from '../Components/BaseCamp/BCCailloux/BCCailloux'
@@ -45,6 +45,7 @@ import BasicScene from '../Modules/Basics/BasicScene'
 
 import { ModalBC1953, ModalBC2024, ModalBC2050 } from '#components'
 import BaseCampLight from '../Components/BaseCamp/BaseCampLight/BaseCampLight'
+import FloorAnimation from '../Components/BaseCamp/FloorParticles/FloorAnimation'
 
 export default class BaseCamp extends BasicScene {
   /**
@@ -78,6 +79,9 @@ export default class BaseCamp extends BasicScene {
     // Components
     this.components = {
       lights: new BaseCampLight(),
+
+      // Particles
+      // floorAnimation: new FloorAnimation(),
 
       // BOX
       BCSmallBox_1953: new BCSmallBox_1953({

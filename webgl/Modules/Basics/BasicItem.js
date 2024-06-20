@@ -11,6 +11,7 @@ export default class BasicItem {
 
     // New elements
     this.parentScene = null // Parent scene of the item   /!/ - Null in the constructor - /!/
+    this.parentComponent = null // Parent component of the item if exists   /!/ - Null in the constructor - /!/
 
     // --------------------------------
     // Elements (to override in the child class)
@@ -133,6 +134,7 @@ export default class BasicItem {
     /**
      * If set, this function will be called on mouse down item
      * If false, the event will be ignored, even if parent is triggering it
+     * @return {Object} - Object with the centered coordinates and the target values
      */
     this.onMouseMove
 
