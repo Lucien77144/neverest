@@ -327,7 +327,19 @@ export default class BasicScene {
     const flatComponents = (c) => {
       Object.keys(c).forEach((key) => {
         const value = c[key]
-        if (!value) return console.warn(`Component ${key} is not defined`, c)
+
+        if (res[key]) {
+          const oldKey = key
+          const count = Object.keys(res).filter((r) => r.includes(key)).length
+          key = `${key}_${count}`
+
+          console.warn(
+            `Component name '${oldKey}' already exists, renamed to '${key}'`
+          )
+        }
+        if (!value) {
+          return console.warn(`Component ${key} is not defined`, c)
+        }
 
         value.parentScene = this
 

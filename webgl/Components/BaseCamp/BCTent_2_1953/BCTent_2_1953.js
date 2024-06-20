@@ -1,7 +1,10 @@
-import { InstancedMesh, MeshNormalMaterial, Object3D, ShaderMaterial } from 'three'
+import { InstancedMesh, Object3D, ShaderMaterial } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import { BCTENT_2_1953 } from '~/const/blocking/baseCamp.const'
 import { InstancedUniformsMesh } from 'three-instanced-uniforms-mesh'
+
+import vertexShader from './shaders/vertexShader.vert?raw'
+import fragmentShader from './shaders/fragmentShader.frag?raw'
 
 export default class BCTent_2_1953 extends BasicItem {
   /**
@@ -50,35 +53,8 @@ export default class BCTent_2_1953 extends BasicItem {
         0.0, 1.0, 0.0,
         -s, 0.0, c
     );
-  }
-  
-
-    void main() {
-      vUv = uv;
-      float ventTexture = texture2D(uVentTexture, uv).r;
-      vec4 modelNormal = modelMatrix * vec4(normal, 0.0);
-      vNormal = modelNormal.xyz;
-      vec3 nrml = normalize(modelNormal.xyz);
-      vec3 windDirection = normalize(vec3(1.0,0.0,0.0));
-      windDirection = rotationY(uRot) * windDirection;
-      float dotProduct = dot(nrml,windDirection);
-      dotProduct=-dotProduct;
-      dotProduct = pow(dotProduct,3.0);
-      vec4 modelPosition =  instanceMatrix * vec4(position, 1.0);
-      modelPosition.x+=dotProduct*sin(uTime)*0.3*ventTexture;
-      gl_Position = projectionMatrix * modelViewMatrix * modelPosition;
     }
-    `
-
-    // Fragment Shader
-    this.frag = `
-    uniform float uTime;
-    uniform sampler2D uTexture;
-    uniform sampler2D uVentTexture;
-    uniform float uRot;
-    varying vec2 vUv;
-    varying vec3 vNormal; 
-
+    
     float random(vec2 st) {
       return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
     }
@@ -95,28 +71,33 @@ export default class BCTent_2_1953 extends BasicItem {
            (c - a) * u.y * (1.0 - u.x) +
            (d - b) * u.x * u.y;
     }
+  
 
-    mat3 rotationY(float angle) {
-    float s = sin(angle);
-    float c = cos(angle);
-    return mat3(
-        c, 0.0, s,
-        0.0, 1.0, 0.0,
-        -s, 0.0, c
-    );
-  }
+    void main() {
+      vUv = uv;
+      float ventTexture = texture2D(uVentTexture, uv).r;
+      vec4 modelNormal = modelMatrix * vec4(normal, 0.0);
+      vec3 nrml = normalize(modelNormal.xyz);
+      vec3 windDirection = normalize(vec3(1.0,0.0,0.0));
+      windDirection = rotationY(uRot) * windDirection;
+      float dotProduct = dot(nrml,windDirection);
+      dotProduct=-dotProduct;
+      dotProduct = pow(dotProduct,3.0);
+      vec4 modelPosition =  instanceMatrix * vec4(position, 1.0);
+      modelPosition.x+=dotProduct*noise(uv+uTime*0.5)*0.5*ventTexture;
+      gl_Position = projectionMatrix * modelViewMatrix * modelPosition;
+    }
+    `
+
+    // Fragment Shader
+    this.frag = `
+    uniform sampler2D uTexture;
+    varying vec2 vUv;
+
 
     void main() {
       vec2 uv = vUv;
-      vec3 nrml = normalize(vNormal);
-      vec3 windDirection = normalize(vec3(1.0,0.0,0.0));
-      windDirection = rotationY(uRot) * windDirection;
-      //uv.x += noise(vUv + uTime * 0.1) * 0.1;
-      //uv.y += noise(vUv + uTime * 0.1) * 0.1;
       vec4 color = texture2D(uTexture, uv);
-      float dotProduct = dot(nrml,windDirection);
-      dotProduct=-dotProduct;
-      //color = vec4(vec3(dotProduct),1.0);
       gl_FragColor = color;
     }
     `;
@@ -133,10 +114,9 @@ export default class BCTent_2_1953 extends BasicItem {
         uVentTexture:{value:testVenttexture},
         uRot:{value:0.0}
       },
-      vertexShader: this.vert,
-      fragmentShader: this.frag,
+      vertexShader:this.vert,
+      fragmentShader:this.frag,
     })
-     
 
     this.item = new InstancedUniformsMesh(
       instance.geometry,
