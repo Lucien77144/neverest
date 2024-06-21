@@ -24,9 +24,6 @@ export default class PlaneTextureIntro extends BasicItem {
 
 
       this.texture = texture
-      this.texture.magFilter = NearestFilter;
-      this.texture.minFilter = LinearMipMapLinearFilter;
-      this.texture.encoding = SRGBColorSpace;
       this.zPos = zPos
       this.width = width
       this.height = height

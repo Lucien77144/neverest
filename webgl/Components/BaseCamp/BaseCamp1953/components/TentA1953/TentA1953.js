@@ -2,6 +2,9 @@ import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import { Vector3 } from 'three'
 import ModalSprite from '../../../../Shared/ModalSprite/ModalSprite'
 
+import vertexShader from '~/webgl/Components/Shared/WindyTenteShader/WindyTenteShader.vert?raw'
+import fragmentShader from '~/webgl/Components/Shared/WindyTenteShader/WindyTenteShader.frag?raw'
+
 export default class TentA1953 extends BasicItem {
   /**
    * Constructor

@@ -36,7 +36,7 @@ export default class TentB1953 extends BasicItem {
     const dummy = new Object3D()
 
     const instance = this.resources.BCTent_2_1953.scene.children[0].clone()
-    const testVenttexture = this.resources.testVent
+    const testVenttexture = this.resources.VentTente1_2024
     testVenttexture.flipY = false
 
     instance.geometry.computeVertexNormals()
