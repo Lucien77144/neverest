@@ -71,6 +71,7 @@ export default class BigBox1953 extends BasicItem {
       data: {
         source: this.resources.box_1953,
         id: this.name + '_audio',
+        tempo: '1953',
       },
       parent: this.item,
       position: new Vector3(-4.647, 1, -35.246),

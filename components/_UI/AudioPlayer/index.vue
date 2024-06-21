@@ -51,6 +51,13 @@ $bus.on('audio-voix-off:muteAll', () => {
   lottieRef.value?.goToAndStop(0)
   // }
 })
+$bus.on('active-tempo', (tempo: String) => {
+  if (tempo === data?.tempo) {
+    audioPlayerRef.value?.classList.remove('hidden')
+  } else {
+    audioPlayerRef.value?.classList.add('hidden')
+  }
+})
 
 // Reset the lottie animation
 const resetLottie = () => {
