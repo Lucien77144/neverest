@@ -1,25 +1,8 @@
 [
   {
-    "name": "global",
+    "name": "audios",
     "data": {},
     "items": [
-      {
-        "name": "click",
-        "source": "/sounds/click.mp3"
-      }
-    ]
-  },
-  {
-    "name": "intro",
-    "data": {
-      "preloadScene": ["intro"]
-    },
-    "items": [
-      {
-        "name": "introMountainTexture",
-        "source": "/img/texturesLoulou/textureIntroMountain.jpg",
-        "type": "texture"
-      },
       {
         "name": "intro",
         "source": "/sounds/VOIX_OFF/INTRO.wav",
@@ -28,48 +11,6 @@
           "en": "/subtitles/voix_off_intro/en.vtt"
         }
       },
-      {
-        "name": "introMountainPlan1",
-        "source": "/img/introMountain1.png",
-        "type": "texture"
-      },
-      {
-        "name": "introMountainPlan2",
-        "source": "/img/introMountain2.png",
-        "type": "texture"
-      },
-      {
-        "name": "introMountainPlan3",
-        "source": "/img/introMountain3.png",
-        "type": "texture"
-      },
-      {
-        "name": "introMountainPlan4",
-        "source": "/img/introMountain4.png",
-        "type": "texture"
-      },
-      {
-        "name": "introMountainPlan5",
-        "source": "/img/introMountain5.png",
-        "type": "texture"
-      },
-      {
-        "name": "introImg",
-        "source": "/img/EcranAccueil.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "introMountain",
-        "source": "/models/Intro/mount_everest_topo_map.glb"
-      }
-    ]
-  },
-  {
-    "name": "basecamp",
-    "data": {
-      "preloadScene": ["basecamp"]
-    },
-    "items": [
       {
         "name": "intro_basecamp",
         "source": "/sounds/VOIX_OFF/INTRO_BASECAMP.wav",
@@ -151,6 +92,16 @@
         }
       },
       {
+        "name": "click",
+        "source": "/sounds/click.mp3"
+      }
+    ]
+  },
+  {
+    "name": "videos",
+    "data": {},
+    "items": [
+      {
         "name": "return1953",
         "source": "/video/return1953.mp4",
         "subtitles": {
@@ -173,6 +124,52 @@
       {
         "name": "video2024_2",
         "source": "/video/video2024_2.mp4"
+      }
+    ]
+  },
+  {
+    "name": "textures",
+    "data": {},
+    "items": [
+      {
+        "name": "focusMask",
+        "source": "/img/focus_mask.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "riverRepeat",
+        "source": "/img/riverRepeat.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "introMountainPlan1",
+        "source": "/img/introMountain1.png",
+        "type": "texture"
+      },
+      {
+        "name": "introMountainPlan2",
+        "source": "/img/introMountain2.png",
+        "type": "texture"
+      },
+      {
+        "name": "introMountainPlan3",
+        "source": "/img/introMountain3.png",
+        "type": "texture"
+      },
+      {
+        "name": "introMountainPlan4",
+        "source": "/img/introMountain4.png",
+        "type": "texture"
+      },
+      {
+        "name": "introMountainPlan5",
+        "source": "/img/introMountain5.png",
+        "type": "texture"
+      },
+      {
+        "name": "introImg",
+        "source": "/img/EcranAccueil.jpg",
+        "type": "texture"
       },
       {
         "name": "testVent",
@@ -180,8 +177,8 @@
         "type": "texture"
       },
       {
-        "name": "riverRepeat",
-        "source": "/img/riverRepeat.jpg",
+        "name": "introMountainTexture",
+        "source": "/img/texturesLoulou/textureIntroMountain.jpg",
         "type": "texture"
       },
       {
@@ -305,8 +302,53 @@
         "type": "texture"
       },
       {
+        "name": "dirt",
+        "source": "/img/dirt.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "lennaTexture",
+        "source": "/img/lenna.png",
+        "type": "texture"
+      },
+      {
+        "name": "ground1953",
+        "source": "/img/Ground_Texture_1953.exr",
+        "type": "texture"
+      },
+      {
+        "name": "ground2024",
+        "source": "/img/Ground_Texture_2024.exr",
+        "type": "texture"
+      },
+      {
+        "name": "testDA1",
+        "source": "/img/texturesTestDA/testDA1.png",
+        "type": "texture"
+      },
+      {
+        "name": "testDA2",
+        "source": "/img/texturesTestDA/testDA2.png",
+        "type": "texture"
+      },
+      {
+        "name": "testDA3",
+        "source": "/img/texturesTestDA/testDA3.png",
+        "type": "texture"
+      },
+      {
+        "name": "testDA4",
+        "source": "/img/texturesTestDA/testDA4.jpg",
+        "type": "texture"
+      },
+      {
         "name": "CloudImg",
         "source": "/img/Degrade.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "tent2_1953_texture",
+        "source": "/img/tent2_1953.webp",
         "type": "texture"
       },
       {
@@ -353,7 +395,23 @@
         "name": "BCMountainRS_2050_texture",
         "source": "/img/Mountains/mountainRS_2050.webp",
         "type": "texture"
-      },
+      }
+    ]
+  },
+  {
+    "name": "Intro",
+    "data": {},
+    "items": [
+      {
+        "name": "introMountain",
+        "source": "/models/Intro/mount_everest_topo_map.glb"
+      }
+    ]
+  },
+  {
+    "name": "BaseCamp",
+    "data": {},
+    "items": [
       {
         "name": "BCTent",
         "source": "/models/BaseCamp/tent.glb"
@@ -541,7 +599,7 @@
     ]
   },
   {
-    "name": "iceFall",
+    "name": "IceFall",
     "data": {},
     "items": [
       {
@@ -555,6 +613,27 @@
       {
         "name": "IFFloor",
         "source": "/models/IceFall/floor.glb"
+      }
+    ]
+  },
+  {
+    "name": "TestDA",
+    "data": {},
+    "items": [
+      {
+        "name": "TESTDAMountain",
+        "source": "/models/TestDA/GlacierTest2.glb"
+      }
+    ]
+  },
+  {
+    "name": "font",
+    "data": {},
+    "items": [
+      {
+        "name": "roboto",
+        "source": "/font/Roboto.json",
+        "type": "font"
       }
     ]
   }

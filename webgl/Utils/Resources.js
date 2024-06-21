@@ -122,7 +122,6 @@ export default class Resources {
       }
 
       this.items[file.resource.name] = data
-      
 
       // Progress and event
       this.groups.current.loaded++
@@ -135,9 +134,7 @@ export default class Resources {
         ease: 'power2.inOut',
         onUpdate: () => this.$bus.emit('loading', this.progress.value),
         onComplete: () => {
-          if (this.progress.value === 100 && !this.experience.landingPage) {
-            this.$bus.emit('start')
-          }
+          if (this.progress.value === 100) this.$bus.emit('start')
         },
       })
     })
