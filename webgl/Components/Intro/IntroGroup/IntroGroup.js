@@ -5,11 +5,14 @@ import InfoLine from '../InfoLine/InfoLine'
 import IntroLights from '../IntroLights/IntroLights'
 import PlaneTextureIntro from '../PlaneTextureIntro/PlaneTextureIntro'
 import IntroFlag from '../IntroFlag/IntroFlag'
+import Experience from '~/webgl/Experience'
 
 export default class IntroGroup extends BasicItem {
   constructor() {
     super()
 
+    this.experience = new Experience()
+    this.ressources = this.experience.resources.items
     // New elements
     this.cssRenderer = null
   }
@@ -141,7 +144,11 @@ export default class IntroGroup extends BasicItem {
       //  }
       //),
       //lights: new IntroLights(),
-      planeTexture: new PlaneTextureIntro(),
+      planeTexture1: new PlaneTextureIntro(this.ressources.introMountainPlan1,0,7,4.61,0.2,0,0),
+      planeTexture2: new PlaneTextureIntro(this.ressources.introMountainPlan2,-1,7,4.9,0.4,0,0),
+      planeTexture3: new PlaneTextureIntro(this.ressources.introMountainPlan3,-2,7,5.3,0.6,0,0),
+      planeTexture4: new PlaneTextureIntro(this.ressources.introMountainPlan4,-3,7,5.61,0.8,0,0),
+      planeTexture5: new PlaneTextureIntro(this.ressources.introMountainPlan5,-4,7,6,1,0,0),
       introFlag:new IntroFlag()
     }
   }

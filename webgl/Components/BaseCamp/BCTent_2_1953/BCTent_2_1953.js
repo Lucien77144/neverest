@@ -3,8 +3,8 @@ import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import { BCTENT_2_1953 } from '~/const/blocking/baseCamp.const'
 import { InstancedUniformsMesh } from 'three-instanced-uniforms-mesh'
 
-import vertexShader from './shaders/vertexShader.vert?raw'
-import fragmentShader from './shaders/fragmentShader.frag?raw'
+import vertexShader from '~/webgl/Components/Shared/WindyTenteShader/WindyTenteShader.vert?raw'
+import fragmentShader from '~/webgl/Components/Shared/WindyTenteShader/WindyTenteShader.frag?raw'
 
 export default class BCTent_2_1953 extends BasicItem {
   /**
@@ -114,8 +114,8 @@ export default class BCTent_2_1953 extends BasicItem {
         uVentTexture:{value:testVenttexture},
         uRot:{value:0.0}
       },
-      vertexShader:this.vert,
-      fragmentShader:this.frag,
+      vertexShader,
+      fragmentShader,
     })
 
     this.item = new InstancedUniformsMesh(

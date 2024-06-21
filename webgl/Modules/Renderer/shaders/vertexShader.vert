@@ -25,10 +25,31 @@ float noise (in vec2 st) {
             (d - b) * u.x * u.y;
 }
 
+float hash(float x) {
+    return fract(sin(x) * 43758.5453123);
+}
+
+float voronoi(float x) {
+    float i = floor(x);
+    float f = fract(x);
+    
+    float res = 8.0;
+    for (float j = -1.0; j <= 1.0; j++) {
+        float neighbor = i + j;
+        float point = hash(neighbor);
+        float distance = abs(f - point);
+        res = min(res, distance);
+    }
+    
+    return res;
+}
+
 void main() {
     vUv = uv;
     vUvNoise = vUv;
-    vUvNoise.y += random(vUv + round(uTime * .002)) * .003;
+    //vUvNoise.y += random(vUv + round(uTime * .002)) * .003;
+    //vUvNoise.y+= abs(mod(uv.x*20.0,1.0)-0.5) * 0.005 * (step(mod(uTime*0.001, 2.),1.0) - 0.5);
+    //vUvNoise.y+= step(mod(uTime*0.001, 2.),1.0);
 
     vec3 pos = position;
     gl_Position = vec4( pos, 1.0 );

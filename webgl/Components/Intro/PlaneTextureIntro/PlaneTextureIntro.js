@@ -6,13 +6,29 @@ export default class PlaneTextureIntro extends BasicItem {
     /**
      * Constructor
      */
-    constructor() {
+    constructor(
+        texture,
+        zPos,
+        width,
+        height,
+        parallaxMultiplier,
+        yPos,
+        xPos
+    ) {
       super()
       // Get elements from experience
       this.experience = new Experience()
-      this.resources = this.experience.resources.items
+      
   
       this.$bus = this.experience.$bus
+
+      this.texture = texture
+      this.zPos = zPos
+      this.width = width
+      this.height = height
+      this.parallaxMultiplier = parallaxMultiplier
+      this.yPos = yPos
+      this.xPos = xPos
   
       // New elements
       this.geometry = null
@@ -21,13 +37,14 @@ export default class PlaneTextureIntro extends BasicItem {
     }
 
     setGeometry(){
-        this.geometry = new PlaneGeometry(8.191,4.6)
+        this.geometry = new PlaneGeometry(this.width,this.height)
     }  
     
     setMaterial(){
         this.material = new MeshBasicMaterial({
-            map:this.resources.introImg,
-            side:0
+            map:this.texture,
+            side:0,
+            transparent:true
         })
     }
 
@@ -39,5 +56,20 @@ export default class PlaneTextureIntro extends BasicItem {
      this.setGeometry()
      this.setMaterial()
      this.item = new Mesh(this.geometry,this.material)
+     this.item.position.z = this.zPos
+     this.item.position.y = this.yPos
+     this.item.position.x = this.xPos
     }
+
+    onMouseMove(e){
+        if(this.item){
+            this.item.position.x = e.x * this.parallaxMultiplier + this.xPos
+        }
+    }
+
+    update(){
+       
+    }
+
+
   }

@@ -69,6 +69,36 @@
         "type": "texture"
       },
       {
+        "name": "riverRepeat",
+        "source": "/img/riverRepeat.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "introMountainPlan1",
+        "source": "/img/introMountain1.png",
+        "type": "texture"
+      },
+      {
+        "name": "introMountainPlan2",
+        "source": "/img/introMountain2.png",
+        "type": "texture"
+      },
+      {
+        "name": "introMountainPlan3",
+        "source": "/img/introMountain3.png",
+        "type": "texture"
+      },
+      {
+        "name": "introMountainPlan4",
+        "source": "/img/introMountain4.png",
+        "type": "texture"
+      },
+      {
+        "name": "introMountainPlan5",
+        "source": "/img/introMountain5.png",
+        "type": "texture"
+      },
+      {
         "name": "introImg",
         "source": "/img/EcranAccueil.jpg",
         "type": "texture" 
@@ -468,7 +498,7 @@
       },
       {
         "name": "BCRiver_2024",
-        "source": "/models/BaseCamp/2024/Riviere_2024.glb"
+        "source": "/models/BaseCamp/2024/Riviere_2024_2.glb"
       },
       {
         "name": "BCFloor_2050",
