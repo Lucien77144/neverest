@@ -2,6 +2,7 @@ import { Mesh, PlaneGeometry, ShaderMaterial, Uniform, Vector3 } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import fragmentShader from './shaders/fragmentShader.frag?raw'
 import vertexShader from './shaders/vertexShader.vert?raw'
+import { UIAudioPlayer } from '#components'
 
 export default class Flag1953 extends BasicItem {
   /**
@@ -64,6 +65,17 @@ export default class Flag1953 extends BasicItem {
   init() {
     this.setItem()
     this.setFlag()
+
+    this.addCSS2D({
+      id: this.name + '_audio',
+      template: UIAudioPlayer,
+      data: {
+        source: this.resources.flag_1953,
+        id: this.name + '_audio',
+      },
+      parent: this.item,
+      position: new Vector3(0, 1, 0),
+    })
   }
 
   /**
