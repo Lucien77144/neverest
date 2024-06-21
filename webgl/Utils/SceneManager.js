@@ -78,20 +78,20 @@ export default class SceneManager {
   /**
    * Preload scenes of the scenes.const file if preload is true
    */
-  async preload(sceneNames = []) {
+  preload(sceneNames = []) {
     this.scenes.list
       .filter((s) => sceneNames.includes(s.name))
       .map((scene) => {
-        return new Promise(() => {
-          this.active = new scene.Scene({
-            interest: {
-              list: scene.nav?.interest,
-              base: this.baseScrollFactor,
-              current: this.scrollManager.factor,
-            },
-          })
-          this.active.dispose()
+        this.active = new scene.Scene({
+          interest: {
+            list: scene.nav?.interest,
+            base: this.baseScrollFactor,
+            current: this.scrollManager.factor,
+          },
         })
+
+        this.active.preload()
+        this.experience.renderer.update()
       })
   }
 

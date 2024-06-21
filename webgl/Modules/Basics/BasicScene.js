@@ -148,24 +148,49 @@ export default class BasicScene {
   /**
    * After the scene has been built and rendered completely one time
    */
+  preload() {
+    const val = { ready: [], max: 0 }
+
+    this.scene.traverse((o) => {
+      if (o.isMesh && o.visible) {
+        val.max++
+
+        o.onAfterRender = () => {
+          if (val.ready.includes(o.uuid)) return
+          val.ready.push(o.uuid)
+
+          if (val.ready.length === val.max) {
+            this.$bus.emit('preloaded:scene')
+          }
+
+          o.onAfterRender?.()
+        }
+      }
+    })
+  }
+
+  /**
+   * After the scene has been built and rendered completely one time
+   */
   onAfterRenderEvt() {
     const afterRender = (item, fn = () => {}, bind = this) => {
-      const val = { ready: {}, max: 0 }
+      const val = { ready: [], max: 0 }
+
       item.traverse((o) => {
         if (o.isMesh && o.visible) {
           val.max++
-          const prevFn = o.onAfterRender
+
           if (!this.ready) {
             o.onAfterRender = () => {
-              val.ready[o.uuid] = true
+              if (val.ready.includes(o.uuid)) return
+              val.ready.push(o.uuid)
 
-              if (
-                Object.values(val.ready).filter((v) => v).length === val.max
-              ) {
+              if (val.ready.length === val.max) {
                 fn.bind(bind)()
                 this.ready = true
-                o.onAfterRender = prevFn
               }
+
+              o.onAfterRender?.()
             }
           }
         }

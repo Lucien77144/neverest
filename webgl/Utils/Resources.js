@@ -20,6 +20,7 @@ export default class Resources {
     this.toLoad = null
     this.loaded = null
     this.loader = null
+    this.preLoaded = { current: 0, max: 0 }
 
     // Plugins
     this.$bus = useNuxtApp().$bus
@@ -103,6 +104,21 @@ export default class Resources {
   }
 
   /**
+   * Group end loading
+   */
+  groupEnd() {
+    // Trigger
+    this.$bus.emit('groupEnd', [this.groups.current])
+
+    if (this.sources.length > 0) {
+      this.loadNextGroup()
+    } else {
+      this.$bus.emit('resources:done')
+      this.experience.audioManager.setEvents()
+    }
+  }
+
+  /**
    * Init
    */
   init() {
@@ -144,17 +160,17 @@ export default class Resources {
       const current = this.groups.current
       this.groups.loaded.push(current)
 
-      await this.experience.sceneManager.preload(current.data.preloadScene)
-
-      // Trigger
-      this.$bus.emit('groupEnd', [this.groups.current])
-
-      if (this.sources.length > 0) {
-        this.loadNextGroup()
+      if (!current.data?.preloadScene) {
+        this.groupEnd()
+        this.preLoaded = { current: 0, max: current.data?.preloadScene?.length }
       } else {
-        this.$bus.emit('resources:done')
-        this.experience.audioManager.setEvents()
+        this.experience.sceneManager.preload(current.data?.preloadScene)
       }
+    })
+
+    this.$bus.on('preloaded:scene', () => {
+      this.preLoaded.current++
+      this.groupEnd()
     })
   }
 

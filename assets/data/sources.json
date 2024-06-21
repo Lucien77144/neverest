@@ -19,6 +19,61 @@
     ]
   },
   {
+    "name": "intro",
+    "data": {
+      "preloadScene": ["intro"]
+    },
+    "items": [
+      {
+        "name": "introMountainTexture",
+        "source": "/img/texturesLoulou/textureIntroMountain.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "intro",
+        "source": "/sounds/VOIX_OFF/INTRO.wav",
+        "subtitles": {
+          "fr": "/subtitles/voix_off_intro/fr.vtt",
+          "en": "/subtitles/voix_off_intro/en.vtt"
+        }
+      },
+      {
+        "name": "introMountainPlan1",
+        "source": "/img/introMountain1.png",
+        "type": "texture"
+      },
+      {
+        "name": "introMountainPlan2",
+        "source": "/img/introMountain2.png",
+        "type": "texture"
+      },
+      {
+        "name": "introMountainPlan3",
+        "source": "/img/introMountain3.png",
+        "type": "texture"
+      },
+      {
+        "name": "introMountainPlan4",
+        "source": "/img/introMountain4.png",
+        "type": "texture"
+      },
+      {
+        "name": "introMountainPlan5",
+        "source": "/img/introMountain5.png",
+        "type": "texture"
+      },
+      {
+        "name": "introImg",
+        "source": "/img/EcranAccueil.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "introMountain",
+        "source": "/models/Intro/mount_everest_topo_map.glb"
+      }
+    ]
+  },
+  {
     "name": "basecamp",
     "data": {
       "preloadScene": ["basecamp"]
@@ -532,61 +587,6 @@
         "name": "VentTenteMain_2050",
         "source": "/img/texturesVent/TenteMain_2050.jpg",
         "type": "texture"
-      }
-    ]
-  },
-  {
-    "name": "intro",
-    "data": {
-      "preloadScene": ["intro"]
-    },
-    "items": [
-      {
-        "name": "introMountainTexture",
-        "source": "/img/texturesLoulou/textureIntroMountain.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "intro",
-        "source": "/sounds/VOIX_OFF/INTRO.wav",
-        "subtitles": {
-          "fr": "/subtitles/voix_off_intro/fr.vtt",
-          "en": "/subtitles/voix_off_intro/en.vtt"
-        }
-      },
-      {
-        "name": "introMountainPlan1",
-        "source": "/img/introMountain1.png",
-        "type": "texture"
-      },
-      {
-        "name": "introMountainPlan2",
-        "source": "/img/introMountain2.png",
-        "type": "texture"
-      },
-      {
-        "name": "introMountainPlan3",
-        "source": "/img/introMountain3.png",
-        "type": "texture"
-      },
-      {
-        "name": "introMountainPlan4",
-        "source": "/img/introMountain4.png",
-        "type": "texture"
-      },
-      {
-        "name": "introMountainPlan5",
-        "source": "/img/introMountain5.png",
-        "type": "texture"
-      },
-      {
-        "name": "introImg",
-        "source": "/img/EcranAccueil.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "introMountain",
-        "source": "/models/Intro/mount_everest_topo_map.glb"
       }
     ]
   },
