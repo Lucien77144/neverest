@@ -33,7 +33,6 @@ export default class IntroFlag extends BasicItem {
       //this.item.position.z+=3
       //this.item.position.y += 4
       
-      console.log(this.item)
       this.item.position.set(0,0,1)
       //this.item.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
       //this.item.name = 'IntroFlag'

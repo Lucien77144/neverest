@@ -154,15 +154,17 @@ export default class Experience {
   /**
    * Start the experience
    */
-  start() {
+  async start() {
     if (
       !this.sceneManager?.active &&
       this.resources.toLoad === this.resources.loaded
     ) {
-      this.setActive(true)
-      this.sceneManager.init(this.viewport.debug && this.baseScene)
+      await this.sceneManager.preload()
 
+      this.sceneManager.init(this.viewport.debug && this.baseScene)
       this.update()
+      this.setActive(true)
+      this.$bus.emit('loading:complete')
     }
   }
 

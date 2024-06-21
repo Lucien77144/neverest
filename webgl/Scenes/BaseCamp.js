@@ -1,4 +1,4 @@
-import { Vector3 } from 'three'
+import { Group, Vector3 } from 'three'
 import gsap from 'gsap'
 import BaseCampCamera from '../Components/BaseCamp/BaseCampCamera/BaseCampCamera'
 import BasicScene from '../Modules/Basics/BasicScene'
@@ -32,11 +32,6 @@ export default class BaseCamp extends BasicScene {
     // Store
     // Actions
     this.setInterest = useExperienceStore().setInterest
-
-    // Events
-    this.scrollManager.on('scroll', ({ current }) =>
-      this.watchCurrentScroll(current)
-    )
 
     // Components
     this.components = {
@@ -79,9 +74,9 @@ export default class BaseCamp extends BasicScene {
   /**
    * Watch the current scroll progression
    * @param {*} value Scroll value
-   * @param {*} instant If the transition should be instant
+   * @param {boolean} visibility Update components visibility
    */
-  watchCurrentScroll(value, instant = false) {
+  watchCurrentScroll(value, visibility = true) {
     if (this.scrollManager.disabled) return
 
     const trigger = this.interest.list?.find(({ start, end }) => {
@@ -90,11 +85,13 @@ export default class BaseCamp extends BasicScene {
 
     const power = trigger?.power || this.interest.base
 
-    Object.values(this.components).forEach((c) => this.setComponentVis(c))
+    if (visibility) {
+      Object.values(this.components).forEach((c) => this.setComponentVis(c))
+    }
 
     if (this.interest.curr === power) return
 
-    this.setInterestVis(trigger?.data, instant)
+    this.setInterestVis(trigger?.data, false)
     this.setScrollFactor(power)
   }
 
@@ -112,13 +109,11 @@ export default class BaseCamp extends BasicScene {
 
     // If current scroll is between visibility values
     if (start <= scroll && scroll <= end) {
-      if (!c.item.visible) {
-        c.item.visible = true
+      if (!c.isActive) {
+        c.toggleActive()
       }
-    } else {
-      if (c.item.visible === true) {
-        c.item.visible = false
-      }
+    } else if (c.isActive) {
+      c.toggleActive()
     }
   }
 
@@ -192,9 +187,6 @@ export default class BaseCamp extends BasicScene {
 
     // Init the scene and components (basic scene)
     super.init()
-    Object.values(this.components).forEach((c) => {
-      c.item.visible = true
-    })
   }
 
   /**
@@ -202,8 +194,13 @@ export default class BaseCamp extends BasicScene {
    */
   onInitComplete() {
     super.onInitComplete()
-    this.watchCurrentScroll(0)
     this.playing = true
+
+    // Events
+    this.watchCurrentScroll(0, false)
+    this.scrollManager.on('scroll', ({ current }) =>
+      this.watchCurrentScroll(current)
+    )
   }
 
   /**

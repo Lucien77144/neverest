@@ -25,13 +25,12 @@ $bus.on('loading', (value: number) => {
   const animationDuration = lottieAnimation?.value?.getDuration() || 0
   const newFrame = (loadValue.value / 100) * animationDuration
   lottieAnimation.value?.goToAndStop(newFrame, true)
-
+})
+$bus.on('loading:complete', () => {
   // On loading end
-  if (loadValue.value === 100) {
-    loader.value?.classList.add('disabled')
-    setTimeout(() => $bus.emit('loaded'), 300)
-    setTimeout(() => loader.value?.remove() , 500)
-  }
+  loader.value?.classList.add('disabled')
+  setTimeout(() => $bus.emit('loaded'), 300)
+  setTimeout(() => loader.value?.remove(), 500)
 })
 </script>
 

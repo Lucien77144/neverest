@@ -20,11 +20,13 @@ export default class BaseCamp1953 extends BasicItem {
   /**
    * Constructor
    */
-  constructor({ visibility = [0, 25.87] }) {
+  constructor({ visibility = [0, 25.87], active = true }) {
     super()
 
     // Elements
     this.visibility = visibility
+    this.isActive = active
+    this.ready = false
     this.components = {
       // Boxes
       smallBox: new SmallBox1953({
@@ -93,5 +95,28 @@ export default class BaseCamp1953 extends BasicItem {
         rotation: new Vector3(0, 0.262, 0),
       }),
     }
+  }
+
+  /**
+   * Toggle active
+   */
+  toggleActive() {
+    this.isActive = !this.isActive
+    this.setActive()
+  }
+
+  /**
+   * Set active
+   */
+  setActive(active = this.isActive) {
+    this.isActive = active
+    this.item.visible = active
+  }
+
+  /**
+   * After the scene has rendered
+   */
+  onAfterRender() {
+    this.setActive()
   }
 }

@@ -62,4 +62,11 @@ export default class BaseCampLight extends BasicItem {
     this.setAmbientLight()
     this.debug && this.setDebug()
   }
+
+  /**
+   * On dispose
+   */
+  dispose() {
+    this.debugFolder && this.debug?.panel.remove(this.debugFolder)
+  }
 }

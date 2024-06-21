@@ -3,7 +3,6 @@ import {
   Color,
   LinearFilter,
   Mesh,
-  PCFShadowMap,
   PerspectiveCamera,
   PlaneGeometry,
   RGBAFormat,
@@ -197,7 +196,6 @@ export default class Renderer {
       magFilter: LinearFilter,
       format: RGBAFormat,
       samples: 1,
-      
     })
     this.rt1 = this.rt0.clone()
   }
