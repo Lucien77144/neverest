@@ -482,6 +482,56 @@
       {
         "name": "TentMain",
         "source": "/models/BaseCamp/TENT_MAINTEST.glb"
+      },
+      {
+        "name": "VentTente1_1953",
+        "source": "/img/texturesVent/Tente1_1953.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTente1_2024",
+        "source": "/img/texturesVent/Tente1_2024.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTente1_2050",
+        "source": "/img/texturesVent/Tente1_2050.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTente2_1953",
+        "source": "/img/texturesVent/Tente2_1953.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTente2_2024",
+        "source": "/img/texturesVent/Tente2_2024.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTente2_2050",
+        "source": "/img/texturesVent/Tente2_2050.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTente3_1953",
+        "source": "/img/texturesVent/Tente3_1953.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTente3_2024",
+        "source": "/img/texturesVent/Tente3_2024.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTente3_2050",
+        "source": "/img/texturesVent/Tente3_2050.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTenteMain_2050",
+        "source": "/img/texturesVent/TenteMain_2050.jpg",
+        "type": "texture"
       }
     ]
   },
@@ -537,56 +587,6 @@
       {
         "name": "introMountain",
         "source": "/models/Intro/mount_everest_topo_map.glb"
-      },
-      {
-        "name": "VentTente1_1953",
-        "source": "/img/texturesVent/Tente1_1953.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "VentTente1_2024",
-        "source": "/img/texturesVent/Tente1_2024.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "VentTente1_2050",
-        "source": "/img/texturesVent/Tente1_2050.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "VentTente2_1953",
-        "source": "/img/texturesVent/Tente2_1953.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "VentTente2_2024",
-        "source": "/img/texturesVent/Tente2_2024.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "VentTente2_2050",
-        "source": "/img/texturesVent/Tente2_2050.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "VentTente3_1953",
-        "source": "/img/texturesVent/Tente3_1953.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "VentTente3_2024",
-        "source": "/img/texturesVent/Tente3_2024.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "VentTente3_2050",
-        "source": "/img/texturesVent/Tente3_2050.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "VentTenteMain_2050",
-        "source": "/img/texturesVent/TenteMain_2050.jpg",
-        "type": "texture"
       }
     ]
   },
