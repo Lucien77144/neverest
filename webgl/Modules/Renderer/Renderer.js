@@ -233,7 +233,7 @@ export default class Renderer {
       this.instance.render(next.scene, next.camera.instance)
     }
 
-    // // RenderMesh
+    // RenderMesh
     this.instance.setRenderTarget(null)
     this.instance.render(this.renderMesh, this.camera)
   }
