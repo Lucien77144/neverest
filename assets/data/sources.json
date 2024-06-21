@@ -4,36 +4,96 @@
     "data": {},
     "items": [
       {
-        "name": "babyshark",
-        "source": "/sounds/babyshark.mp3"
-      },
-      {
-        "name": "onichan",
-        "source": "/sounds/onichan.mp3"
-      },
-      {
-        "name": "yameteAh",
-        "source": "/sounds/yamete_ah.mp3"
-      },
-      {
-        "name": "tedTalk",
-        "source": "/sounds/ted_talk.mp3",
+        "name": "intro",
+        "source": "/sounds/VOIX_OFF/INTRO.wav",
         "subtitles": {
-          "fr": "/subtitles/ted_talk/fr.vtt",
-          "en": "/subtitles/ted_talk/en.vtt"
+          "fr": "/subtitles/voix_off_intro/fr.vtt",
+          "en": "/subtitles/voix_off_intro/en.vtt"
+        }
+      },
+      {
+        "name": "intro_basecamp",
+        "source": "/sounds/VOIX_OFF/INTRO_BASECAMP.wav",
+        "subtitles": {
+          "fr": "/subtitles/voix_off_basecamp_intro/fr.vtt",
+          "en": "/subtitles/voix_off_basecamp_intro/en.vtt"
+        }
+      },
+      {
+        "name": "box_1953",
+        "source": "/sounds/VOIX_OFF/BOX_1953.wav",
+        "subtitles": {
+          "fr": "/subtitles/voix_off_box_1953/fr.vtt",
+          "en": "/subtitles/voix_off_box_1953/en.vtt"
+        }
+      },
+      {
+        "name": "flag_1953",
+        "source": "/sounds/VOIX_OFF/FLAG_1953.wav",
+        "subtitles": {
+          "fr": "/subtitles/voix_off_flag_1953/fr.vtt",
+          "en": "/subtitles/voix_off_flag_1953/en.vtt"
+        }
+      },
+      {
+        "name": "montagne_1953",
+        "source": "/sounds/VOIX_OFF/MONTAGNE_1953.wav",
+        "subtitles": {
+          "fr": "/subtitles/voix_off_montagne_1953/fr.vtt",
+          "en": "/subtitles/voix_off_montagne_1953/en.vtt"
+        }
+      },
+      {
+        "name": "montagne_2024",
+        "source": "/sounds/VOIX_OFF/MONTAGNE_2024.wav",
+        "subtitles": {
+          "fr": "/subtitles/voix_off_montagne_2024/fr.vtt",
+          "en": "/subtitles/voix_off_montagne_2024/en.vtt"
+        }
+      },
+      {
+        "name": "drapeau_priere_2024",
+        "source": "/sounds/VOIX_OFF/DRAPEAU_PRIERE_2024.wav",
+        "subtitles": {
+          "fr": "/subtitles/voix_off_drapeau_priere_2024/fr.vtt",
+          "en": "/subtitles/voix_off_drapeau_priere_2024/en.vtt"
+        }
+      },
+      {
+        "name": "antenne_2024",
+        "source": "/sounds/VOIX_OFF/ANTENNE_2024.wav",
+        "subtitles": {
+          "fr": "/subtitles/voix_off_antenne_2024/fr.vtt",
+          "en": "/subtitles/voix_off_antenne_2024/en.vtt"
+        }
+      },
+      {
+        "name": "tent_box_2050",
+        "source": "/sounds/VOIX_OFF/TENT_BOX_2050.wav",
+        "subtitles": {
+          "fr": "/subtitles/voix_off_tent_box_2050/fr.vtt",
+          "en": "/subtitles/voix_off_tent_box_2050/en.vtt"
+        }
+      },
+      {
+        "name": "tent_green_2050",
+        "source": "/sounds/VOIX_OFF/TENT_GREEN_2050.wav",
+        "subtitles": {
+          "fr": "/subtitles/voix_off_tent_green_2050/fr.vtt",
+          "en": "/subtitles/voix_off_tent_green_2050/en.vtt"
+        }
+      },
+      {
+        "name": "tent_purple_2050",
+        "source": "/sounds/VOIX_OFF/TENT_PURPLE_2050.wav",
+        "subtitles": {
+          "fr": "/subtitles/voix_off_tent_purple_2050/fr.vtt",
+          "en": "/subtitles/voix_off_tent_purple_2050/en.vtt"
         }
       },
       {
         "name": "click",
         "source": "/sounds/click.mp3"
-      },
-      {
-        "name": "flag1953",
-        "source": "/sounds/flag_1953.mp3"
-      },
-      {
-        "name": "vent2050",
-        "source": "/sounds/vent_2050.mp3"
       }
     ]
   },
