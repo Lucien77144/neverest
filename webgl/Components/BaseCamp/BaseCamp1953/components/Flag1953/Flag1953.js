@@ -29,7 +29,7 @@ export default class Flag1953 extends BasicItem {
    * Set item
    */
   setItem() {
-    this.item = this.resources.BCFlag.scene.clone()
+    this.item = this.resources.ENFlag.scene.clone()
     this.item.position.copy(this.position)
     this.item.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
     this.item.name = this.name

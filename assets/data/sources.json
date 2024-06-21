@@ -6,6 +6,15 @@
       {
         "name": "click",
         "source": "/sounds/click.mp3"
+      },
+      {
+        "name": "ENFlag",
+        "source": "/models/BaseCamp/1953/flag_1953.glb"
+      },
+      {
+        "name": "flagTexture",
+        "source": "/img/england_flag.jpg",
+        "type": "texture"
       }
     ]
   },
@@ -320,11 +329,6 @@
         "type": "texture"
       },
       {
-        "name": "flagTexture",
-        "source": "/img/england_flag.jpg",
-        "type": "texture"
-      },
-      {
         "name": "BCMountainLS_1953_texture",
         "source": "/img/Mountains/mountainLS_1953.webp",
         "type": "texture"
@@ -517,10 +521,6 @@
       {
         "name": "BCRiver_2050",
         "source": "/models/BaseCamp/2050/Riviere_2050.glb"
-      },
-      {
-        "name": "BCFlag",
-        "source": "/models/BaseCamp/1953/flag_1953.glb"
       },
       {
         "name": "BCAntenne_2024",

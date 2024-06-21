@@ -154,18 +154,17 @@ export default class Experience {
   /**
    * Start the experience
    */
-  async start() {
-    if (
-      !this.sceneManager?.active &&
-      this.resources.toLoad === this.resources.loaded
-    ) {
-      await this.sceneManager.preload()
+  start() {
+    this.sceneManager.init(this.viewport.debug && this.baseScene)
+    this.setActive(true)
 
-      this.sceneManager.init(this.viewport.debug && this.baseScene)
-      this.update()
-      this.setActive(true)
-      this.$bus.emit('loading:complete')
-    }
+    // Events
+    this.$bus.emit('loading:complete')
+    this.$bus.on('resize', this.handleResize)
+    this.$bus.on('tick', this.handleUpdate)
+    this.$bus.on('resources:done', this.handleUniforms)
+
+    this.scrollManager.on('scroll', this.handleScroll)
   }
 
   /**
@@ -218,12 +217,8 @@ export default class Experience {
     // Set global debuggers
     this.setDebug()
 
-    // Events
+    // Start experience
     this.$bus.on('start', this.handleStart)
-    this.$bus.on('resize', this.handleResize)
-    this.$bus.on('tick', this.handleUpdate)
-    this.$bus.on('resources:done', this.handleUniforms)
-    this.scrollManager.on('scroll', this.handleScroll)
   }
 
   /**

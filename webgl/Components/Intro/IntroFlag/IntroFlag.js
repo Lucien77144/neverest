@@ -26,7 +26,7 @@ export default class IntroFlag extends BasicItem {
      */
     setIntroFlag() {
         
-      this.item = this.resources.BCFlag.scene.clone()
+      this.item = this.resources.ENFlag.scene.clone()
       
       //this.item.scale.set(0.2,0.2,0.2)
       this.item.children[0].position.set(-0.9,-5.7,0)
