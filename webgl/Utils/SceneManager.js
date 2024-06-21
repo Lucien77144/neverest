@@ -76,6 +76,26 @@ export default class SceneManager {
   }
 
   /**
+   * Preload scenes of the scenes.const file if preload is true
+   */
+  async preload() {
+    this.scenes.list
+      .filter((scene) => scene.preload)
+      .map((scene) => {
+        return new Promise(() => {
+          this.active = new scene.Scene({
+            interest: {
+              list: scene.nav?.interest,
+              base: this.baseScrollFactor,
+              current: this.scrollManager.factor,
+            },
+          })
+          this.active.dispose()
+        })
+      })
+  }
+
+  /**
    * Set scene in storage and navigation stores
    * @param {*} scene Scene
    */

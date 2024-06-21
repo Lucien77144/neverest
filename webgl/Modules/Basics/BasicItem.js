@@ -115,6 +115,11 @@ export default class BasicItem {
     this.afterSceneInit
 
     /**
+     * After the item and its childs has been built and rendered completely one time
+     */
+    this.onAfterRender
+
+    /**
      * If set, this function will be called on each tick to update
      * If false, the event will be ignored, even if parent is triggering it
      */

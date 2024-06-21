@@ -69,7 +69,7 @@
                 })
             "
             class="img__container"
-            src="/assets/img/HS-Everest-1953_2.jpg"
+            src="/assets/img/HS-Everest-1953_7.jpg"
             alt=""
           />
         </div>

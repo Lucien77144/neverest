@@ -1,4 +1,4 @@
-import { FogExp2, Group, Scene } from 'three'
+import { Group, Scene } from 'three'
 import BasicCamera from './BasicCamera'
 import Experience from '~/webgl/Experience'
 import gsap from 'gsap'
@@ -27,6 +27,7 @@ export default class BasicScene {
     this.wireframe = false
 
     // Events
+    this.handleAfterRender = this.onAfterRenderEvt.bind(this)
     this.handleMouseDownEvt = this.onMouseDownEvt.bind(this)
     this.handleMouseUpEvt = this.onMouseUpEvt.bind(this)
     this.handleMouseMoveEvt = this.onMouseMoveEvt.bind(this)
@@ -105,6 +106,11 @@ export default class BasicScene {
      * On switch between scene complete and this scene is the new one
      */
     this.onInitComplete
+
+    /**
+     * After the scene has been built and rendered completely one time
+     */
+    this.onAfterRender
   }
 
   // --------------------------------
@@ -137,6 +143,39 @@ export default class BasicScene {
     this.$bus.on('mouseup', this.handleMouseUpEvt)
     this.$bus.on('mousemove', this.handleMouseMoveEvt)
     this.$bus.on('scroll', this.handleScrollEvt)
+  }
+
+  /**
+   * After the scene has been built and rendered completely one time
+   */
+  onAfterRenderEvt() {
+    const afterRender = (item, fn = () => {}, bind = this) => {
+      const val = { ready: {}, max: 0 }
+      item.traverse((o) => {
+        if (o.isMesh && o.visible) {
+          val.max++
+          const prevFn = o.onAfterRender
+          if (!this.ready) {
+            o.onAfterRender = () => {
+              val.ready[o.uuid] = true
+
+              if (
+                Object.values(val.ready).filter((v) => v).length === val.max
+              ) {
+                fn.bind(bind)()
+                this.ready = true
+                o.onAfterRender = prevFn
+              }
+            }
+          }
+        }
+      })
+    }
+
+    this.onAfterRender && afterRender(this.scene, this.onAfterRender)
+    Object.values(this.allComponents).forEach(
+      (c) => c.onAfterRender && afterRender(c.item, c.onAfterRender, c)
+    )
   }
 
   /**
@@ -415,6 +454,7 @@ export default class BasicScene {
   init() {
     this.allComponents = this.getRecursiveComponents()
     this.addItemsToScene()
+    this.handleAfterRender()
 
     this.debug && this.setDebug()
     this.audios && this.camera.addAudios(this.audios)
