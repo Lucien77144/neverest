@@ -1,4 +1,4 @@
-import { AmbientLight, Group } from 'three'
+import { AmbientLight, Color, Group } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
 export default class BaseCampLight extends BasicItem {
@@ -13,6 +13,8 @@ export default class BaseCampLight extends BasicItem {
     // New elements
     this.item = new Group()
     this.ambient = null
+    this.color = 0xffffff
+    this.intensity = 3
   }
 
   /**
@@ -45,7 +47,7 @@ export default class BaseCampLight extends BasicItem {
    * Set the ambient light
    */
   setAmbientLight() {
-    this.ambient = new AmbientLight(0xffffff, 3)
+    this.ambient = new AmbientLight(this.color, this.intensity)
     // const ambient = new AmbientLight(0xff0000, 3)
     this.ambient.position.set(0, 3, 0)
     this.ambient.castShadow = false

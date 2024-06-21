@@ -51,11 +51,19 @@
       },
       {
         "name": "archives1953",
-        "source": "/video/archives1953.mp4",
+        "source": "/video/archives1953.mp4"
+      },
+      {
+        "name": "video2024_1",
+        "source": "/video/video2024_1.mp4",
         "subtitles": {
-          "fr": "/subtitles/archives1953/fr.vtt",
-          "en": "/subtitles/archives1953/en.vtt"
+          "fr": "/subtitles/video2024_1/fr.vtt",
+          "en": "/subtitles/video2024_1/en.vtt"
         }
+      },
+      {
+        "name": "video2024_2",
+        "source": "/video/video2024_2.mp4"
       }
     ]
   },

@@ -144,11 +144,11 @@ export default class IntroGroup extends BasicItem {
       //  }
       //),
       //lights: new IntroLights(),
-      planeTexture1: new PlaneTextureIntro(this.ressources.introMountainPlan1,0,7,4.61,0.2,0,0),
-      planeTexture2: new PlaneTextureIntro(this.ressources.introMountainPlan2,-1,7,4.9,0.4,0,0),
-      planeTexture3: new PlaneTextureIntro(this.ressources.introMountainPlan3,-2,7,5.3,0.6,0,0),
-      planeTexture4: new PlaneTextureIntro(this.ressources.introMountainPlan4,-3,7,5.61,0.8,0,0),
-      planeTexture5: new PlaneTextureIntro(this.ressources.introMountainPlan5,-4,7,6,1,0,0),
+      planeTexture1: new PlaneTextureIntro(this.ressources.introMountainPlan1,   0, 16.354,  4.6, 0.2,  0, 0),
+      planeTexture2: new PlaneTextureIntro(this.ressources.introMountainPlan2,  -1, 17.6,  4.95,  0.4,  0,0),
+      planeTexture3: new PlaneTextureIntro(this.ressources.introMountainPlan3,  -2, 18.844,  5.3,  0.6,  0,0),
+      planeTexture4: new PlaneTextureIntro(this.ressources.introMountainPlan4,  -3, 20.088,  5.65, 0.8,  0,0),
+      planeTexture5: new PlaneTextureIntro(this.ressources.introMountainPlan5,  -4, 21.12,  6,    1,    0,0),
       introFlag:new IntroFlag()
     }
   }
@@ -159,6 +159,14 @@ export default class IntroGroup extends BasicItem {
   init() {
     this.setCameraPos()
     this.addComponents()
+  }
+
+  onMouseMove(e){
+    this.components.planeTexture1.cursorXPos = e.centered.x
+    this.components.planeTexture2.cursorXPos = e.centered.x
+    this.components.planeTexture3.cursorXPos = e.centered.x
+    this.components.planeTexture4.cursorXPos = e.centered.x
+    this.components.planeTexture5.cursorXPos = e.centered.x
   }
 
   /**

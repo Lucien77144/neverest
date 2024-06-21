@@ -22,7 +22,7 @@ export default class Cube extends BasicItem {
    * Set geometry
    */
   setGeometry() {
-    this.geometry = new BoxGeometry(4, 4, 4)
+    this.geometry = new BoxGeometry(1, 1, 1)
   }
 
   /**
