@@ -78,9 +78,9 @@ export default class SceneManager {
   /**
    * Preload scenes of the scenes.const file if preload is true
    */
-  async preload() {
+  async preload(sceneNames = []) {
     this.scenes.list
-      .filter((scene) => scene.preload)
+      .filter((s) => sceneNames.includes(s.name))
       .map((scene) => {
         return new Promise(() => {
           this.active = new scene.Scene({

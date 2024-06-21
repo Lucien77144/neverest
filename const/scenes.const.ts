@@ -18,7 +18,6 @@ export type TSceneInterest = {
 export type TSceneInfos = {
   id?: number
   isDefault?: boolean
-  preload?: boolean
   name: string
   Scene: any
   nav?: {
@@ -36,7 +35,6 @@ export type TSceneInfos = {
 const SCENES: TSceneInfos[] = [
   {
     isDefault: true,
-    preload: true,
     name: 'intro',
     Scene: Intro,
     transition: {
@@ -59,7 +57,6 @@ const SCENES: TSceneInfos[] = [
   },
   {
     name: 'basecamp',
-    preload: true,
     Scene: BaseCamp,
     nav: {
       scale: 100,

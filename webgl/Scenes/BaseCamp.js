@@ -112,8 +112,10 @@ export default class BaseCamp extends BasicScene {
       if (!c.isActive) {
         c.toggleActive()
       }
-    } else if (c.isActive) {
-      c.toggleActive()
+    } else {
+      if (c.isActive) {
+        c.toggleActive()
+      }
     }
   }
 

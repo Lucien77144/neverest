@@ -140,8 +140,11 @@ export default class Resources {
     })
 
     // Loader all end event
-    this.$bus.on('loadingGroupEnd', () => {
-      this.groups.loaded.push(this.groups.current)
+    this.$bus.on('loadingGroupEnd', async () => {
+      const current = this.groups.current
+      this.groups.loaded.push(current)
+
+      await this.experience.sceneManager.preload(current.data.preloadScene)
 
       // Trigger
       this.$bus.emit('groupEnd', [this.groups.current])

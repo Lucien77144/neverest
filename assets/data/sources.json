@@ -6,110 +6,14 @@
       {
         "name": "click",
         "source": "/sounds/click.mp3"
-      }
-    ]
-  },
-  {
-    "name": "intro",
-    "data": {
-      "preloadScene": ["intro"]
-    },
-    "items": [
-      {
-        "name": "introMountainTexture",
-        "source": "/img/texturesLoulou/textureIntroMountain.jpg",
-        "type": "texture"
       },
       {
-        "name": "intro",
-        "source": "/sounds/VOIX_OFF/INTRO.wav",
-        "subtitles": {
-          "fr": "/subtitles/voix_off_intro/fr.vtt",
-          "en": "/subtitles/voix_off_intro/en.vtt"
-        }
+        "name": "ENFlag",
+        "source": "/models/BaseCamp/1953/flag_1953.glb"
       },
       {
-        "name": "introMountainPlan1",
-        "source": "/img/introMountain1.png",
-        "type": "texture"
-      },
-      {
-        "name": "introMountainPlan2",
-        "source": "/img/introMountain2.png",
-        "type": "texture"
-      },
-      {
-        "name": "introMountainPlan3",
-        "source": "/img/introMountain3.png",
-        "type": "texture"
-      },
-      {
-        "name": "introMountainPlan4",
-        "source": "/img/introMountain4.png",
-        "type": "texture"
-      },
-      {
-        "name": "introMountainPlan5",
-        "source": "/img/introMountain5.png",
-        "type": "texture"
-      },
-      {
-        "name": "introImg",
-        "source": "/img/EcranAccueil.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "introMountain",
-        "source": "/models/Intro/mount_everest_topo_map.glb"
-      },
-      {
-        "name": "VentTente1_1953",
-        "source": "/img/texturesVent/Tente1_1953.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "VentTente1_2024",
-        "source": "/img/texturesVent/Tente1_2024.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "VentTente1_2050",
-        "source": "/img/texturesVent/Tente1_2050.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "VentTente2_1953",
-        "source": "/img/texturesVent/Tente2_1953.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "VentTente2_2024",
-        "source": "/img/texturesVent/Tente2_2024.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "VentTente2_2050",
-        "source": "/img/texturesVent/Tente2_2050.jpg",
-        "type": "texture"
-      },   
-      {
-        "name": "VentTente3_1953",
-        "source": "/img/texturesVent/Tente3_1953.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "VentTente3_2024",
-        "source": "/img/texturesVent/Tente3_2024.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "VentTente3_2050",
-        "source": "/img/texturesVent/Tente3_2050.jpg",
-        "type": "texture"
-      }, 
-      {
-        "name": "VentTenteMain_2050",
-        "source": "/img/texturesVent/TenteMain_2050.jpg",
+        "name": "flagTexture",
+        "source": "/img/england_flag.jpg",
         "type": "texture"
       }
     ]
@@ -370,11 +274,6 @@
         "type": "texture"
       },
       {
-        "name": "flagTexture",
-        "source": "/img/england_flag.jpg",
-        "type": "texture"
-      },
-      {
         "name": "BCMountainLS_1953_texture",
         "source": "/img/Mountains/mountainLS_1953.webp",
         "type": "texture"
@@ -569,10 +468,6 @@
         "source": "/models/BaseCamp/2050/Riviere_2050.glb"
       },
       {
-        "name": "BCFlag",
-        "source": "/models/BaseCamp/1953/flag_1953.glb"
-      },
-      {
         "name": "BCAntenne_2024",
         "source": "/models/BaseCamp/2024/antenne_2024.glb"
       },
@@ -587,6 +482,111 @@
       {
         "name": "TentMain",
         "source": "/models/BaseCamp/TENT_MAINTEST.glb"
+      }
+    ]
+  },
+  {
+    "name": "intro",
+    "data": {
+      "preloadScene": ["intro"]
+    },
+    "items": [
+      {
+        "name": "introMountainTexture",
+        "source": "/img/texturesLoulou/textureIntroMountain.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "intro",
+        "source": "/sounds/VOIX_OFF/INTRO.wav",
+        "subtitles": {
+          "fr": "/subtitles/voix_off_intro/fr.vtt",
+          "en": "/subtitles/voix_off_intro/en.vtt"
+        }
+      },
+      {
+        "name": "introMountainPlan1",
+        "source": "/img/introMountain1.png",
+        "type": "texture"
+      },
+      {
+        "name": "introMountainPlan2",
+        "source": "/img/introMountain2.png",
+        "type": "texture"
+      },
+      {
+        "name": "introMountainPlan3",
+        "source": "/img/introMountain3.png",
+        "type": "texture"
+      },
+      {
+        "name": "introMountainPlan4",
+        "source": "/img/introMountain4.png",
+        "type": "texture"
+      },
+      {
+        "name": "introMountainPlan5",
+        "source": "/img/introMountain5.png",
+        "type": "texture"
+      },
+      {
+        "name": "introImg",
+        "source": "/img/EcranAccueil.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "introMountain",
+        "source": "/models/Intro/mount_everest_topo_map.glb"
+      },
+      {
+        "name": "VentTente1_1953",
+        "source": "/img/texturesVent/Tente1_1953.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTente1_2024",
+        "source": "/img/texturesVent/Tente1_2024.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTente1_2050",
+        "source": "/img/texturesVent/Tente1_2050.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTente2_1953",
+        "source": "/img/texturesVent/Tente2_1953.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTente2_2024",
+        "source": "/img/texturesVent/Tente2_2024.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTente2_2050",
+        "source": "/img/texturesVent/Tente2_2050.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTente3_1953",
+        "source": "/img/texturesVent/Tente3_1953.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTente3_2024",
+        "source": "/img/texturesVent/Tente3_2024.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTente3_2050",
+        "source": "/img/texturesVent/Tente3_2050.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTenteMain_2050",
+        "source": "/img/texturesVent/TenteMain_2050.jpg",
+        "type": "texture"
       }
     ]
   },

@@ -37,11 +37,20 @@ const audio = data?.source
 const lottieRef = ref<InstanceType<typeof Vue3Lottie>>()
 const audioEnd = ref(true)
 const audioPlayerRef = ref<HTMLElement>()
+const isPaused = ref(true)
 
 // Bus
 const { $bus }: any = useNuxtApp()
 
 $bus.on('scene:switch', () => audioPlayerRef.value?.classList.add('hidden'))
+$bus.on('audio-voix-off:muteAll', () => {
+  audio.pause()
+
+  // if (!isPaused.value) {
+  audio.currentTime = 0
+  lottieRef.value?.goToAndStop(0)
+  // }
+})
 
 // Reset the lottie animation
 const resetLottie = () => {
@@ -63,6 +72,7 @@ audio.addEventListener('play', () => {
 })
 audio.addEventListener('pause', () => {
   lottieRef.value?.pause()
+  isPaused.value = true
   setCues([])
 })
 audio.addEventListener('ended', () => {
@@ -71,7 +81,7 @@ audio.addEventListener('ended', () => {
 })
 
 // Toggle audio
-const toggle = () => (audio?.paused ? audio?.play() : audio?.pause())
+const toggle = () => (audio?.paused ? ($bus.emit('audio-voix-off:muteAll'), audio?.play()) : audio?.pause())
 
 // On mounted
 onMounted(() => lottieRef.value?.setSpeed(1 / audio.duration))
