@@ -70,11 +70,6 @@ export default class AudioManager {
     }
     
     this.$bus.on('audio:click', () => this.resources.items.click.play())
-    this.$bus.on('audio:vent2050', () => {
-      this.resources.items.vent2050.play()
-      this.resources.items.vent2050.loop = true
-      this.resources.items.vent2050.volume = 0.2
-    })
 
     this.$bus.on('audio:mute', () => {
       Object.values(sounds).forEach((sound) => {
@@ -87,8 +82,6 @@ export default class AudioManager {
       })
       this.resources.items.vent2050.volume = 0.2
     })
-    this.$bus.on('modal:open', () => this.resources.items.vent2050.volume = 0.05)
-    this.$bus.on('modal:close', () => this.resources.items.vent2050.volume = 0.2)
   }
 
   /**

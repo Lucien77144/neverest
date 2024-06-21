@@ -11,7 +11,7 @@
     <UITitle />
     <div ref="startBtnRef" class="start__btn" :class="sceneRef && 'hidden'">
       <UIBtn
-        @click="start(), $bus.emit('audio:unmute'), $bus.emit('audio:vent2050')"
+        @click="start(), $bus.emit('audio:unmute')"
       >
         {{ $t('START') }}
       </UIBtn>

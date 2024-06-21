@@ -26,6 +26,7 @@ export default class BaseCamp2024 extends BasicItem {
     // Elements
     this.visibility = visibility
     this.isActive = active
+    this.$bus = this.experience.$bus
     this.components = {
       // Boxes
       smallBox2024: new SmallBox2024({
@@ -110,6 +111,10 @@ export default class BaseCamp2024 extends BasicItem {
   setActive(active = this.isActive) {
     this.isActive = active
     this.item.visible = active
+
+    if (this.isActive) {
+      this.$bus.emit('active-tempo', '2024')
+    }
   }
 
   /**
