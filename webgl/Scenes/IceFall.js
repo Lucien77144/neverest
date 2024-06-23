@@ -2,7 +2,6 @@ import { MathUtils, Vector3 } from 'three'
 import IFFloor from '../Components/Icefall/IFFloor/IFFloor'
 import Iceblocks from '../Components/Icefall/Iceblocks/Iceblocks'
 import Mountains from '../Components/Icefall/Mountains/Mountains'
-import Lights from '../Components/Shared/Lights/Lights'
 import BasicScene from '../Modules/Basics/BasicScene'
 
 export default class IceFall extends BasicScene {
@@ -24,7 +23,6 @@ export default class IceFall extends BasicScene {
 
     // Components
     this.components = {
-      lights: new Lights(),
       moutains: new Mountains(),
       iceblocks: new Iceblocks(),
       floor: new IFFloor(),

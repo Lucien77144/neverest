@@ -80,7 +80,6 @@ export default class AudioManager {
       Object.values(sounds).forEach((sound) => {
         sound.volume = 1
       })
-      this.resources.items.vent2050.volume = 0.2
     })
   }
 
