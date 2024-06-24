@@ -1,8 +1,9 @@
 <template>
   <div id="css-2d-renderer" class="renderer">
     <div
-      class="renderer__item"
       v-for="(d, i) in list"
+      class="renderer__item"
+      :class="d?.classList || ''"
       :key="i"
       :id="d?.id?.toLowerCase()"
       :ref="(el) => add({ ...d, el })"

@@ -43,6 +43,7 @@ export default class FloorAnimationEffect extends BasicItem {
       uniforms: {
         uTime: new Uniform(0),
         uSpeed: new Uniform(5),
+        uSpeedDelta: new Uniform(0),
         uDirection: new Uniform(new Vector2(1, 1)),
         uColor: new Uniform(new Color('#bfbfbf')),
       },
@@ -52,6 +53,13 @@ export default class FloorAnimationEffect extends BasicItem {
     this.item = new Mesh(this.geometry, this.material)
     this.item.position.copy(this.position)
     this.item.rotation.x = -Math.PI / 2
+  }
+
+  /**
+   * Set the color of the effect
+   */
+  setEffectColor(color) {
+    this.item.material.uniforms.uColor.value = color
   }
 
   /**
@@ -95,6 +103,16 @@ export default class FloorAnimationEffect extends BasicItem {
   }
 
   /**
+   * Get the speed delta on X
+   */
+  getSpeedDeltaX() {
+    const curr = new Vector3(this.current.x, 0, 0)
+    const target = new Vector3(this.target.x, 0, 0)
+
+    return curr.distanceTo(target) * 5
+  }
+
+  /**
    * Update
    */
   update() {
@@ -110,6 +128,7 @@ export default class FloorAnimationEffect extends BasicItem {
     // this.item.scale.set(Math.max(0.35, speed), Math.max(0.35, speed), 1)
     this.item.material.uniforms.uTime.value = this.time.elapsed
     this.item.material.uniforms.uSpeed.value = this.speedDist
+    this.item.material.uniforms.uSpeedDelta.value = this.getSpeedDeltaX()
     this.item.material.uniforms.uDirection.value = this.getDirection(previous)
   }
 }

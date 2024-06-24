@@ -156,7 +156,6 @@ export default class Experience {
    */
   start() {
     this.sceneManager.init(this.viewport.debug && this.baseScene).then(() => {
-      console.log('done')
       this.setActive(true)
 
       // Events

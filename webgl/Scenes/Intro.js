@@ -5,8 +5,8 @@ export default class Intro extends BasicScene {
   /**
    * Constructor
    */
-  constructor() {
-    super()
+  constructor({ infos }) {
+    super(infos)
 
     // Components
     this.components = {
@@ -55,8 +55,8 @@ export default class Intro extends BasicScene {
     this.$bus.emit('title:disable', true)
   }
 
-  setCam(){
-    this.camera.instance.position.set(0,0,13)
-    this.camera.instance.lookAt(0,0,0)
+  setCam() {
+    this.camera.instance.position.set(0, 0, 13)
+    this.camera.instance.lookAt(0, 0, 0)
   }
 }

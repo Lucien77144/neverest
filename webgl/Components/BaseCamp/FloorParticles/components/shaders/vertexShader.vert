@@ -1,5 +1,7 @@
 varying vec2 vUv;
 varying vec3 vPosition;
+uniform vec2 uDirection;
+uniform float uSpeedDelta;
 uniform float uTime;
 
 void main() {
@@ -10,10 +12,9 @@ void main() {
     vUv += 0.5;
 
     vPosition = position;
-    vPosition.z += max(circle, 0.);
-    vPosition.z = max(vPosition.z - 0.05, 0.);
-
-    vPosition.x *= 1. + abs(sin(vPosition.z));
+    vPosition.z += max(circle, 0.1);
+    vPosition.y -= .37;
+    vPosition.x += (.5 * (-uDirection.x * (uSpeedDelta * .1))) * vPosition.z;
     
     gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(vPosition, 1.0);
 }

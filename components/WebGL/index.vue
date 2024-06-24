@@ -90,6 +90,7 @@ onMounted(() => {
     baseScene: route.query.scene,
     name: 'template',
   })
+
   // On component unmounted, dispose the experience
   onUnmounted(() => exp.value?.dispose())
 })

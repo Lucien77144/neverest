@@ -1,10 +1,11 @@
 uniform sampler2D uScene0;
 uniform sampler2D uScene1;
+uniform sampler2D uBlob;
 uniform float uTime;
 uniform float uTransition;
 uniform float uModalProgress;
 uniform float uFocProgress;
-uniform sampler2D uBlob;
+uniform vec3 uBackgroundColor;
 uniform vec3 uModalColor;
 uniform vec3 uFocColor;
 uniform vec3 uFocTransitionColor;
@@ -209,6 +210,8 @@ void main() {
     frag = mix(frag, mix(frag, vec4(uModalColor, 1.), (1. - mask) * play), .995);
 
     gl_FragColor = frag;
+    gl_FragColor.rgb = mix(uBackgroundColor, gl_FragColor.rgb, gl_FragColor.a);
+    gl_FragColor.a = 1.;
     // gl_FragColor = getMountainAmbiant();
    
     #include <tonemapping_fragment> // To fix tonemapping problems when using render targets (only if tone mapping is enabled)

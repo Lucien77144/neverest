@@ -237,6 +237,7 @@ export default class Loader {
     })
 
     // Update the track on locale change
+    this.onLangChange(element, this.i18n.locale.value)
     this.$bus.on('lang:change', (locale) => this.onLangChange(element, locale))
   }
 
