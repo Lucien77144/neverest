@@ -1,6 +1,13 @@
 import Loader from './Loader.js'
 import sources from './assets/data/sources.json'
-import { Cache, Texture } from 'three'
+import {
+  Cache,
+  Mesh,
+  MeshBasicMaterial,
+  PlaneGeometry,
+  Scene,
+  Texture,
+} from 'three'
 import gsap from 'gsap'
 import Experience from '../Experience.js'
 
@@ -11,7 +18,8 @@ export default class Resources {
   constructor(_groups) {
     // Get elements from experience
     this.experience = new Experience()
-    Cache.enabled = true
+    this.renderer = this.experience.renderer
+    Cache.enabled = !this.experience.debug
 
     // New elements
     this.sources = []
@@ -160,7 +168,31 @@ export default class Resources {
     this.$bus.on('loadingGroupEnd', async () => {
       const current = this.groups.current
       this.groups.loaded.push(current)
-      this.groupEnd()
+
+      if (current.data.preload) {
+        const tmpScene = new Scene()
+        current.items
+          .map((i) => this.items[i.name])
+          .forEach((i) => {
+            if (i.scene) {
+              tmpScene.add(i.scene)
+            } else if (i.isTexture) {
+              const geometry = new PlaneGeometry(1, 1)
+              const material = new MeshBasicMaterial({ map: i })
+              const mesh = new Mesh(geometry, material)
+              tmpScene.add(mesh)
+            }
+          })
+
+        tmpScene.onAfterRender = () => {
+          tmpScene.clear()
+          this.groupEnd()
+        }
+        this.renderer.instance.render(tmpScene, this.renderer.camera)
+        this.renderer.instance.clear()
+      } else {
+        this.groupEnd()
+      }
     })
   }
 
