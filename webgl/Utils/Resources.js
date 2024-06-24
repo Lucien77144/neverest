@@ -1,13 +1,6 @@
 import Loader from './Loader.js'
 import sources from './assets/data/sources.json'
-import {
-  Cache,
-  Mesh,
-  MeshBasicMaterial,
-  PlaneGeometry,
-  Scene,
-  Texture,
-} from 'three'
+import { Cache, Scene, Texture } from 'three'
 import gsap from 'gsap'
 import Experience from '../Experience.js'
 
@@ -107,9 +100,7 @@ export default class Resources {
         }),
       }))
 
-    this.toLoad
-      ? this.loadNextGroup()
-      : setTimeout(() => this.$bus.emit('loadingGroupEnd'))
+    this.toLoad ? this.loadNextGroup() : () => this.$bus.emit('loadingGroupEnd')
   }
 
   /**
@@ -159,7 +150,9 @@ export default class Resources {
         ease: 'power2.inOut',
         onUpdate: () => this.$bus.emit('loading', this.progress.value),
         onComplete: () => {
-          if (this.progress.value === 100) this.$bus.emit('start')
+          if (this.progress.value === 100) {
+            this.$bus.emit('start')
+          }
         },
       })
     })
@@ -176,20 +169,15 @@ export default class Resources {
           .forEach((i) => {
             if (i.scene) {
               tmpScene.add(i.scene)
-            } else if (i.isTexture) {
-              const geometry = new PlaneGeometry(1, 1)
-              const material = new MeshBasicMaterial({ map: i })
-              const mesh = new Mesh(geometry, material)
-              tmpScene.add(mesh)
             }
           })
 
         tmpScene.onAfterRender = () => {
           tmpScene.clear()
+          this.renderer.instance.clear()
           this.groupEnd()
         }
         this.renderer.instance.render(tmpScene, this.renderer.camera)
-        this.renderer.instance.clear()
       } else {
         this.groupEnd()
       }

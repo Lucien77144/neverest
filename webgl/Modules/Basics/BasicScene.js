@@ -47,9 +47,6 @@ export default class BasicScene {
     // Getters
     this.progressHold = computed(() => useHoldStore().getProgress)
 
-    // Scope
-    this.scope = effectScope()
-
     // --------------------------------
     // Elements (to override in the child class)
     // --------------------------------
@@ -507,10 +504,6 @@ export default class BasicScene {
    * Dispose the scene
    */
   dispose() {
-    // Scope
-    this.scope.stop()
-    this.scope = null
-
     // Items
     Object.values(this.allComponents).forEach((c) => {
       this.triggerFn(c, 'dispose')
