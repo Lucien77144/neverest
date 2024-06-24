@@ -1,6 +1,10 @@
-import { InstancedMesh, Object3D } from 'three'
+import { InstancedMesh, Object3D, ShaderMaterial } from 'three'
 import { BCTENT_3_2024 } from '~/const/blocking/baseCamp.const'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
+import { InstancedUniformsMesh } from 'three-instanced-uniforms-mesh'
+import vertexShader from '~/webgl/Components/Shared/WindyTenteShader/WindyTenteShader.vert?raw'
+import fragmentShader from '~/webgl/Components/Shared/WindyTenteShader/WindyTenteShader.frag?raw'
+import Experience from '~/webgl/Experience'
 
 export default class TentC2024 extends BasicItem {
   /**
@@ -15,6 +19,8 @@ export default class TentC2024 extends BasicItem {
   }) {
     super()
 
+    this.experience = new Experience()
+
     // Elements
     this.position = position
     this.rotation = rotation
@@ -24,17 +30,31 @@ export default class TentC2024 extends BasicItem {
 
     // New elements
     this.resources = this.experience.resources.items
+    this.time = this.experience.time
   }
 
   /**
    * Set Instances
    */
   setInstances() {
+    const textureTenteC2024 = this.resources.VentTente3_2024
     const instance = this.resources.BCTent_3_2024.scene.children[0]
+
+    const material = new ShaderMaterial({
+      uniforms: {
+        uTime: { value: 1.0 },
+        uTexture: { value: instance.material.map },
+        uVentTexture: { value: textureTenteC2024 },
+        uRot: { value: 0.0 },
+      },
+      vertexShader,
+      fragmentShader,
+    })
+
     const dummy = new Object3D()
-    this.item = new InstancedMesh(
+    this.item = new InstancedUniformsMesh(
       instance.geometry,
-      instance.material,
+      material,
       BCTENT_3_2024.length
     )
 
@@ -43,6 +63,7 @@ export default class TentC2024 extends BasicItem {
       dummy.rotation.set(el.rotation.x, el.rotation.y, el.rotation.z)
       dummy.updateMatrix()
       this.item.setMatrixAt(i, dummy.matrix)
+      this.item.setUniformAt('uRot', i, el.rotation.y)
     })
 
     this.item.instanceMatrix.needsUpdate = true
@@ -64,5 +85,9 @@ export default class TentC2024 extends BasicItem {
   init() {
     this.isInstances && this.setInstances()
     !this.isInstances && this.setItem()
+  }
+
+  update(){
+    this.item.material.uniforms.uTime.value = this.time.elapsed * 0.001
   }
 }

@@ -43,7 +43,7 @@ void main() {
   float dotProduct = dot(nrml,windDirection);
   dotProduct=-dotProduct;
   dotProduct = pow(dotProduct,3.0);
-  vec4 modelPosition =  instanceMatrix * vec4(position, 1.0);
+  vec4 modelPosition =  modelMatrix * vec4(position, 1.0);
   modelPosition.x+=dotProduct*noise(uv+uTime*0.5)*0.5*ventTexture;
   gl_Position = projectionMatrix * modelViewMatrix * modelPosition;
 }
