@@ -181,7 +181,7 @@ export default class Renderer {
     // Options
     this.instance.toneMapping = ACESFilmicToneMapping
     this.instance.toneMappingExposure = 1.1
-    this.instance.outputColorSpace = SRGBColorSpace;
+    this.instance.outputColorSpace = SRGBColorSpace
 
     // Context
     this.context = this.instance.getContext()

@@ -109,13 +109,9 @@ export default class BaseCamp extends BasicScene {
 
     // If current scroll is between visibility values
     if (start <= scroll && scroll <= end) {
-      if (!c.isActive) {
-        c.toggleActive()
-      }
+      !c.isActive && c.toggleActive()
     } else {
-      if (c.isActive) {
-        c.toggleActive()
-      }
+      c.isActive && c.toggleActive()
     }
   }
 

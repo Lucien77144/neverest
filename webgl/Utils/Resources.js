@@ -137,6 +137,12 @@ export default class Resources {
         data.needsUpdate = true
       }
 
+      data.scene?.traverse((child) => {
+        if (child.material) {
+          child.material.generateMipmaps = true
+        }
+      })
+
       this.items[file.resource.name] = data
 
       // Progress and event
@@ -159,17 +165,6 @@ export default class Resources {
     this.$bus.on('loadingGroupEnd', async () => {
       const current = this.groups.current
       this.groups.loaded.push(current)
-
-      if (!current.data?.preloadScene) {
-        this.groupEnd()
-        this.preLoaded = { current: 0, max: current.data?.preloadScene?.length }
-      } else {
-        this.experience.sceneManager.preload(current.data?.preloadScene)
-      }
-    })
-
-    this.$bus.on('preloaded:scene', () => {
-      this.preLoaded.current++
       this.groupEnd()
     })
   }

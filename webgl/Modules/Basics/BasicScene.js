@@ -148,30 +148,6 @@ export default class BasicScene {
   /**
    * After the scene has been built and rendered completely one time
    */
-  preload() {
-    const val = { ready: [], max: 0 }
-
-    this.scene.traverse((o) => {
-      if (o.isMesh && o.visible) {
-        val.max++
-
-        o.onAfterRender = () => {
-          if (val.ready.includes(o.uuid)) return
-          val.ready.push(o.uuid)
-
-          if (val.ready.length === val.max) {
-            this.$bus.emit('preloaded:scene')
-          }
-
-          o.onAfterRender?.()
-        }
-      }
-    })
-  }
-
-  /**
-   * After the scene has been built and rendered completely one time
-   */
   onAfterRenderEvt() {
     const afterRender = (item, fn = () => {}, bind = this) => {
       const val = { ready: [], max: 0 }
@@ -543,7 +519,7 @@ export default class BasicScene {
     })
 
     // Camera
-    this.scene.remove(this.camera.instance)
+    this.scene.clear()
     this.camera.dispose()
     this.css2d?.dispose()
     this.css3d?.dispose()

@@ -161,10 +161,7 @@ export default class Experience {
     // Events
     this.$bus.emit('loading:complete')
     this.$bus.on('resize', this.handleResize)
-    this.$bus.on('tick', this.handleUpdate)
     this.$bus.on('resources:done', this.handleUniforms)
-
-    this.scrollManager.on('scroll', this.handleScroll)
   }
 
   /**
@@ -217,8 +214,10 @@ export default class Experience {
     // Set global debuggers
     this.setDebug()
 
-    // Start experience
+    // Events
     this.$bus.on('start', this.handleStart)
+    this.$bus.on('tick', this.handleUpdate)
+    this.scrollManager.on('scroll', this.handleScroll)
   }
 
   /**

@@ -76,26 +76,6 @@ export default class SceneManager {
   }
 
   /**
-   * Preload scenes of the scenes.const file if preload is true
-   */
-  preload(sceneNames = []) {
-    this.scenes.list
-      .filter((s) => sceneNames.includes(s.name))
-      .map((scene) => {
-        this.active = new scene.Scene({
-          interest: {
-            list: scene.nav?.interest,
-            base: this.baseScrollFactor,
-            current: this.scrollManager.factor,
-          },
-        })
-
-        this.active.preload()
-        this.experience.renderer.update()
-      })
-  }
-
-  /**
    * Set scene in storage and navigation stores
    * @param {*} scene Scene
    */
