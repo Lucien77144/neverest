@@ -6,7 +6,7 @@
     <div ref="footerRef" class="start__footer">
       <p>{{ $t('LANDING_START') }}</p>
       <div class="start__footer__content">
-        <UIBtn @click="start()">
+        <UIBtn @click="enter()">
           {{ $t('ENTER') }}
         </UIBtn>
       </div>
@@ -45,14 +45,14 @@ $bus.on('loaded', () => {
  * Start the experience
  * @param muted - If the audio should be muted
  */
-const start = () => {
+const enter = () => {
   $bus.emit('audio:unmute')
-  $bus.emit('start')
 
   if (landingRef.value) {
     gsap.to(landingRef.value, {
       duration: 0.5,
       opacity: 0,
+      onComplete: () => landingRef.value?.remove(),
     })
   }
 }

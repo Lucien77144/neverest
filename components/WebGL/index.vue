@@ -1,5 +1,5 @@
 <template>
-  <Landing v-if="!activeStatus && landing" />
+  <Landing v-if="landing" />
   <Interface />
   <div ref="webGlCSSRef" id="webgl-css-wrapper" class="webGlCSS">
     <WebGLCSS2DRenderer />
@@ -9,7 +9,7 @@
   <div id="webgl-interface">
     <UIInterestData />
     <UITitle />
-    <div ref="startBtnRef" class="start__btn" :class="sceneRef && 'hidden'">
+    <div ref="startBtnRef" class="start__btn">
       <UIBtn @click="start()">
         {{ $t('START') }}
       </UIBtn>
@@ -22,6 +22,7 @@ import Experience from '~/webgl/Experience'
 
 // Scene
 import scenes, { type TSceneInfos } from '~/const/scenes.const'
+import type { TExpStore } from '~/stores/experience.store'
 
 // Plugins
 const { $bus }: any = useNuxtApp()
@@ -42,18 +43,22 @@ const route = useRoute()
 // get active scene
 const active = computed(() => useExperienceStore().getActive)
 const landing = computed(() => useExperienceStore().getLanding)
+const navigation = computed(() => useExperienceStore().getNavigation)
 
 watch(active, (v: boolean) =>
   setTimeout(() => {
     activeStatus.value = v
   }, 750)
 )
+watch(navigation, ({ scene }: TExpStore['navigation']) => {
+  setVisibility(scene?.name || 'intro')
+})
 
 /**
  * Start the experience
  */
 function start() {
-  $bus.emit('audio:unmute')
+  // $bus.emit('audio:unmute')
   sceneRef.value = scenes.nav.list.find((s) => s.name === 'basecamp')
   sceneRef.value && $bus.emit('scene:switch', sceneRef.value)
 }
@@ -73,13 +78,10 @@ $bus.on('modal:destroy', () => {
 const setVisibility = (name: string) => {
   if (name !== 'intro') {
     startBtnRef.value?.classList.add('hidden')
-    setTimeout(() => startBtnRef.value?.classList.add('d-none'), 500)
   } else {
     startBtnRef.value?.classList.remove('hidden')
-    setTimeout(() => startBtnRef.value?.classList.remove('d-none'), 500)
   }
 }
-$bus.on('debug:scene', (name: string) => setVisibility(name))
 
 // On component mounted, create the experience
 onMounted(() => {

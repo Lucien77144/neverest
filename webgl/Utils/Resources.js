@@ -1,6 +1,6 @@
 import Loader from './Loader.js'
 import sources from './assets/data/sources.json'
-import { Texture } from 'three'
+import { Cache, Texture } from 'three'
 import gsap from 'gsap'
 import Experience from '../Experience.js'
 
@@ -11,6 +11,7 @@ export default class Resources {
   constructor(_groups) {
     // Get elements from experience
     this.experience = new Experience()
+    Cache.enabled = true
 
     // New elements
     this.sources = []
@@ -136,12 +137,6 @@ export default class Resources {
         }
         data.needsUpdate = true
       }
-
-      data.scene?.traverse((child) => {
-        if (child.material) {
-          child.material.generateMipmaps = true
-        }
-      })
 
       this.items[file.resource.name] = data
 
