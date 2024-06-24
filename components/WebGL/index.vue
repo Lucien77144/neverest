@@ -10,9 +10,7 @@
     <UIInterestData />
     <UITitle />
     <div ref="startBtnRef" class="start__btn" :class="sceneRef && 'hidden'">
-      <UIBtn
-        @click="start(), $bus.emit('audio:unmute')"
-      >
+      <UIBtn @click="start()">
         {{ $t('START') }}
       </UIBtn>
     </div>

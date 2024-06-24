@@ -65,9 +65,9 @@ export default class AudioManager {
    */
   setEvents() {
     const sounds = {
-      click: this.resources.items.click
+      click: this.resources.items.click,
     }
-    
+
     this.$bus.on('audio:click', () => this.resources.items.click.play())
 
     this.$bus.on('audio:mute', () => {
@@ -102,30 +102,42 @@ export default class AudioManager {
     const source = this.resources.items[name]
     const sound = new (parent ? PositionalAudio : Audio)(listener)
 
-    if (!this.sources[name]) {
+    if (!this.sources[name] && source) {
       this.sources[name] = sound.setMediaElementSource(source).source
     }
     sound.source = this.sources[name]
 
     sound.play = () => {
-      sound.source.mediaElement.play()
-      sound.isPlaying = true
+      if (sound.source?.mediaElement) {
+        sound.source.mediaElement.play()
+        sound.isPlaying = true
+      }
     }
     sound.pause = () => {
-      sound.source.mediaElement.pause()
-      sound.isPlaying = false
+      if (sound.source?.mediaElement) {
+        sound.source.mediaElement.pause()
+        sound.isPlaying = false
+      }
     }
     sound.stop = () => {
-      sound.source.mediaElement.pause()
-      sound.source.mediaElement.currentTime = 0
-      sound.isPlaying = false
+      if (sound.source?.mediaElement) {
+        sound.source.mediaElement.pause()
+        sound.source.mediaElement.currentTime = 0
+        sound.isPlaying = false
+      }
     }
     sound.setVolume = (volume) => {
-      sound.source.mediaElement.volume = volume
+      if (sound.source?.mediaElement) {
+        sound.source.mediaElement.volume = volume
+      }
+
       sound.volume = volume
     }
     sound.setLoop = (loop) => {
-      sound.source.mediaElement.loop = loop
+      if (sound.source?.mediaElement) {
+        sound.source.mediaElement.loop = loop
+      }
+
       sound.loop = loop
     }
 
