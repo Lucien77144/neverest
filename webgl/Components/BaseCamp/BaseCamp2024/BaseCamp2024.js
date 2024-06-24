@@ -15,6 +15,7 @@ import MountainRS2024 from './components/MountainRS2024/MountainRS2024'
 import Floor2024 from './components/Floor2024/Floor2024'
 import River2024 from './components/River2024/River2024'
 import Antenne2024 from './components/Antenne2024/Antenne2024'
+import Flag2024 from './components/Flag2024/Flag2024'
 
 export default class BaseCamp2024 extends BasicItem {
   /**
@@ -93,6 +94,10 @@ export default class BaseCamp2024 extends BasicItem {
       antenne2024: new Antenne2024({
         position: new Vector3(6.52, -0.2, -25.785),
         rotation: new Vector3(0.0, 0, 0),
+      }),
+      flag2024: new Flag2024({
+        position: new Vector3(-4.45, 1.5, -20),
+        rotation: new Vector3(0, 0, 0),
       }),
     }
   }

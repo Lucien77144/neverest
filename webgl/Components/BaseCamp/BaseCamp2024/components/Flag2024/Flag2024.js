@@ -2,14 +2,14 @@ import { UIAudioPlayer } from '#components'
 import { Vector3 } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
-export default class Antenne2024 extends BasicItem {
+export default class Flag2024 extends BasicItem {
   /**
    * Constructor
    */
   constructor({
     position = new Vector3(0, 0, 0),
     rotation = new Vector3(0, 0, 0),
-    name = 'Antenne2024',
+    name = 'Flag2024',
   }) {
     super()
 
@@ -27,7 +27,7 @@ export default class Antenne2024 extends BasicItem {
    * Set item
    */
   setItem() {
-    this.item = this.resources.BCAntenne_2024.scene.clone()
+    this.item = this.resources.Flag_2024.scene.clone()
     this.item.position.copy(this.position)
     this.item.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
     this.item.name = this.name
@@ -43,12 +43,12 @@ export default class Antenne2024 extends BasicItem {
       id: this.name + '_audio',
       template: UIAudioPlayer,
       data: {
-        source: this.resources.antenne_2024,
+        source: this.resources.drapeau_priere_2024,
         id: this.name + '_audio',
         tempo: '2024',
       },
       parent: this.item,
-      position: new Vector3(0, 1, 0),
+      position: new Vector3(0, 0.2, 0),
     })
   }
 }
