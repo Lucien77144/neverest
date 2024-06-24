@@ -73,9 +73,6 @@
   },
   {
     "name": "basecamp",
-    "data": {
-      "preload": true
-    },
     "items": [
       {
         "name": "intro_basecamp",

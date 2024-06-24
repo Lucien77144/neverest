@@ -190,7 +190,7 @@ void main() {
     
 
     scene0 = mix(scene0, vec4(1.0), zoomInTransiTiming);
-    frag = mix(scene1,scene0,fadeOutTransiTiming);
+    frag = mix(scene1, scene0, fadeOutTransiTiming);
 
     // -------------------- //
     //        Modal         //

@@ -251,6 +251,10 @@ export default class Renderer {
     this.setRenderTargets()
     this.setRenderMesh()
 
+    setTimeout(() => {
+      this.renderMesh.material.uniforms
+    }, 2000)
+
     // Debug
     if (this.debug) this.setDebug()
   }
