@@ -32,7 +32,7 @@ export default class Rock1953 extends BasicItem {
   }
 
   /**
-   * Init the floor
+   * Init the rock
    */
   init() {
     this.setItem()

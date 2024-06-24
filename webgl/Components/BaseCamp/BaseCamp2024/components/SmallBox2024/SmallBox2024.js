@@ -57,7 +57,7 @@ export default class SmallBox2024 extends BasicItem {
   }
 
   /**
-   * Init the floor
+   * Init the box
    */
   init() {
     this.isInstances && this.setInstances()

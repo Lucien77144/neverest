@@ -54,7 +54,14 @@ $bus.on('audio-voix-off:muteAll', () => {
 $bus.on('active-tempo', (tempo: String) => {
   if (tempo === data?.tempo) {
     audioPlayerRef.value?.classList.remove('hidden')
+    fadeAudio(audio, 1, 1)
   } else {
+    fadeAudio(audio, 1000, 0)
+    setTimeout(() => {
+      audio.pause()
+      audio.currentTime = 0
+      lottieRef.value?.goToAndStop(0)
+    }, 1000)
     audioPlayerRef.value?.classList.add('hidden')
   }
 })
@@ -68,6 +75,24 @@ const resetLottie = () => {
     value: 0,
     onUpdate: () => lottieRef.value?.goToAndStop(to.value),
   })
+}
+
+// Fade in/out the audio volume
+const fadeAudio = (
+  audio: HTMLAudioElement,
+  duration: number,
+  targetVolume: number
+) => {
+  const volume = audio.volume
+  const steps = 10
+  const stepDuration = duration / steps
+  const stepVolume = (targetVolume - volume) / steps
+
+  for (let i = 1; i <= steps; i++) {
+    setTimeout(() => {
+      audio.volume = volume + stepVolume * i
+    }, stepDuration * i)
+  }
 }
 
 // Audio Events
@@ -88,7 +113,10 @@ audio.addEventListener('ended', () => {
 })
 
 // Toggle audio
-const toggle = () => (audio?.paused ? ($bus.emit('audio-voix-off:muteAll'), audio?.play()) : audio?.pause())
+const toggle = () =>
+  audio?.paused
+    ? ($bus.emit('audio-voix-off:muteAll'), audio?.play())
+    : audio?.pause()
 
 // On mounted
 onMounted(() => lottieRef.value?.setSpeed(1 / audio.duration))

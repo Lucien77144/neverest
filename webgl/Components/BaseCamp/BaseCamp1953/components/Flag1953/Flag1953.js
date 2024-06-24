@@ -65,7 +65,7 @@ export default class Flag1953 extends BasicItem {
   init() {
     this.setItem()
     this.setFlag()
-
+    
     this.addCSS2D({
       id: this.name + '_audio',
       template: UIAudioPlayer,

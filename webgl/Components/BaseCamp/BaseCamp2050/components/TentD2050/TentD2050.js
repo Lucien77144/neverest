@@ -57,7 +57,7 @@ export default class TentD2050 extends BasicItem {
   }
 
   /**
-   * Init the floor
+   * Init the tent
    */
   init() {
     this.isInstances && this.setInstances()

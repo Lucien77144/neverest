@@ -57,7 +57,7 @@ export default class BigBox2050 extends BasicItem {
   }
 
   /**
-   * Init the floor
+   * Init the Box
    */
   init() {
     this.isInstances && this.setInstances()
