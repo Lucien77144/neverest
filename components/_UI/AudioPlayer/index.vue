@@ -68,13 +68,9 @@ $bus.on('active-tempo', (tempo: String) => {
 
 // Reset the lottie animation
 const resetLottie = () => {
-  const to = { value: lottieRef.value?.getDuration() || 1 }
-  gsap.to(to, {
-    duration: 0.25,
-    ease: 'power2.inOut',
-    value: 0,
-    onUpdate: () => lottieRef.value?.goToAndStop(to.value),
-  })
+  audio.pause()
+  lottieRef.value?.goToAndStop(1)
+  audio.currentTime = 0
 }
 
 // Fade in/out the audio volume
@@ -84,7 +80,7 @@ const fadeAudio = (
   targetVolume: number
 ) => {
   const volume = audio.volume
-  const steps = 10
+  const steps = 50
   const stepDuration = duration / steps
   const stepVolume = (targetVolume - volume) / steps
 
@@ -97,7 +93,6 @@ const fadeAudio = (
 
 // Audio Events
 audio.addEventListener('play', () => {
-  if (audioEnd.value) lottieRef.value?.goToAndStop(1)
   audioEnd.value = false
 
   lottieRef.value?.play()
@@ -116,7 +111,7 @@ audio.addEventListener('ended', () => {
 const toggle = () =>
   audio?.paused
     ? ($bus.emit('audio-voix-off:muteAll'), audio?.play())
-    : audio?.pause()
+    : (lottieRef.value?.goToAndStop(0), audio?.pause())
 
 // On mounted
 onMounted(() => lottieRef.value?.setSpeed(1 / audio.duration))

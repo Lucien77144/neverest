@@ -48,6 +48,7 @@ export default class TentB1953 extends BasicItem {
         uVentTexture: { value: testVenttexture },
         uRot: { value: 0.0 },
       },
+      side: 2,
       vertexShader,
       fragmentShader,
     })

@@ -6,7 +6,7 @@
       <Modal />
       <UISubtitle />
       <NextScene />
-      <UIProgressBar />
+      <!-- <UIProgressBar /> -->
       <UIInputControl />
       <UILangPicker />
     </div>

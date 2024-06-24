@@ -6,14 +6,16 @@
   </select> -->
   <div class="LP">
     <UIIconBtn
+      v-if="!toggleLang"
       :disable="false"
-      @click="I18n.setLocale('fr'), $bus.emit('lang:change', 'fr')"
+      @click="change({ target: { value: 'fr' } })"
     >
       {{ $t('LANG.FR.TAG') }}
     </UIIconBtn>
     <UIIconBtn
+      v-if="toggleLang"
       :disable="false"
-      @click="I18n.setLocale('en'), $bus.emit('lang:change', 'en')"
+      @click="change({ target: { value: 'en' } })"
     >
       {{ $t('LANG.EN.TAG') }}
     </UIIconBtn>
@@ -32,6 +34,8 @@ const options = ref<string[]>(
   Object.values(I18n.locales.value).map(({ code }) => code)
 )
 
+const toggleLang = ref<boolean>(false)
+
 /**
  * Change the language of the experience
  * @param target Target element to get value from
@@ -39,6 +43,7 @@ const options = ref<string[]>(
 const change = ({ target }: any) => {
   I18n.setLocale(target.value)
   $bus.emit('lang:change', target.value)
+  toggleLang.value = !toggleLang.value
 }
 </script>
 

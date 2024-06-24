@@ -65,8 +65,7 @@ export default class AudioManager {
    */
   setEvents() {
     const sounds = {
-      click: this.resources.items.click,
-      vent2050: this.resources.items.vent2050,
+      click: this.resources.items.click
     }
     
     this.$bus.on('audio:click', () => this.resources.items.click.play())

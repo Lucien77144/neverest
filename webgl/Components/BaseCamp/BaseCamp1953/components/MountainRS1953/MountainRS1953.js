@@ -1,3 +1,4 @@
+import { UIAudioPlayer } from '#components'
 import { DoubleSide, MeshBasicMaterial, Vector3 } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
@@ -48,5 +49,17 @@ export default class MountainRS1953 extends BasicItem {
   init() {
     this.setItem()
     this.setMaterial()
+
+    this.addCSS2D({
+      id: this.name + '_audio',
+      template: UIAudioPlayer,
+      data: {
+        source: this.resources.montagne_1953,
+        id: this.name + '_audio',
+        tempo: '1953',
+      },
+      parent: this.item,
+      position: new Vector3(2, 6, -85),
+    })
   }
 }
