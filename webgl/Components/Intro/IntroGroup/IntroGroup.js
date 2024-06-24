@@ -1,4 +1,4 @@
-import { Vector3 } from 'three'
+import { MathUtils, Vector3 } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import Mountain from '../Mountain/Mountain'
 import InfoLine from '../InfoLine/InfoLine'
@@ -162,11 +162,17 @@ export default class IntroGroup extends BasicItem {
   }
 
   onMouseMove(e){
-    this.components.planeTexture1.cursorXPos = e.centered.x
+    this.components.planeTexture1.cursorXPos = e.centered.x 
     this.components.planeTexture2.cursorXPos = e.centered.x
     this.components.planeTexture3.cursorXPos = e.centered.x
     this.components.planeTexture4.cursorXPos = e.centered.x
     this.components.planeTexture5.cursorXPos = e.centered.x
+    this.components.planeTexture1.cursorYPos = e.centered.y
+    this.components.planeTexture2.cursorYPos = e.centered.y
+    this.components.planeTexture3.cursorYPos = e.centered.y
+    this.components.planeTexture4.cursorYPos = e.centered.y
+    this.components.planeTexture5.cursorYPos = e.centered.y
+
   }
 
   /**

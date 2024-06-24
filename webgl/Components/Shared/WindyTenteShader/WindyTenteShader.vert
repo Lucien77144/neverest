@@ -1,5 +1,6 @@
 varying vec2 vUv;
 uniform float uRot;
+uniform float uDec;
 uniform float uTime;
 uniform sampler2D uVentTexture;
 
@@ -45,5 +46,6 @@ void main() {
   dotProduct = pow(dotProduct,3.0);
   vec4 modelPosition =  instanceMatrix * vec4(position, 1.0);
   modelPosition.x+=dotProduct*noise(uv+uTime*0.5)*0.5*ventTexture;
+  modelPosition.x += pow(min(1.0,position.y*0.3),2.0) * noise(vec2(uTime*0.5+uDec)) * 0.2;
   gl_Position = projectionMatrix * modelViewMatrix * modelPosition;
 }

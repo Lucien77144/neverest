@@ -184,6 +184,11 @@
         "type": "texture"
       },
       {
+        "name": "flag2024Displacement",
+        "source": "/img/flags2024/flag2024displacement.jpg",
+        "type": "texture"
+      },
+      {
         "name": "riverRepeat",
         "source": "/img/riverRepeat.jpg",
         "type": "texture"

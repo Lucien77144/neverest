@@ -47,6 +47,7 @@ export default class TentB1953 extends BasicItem {
         uTexture: { value: instance.material.map },
         uVentTexture: { value: testVenttexture },
         uRot: { value: 0.0 },
+        uDec:{ value: 0 }
       },
       side: 2,
       vertexShader,
@@ -66,6 +67,7 @@ export default class TentB1953 extends BasicItem {
 
       this.item.setMatrixAt(i, dummy.matrix)
       this.item.setUniformAt('uRot', i, el.rotation.y)
+      this.item.setUniformAt('uDec', i, Math.round(Math.random()*100)*0.01)
     })
 
     this.item.instanceMatrix.needsUpdate = true

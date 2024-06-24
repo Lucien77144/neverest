@@ -43,6 +43,7 @@ export default class TentC2050 extends BasicItem {
         uTexture: { value: instance.material.map },
         uVentTexture: { value: textureTenteC2050 },
         uRot: { value: 0.0 },
+        uDec:{ value: 0 }
       },
       vertexShader,
       fragmentShader,

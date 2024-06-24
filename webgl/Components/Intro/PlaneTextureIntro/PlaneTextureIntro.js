@@ -1,4 +1,4 @@
-import { AdditiveBlending, LinearMipMapLinearFilter, Mesh, MeshBasicMaterial, MeshStandardMaterial, NearestFilter, NormalBlending, PlaneGeometry, SRGBColorSpace } from "three"
+import { AdditiveBlending, LinearMipMapLinearFilter, MathUtils, Mesh, MeshBasicMaterial, MeshStandardMaterial, NearestFilter, NormalBlending, PlaneGeometry, SRGBColorSpace } from "three"
 import Experience from "~/webgl/Experience"
 import BasicItem from "~/webgl/Modules/Basics/BasicItem"
 
@@ -36,6 +36,7 @@ export default class PlaneTextureIntro extends BasicItem {
       this.material = null
       this.test = null
       this.cursorXPos = 0
+      this.cursorYPos = 0
     }
 
     setGeometry(){
@@ -66,7 +67,16 @@ export default class PlaneTextureIntro extends BasicItem {
 
 
     update(){
-        this.item.position.x = this.cursorXPos * this.parallaxMultiplier * 0.3
+        this.item.position.x = MathUtils.lerp(
+            this.item.position.x,
+            this.cursorXPos * this.parallaxMultiplier * 0.3,
+            0.1
+        )
+        this.item.position.y = MathUtils.lerp(
+            this.item.position.y,
+            this.cursorYPos * this.parallaxMultiplier * 0.3,
+            0.1
+        )
     }
 
 

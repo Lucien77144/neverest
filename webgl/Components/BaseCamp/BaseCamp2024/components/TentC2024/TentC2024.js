@@ -46,6 +46,7 @@ export default class TentC2024 extends BasicItem {
         uTexture: { value: instance.material.map },
         uVentTexture: { value: textureTenteC2024 },
         uRot: { value: 0.0 },
+        uDec:{ value: 0 }
       },
       vertexShader,
       fragmentShader,
@@ -64,6 +65,7 @@ export default class TentC2024 extends BasicItem {
       dummy.updateMatrix()
       this.item.setMatrixAt(i, dummy.matrix)
       this.item.setUniformAt('uRot', i, el.rotation.y)
+      this.item.setUniformAt('uDec', i, Math.round(Math.random()*100)*0.01)
     })
 
     this.item.instanceMatrix.needsUpdate = true
