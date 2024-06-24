@@ -155,11 +155,14 @@ export default class Experience {
    * Start the experience
    */
   start() {
-    this.sceneManager.init(this.viewport.debug && this.baseScene)
-    this.setActive(true)
+    this.sceneManager.init(this.viewport.debug && this.baseScene).then(() => {
+      console.log('done')
+      this.setActive(true)
 
-    // Events
-    this.$bus.emit('loading:complete')
+      // Events
+      this.$bus.on('tick', this.handleUpdate)
+      this.$bus.emit('loading:complete')
+    })
   }
 
   /**
@@ -202,11 +205,11 @@ export default class Experience {
       limit: { min: 0, max: 100 },
       decimal: 1000,
     })
+    this.renderer = new Renderer()
     this.keysManager = new KeysManager()
     this.sceneManager = new SceneManager()
     this.raycaster = new Raycaster()
     this.resources = new Resources()
-    this.renderer = new Renderer()
     this.audioManager = new AudioManager()
 
     // Set global debuggers
@@ -214,7 +217,6 @@ export default class Experience {
 
     // Events
     this.$bus.on('start', this.handleStart)
-    this.$bus.on('tick', this.handleUpdate)
     this.$bus.on('resize', this.handleResize)
     this.$bus.on('resources:done', this.handleUniforms)
     this.scrollManager.on('scroll', this.handleScroll)

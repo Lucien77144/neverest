@@ -1,7 +1,9 @@
 [
   {
     "name": "global",
-    "data": {},
+    "data": {
+      "preload": true
+    },
     "items": [
       {
         "name": "click",
@@ -20,7 +22,9 @@
   },
   {
     "name": "intro",
-    "data": {},
+    "data": {
+      "preload": true
+    },
     "items": [
       {
         "name": "introMountainTexture",
@@ -73,6 +77,9 @@
   },
   {
     "name": "basecamp",
+    "data": {
+      "preload": true
+    },
     "items": [
       {
         "name": "intro_basecamp",

@@ -9,6 +9,7 @@ export default class SceneManager {
   constructor() {
     // Get elements from experience
     this.experience = new Experience()
+    this.renderer = this.experience.renderer
     this.scrollManager = this.experience.scrollManager
     this.debug = this.experience.debug
     this.resources = this.experience.resources
@@ -148,7 +149,7 @@ export default class SceneManager {
 
     // Add render mesh if unset :
     const transition = next.transition
-    this.renderMesh ??= this.experience.renderer.renderMesh
+    this.renderMesh ??= this.renderer.renderMesh
 
     // Get current values :
     const currStart = this.start
@@ -257,6 +258,20 @@ export default class SceneManager {
 
     // Start navigation
     this.$bus.on('scene:switch', (scene) => this.switch(scene))
+
+    return new Promise((resolve) => {
+      const prev = this.active.scene.onAfterRender
+      this.active.scene.onAfterRender = () => {
+        this.active.scene.onAfterRender = prev
+        resolve()
+      }
+
+      this.renderer.instance.render(
+        this.active.scene,
+        this.active.camera.instance
+      )
+      this.renderer.instance.clear()
+    })
   }
 
   /**
