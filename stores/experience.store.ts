@@ -1,6 +1,6 @@
 import type { TSceneInfos } from '~/const/scenes.const'
 
-type TExpStore = {
+export type TExpStore = {
   active: boolean
   landing: boolean
   scroll: number
