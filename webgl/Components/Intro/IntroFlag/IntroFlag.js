@@ -29,7 +29,7 @@ export default class IntroFlag extends BasicItem {
       this.item = this.resources.ENFlag.scene.clone()
       
       //this.item.scale.set(0.2,0.2,0.2)
-      this.item.children[0].position.set(-0.9,-5.7,0)
+      this.item.children[0].position.set(0.3,-5.7,3)
       //this.item.position.z+=3
       //this.item.position.y += 4
       
@@ -95,8 +95,9 @@ export default class IntroFlag extends BasicItem {
         flagMaterial.userData.shader = shader;
       };
       this.flag = new Mesh(flagGeometry, flagMaterial)
+      this.flag.position.set(1.2,0,3)
       const light = new PointLight(0xffffff,4,0,0)
-      light.position.set(1,1,1.3)
+      light.position.set(2,1,4.2)
       this.item.add(light)
   
       this.item.add(this.flag)
