@@ -4,17 +4,25 @@ export default class BasicBaseCampSteps extends BasicItem {
   /**
    * Constructor
    */
-  constructor({ visibility = [0, 25.87], CSSVisibility, active = true }) {
+  constructor({
+    visibility = [0, 25.87],
+    CSSVisibility,
+    active = true,
+    tempo,
+    ignoreHover = [],
+  }) {
     super()
     // Get elements from Experience
     this.$bus = this.experience.$bus
 
     // Elements
+    this.tempo = tempo
     this.visibility = visibility
     this.CSSVisibility = CSSVisibility ?? visibility
     this.isActive = active
     this.isActiveCSS = active
     this.ready = false
+    this.ignoreHover = ignoreHover
   }
 
   /**
@@ -41,15 +49,16 @@ export default class BasicBaseCampSteps extends BasicItem {
     this.item.visible = this.isActive
 
     if (this.isActive) {
-      this.$bus.emit('audio:1953')
+      this.$bus.emit('audio:' + this.tempo)
+      this.$bus.emit('tempo:change', this.tempo)
 
       Object.values(this.components).forEach((c) => {
-        if (c.name === 'Floor1953') return
+        if (this.ignoreHover.includes(c.name)) return
         c.onMouseMove = false
       })
     } else {
       Object.values(this.components).forEach((c) => {
-        if (c.name === 'Floor1953') return
+        if (this.ignoreHover.includes(c.name)) return
         c.onMouseMove = undefined
       })
     }
