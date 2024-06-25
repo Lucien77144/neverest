@@ -9,7 +9,7 @@
   <div id="webgl-interface">
     <UIInterestData />
     <UITitle />
-    <div ref="startBtnRef" class="start__btn">
+    <div ref="startBtnRef" class="start__btn hidden">
       <UIBtn @click="start()">
         {{ $t('START') }}
       </UIBtn>
@@ -58,7 +58,7 @@ watch(navigation, ({ scene }: TExpStore['navigation']) => {
  * Start the experience
  */
 function start() {
-  // $bus.emit('audio:unmute')
+  $bus.emit('audio:start')
   sceneRef.value = scenes.nav.list.find((s) => s.name === 'basecamp')
   sceneRef.value && $bus.emit('scene:switch', sceneRef.value)
 }
@@ -79,7 +79,11 @@ const setVisibility = (name: string) => {
   if (name !== 'intro') {
     startBtnRef.value?.classList.add('hidden')
   } else {
-    startBtnRef.value?.classList.remove('hidden')
+    $bus.on('audio:intro', () => {
+      setTimeout(() => {
+        startBtnRef.value?.classList.remove('hidden')
+      }, 10000)
+    })
   }
 }
 

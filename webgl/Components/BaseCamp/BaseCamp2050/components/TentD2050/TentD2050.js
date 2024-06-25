@@ -1,6 +1,7 @@
 import { InstancedMesh, Object3D, Vector3 } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import { BCTENT_3_2050 } from '~/const/blocking/baseCamp.const'
+import { UIAudioPlayer } from '#components'
 
 export default class TentD2050 extends BasicItem {
   /**
@@ -62,5 +63,17 @@ export default class TentD2050 extends BasicItem {
   init() {
     this.isInstances && this.setInstances()
     !this.isInstances && this.setItem()
+
+    this.addCSS2D({
+      id: this.name + '_audio',
+      template: UIAudioPlayer,
+      data: {
+        source: this.resources.tent_box_2050,
+        id: this.name + '_audio',
+        tempo: '2050',
+      },
+      parent: this.item,
+      position: new Vector3(-10, 1, -35),
+    })
   }
 }

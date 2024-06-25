@@ -51,10 +51,6 @@ export default class TentA2050 extends BasicItem {
       position,
       data: {
         template: this.modal,
-        values: {
-          archives1953: this.resources.archives1953,
-          return1953: this.resources.return1953,
-        },
       },
     })
   }

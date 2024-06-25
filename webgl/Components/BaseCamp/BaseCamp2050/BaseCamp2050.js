@@ -102,6 +102,7 @@ export default class BaseCamp2050 extends BasicItem {
 
     if (this.isActive) {
       this.$bus.emit('active-tempo', '2050')
+      this.$bus.emit('audio:2050')
     }
   }
 

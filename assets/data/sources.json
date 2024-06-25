@@ -36,6 +36,10 @@
         }
       },
       {
+        "name": "ambient_intro",
+        "source": "/sounds/AMBIENT/INTRO.mp3"
+      },
+      {
         "name": "introMountainPlan1",
         "source": "/img/introMountain1.png",
         "type": "texture"
@@ -161,6 +165,22 @@
           "fr": "/subtitles/return1953/fr.vtt",
           "en": "/subtitles/return1953/en.vtt"
         }
+      },
+      {
+        "name": "ambient_1953",
+        "source": "/sounds/AMBIENT/1953.mp3"
+      },
+      {
+        "name": "ambient_2024",
+        "source": "/sounds/AMBIENT/2024.mp3"
+      },
+      {
+        "name": "ambient_2050",
+        "source": "/sounds/AMBIENT/2050.mp3"
+      },
+      {
+        "name": "ambient_conclusion",
+        "source": "/sounds/AMBIENT/CONCLUSION.mp3"
       },
       {
         "name": "archives1953",

@@ -115,6 +115,7 @@ export default class BaseCamp1953 extends BasicItem {
 
     if (this.isActive) {
       this.$bus.emit('active-tempo', '1953')
+      this.$bus.emit('audio:1953')
     }
   }
 
