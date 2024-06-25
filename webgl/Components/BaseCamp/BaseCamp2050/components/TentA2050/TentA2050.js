@@ -1,5 +1,5 @@
 import { Vector3 } from 'three'
-import ModalSprite from '~/webgl/Components/Shared/ModalSprite/ModalSprite'
+import ModalBtn from '~/webgl/Components/Shared/ModalBtn/ModalBtn'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
 export default class TentA2050 extends BasicItem {
@@ -47,7 +47,7 @@ export default class TentA2050 extends BasicItem {
     position.x += 0.4
     position.z += 3.3
 
-    this.components.modalSprite2050 = new ModalSprite({
+    this.components.modalSprite2050 = new ModalBtn({
       position,
       data: {
         template: this.modal,

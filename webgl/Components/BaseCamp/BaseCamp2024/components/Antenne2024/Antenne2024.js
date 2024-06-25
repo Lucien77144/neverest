@@ -1,5 +1,5 @@
-import { UIAudioPlayer } from '#components'
 import { Vector3 } from 'three'
+import AudioBtn from '~/webgl/Components/Shared/AudioBtn/AudioBtn'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
 export default class Antenne2024 extends BasicItem {
@@ -13,14 +13,21 @@ export default class Antenne2024 extends BasicItem {
   }) {
     super()
 
-    // Elements
+    // Get elements from Experience
+    this.resources = this.experience.resources.items
+    this.time = this.experience.time
+
+    // New elements
     this.position = position
     this.rotation = rotation
     this.name = name
-
-    // New elements
-    this.resources = this.experience.resources.items
-    this.time = this.experience.time
+    this.components = {
+      audioBtnAntenne24: new AudioBtn({
+        position: this.position.clone().add(new Vector3(0, 1, 0)),
+        source: this.resources.antenne_2024,
+        name: this.name + '_audio',
+      }),
+    }
   }
 
   /**
@@ -38,17 +45,5 @@ export default class Antenne2024 extends BasicItem {
    */
   init() {
     this.setItem()
-
-    this.addCSS2D({
-      id: this.name + '_audio',
-      template: UIAudioPlayer,
-      data: {
-        source: this.resources.antenne_2024,
-        id: this.name + '_audio',
-        tempo: '2024',
-      },
-      parent: this.item,
-      position: new Vector3(0, 1, 0),
-    })
   }
 }

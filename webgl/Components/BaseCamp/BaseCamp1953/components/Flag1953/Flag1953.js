@@ -2,7 +2,7 @@ import { Mesh, PlaneGeometry, ShaderMaterial, Uniform, Vector3 } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import fragmentShader from './shaders/fragmentShader.frag?raw'
 import vertexShader from './shaders/vertexShader.vert?raw'
-import { UIAudioPlayer } from '#components'
+import AudioBtn from '~/webgl/Components/Shared/AudioBtn/AudioBtn'
 
 export default class Flag1953 extends BasicItem {
   /**
@@ -14,16 +14,22 @@ export default class Flag1953 extends BasicItem {
     name = 'Flag1953',
   }) {
     super()
+    // Get elements from Experience
+    this.resources = this.experience.resources.items
+    this.time = this.experience.time
 
-    // Elements
+    // New elements
     this.position = position
     this.rotation = rotation
     this.name = name
-    
-    // New elements
-    this.resources = this.experience.resources.items
-    this.time = this.experience.time
     this.flag = null
+    this.components = {
+      audioBtnFlag53: new AudioBtn({
+        position: this.position.clone().add(new Vector3(0, 1, 0)),
+        source: this.resources.flag_1953,
+        name: this.name + '_audio',
+      }),
+    }
   }
 
   /**
@@ -42,7 +48,7 @@ export default class Flag1953 extends BasicItem {
    */
   setFlag() {
     const geometry = new PlaneGeometry(3, 2, 32, 32)
-    
+
     const material = new ShaderMaterial({
       uniforms: {
         uTime: new Uniform(this.time.elapsed * 0.001),
@@ -65,25 +71,13 @@ export default class Flag1953 extends BasicItem {
   init() {
     this.setItem()
     this.setFlag()
-    
-    this.addCSS2D({
-      id: this.name + '_audio',
-      template: UIAudioPlayer,
-      data: {
-        source: this.resources.flag_1953,
-        id: this.name + '_audio',
-        tempo: '1953',
-      },
-      parent: this.item,
-      position: new Vector3(0, 1, 0),
-    })
   }
 
   /**
    * Update
    */
   update() {
-    this.item.children[1].material.uniforms.uTime.value =
+    this.item.children[0].children[1].material.uniforms.uTime.value =
       this.time.elapsed * 0.001
   }
 }

@@ -4,28 +4,25 @@ import { CustomEase } from 'gsap/all'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 gsap.registerPlugin(CustomEase)
 
-export default class ModalSprite extends BasicItem {
+export default class ModalBtn extends BasicItem {
   /**
    * Constructor
    */
   constructor({ position, data, name }) {
     super()
-    // Elements
+
+    // Elements from Experience
     this.scrollManager = this.experience.scrollManager
     this.keysManager = this.experience.keysManager
     this.resources = this.experience.resources.items
     this.renderUniforms = this.experience.renderer.renderMesh.material.uniforms
     this.$bus = this.experience.$bus
+
+    // New elements
     this.position = position
     this.data = data
     this.name = name
-
-    // New elements
     this.camera = null
-    this.material = null
-    this.active = false
-    this.scale = 1.3
-    this.scaleFocus = 0
   }
 
   /**

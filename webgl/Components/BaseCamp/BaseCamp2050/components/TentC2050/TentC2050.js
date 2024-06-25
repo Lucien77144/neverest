@@ -5,7 +5,7 @@ import { InstancedUniformsMesh } from 'three-instanced-uniforms-mesh'
 import vertexShader from '~/webgl/Components/Shared/WindyTenteShader/WindyTenteShader.vert?raw'
 import fragmentShader from '~/webgl/Components/Shared/WindyTenteShader/WindyTenteShader.frag?raw'
 import Experience from '~/webgl/Experience'
-import { UIAudioPlayer } from '#components'
+import AudioBtn from '~/webgl/Components/Shared/AudioBtn/AudioBtn'
 
 export default class TentC2050 extends BasicItem {
   /**
@@ -21,15 +21,22 @@ export default class TentC2050 extends BasicItem {
 
     this.experience = new Experience()
 
-    // Elements
+    // Get elements from Experience
+    this.resources = this.experience.resources.items
+    this.time = this.experience.time
+
+    // New elements
     this.position = position
     this.rotation = rotation
     this.name = name
     this.isInstances = isInstances
-
-    // New elements
-    this.resources = this.experience.resources.items
-    this.time = this.experience.time
+    this.components = {
+      audioBtnTentC50: new AudioBtn({
+        position: new Vector3(0, 1, -8),
+        source: this.resources.tent_green_2050,
+        name: this.name + '_audio',
+      }),
+    }
   }
 
   /**
@@ -44,7 +51,7 @@ export default class TentC2050 extends BasicItem {
         uTexture: { value: instance.material.map },
         uVentTexture: { value: textureTenteC2050 },
         uRot: { value: 0.0 },
-        uDec:{ value: 0 }
+        uDec: { value: 0 },
       },
       vertexShader,
       fragmentShader,
@@ -83,21 +90,10 @@ export default class TentC2050 extends BasicItem {
   init() {
     this.isInstances && this.setInstances()
     !this.isInstances && this.setItem()
-
-    this.addCSS2D({
-      id: this.name + '_audio',
-      template: UIAudioPlayer,
-      data: {
-        source: this.resources.tent_green_2050,
-        id: this.name + '_audio',
-        tempo: '2050',
-      },
-      parent: this.item,
-      position: new Vector3(0, 1, -8),
-    })
   }
 
-  update(){
-    this.item.material.uniforms.uTime.value = this.time.elapsed * 0.001
+  update() {
+    this.item.children[0].material.uniforms.uTime.value =
+      this.time.elapsed * 0.001
   }
 }

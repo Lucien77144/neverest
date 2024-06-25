@@ -1,7 +1,6 @@
-import { UIAudioPlayer } from '#components'
-import { ShaderMaterial, Uniform, Vector3 } from 'three'
+import { Uniform, Vector3 } from 'three'
+import AudioBtn from '~/webgl/Components/Shared/AudioBtn/AudioBtn'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
-
 
 export default class Flag2024 extends BasicItem {
   /**
@@ -14,28 +13,36 @@ export default class Flag2024 extends BasicItem {
   }) {
     super()
 
-    // Elements
+    // Get elements from Experience
+    this.resources = this.experience.resources.items
+    this.time = this.experience.time
+
+    // New elements
     this.position = position
     this.rotation = rotation
     this.name = name
-
-    // New elements
-    this.resources = this.experience.resources.items
-    this.time = this.experience.time
+    this.components = {
+      audioBtnFlag24: new AudioBtn({
+        position: this.position.clone().add(new Vector3(0, 0.2, 0)),
+        source: this.resources.drapeau_priere_2024,
+        name: this.name + '_audio',
+      }),
+    }
   }
 
   /**
    * Set item
    */
-  setItem() {
-    this.item = this.resources.Flag_2024.scene.clone()
-    this.item.position.copy(this.position)
-    this.item.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
-    this.item.name = this.name
+  setFlag() {
+    this.flag = this.resources.Flag_2024.scene.clone()
+    this.flag.name = this.name
+    this.flag.position.copy(this.position)
+    this.flag.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
+
     const texture = this.resources.flag2024Displacement
     texture.flipY = false
 
-    this.item.children[0].material.onBeforeCompile = (shader) => {
+    this.flag.children[0].material.onBeforeCompile = (shader) => {
       shader.uniforms.uTime = new Uniform(0)
       shader.uniforms.uDisplacementMap = new Uniform(texture)
 
@@ -67,38 +74,35 @@ export default class Flag2024 extends BasicItem {
           }
           ${shader.vertexShader}
         `.replace(
-          `#include <begin_vertex>`,
-          `
+        `#include <begin_vertex>`,
+        `
           #include <begin_vertex>
           float noiseUv = noise(uv - uTime) - 0.5;
           transformed.z += texture2D(uDisplacementMap, uv).r * noiseUv;
           `
-        );
-        this.item.children[0].material.userData.shader = shader;
-    }
+      )
 
+      this.flag.children[0].material.userData.shader = shader
+
+      this.item = this.flag
+    }
   }
 
   /**
    * Init
    */
   init() {
-    this.setItem()
-
-    this.addCSS2D({
-      id: this.name + '_audio',
-      template: UIAudioPlayer,
-      data: {
-        source: this.resources.drapeau_priere_2024,
-        id: this.name + '_audio',
-        tempo: '2024',
-      },
-      parent: this.item,
-      position: new Vector3(0, 0.2, 0),
-    })
+    this.setFlag()
   }
 
-  update(){
-    this.item.children[0].material.userData.shader.uniforms.uTime.value = this.time.elapsed * 0.001
+  /**
+   * Update
+   */
+  update() {
+    if (this.flag?.material?.userData?.shader) {
+      console.log(this.flag.material)
+    }
+    // this.flag.material.userData.shader.uniforms.uTime.value =
+    //   this.time.elapsed * 0.001
   }
 }

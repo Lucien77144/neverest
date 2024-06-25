@@ -1,9 +1,6 @@
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import { Vector3 } from 'three'
-import ModalSprite from '../../../../Shared/ModalSprite/ModalSprite'
-
-import vertexShader from '~/webgl/Components/Shared/WindyTenteShader/WindyTenteShader.vert?raw'
-import fragmentShader from '~/webgl/Components/Shared/WindyTenteShader/WindyTenteShader.frag?raw'
+import ModalBtn from '~/webgl/Components/Shared/ModalBtn/ModalBtn'
 
 export default class TentA1953 extends BasicItem {
   /**
@@ -50,7 +47,7 @@ export default class TentA1953 extends BasicItem {
     position.y = boundings.min.y + 1
     position.z += 3.3
 
-    this.components.modalSprite1953 = new ModalSprite({
+    this.components.modalSprite1953 = new ModalBtn({
       position,
       data: {
         template: this.modal,

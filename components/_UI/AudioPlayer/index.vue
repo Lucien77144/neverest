@@ -50,20 +50,6 @@ $bus.on('audio-voix-off:muteAll', () => {
   lottieRef.value?.goToAndStop(0)
   // }
 })
-$bus.on('active-tempo', (tempo: String) => {
-  if (tempo === data?.tempo) {
-    audioPlayerRef.value?.classList.remove('hidden')
-    fadeAudio(audio, 1, 1)
-  } else {
-    fadeAudio(audio, 1000, 0)
-    setTimeout(() => {
-      audio.pause()
-      audio.currentTime = 0
-      lottieRef.value?.goToAndStop(0)
-    }, 1000)
-    audioPlayerRef.value?.classList.add('hidden')
-  }
-})
 
 // Reset the lottie animation
 const resetLottie = () => {

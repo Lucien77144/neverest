@@ -89,6 +89,7 @@ export default class BaseCamp extends BasicScene {
     // If current scroll is between visibility values
     if (start <= scroll && scroll <= end) {
       !c.isActive && c.toggleActive()
+
       this.components.floorAnimation.setEffectColor(c.colors.mouse)
       this.components.floorAnimation.setBackgroundColor(c.colors.background)
     } else {

@@ -1,6 +1,6 @@
-import { UIAudioPlayer } from '#components'
 import { InstancedMesh, Object3D, Vector3 } from 'three'
 import { BCBIGBOX_1953 } from '~/const/blocking/baseCamp.const'
+import AudioBtn from '~/webgl/Components/Shared/AudioBtn/AudioBtn'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
 export default class BigBox1953 extends BasicItem {
@@ -14,15 +14,21 @@ export default class BigBox1953 extends BasicItem {
     isInstances = true,
   }) {
     super()
+    // Get elements from Experience
+    this.resources = this.experience.resources.items
 
-    // Elements
+    // New elements
     this.position = position
     this.rotation = rotation
     this.name = name
     this.isInstances = isInstances
-
-    // New elements
-    this.resources = this.experience.resources.items
+    this.components = {
+      audioBtnBox53: new AudioBtn({
+        position: new Vector3(-4.647, 1, -35.246),
+        source: this.resources.box_1953,
+        name: this.name + '_audio',
+      }),
+    }
   }
 
   /**
@@ -64,17 +70,5 @@ export default class BigBox1953 extends BasicItem {
   init() {
     this.isInstances && this.setInstances()
     !this.isInstances && this.setItem()
-
-    this.addCSS2D({
-      id: this.name + '_audio',
-      template: UIAudioPlayer,
-      data: {
-        source: this.resources.box_1953,
-        id: this.name + '_audio',
-        tempo: '1953',
-      },
-      parent: this.item,
-      position: new Vector3(-4.647, 1, -35.246),
-    })
   }
 }

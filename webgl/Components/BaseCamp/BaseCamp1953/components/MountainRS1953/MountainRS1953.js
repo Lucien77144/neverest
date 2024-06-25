@@ -1,5 +1,5 @@
-import { UIAudioPlayer } from '#components'
 import { DoubleSide, MeshBasicMaterial, Vector3 } from 'three'
+import AudioBtn from '~/webgl/Components/Shared/AudioBtn/AudioBtn'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
 export default class MountainRS1953 extends BasicItem {
@@ -12,14 +12,20 @@ export default class MountainRS1953 extends BasicItem {
     name = 'MountainRS1953',
   }) {
     super()
+    // Get elements from Experience
+    this.resources = this.experience.resources.items
 
-    // Elements
+    // New elements
     this.position = position
     this.rotation = rotation
     this.name = name
-
-    // New elements
-    this.resources = this.experience.resources.items
+    this.components = {
+      audioBtnRS53: new AudioBtn({
+        position: new Vector3(2, 6, -85),
+        source: this.resources.montagne_1953,
+        name: this.name + '_audio',
+      }),
+    }
   }
 
   /**
@@ -49,17 +55,5 @@ export default class MountainRS1953 extends BasicItem {
   init() {
     this.setItem()
     this.setMaterial()
-
-    this.addCSS2D({
-      id: this.name + '_audio',
-      template: UIAudioPlayer,
-      data: {
-        source: this.resources.montagne_1953,
-        id: this.name + '_audio',
-        tempo: '1953',
-      },
-      parent: this.item,
-      position: new Vector3(2, 6, -85),
-    })
   }
 }
