@@ -5,6 +5,7 @@ import { InstancedUniformsMesh } from 'three-instanced-uniforms-mesh'
 import vertexShader from '~/webgl/Components/Shared/WindyTenteShader/WindyTenteShader.vert?raw'
 import fragmentShader from '~/webgl/Components/Shared/WindyTenteShader/WindyTenteShader.frag?raw'
 import Experience from '~/webgl/Experience'
+import { UIAudioPlayer } from '#components'
 
 export default class TentB2050 extends BasicItem {
   /**
@@ -84,6 +85,18 @@ export default class TentB2050 extends BasicItem {
   init() {
     this.isInstances && this.setInstances()
     !this.isInstances && this.setItem()
+
+    this.addCSS2D({
+      id: this.name + '_audio',
+      template: UIAudioPlayer,
+      data: {
+        source: this.resources.tent_purple_2050,
+        id: this.name + '_audio',
+        tempo: '2050',
+      },
+      parent: this.item,
+      position: new Vector3(10, 1.5, -40),
+    })
   }
 
   update(){

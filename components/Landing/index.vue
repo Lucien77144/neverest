@@ -47,6 +47,7 @@ $bus.on('loaded', () => {
  */
 const enter = () => {
   $bus.emit('audio:unmute')
+  $bus.emit('audio:intro')
 
   if (landingRef.value) {
     gsap.to(landingRef.value, {
