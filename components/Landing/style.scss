@@ -2,13 +2,38 @@
   position: fixed;
   z-index: 100;
   background-color: $secondary;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   opacity: 1;
+  font-family: $lato;
+  font-weight: 600;
+
+  p {
+    user-select: none;
+  }
+
+  &__logo {
+    position: absolute;
+    top: 4rem;
+    left: 4rem;
+    opacity: 0;
+    user-select: none;
+  }
+
+  span{
+    position: absolute;
+    right: 4rem;
+    bottom: 4rem;
+    color: #41545A;
+    font-size: .9rem;
+    font-family: $lato;
+    font-weight: 600;
+    user-select: none;
+  }
 
   &__content {
     color: $primary;
@@ -19,7 +44,7 @@
     & h1 {
       text-transform: uppercase;
       text-align: center;
-      font-family: $open-sans;
+      // font-family: $open-sans;
       font-size: 6rem;
       font-style: italic;
       line-height: 3rem;
@@ -34,7 +59,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 2rem;
+      gap: 4rem;
       padding-top: 4.5rem;
     }
   }

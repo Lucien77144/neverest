@@ -46,7 +46,10 @@ export default {
   WELCOME: 'Neverest',
   LANDING:
     "Escaladez l'Everest et plongez dans les récits passionnants des expéditions historiques, découvrez les défis actuels des alpinistes et explorez les visions futures de cette montagne légendaire.",
-  LANDING_START: 'Pour une expérience optimale, branchez un casque',
+  LANDING_START: 'Cette expérience propose du contenu audio.',
+  LANDING_START_2: 'Pour en profiter dans le meilleur des cadres, nous vous conseillons d’activer le son.',
+  ACTIVATE: 'Activer le son',
+  NO_ACTIVATE: 'Ne pas activer',
   BASECAMP: 'Camp de base',
   ICEFALL: 'Chute de glace',
   SOUTHCOL: 'Col sud',
@@ -59,4 +62,5 @@ export default {
   WESTRIDGE: 'Arête Ouest',
   INTRO_TITLE_1: 'Ouvrez la voie',
   INTRO_TITLE_2: 'Neverest',
+  INTRO_CONTENT: "Explorez l’Everest, à travers un documentaire immersif pour découvrir et comprendre l'Everest à travers différentes époques."
 }

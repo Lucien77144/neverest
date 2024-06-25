@@ -1,6 +1,8 @@
 <template>
   <div class="button">
-    <button :type="type" @click="$emit('click', $props.value), $bus.emit('audio:click')">
+    <button :class="secondary && 'secondary', round && 'round', inverse && 'inverse'" :type="type" @click="$emit('click', $props.value), $bus.emit('audio:click')">
+      <img id="bg1" class="bg" src="/assets/img/btnBg.svg" alt="">
+      <img id="bg2" class="bg" src="/assets/img/btnBgWhite.svg" alt="">
       <slot />
     </button>
   </div>
@@ -22,6 +24,18 @@ const $props = defineProps({
   value: {
     type: [String, Number, Boolean],
     default: true,
+  },
+  secondary: {
+    type: Boolean,
+    default: false,
+  },
+  round: {
+    type: Boolean,
+    default: false,
+  },
+  inverse: {
+    type: Boolean,
+    default: false,
   },
 })
 </script>
