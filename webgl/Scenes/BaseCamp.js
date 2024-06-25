@@ -47,14 +47,14 @@ export default class BaseCamp extends BasicScene {
         CSSVisibility: [32.45, 71.8],
         active: false,
         tempo: '2024',
-        ignoreHover: ['Floor2024', ],
+        ignoreHover: ['Floor2024'],
       }),
       baseCamp2050: new BaseCamp2050({
         visibility: [75.97, 100],
         CSSVisibility: [80, 100],
         active: false,
         tempo: '2050',
-        ignoreHover: ['Floor2050', 'River2050'],
+        ignoreHover: ['Floor2050'],
       }),
     }
 

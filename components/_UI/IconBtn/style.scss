@@ -29,8 +29,8 @@
     pointer-events: none;
   }
 
-  &.disabled::before {
-    opacity: 1;
+  &.disabled {
+    opacity: .75;
   }
 
   img {

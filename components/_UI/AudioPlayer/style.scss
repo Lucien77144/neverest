@@ -1,15 +1,45 @@
 .audio-player {
-  width: 5rem;
-  height: 5rem;
   cursor: pointer;
   animation: fadeIn 1s;
   transition: opacity 0.5s ease-in-out;
   display: block;
+  height: 48px;
+  width: 48px;
+  overflow: hidden;
+
+  &__svg {
+    height: 100%;
+    animation: waveContainer 5s infinite linear;
+
+    path {
+      stroke: $primary;
+      stroke-dasharray: 153px;
+      animation: wave 5s infinite linear;
+    }
+  }
 }
 
 .hidden {
   display: none;
   opacity: 0;
+}
+
+@keyframes wave {
+  0% {
+    stroke-dashoffset: -306px;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes waveContainer {
+  0% {
+    margin-left: calc(-64px + 2px); // width - strokewidth
+  }
+  100% {
+    margin-left: 0;
+  }
 }
 
 @keyframes fadeIn {
