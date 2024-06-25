@@ -1,4 +1,3 @@
-import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import { Modal2050 } from '#components'
 import { Vector3 } from 'three'
 import BigBox2050 from './components/BigBox2050/BigBox2050'
@@ -13,7 +12,7 @@ import MountainR2050 from './components/MountainR2050/MountainR2050'
 import MountainRS2050 from './components/MountainRS2050/MountainRS2050'
 import Floor2050 from './components/Floor2050/Floor2050'
 import River2050 from './components/River2050/River2050'
-import BasicBaseCampSteps from '../BasicBaseCampSteps/BasicBaseCampSteps'
+import BasicBaseCampSteps from '../../BasicBaseCampSteps'
 
 export default class BaseCamp2050 extends BasicBaseCampSteps {
   /**

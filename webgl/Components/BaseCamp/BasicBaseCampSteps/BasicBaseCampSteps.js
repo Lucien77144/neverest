@@ -62,7 +62,7 @@ export default class BasicBaseCampSteps extends BasicItem {
     setTimeout(() => {
       this.isActiveCSS = active
       this.item.traverse((c) => {
-        if (c.isCSS2DObject) c.visible = this.isActive
+        if (c.isCSS2DObject) c.visible = this.isActiveCSS
       })
     })
   }

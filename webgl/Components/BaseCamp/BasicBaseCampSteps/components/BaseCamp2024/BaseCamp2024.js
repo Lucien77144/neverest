@@ -15,7 +15,7 @@ import Floor2024 from './components/Floor2024/Floor2024'
 import River2024 from './components/River2024/River2024'
 import Antenne2024 from './components/Antenne2024/Antenne2024'
 import Flag2024 from './components/Flag2024/Flag2024'
-import BasicBaseCampSteps from '../BasicBaseCampSteps/BasicBaseCampSteps'
+import BasicBaseCampSteps from '../../BasicBaseCampSteps'
 
 export default class BaseCamp2024 extends BasicBaseCampSteps {
   /**
