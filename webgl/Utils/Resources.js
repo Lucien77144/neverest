@@ -1,6 +1,6 @@
 import Loader from './Loader.js'
 import sources from './assets/data/sources.json'
-import { Cache, Texture } from 'three'
+import { Cache, Scene, Texture } from 'three'
 import gsap from 'gsap'
 import Experience from '../Experience.js'
 
@@ -11,7 +11,8 @@ export default class Resources {
   constructor(_groups) {
     // Get elements from experience
     this.experience = new Experience()
-    Cache.enabled = true
+    this.renderer = this.experience.renderer
+    Cache.enabled = !this.experience.debug
 
     // New elements
     this.sources = []
@@ -99,9 +100,7 @@ export default class Resources {
         }),
       }))
 
-    this.toLoad
-      ? this.loadNextGroup()
-      : setTimeout(() => this.$bus.emit('loadingGroupEnd'))
+    this.toLoad ? this.loadNextGroup() : () => this.$bus.emit('loadingGroupEnd')
   }
 
   /**
@@ -151,7 +150,9 @@ export default class Resources {
         ease: 'power2.inOut',
         onUpdate: () => this.$bus.emit('loading', this.progress.value),
         onComplete: () => {
-          if (this.progress.value === 100) this.$bus.emit('start')
+          if (this.progress.value === 100) {
+            this.$bus.emit('start')
+          }
         },
       })
     })
@@ -160,7 +161,26 @@ export default class Resources {
     this.$bus.on('loadingGroupEnd', async () => {
       const current = this.groups.current
       this.groups.loaded.push(current)
-      this.groupEnd()
+
+      if (current.data.preload) {
+        const tmpScene = new Scene()
+        current.items
+          .map((i) => this.items[i.name])
+          .forEach((i) => {
+            if (i.scene) {
+              tmpScene.add(i.scene)
+            }
+          })
+
+        tmpScene.onAfterRender = () => {
+          tmpScene.clear()
+          this.renderer.instance.clear()
+          this.groupEnd()
+        }
+        this.renderer.instance.render(tmpScene, this.renderer.camera)
+      } else {
+        this.groupEnd()
+      }
     })
   }
 

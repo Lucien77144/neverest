@@ -28,7 +28,6 @@ export default class Renderer {
     this.viewport = this.experience.viewport
     this.debug = this.experience.debug
     this.time = this.experience.time
-    this.sceneManager = this.experience.sceneManager
     this.stats = this.experience.stats
     this.$bus = this.experience.$bus
 
@@ -218,8 +217,8 @@ export default class Renderer {
    */
   renderTargets() {
     // Get elements from experience
-    const active = this.sceneManager.active
-    const next = this.sceneManager.next
+    const active = this.experience.sceneManager.active
+    const next = this.experience.sceneManager.next
 
     // Scene1
     if (active?.camera?.instance) {
@@ -250,10 +249,6 @@ export default class Renderer {
     this.setInstance(this.experience.canvas)
     this.setRenderTargets()
     this.setRenderMesh()
-
-    setTimeout(() => {
-      this.renderMesh.material.uniforms
-    }, 2000)
 
     // Debug
     if (this.debug) this.setDebug()
