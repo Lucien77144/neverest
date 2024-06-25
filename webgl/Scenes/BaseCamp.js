@@ -22,7 +22,7 @@ export default class BaseCamp extends BasicScene {
 
     // New elements
     this.interest = interest
-    this.camFov = 15
+    this.camFov = 12.5
     this.list = []
     this.playing = false
     this.factorChange = false
@@ -37,9 +37,18 @@ export default class BaseCamp extends BasicScene {
       lights: new BaseCampLight(),
       floorAnimation: new FloorAnimation(),
 
-      baseCamp1953: new BaseCamp1953({ visibility: [0, 25.87] }),
-      baseCamp2024: new BaseCamp2024({ visibility: [25.87, 75.97] }),
-      baseCamp2050: new BaseCamp2050({ visibility: [75.97, 100] }),
+      baseCamp1953: new BaseCamp1953({
+        visibility: [0, 25.87],
+        CSSVisibility: [0, 25.87],
+      }),
+      baseCamp2024: new BaseCamp2024({
+        visibility: [25.87, 75.97],
+        CSSVisibility: [25.87, 75.97],
+      }),
+      baseCamp2050: new BaseCamp2050({
+        visibility: [75.97, 100],
+        CSSVisibility: [75.97, 100],
+      }),
     }
 
     // Init the scene
@@ -83,10 +92,12 @@ export default class BaseCamp extends BasicScene {
     if (!c.visibility?.length) return
 
     const scroll = force ?? this.scrollManager.current
-    const start = c.visibility[0]
-    const end = c.visibility[1]
+
+    console.log(scroll)
 
     // If current scroll is between visibility values
+    const start = c.visibility[0]
+    const end = c.visibility[1]
     if (start <= scroll && scroll <= end) {
       !c.isActive && c.toggleActive()
 
@@ -94,6 +105,15 @@ export default class BaseCamp extends BasicScene {
       this.components.floorAnimation.setBackgroundColor(c.colors.background)
     } else {
       c.isActive && c.toggleActive()
+    }
+
+    // If current scroll is between CSS visibility values
+    const startCSS = c.CSSVisibility[0]
+    const endCSS = c.CSSVisibility[1]
+    if (startCSS <= scroll && scroll <= endCSS) {
+      !c.isActiveCSS && c.toggleActiveCSS()
+    } else {
+      c.isActiveCSS && c.toggleActiveCSS()
     }
   }
 

@@ -20,12 +20,14 @@ export default class BaseCamp1953 extends BasicItem {
   /**
    * Constructor
    */
-  constructor({ visibility = [0, 25.87], active = true }) {
+  constructor({ visibility = [0, 25.87], CSSVisibility, active = true }) {
     super()
 
     // Elements
     this.visibility = visibility
+    this.CSSVisibility = CSSVisibility ?? visibility
     this.isActive = active
+    this.isActiveCSS = active
     this.ready = false
     this.$bus = this.experience.$bus
     this.colors = {
@@ -111,13 +113,20 @@ export default class BaseCamp1953 extends BasicItem {
   }
 
   /**
+   * Toggle active
+   */
+  toggleActiveCSS() {
+    this.isActiveCSS = !this.isActiveCSS
+    this.setActiveCSS()
+  }
+
+  /**
    * Set active
    */
   setActive(active = this.isActive) {
     this.isActive = active
-    this.item.visible = active
+    this.item.visible = this.isActive
 
-    console.log(this.components)
     if (this.isActive) {
       this.$bus.emit('audio:1953')
 
@@ -134,9 +143,22 @@ export default class BaseCamp1953 extends BasicItem {
   }
 
   /**
+   * Set active CSS
+   */
+  setActiveCSS(active = this.isActiveCSS) {
+    setTimeout(() => {
+      this.isActiveCSS = active
+      this.item.traverse((c) => {
+        if (c.isCSS2DObject) c.visible = this.isActive
+      })
+    })
+  }
+
+  /**
    * After the scene has rendered
    */
   onAfterRender() {
     this.setActive()
+    this.setActiveCSS()
   }
 }

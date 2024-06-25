@@ -23,6 +23,20 @@ export default class TentA1953 extends BasicItem {
 
     // New elements
     this.resources = this.experience.resources.items
+
+    this.components = {
+      modal1953: new ModalBtn({
+        position,
+        data: {
+          template: this.modal,
+          values: {
+            archives1953: this.resources.archives1953,
+            return1953: this.resources.return1953,
+          },
+        },
+        name: 'modal1953',
+      }),
+    }
   }
 
   /**
@@ -46,18 +60,6 @@ export default class TentA1953 extends BasicItem {
     mat.getWorldPosition(position)
     position.y = boundings.min.y + 1
     position.z += 3.3
-
-    this.components.modalSprite1953 = new ModalBtn({
-      position,
-      data: {
-        template: this.modal,
-        values: {
-          archives1953: this.resources.archives1953,
-          return1953: this.resources.return1953,
-        },
-      },
-      name: 'modalSprite1953',
-    })
   }
 
   /**

@@ -22,6 +22,19 @@ export default class TentA2024 extends BasicItem {
 
     // New elements
     this.resources = this.experience.resources.items
+    this.components = {
+      modal2024: new ModalBtn({
+        position,
+        data: {
+          template: this.modal,
+          values: {
+            video2024_1: this.resources.video2024_1,
+            video2024_2: this.resources.video2024_2,
+          },
+        },
+        name: 'modal2024',
+      }),
+    }
   }
 
   /**
@@ -35,18 +48,6 @@ export default class TentA2024 extends BasicItem {
     mat.getWorldPosition(position)
     position.y = boundings.min.y + 1
     position.z += 3.3
-
-    this.components.modalSprite2024 = new ModalBtn({
-      position,
-      data: {
-        template: this.modal,
-        values: {
-          video2024_1: this.resources.video2024_1,
-          video2024_2: this.resources.video2024_2,
-        },
-      },
-      name: 'modalSprite2024',
-    })
   }
 
   /**

@@ -13,15 +13,23 @@ export default class TentA2050 extends BasicItem {
     modal,
   }) {
     super()
+    // Get elements from Experience
+    this.resources = this.experience.resources.items
 
     // Elements
     this.position = position
     this.rotation = rotation
     this.name = name
     this.modal = modal
-
-    // New elements
-    this.resources = this.experience.resources.items
+    this.components = {
+      modal2050: new ModalBtn({
+        position,
+        data: {
+          template: this.modal,
+        },
+        name: 'modal2050',
+      }),
+    }
   }
 
   /**
@@ -46,14 +54,6 @@ export default class TentA2050 extends BasicItem {
     position.y = boundings.min.y + 1
     position.x += 0.4
     position.z += 3.3
-
-    this.components.modalSprite2050 = new ModalBtn({
-      position,
-      data: {
-        template: this.modal,
-      },
-      name: 'modalSprite2050',
-    })
   }
 
   /**
