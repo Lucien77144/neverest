@@ -4,7 +4,7 @@ import BaseCampCamera from '../Components/BaseCamp/BaseCampCamera/BaseCampCamera
 import BasicScene from '../Modules/Basics/BasicScene'
 import BaseCampLight from '../Components/BaseCamp/BaseCampLight/BaseCampLight'
 import FloorAnimation from '../Components/BaseCamp/FloorParticles/FloorAnimation'
-import BaseCamp1953 from '../Components/BaseCamp/BaseCamp1953/BaseCamp1953'
+import BaseCamp1953 from '../Components/BaseCamp/BasicBaseCampSteps/components/BaseCamp1953/BaseCamp1953'
 import BaseCamp2024 from '../Components/BaseCamp/BaseCamp2024/BaseCamp2024'
 import BaseCamp2050 from '../Components/BaseCamp/BaseCamp2050/BaseCamp2050'
 
@@ -44,10 +44,12 @@ export default class BaseCamp extends BasicScene {
       baseCamp2024: new BaseCamp2024({
         visibility: [25.87, 75.97],
         CSSVisibility: [25.87, 75.97],
+        active: false,
       }),
       baseCamp2050: new BaseCamp2050({
         visibility: [75.97, 100],
         CSSVisibility: [75.97, 100],
+        active: false,
       }),
     }
 

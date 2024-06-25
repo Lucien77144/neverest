@@ -13,19 +13,16 @@ import MountainR2050 from './components/MountainR2050/MountainR2050'
 import MountainRS2050 from './components/MountainRS2050/MountainRS2050'
 import Floor2050 from './components/Floor2050/Floor2050'
 import River2050 from './components/River2050/River2050'
+import BasicBaseCampSteps from '../BasicBaseCampSteps/BasicBaseCampSteps'
 
-export default class BaseCamp2050 extends BasicItem {
+export default class BaseCamp2050 extends BasicBaseCampSteps {
   /**
    * Constructor
    */
-  constructor({ visibility = [75.97, 100], CSSVisibility, active = false }) {
-    super()
+  constructor(options) {
+    super(options)
 
-    // Elements
-    this.visibility = visibility
-    this.CSSVisibility = CSSVisibility ?? visibility
-    this.isActive = active
-    this.$bus = this.experience.$bus
+    // New elements
     this.colors = {
       background: '#989898',
       mouse: '#869195',
@@ -88,69 +85,5 @@ export default class BaseCamp2050 extends BasicItem {
         rotation: new Vector3(0, 0, 0),
       }),
     }
-  }
-
-  /**
-   * Toggle active
-   */
-  toggleActive() {
-    this.isActive = !this.isActive
-    this.setActive()
-  }
-
-  /**
-   * Toggle active
-   */
-  toggleActiveCSS() {
-    this.isActiveCSS = !this.isActiveCSS
-    this.setActiveCSS()
-  }
-
-  /**
-   * Set active
-   */
-  setActive(active = this.isActive) {
-    this.isActive = active
-    this.item.visible = this.isActive
-
-    setTimeout(() =>
-      this.item.traverse((c) => {
-        if (c.isCSS2DObject) c.visible = this.isActive
-      })
-    )
-
-    if (this.isActive) {
-      this.$bus.emit('audio:2050')
-
-      Object.values(this.components).forEach((c) => {
-        if (c.name === 'Floor2050' || c.name === 'River2050') return
-        c.onMouseMove = false
-      })
-    } else {
-      Object.values(this.components).forEach((c) => {
-        if (c.name === 'Floor2050' || c.name === 'River2050') return
-        c.onMouseMove = undefined
-      })
-    }
-  }
-
-  /**
-   * Set active CSS
-   */
-  setActiveCSS(active = this.isActiveCSS) {
-    setTimeout(() => {
-      this.isActiveCSS = active
-      this.item.traverse((c) => {
-        if (c.isCSS2DObject) c.visible = this.isActive
-      })
-    })
-  }
-
-  /**
-   * After the scene has rendered
-   */
-  onAfterRender() {
-    this.setActive()
-    this.setActiveCSS()
   }
 }

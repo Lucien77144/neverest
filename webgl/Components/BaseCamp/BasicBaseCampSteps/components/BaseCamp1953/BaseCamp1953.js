@@ -1,4 +1,3 @@
-import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import { Modal1953 } from '#components'
 import { Vector3 } from 'three'
 import Rock1953 from './components/Rock1953/Rock1953'
@@ -15,21 +14,16 @@ import TentA1953 from './components/TentA1953/TentA1953'
 import BigBox1953 from './components/BigBox1953/BigBox1953'
 import MediumBox1953 from './components/MediumBox1953/MediumBox1953'
 import SmallBox1953 from './components/SmallBox1953/SmallBox1953'
+import BasicBaseCampSteps from '../../BasicBaseCampSteps'
 
-export default class BaseCamp1953 extends BasicItem {
+export default class BaseCamp1953 extends BasicBaseCampSteps {
   /**
    * Constructor
    */
-  constructor({ visibility = [0, 25.87], CSSVisibility, active = true }) {
-    super()
+  constructor(options) {
+    super(options)
 
-    // Elements
-    this.visibility = visibility
-    this.CSSVisibility = CSSVisibility ?? visibility
-    this.isActive = active
-    this.isActiveCSS = active
-    this.ready = false
-    this.$bus = this.experience.$bus
+    // New elements
     this.colors = {
       background: '#b0d4e4',
       mouse: '#869195',
@@ -102,63 +96,5 @@ export default class BaseCamp1953 extends BasicItem {
         rotation: new Vector3(0, 0.262, 0),
       }),
     }
-  }
-
-  /**
-   * Toggle active
-   */
-  toggleActive() {
-    this.isActive = !this.isActive
-    this.setActive()
-  }
-
-  /**
-   * Toggle active
-   */
-  toggleActiveCSS() {
-    this.isActiveCSS = !this.isActiveCSS
-    this.setActiveCSS()
-  }
-
-  /**
-   * Set active
-   */
-  setActive(active = this.isActive) {
-    this.isActive = active
-    this.item.visible = this.isActive
-
-    if (this.isActive) {
-      this.$bus.emit('audio:1953')
-
-      Object.values(this.components).forEach((c) => {
-        if (c.name === 'Floor1953') return
-        c.onMouseMove = false
-      })
-    } else {
-      Object.values(this.components).forEach((c) => {
-        if (c.name === 'Floor1953') return
-        c.onMouseMove = undefined
-      })
-    }
-  }
-
-  /**
-   * Set active CSS
-   */
-  setActiveCSS(active = this.isActiveCSS) {
-    setTimeout(() => {
-      this.isActiveCSS = active
-      this.item.traverse((c) => {
-        if (c.isCSS2DObject) c.visible = this.isActive
-      })
-    })
-  }
-
-  /**
-   * After the scene has rendered
-   */
-  onAfterRender() {
-    this.setActive()
-    this.setActiveCSS()
   }
 }

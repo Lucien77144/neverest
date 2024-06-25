@@ -1,6 +1,6 @@
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
-export default class BasicBaseCampStep extends BasicItem {
+export default class BasicBaseCampSteps extends BasicItem {
   /**
    * Constructor
    */

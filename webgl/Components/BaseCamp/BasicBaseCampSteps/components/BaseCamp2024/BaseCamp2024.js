@@ -1,4 +1,3 @@
-import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import { Modal2024 } from '#components'
 import { Vector3 } from 'three'
 import SmallBox2024 from './components/SmallBox2024/SmallBox2024'
@@ -16,19 +15,16 @@ import Floor2024 from './components/Floor2024/Floor2024'
 import River2024 from './components/River2024/River2024'
 import Antenne2024 from './components/Antenne2024/Antenne2024'
 import Flag2024 from './components/Flag2024/Flag2024'
+import BasicBaseCampSteps from '../BasicBaseCampSteps/BasicBaseCampSteps'
 
-export default class BaseCamp2024 extends BasicItem {
+export default class BaseCamp2024 extends BasicBaseCampSteps {
   /**
    * Constructor
    */
-  constructor({ visibility = [25.87, 75.97], CSSVisibility, active = false }) {
-    super()
+  constructor(options) {
+    super(options)
 
-    // Elements
-    this.visibility = visibility
-    this.CSSVisibility = CSSVisibility ?? visibility
-    this.isActive = active
-    this.$bus = this.experience.$bus
+    // New elements
     this.colors = {
       background: '#c1d9e3',
       mouse: '#869195',
@@ -105,69 +101,5 @@ export default class BaseCamp2024 extends BasicItem {
         rotation: new Vector3(0, 0, 0),
       }),
     }
-  }
-
-  /**
-   * Toggle active
-   */
-  toggleActive() {
-    this.isActive = !this.isActive
-    this.setActive()
-  }
-
-  /**
-   * Toggle active
-   */
-  toggleActiveCSS() {
-    this.isActiveCSS = !this.isActiveCSS
-    this.setActiveCSS()
-  }
-
-  /**
-   * Set active
-   */
-  setActive(active = this.isActive) {
-    this.isActive = active
-    this.item.visible = this.isActive
-
-    setTimeout(() =>
-      this.item.traverse((c) => {
-        if (c.isCSS2DObject) c.visible = this.isActive
-      })
-    )
-
-    if (this.isActive) {
-      this.$bus.emit('audio:2024')
-
-      Object.values(this.components).forEach((c) => {
-        if (c.name === 'Floor2024') return
-        c.onMouseMove = false
-      })
-    } else {
-      Object.values(this.components).forEach((c) => {
-        if (c.name === 'Floor2024') return
-        c.onMouseMove = undefined
-      })
-    }
-  }
-
-  /**
-   * Set active CSS
-   */
-  setActiveCSS(active = this.isActiveCSS) {
-    setTimeout(() => {
-      this.isActiveCSS = active
-      this.item.traverse((c) => {
-        if (c.isCSS2DObject) c.visible = this.isActive
-      })
-    })
-  }
-
-  /**
-   * After the scene has rendered
-   */
-  onAfterRender() {
-    this.setActive()
-    this.setActiveCSS()
   }
 }
