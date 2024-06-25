@@ -123,6 +123,7 @@ export default class BaseCamp2024 extends BasicItem {
 
     if (this.isActive) {
       this.$bus.emit('active-tempo', '2024')
+      this.$bus.emit('audio:2024')
 
       Object.values(this.components).forEach((c) => {
         if (c.name === 'Floor2024') return
