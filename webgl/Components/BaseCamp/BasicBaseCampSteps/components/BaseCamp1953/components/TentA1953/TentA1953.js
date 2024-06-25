@@ -34,6 +34,7 @@ export default class TentA1953 extends BasicItem {
             archives1953: this.resources.archives1953,
             return1953: this.resources.return1953,
           },
+          date: '1953',
         },
         name: 'modal1953',
       }),

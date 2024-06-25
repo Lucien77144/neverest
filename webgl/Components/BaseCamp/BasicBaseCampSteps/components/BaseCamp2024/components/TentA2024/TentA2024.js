@@ -32,6 +32,7 @@ export default class TentA2024 extends BasicItem {
             video2024_1: this.resources.video2024_1,
             video2024_2: this.resources.video2024_2,
           },
+          date: '2024',
         },
         name: 'modal2024',
       }),
