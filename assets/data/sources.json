@@ -6,6 +6,11 @@
     },
     "items": [
       {
+        "name": "noisePostProc",
+        "source": "/img/noise.jpg",
+        "type": "texture"
+      },
+      {
         "name": "click",
         "source": "/sounds/click.mp3"
       },

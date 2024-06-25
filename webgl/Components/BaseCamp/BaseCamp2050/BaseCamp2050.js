@@ -27,7 +27,7 @@ export default class BaseCamp2050 extends BasicItem {
     this.$bus = this.experience.$bus
     this.colors = {
       background: '#989898',
-      mouse: '#0000FF',
+      mouse: '#869195',
     }
     this.components = {
       // Boxes

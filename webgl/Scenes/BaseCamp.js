@@ -36,8 +36,8 @@ export default class BaseCamp extends BasicScene {
     // Components
     this.components = {
       lights: new BaseCampLight(),
-
       floorAnimation: new FloorAnimation(),
+
       baseCamp1953: new BaseCamp1953({ visibility: [0, 25.87] }),
       baseCamp2024: new BaseCamp2024({ visibility: [25.87, 75.97] }),
       baseCamp2050: new BaseCamp2050({ visibility: [75.97, 100] }),

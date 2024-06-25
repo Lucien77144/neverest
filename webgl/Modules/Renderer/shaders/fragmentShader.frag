@@ -1,6 +1,7 @@
 uniform sampler2D uScene0;
 uniform sampler2D uScene1;
 uniform sampler2D uBlob;
+uniform sampler2D uNoisePostProc;
 uniform float uTime;
 uniform float uTransition;
 uniform float uModalProgress;
@@ -9,6 +10,7 @@ uniform vec3 uBackgroundColor;
 uniform vec3 uModalColor;
 uniform vec3 uFocColor;
 uniform vec3 uFocTransitionColor;
+uniform vec2 uNoiseRepeat;
 uniform vec2 uResolution;
 uniform vec2 uCursor;
 uniform vec2 uRatio;
@@ -108,7 +110,7 @@ vec2 getMaskUv(vec2 uv) {
 }
 
 vec2 getZoomedUv(vec2 uv, float timing) {    
-    vec2 centeredUv = vUvNoise - 0.5;
+    vec2 centeredUv = uv - 0.5;
     vec2 zoomedUv = centeredUv * (1.0 - timing); // Appliquer le zoom
     zoomedUv += 0.5; // Recentrer les coordonnées UV
 
@@ -209,10 +211,32 @@ void main() {
 
     frag = mix(frag, mix(frag, vec4(uModalColor, 1.), (1. - mask) * play), .995);
 
+    // -------------------- //
+    //         Sky          //
+    // -------------------- //
+    float skyTime = (sin(uTime * .0007) + uTime * .5) * -.001;
+    float skyNoise1 = smoothstep(0., 1., cnoise(uv * 4. + skyTime * vec2(1., .5))) * .75;
+
+    vec3 skyColor = uBackgroundColor;
+    skyColor = mix(skyColor, vec3(0.), skyNoise1 * .5);
+
+    frag = vec4(mix(skyColor, frag.rgb, frag.a), 1.);
+
+    // -------------------- //
+    //      Post Proc       //
+    // -------------------- //
+    vec3 noiseT = texture2D(uNoisePostProc, vUvNoise * uNoiseRepeat).rgb;
+    // vec3 noiseScene0T = texture2D(uScene0, vUvNoise).rgb;
+
+    // vec3 noise = mix(noiseT, noiseScene0T, .3);
+
+    // frag.rgb = mix(noiseT, frag.rgb, clamp(cnoise(uv * 3. - uTime * .00025) * 2., 0.5, .9));
+    // frag.rgb = mix(noiseT, frag.rgb, noiseT.r * .99);
+    frag.rgb = mix(frag.rgb, vec3(0.), abs(1. - noiseT.r) * .8 );
+
     gl_FragColor = frag;
-    gl_FragColor.rgb = mix(uBackgroundColor, gl_FragColor.rgb, gl_FragColor.a);
-    gl_FragColor.a = 1.;
     // gl_FragColor = getMountainAmbiant();
+
    
     #include <tonemapping_fragment> // To fix tonemapping problems when using render targets (only if tone mapping is enabled)
     #include <colorspace_fragment> // To fix colors problems when using render targets

@@ -409,7 +409,6 @@ export default class BasicScene {
   addCSS2D(item) {
     this.css2d ??= new CSS2DManager(this.scene, this.camera.instance)
 
-    console.log(this.infos)
     const classList = item.classList + ` ${this.infos?.name}`
     this.addToCSS2DList({ ...item, classList })
   }

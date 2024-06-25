@@ -47,9 +47,9 @@ float voronoi(float x) {
 void main() {
     vUv = uv;
     vUvNoise = vUv;
-    //vUvNoise.y += random(vUv + round(uTime * .002)) * .003;
-    //vUvNoise.y+= abs(mod(uv.x*20.0,1.0)-0.5) * 0.005 * (step(mod(uTime*0.001, 2.),1.0) - 0.5);
-    //vUvNoise.y+= step(mod(uTime*0.001, 2.),1.0);
+    vUvNoise.y += random(vUv + round(uTime * .002)) * .01;
+    vUvNoise.y += abs(mod(uv.x*20.0,1.0)-0.5) * 0.005 * (step(mod(uTime*0.001, 2.),1.0) - 0.5);
+    vUvNoise.y += step(mod(uTime*0.001, 2.),1.0);
 
     vec3 pos = position;
     gl_Position = vec4( pos, 1.0 );
