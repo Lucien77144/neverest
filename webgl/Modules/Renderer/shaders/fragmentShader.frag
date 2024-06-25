@@ -154,7 +154,7 @@ void main() {
     vec2 bwUv = vec2(focUV.x * cos(bwTime) - focUV.y * sin(bwTime), focUV.x * sin(bwTime) + focUV.y * cos(bwTime));
     float bwNoise = smoothstep(0., 1., cnoise(focUV * 4. + bwTime)) * .75;
 
-    scene0BW = mix(vec4(0.), scene0BW, (1. - bwNoise));
+    scene0BW = mix(vec4(0.), scene0BW, (1. - bwNoise * .35));
     scene0BW.a = bwNoise;
     scene0.rgb = mix(scene0.rgb, scene0BW.rgb, uFocProgress * .5);
 

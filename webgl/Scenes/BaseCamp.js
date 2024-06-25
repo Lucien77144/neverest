@@ -2,7 +2,6 @@ import { Vector3 } from 'three'
 import gsap from 'gsap'
 import BaseCampCamera from '../Components/BaseCamp/BaseCampCamera/BaseCampCamera'
 import BasicScene from '../Modules/Basics/BasicScene'
-
 import BaseCampLight from '../Components/BaseCamp/BaseCampLight/BaseCampLight'
 import FloorAnimation from '../Components/BaseCamp/FloorParticles/FloorAnimation'
 import BaseCamp1953 from '../Components/BaseCamp/BaseCamp1953/BaseCamp1953'
@@ -24,7 +23,6 @@ export default class BaseCamp extends BasicScene {
     // New elements
     this.interest = interest
     this.camFov = 20
-    this.camRot = new Vector3(0, 0, 0)
     this.list = []
     this.playing = false
     this.factorChange = false
@@ -35,6 +33,7 @@ export default class BaseCamp extends BasicScene {
 
     // Components
     this.components = {
+      camera: new BaseCampCamera(),
       lights: new BaseCampLight(),
       floorAnimation: new FloorAnimation(),
 
@@ -50,26 +49,6 @@ export default class BaseCamp extends BasicScene {
   // --------------------------------
   // Workflow
   // --------------------------------
-
-  /**
-   * Scroll the camera around the cube
-   */
-  setCamera() {
-    this.camera.instance.position.y = 3.7
-    this.camera.instance.position.z = 20
-
-    this.camera.instance.fov = this.camFov
-    this.camera.instance.far = 500
-    this.camera.instance.updateProjectionMatrix()
-
-    this.components['Camera'] = new BaseCampCamera({
-      name: 'Camera',
-      model: this.resources.items.BCAnimCam,
-      position: new Vector3(0, 0, 0),
-      rotation: new Vector3(0, 0, 0),
-      scale: new Vector3(1, 1, 1),
-    })
-  }
 
   /**
    * Watch the current scroll progression
@@ -126,8 +105,7 @@ export default class BaseCamp extends BasicScene {
     data && this.setInterest({ data })
     this.setInterest({ visible: !!data })
 
-    const val = {
-      ...this.camRot,
+    const value = {
       fov: this.camera.instance?.fov,
     }
 
@@ -137,15 +115,13 @@ export default class BaseCamp extends BasicScene {
       ease: 'power1.inOut',
     })
 
-    gsap.to(val, {
-      x: !!data ? 0.1 : 0,
+    gsap.to(value, {
       fov: !!data ? this.camFov * 0.85 : this.camFov,
       duration: instant ? 0 : 1,
       ease: 'power1.inOut',
       onUpdate: () => {
-        this.camRot.x = val.x
         if (!this.camera.instance) return
-        this.camera.instance.fov = val.fov
+        this.camera.instance.fov = value.fov
         this.camera.instance.updateProjectionMatrix()
       },
     })
@@ -180,8 +156,6 @@ export default class BaseCamp extends BasicScene {
    * Init the scene
    */
   init() {
-    // Set the camera
-    this.setCamera()
     this.setInterestVis(null)
     this.setInterest({ visible: false })
 
