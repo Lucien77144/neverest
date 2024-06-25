@@ -27,21 +27,21 @@ export default class ModalBtn extends BasicItem {
 
   /**
    * Toggle modal effects
-   * @param {boolean} open - Open or close the modal
+   * @param {boolean} data - Open or close the modal
    */
-  toggleModal(open) {
+  toggleModal(data) {
     this.$bus.emit('audio:click')
-    this.scrollManager.setDisable(open)
+    this.scrollManager.setDisable(!!data)
 
     gsap.to(this.renderUniforms.uModalProgress, {
-      value: open ? 1 : 0,
+      value: data ? 1 : 0,
       duration: 1,
-      ease: open ? 'power2.in' : 'circ.out',
+      ease: data ? 'power2.in' : 'circ.out',
       onStart: () => this.$bus.emit('modal:init'),
       onUpdate: () => {
         if (this.renderUniforms.uModalProgress.value > 0.25) {
-          if (open) {
-            this.$bus.emit('modal:open', this.data)
+          if (data) {
+            this.$bus.emit('modal:open', data)
           } else {
             this.$bus.emit('modal:destroy')
           }
@@ -49,11 +49,11 @@ export default class ModalBtn extends BasicItem {
       },
     })
 
-    if (open) {
+    if (data) {
       const fov = { value: this.camera.fov, base: this.camera.fov }
 
       gsap.to(fov, {
-        value: fov.base * 0.75,
+        value: fov.base * 0.9,
         duration: 0.5,
         ease: CustomEase.create(
           'custom',
@@ -86,7 +86,7 @@ export default class ModalBtn extends BasicItem {
     this.$bus.on('modal:toggle', (data) => this.toggleModal(data))
     this.keysManager.on('keydown', ({ keyCode }) => {
       if (keyCode === 27 && this.renderUniforms.uModalProgress.value > 0) {
-        this.toggleModal(false)
+        this.toggleModal()
       }
     })
 

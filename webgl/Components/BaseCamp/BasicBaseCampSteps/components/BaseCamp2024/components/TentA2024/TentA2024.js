@@ -24,9 +24,10 @@ export default class TentA2024 extends BasicItem {
     this.resources = this.experience.resources.items
     this.components = {
       modal2024: new ModalBtn({
-        position,
+        position: this.position.clone().add(new Vector3(0, 1, 0)),
         data: {
           template: this.modal,
+          title: 'TITLE_2024',
           values: {
             video2024_1: this.resources.video2024_1,
             video2024_2: this.resources.video2024_2,

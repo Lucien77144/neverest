@@ -34,7 +34,7 @@
             <h2 class="title">{{ $t('SCROLL_TO_EXPLORE') }}</h2>
           </div>
           <p class="modal__scroll__text">
-            {{ $t('TITLE_1953') }}
+            {{ $t(data.title || 'TITLE_1953') }}
           </p>
           <img
             class="modal__scroll__bg"
@@ -75,6 +75,7 @@ const progressValue = ref<number>(0)
 // Props
 const data = ref<{
   template?: any
+  title?: string
   values?: any
 } | null>(null)
 

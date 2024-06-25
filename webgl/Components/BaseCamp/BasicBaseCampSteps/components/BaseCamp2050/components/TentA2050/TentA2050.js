@@ -23,8 +23,9 @@ export default class TentA2050 extends BasicItem {
     this.modal = modal
     this.components = {
       modal2050: new ModalBtn({
-        position,
+        position: this.position.clone().add(new Vector3(0, 1, 0)),
         data: {
+          title: 'TITLE_2050',
           template: this.modal,
         },
         name: 'modal2050',

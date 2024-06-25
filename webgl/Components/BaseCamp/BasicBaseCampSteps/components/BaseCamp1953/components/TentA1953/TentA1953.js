@@ -26,9 +26,10 @@ export default class TentA1953 extends BasicItem {
 
     this.components = {
       modal1953: new ModalBtn({
-        position,
+        position: this.position.clone().add(new Vector3(0, 1, 0)),
         data: {
           template: this.modal,
+          title: 'TITLE_1953',
           values: {
             archives1953: this.resources.archives1953,
             return1953: this.resources.return1953,

@@ -21,7 +21,7 @@ export default class BaseCamp extends BasicScene {
 
     // New elements
     this.interest = interest
-    this.camFov = 12.5
+    this.camFov = 20
     this.list = []
     this.playing = false
     this.factorChange = false
@@ -93,8 +93,6 @@ export default class BaseCamp extends BasicScene {
     if (!c.visibility?.length) return
 
     const scroll = force ?? this.scrollManager.current
-
-    console.log(scroll)
 
     // If current scroll is between visibility values
     const start = c.visibility[0]

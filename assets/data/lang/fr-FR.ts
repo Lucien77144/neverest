@@ -17,7 +17,9 @@ export default {
   DRAG: 'Tirer',
   SCROLL_TO_EXPLORE: 'Scrollez pour explorer',
   TITLE_1953:
-    'Participer à la première ascension à travers les archives de 1953',
+    'Participez à la première ascension à travers les archives de 1953',
+  TITLE_2024: 'Découvrez l’Everest en tant que lieu spirituel en 2024',
+  TITLE_2050: 'À quoi ressemblera l’Everest en 2050 ?',
   PREPARE_1953: 'Préparation de la première ascension',
   EXPEDITION_1953:
     'Une expédition de 400 hommes se lance à la conquête du sommet de l’Everest',
@@ -27,7 +29,6 @@ export default {
     'L’ascension nécessitait du matériel comme des masques à gaz pour supporter la haute altitude ',
   RETURN_1953: 'Le retour des héros à Katmandou',
   BASECAMP_1953: 'Camp de base 1953',
-  TITLE_2024: 'En 2024, découvrez l’Everest en tant que lieu spirituel',
   SHERPA_FLAG_2024: 'Drapeaux de prière au sommet de l’Everest',
   DIVIN_2024: 'L’Everest, un symbole divin',
   RITUAL_2024: 'Rituel bouddhiste traditionnel avant chaque ascension',
