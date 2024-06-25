@@ -10,7 +10,7 @@ h1 {
 
 .loader {
   z-index: 10001;
-  background-color: $black;
+  background-color: #FFFFFF;
 
   position: fixed;
   top: 0;
@@ -30,6 +30,14 @@ h1 {
   }
 
   .lottie-animation-container {
-    width: 50vw;
+    width: 20vw;
+  }
+
+  span{
+    position: absolute;
+    right: 64px;
+    bottom: 64px;
+    color: #41545A;
+    font-size: 16px;
   }
 }

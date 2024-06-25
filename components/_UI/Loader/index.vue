@@ -2,14 +2,14 @@
   <div ref="loader" class="loader t-25">
     <client-only>
       <Vue3Lottie ref="lottieAnimation" :animationData="loadingLottie" />
+      <span>28° 00′ 26″ N, 86° 51′ 34″ E</span>
     </client-only>
-    <h1>{{ Math.floor(loadValue) }}</h1>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { Vue3Lottie } from 'vue3-lottie'
-import loadingLottie from '~/assets/data/loader.json'
+import loadingLottie from '~/assets/data/loaderAnim.json'
 
 // Refs
 const loader = ref<HTMLElement>()
