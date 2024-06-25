@@ -39,16 +39,22 @@ export default class BaseCamp extends BasicScene {
       baseCamp1953: new BaseCamp1953({
         visibility: [0, 25.87],
         CSSVisibility: [0, 21.6],
+        tempo: '1953',
+        ignoreHover: ['Floor1953'],
       }),
       baseCamp2024: new BaseCamp2024({
         visibility: [25.87, 75.97],
         CSSVisibility: [32.45, 71.8],
         active: false,
+        tempo: '2024',
+        ignoreHover: ['Floor2024', ],
       }),
       baseCamp2050: new BaseCamp2050({
         visibility: [75.97, 100],
         CSSVisibility: [80, 100],
         active: false,
+        tempo: '2050',
+        ignoreHover: ['Floor2050', 'River2050'],
       }),
     }
 
