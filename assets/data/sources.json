@@ -458,14 +458,6 @@
         "source": "/models/BaseCamp/tentMain2024.glb"
       },
       {
-        "name": "BCBloc",
-        "source": "/models/BaseCamp/bloc.glb"
-      },
-      {
-        "name": "BCBloc2024",
-        "source": "/models/BaseCamp/bloc2024.glb"
-      },
-      {
         "name": "BCMountain_1953",
         "source": "/models/BaseCamp/Mountains/mountain_1953.glb"
       },
@@ -532,6 +524,10 @@
       {
         "name": "BCAntenne_2024",
         "source": "/models/BaseCamp/2024/antenne_2024.glb"
+      },
+      {
+        "name": "Flag_2024",
+        "source": "/models/BaseCamp/2024/flag_2024.glb"
       },
       {
         "name": "BCCailloux",

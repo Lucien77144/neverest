@@ -1,3 +1,4 @@
+import { UIAudioPlayer } from '#components'
 import { DoubleSide, MeshBasicMaterial, Vector3 } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
@@ -48,5 +49,17 @@ export default class MountainLS2024 extends BasicItem {
   init() {
     this.setItem()
     this.setMaterial()
+
+    this.addCSS2D({
+      id: this.name + '_audio',
+      template: UIAudioPlayer,
+      data: {
+        source: this.resources.montagne_2024,
+        id: this.name + '_audio',
+        tempo: '2024',
+      },
+      parent: this.item,
+      position: new Vector3(-8, 10, -135),
+    })
   }
 }
