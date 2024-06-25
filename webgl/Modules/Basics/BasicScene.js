@@ -9,7 +9,7 @@ export default class BasicScene {
   /**
    * Constructor
    */
-  constructor() {
+  constructor({ infos }) {
     // Get elements from experience
     this.experience = new Experience()
     this.raycaster = this.experience.raycaster
@@ -20,6 +20,7 @@ export default class BasicScene {
     this.scene = new Scene()
     this.camera = new BasicCamera()
     this.allComponents = {}
+    this.infos = infos // Informations of the scene stored in the scene const
     this.hovered = null
     this.holded = null
     this.holdProgress = null
@@ -407,7 +408,9 @@ export default class BasicScene {
    */
   addCSS2D(item) {
     this.css2d ??= new CSS2DManager(this.scene, this.camera.instance)
-    this.addToCSS2DList(item)
+
+    const classList = item.classList + ` ${this.infos?.name}`
+    this.addToCSS2DList({ ...item, classList })
   }
 
   /**
@@ -416,7 +419,9 @@ export default class BasicScene {
    */
   addCSS3D(item) {
     this.css3d ??= new CSS3DManager(this.scene, this.camera.instance)
-    this.addToCSS3DList(item)
+
+    const classList = item.classList + ` ${this.infos?.name}`
+    this.addToCSS3DList({ ...item, classList })
   }
 
   /**

@@ -139,6 +139,7 @@ export default class SceneManager {
         base: this.baseScrollFactor,
         current: this.scrollManager.factor,
       },
+      infos: { ...next },
     })
 
     // Switch function start on previous scene
@@ -161,6 +162,7 @@ export default class SceneManager {
     const diff = findIndex(next.name) - findIndex(previous)
     this.renderMesh.material.uniforms.uDirection.value = Math.sign(diff)
 
+    const isHalf = { value: false }
     gsap.to(this.renderMesh.material.uniforms.uTransition, {
       value: 1,
       duration: transition.duration / 1000,
@@ -168,6 +170,11 @@ export default class SceneManager {
       onUpdate: () => {
         // Progression of the transition :
         const progress = this.renderMesh.material.uniforms.uTransition.value
+
+        if (!isHalf.value && progress >= 0.5) {
+          isHalf.value = true
+          this.$bus.emit('scene--transition:half', next.name)
+        }
 
         // Interpolate values :
         const interpolate = (from, to) => from + (to - from) * progress
@@ -251,6 +258,7 @@ export default class SceneManager {
         base: this.baseScrollFactor,
         current: this.scrollManager.factor,
       },
+      infos: { ...scene },
     })
 
     // Switch complete function on the new scene

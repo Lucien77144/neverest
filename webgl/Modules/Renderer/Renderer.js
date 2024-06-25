@@ -132,6 +132,9 @@ export default class Renderer {
           uScene1: new Uniform(this.rt1.texture),
           uTransition: new Uniform(0),
           uDirection: new Uniform(1),
+          uBackgroundColor: new Uniform(new Color(this.clearColor.color)),
+          uNoisePostProc: new Uniform(),
+          uNoiseRepeat: new Uniform(new Vector2(1, 1)),
 
           // Focus
           uFocTransitionColor: new Uniform(new Color('#0d1113')),

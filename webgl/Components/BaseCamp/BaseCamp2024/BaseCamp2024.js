@@ -28,6 +28,10 @@ export default class BaseCamp2024 extends BasicItem {
     this.visibility = visibility
     this.isActive = active
     this.$bus = this.experience.$bus
+    this.colors = {
+      background: '#c1d9e3',
+      mouse: '#869195',
+    }
     this.components = {
       // Boxes
       smallBox2024: new SmallBox2024({
@@ -119,6 +123,16 @@ export default class BaseCamp2024 extends BasicItem {
 
     if (this.isActive) {
       this.$bus.emit('active-tempo', '2024')
+
+      Object.values(this.components).forEach((c) => {
+        if (c.name === 'Floor2024') return
+        c.onMouseMove = false
+      })
+    } else {
+      Object.values(this.components).forEach((c) => {
+        if (c.name === 'Floor2024') return
+        c.onMouseMove = undefined
+      })
     }
   }
 

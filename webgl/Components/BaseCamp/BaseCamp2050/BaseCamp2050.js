@@ -25,6 +25,10 @@ export default class BaseCamp2050 extends BasicItem {
     this.visibility = visibility
     this.isActive = active
     this.$bus = this.experience.$bus
+    this.colors = {
+      background: '#989898',
+      mouse: '#869195',
+    }
     this.components = {
       // Boxes
       bigBox2050: new BigBox2050({
@@ -102,6 +106,16 @@ export default class BaseCamp2050 extends BasicItem {
 
     if (this.isActive) {
       this.$bus.emit('active-tempo', '2050')
+
+      Object.values(this.components).forEach((c) => {
+        if (c.name === 'Floor2050' || c.name === 'River2050') return
+        c.onMouseMove = false
+      })
+    } else {
+      Object.values(this.components).forEach((c) => {
+        if (c.name === 'Floor2050' || c.name === 'River2050') return
+        c.onMouseMove = undefined
+      })
     }
   }
 

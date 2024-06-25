@@ -3,6 +3,7 @@ varying vec3 vPosition;
 
 uniform float uTime;
 uniform float uSpeed;
+uniform float uSpeedDelta;
 uniform vec3 uColor;
 
 float random(vec2 st) {
@@ -25,7 +26,7 @@ float noise(vec2 st) {
 float getProgress() {
     float progress = 1. - (vPosition.z * 2.);
 
-    if (progress > 0.95) { progress = 0.; }
+    if (progress > 0.7) { progress = 0.; }
     return progress;
 }
 
@@ -44,6 +45,10 @@ void main() {
 
     float opacity = max(progress - (1. - snow), 0.);
     opacity += getProgress() * noise(uv * 25. - (uTime * .001));
+    opacity = clamp(opacity, 0., 1.);
+
+    opacity *= min(uSpeedDelta * 2., 1.);
+    opacity *= smoothstep(.1, .3, vPosition.z);
 
     gl_FragColor = vec4(uColor, opacity);
 }

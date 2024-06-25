@@ -6,14 +6,14 @@
   </select> -->
   <div class="LP">
     <UIIconBtn
-      v-if="!toggleLang"
+      v-if="I18n.locale.value == 'fr'"
       :disable="false"
       @click="change({ target: { value: 'fr' } })"
     >
       {{ $t('LANG.FR.TAG') }}
     </UIIconBtn>
     <UIIconBtn
-      v-if="toggleLang"
+      v-if="I18n.locale.value == 'en'"
       :disable="false"
       @click="change({ target: { value: 'en' } })"
     >
@@ -34,8 +34,6 @@ const options = ref<string[]>(
   Object.values(I18n.locales.value).map(({ code }) => code)
 )
 
-const toggleLang = ref<boolean>(false)
-
 /**
  * Change the language of the experience
  * @param target Target element to get value from
@@ -43,7 +41,6 @@ const toggleLang = ref<boolean>(false)
 const change = ({ target }: any) => {
   I18n.setLocale(target.value)
   $bus.emit('lang:change', target.value)
-  toggleLang.value = !toggleLang.value
 }
 </script>
 

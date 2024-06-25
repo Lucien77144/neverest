@@ -1,4 +1,4 @@
-import { Group, Vector3 } from 'three'
+import { Vector3 } from 'three'
 import gsap from 'gsap'
 import BaseCampCamera from '../Components/BaseCamp/BaseCampCamera/BaseCampCamera'
 import BasicScene from '../Modules/Basics/BasicScene'
@@ -13,8 +13,8 @@ export default class BaseCamp extends BasicScene {
   /**
    * Constructor
    */
-  constructor({ interest }) {
-    super()
+  constructor({ interest, infos }) {
+    super(infos)
 
     // Get elements from experience
     this.scrollManager = this.experience.scrollManager
@@ -36,8 +36,8 @@ export default class BaseCamp extends BasicScene {
     // Components
     this.components = {
       lights: new BaseCampLight(),
+      floorAnimation: new FloorAnimation(),
 
-      // floorAnimation: new FloorAnimation(),
       baseCamp1953: new BaseCamp1953({ visibility: [0, 25.87] }),
       baseCamp2024: new BaseCamp2024({ visibility: [25.87, 75.97] }),
       baseCamp2050: new BaseCamp2050({ visibility: [75.97, 100] }),
@@ -110,6 +110,8 @@ export default class BaseCamp extends BasicScene {
     // If current scroll is between visibility values
     if (start <= scroll && scroll <= end) {
       !c.isActive && c.toggleActive()
+      this.components.floorAnimation.setEffectColor(c.colors.mouse)
+      this.components.floorAnimation.setBackgroundColor(c.colors.background)
     } else {
       c.isActive && c.toggleActive()
     }
@@ -198,6 +200,9 @@ export default class BaseCamp extends BasicScene {
     this.watchCurrentScroll(0, false)
     this.scrollManager.on('scroll', ({ current }) =>
       this.watchCurrentScroll(current)
+    )
+    this.components.floorAnimation.setBackgroundColor(
+      this.components.baseCamp1953.colors.background
     )
   }
 
