@@ -45,10 +45,14 @@ export default {
   WELCOME: 'Neverest',
   LANDING:
     'Climb Everest and immerse yourself in exciting tales of historic expeditions, discover the current challenges facing mountaineers and explore future visions of this legendary mountain.',
-  LANDING_START: 'For the best experience, connect headphones',
+  LANDING_START: 'This experience offers audio content.',
+  LANDING_START_2: 'To enjoy it in the best possible setting, we recommend activating the sound.',
+  ACTIVATE: 'Activate sound',
+  NO_ACTIVATE: 'Do not activate',
   BASECAMP: 'Base camp',
   ICEFALL: 'Icefall',
   SOUTHCOL: 'South col',
   INTRO_TITLE_1: 'open the way',
   INTRO_TITLE_2: 'Neverest',
+  INTRO_CONTENT: 'Explore Everest, through an immersive documentary to discover and understand Everest through different eras.',
 }

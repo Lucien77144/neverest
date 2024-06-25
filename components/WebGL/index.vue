@@ -10,7 +10,7 @@
     <UIInterestData />
     <UITitle />
     <div ref="startBtnRef" class="start__btn hidden">
-      <UIBtn @click="start()">
+      <UIBtn class="inverse" @click="start()">
         {{ $t('START') }}
       </UIBtn>
     </div>

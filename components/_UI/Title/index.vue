@@ -6,8 +6,8 @@
     }"
   >
     <div class="title__wrapper">
-      <h1 class="title__item">{{ $t('INTRO_TITLE_1') }}</h1>
       <h1 class="title__item">{{ $t('INTRO_TITLE_2') }}</h1>
+      <p>{{ $t('INTRO_CONTENT') }}</p>
     </div>
   </div>
 </template>

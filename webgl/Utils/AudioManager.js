@@ -164,7 +164,7 @@ export default class AudioManager {
       sounds.ambient_2024.loop = true
       sounds.ambient_2024.volume = 0
       gsap.to(sounds.ambient_2024, {
-        volume: 1,
+        volume: 0.5,
         duration: 3,
       })
     })
