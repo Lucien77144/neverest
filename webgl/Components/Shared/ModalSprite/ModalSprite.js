@@ -1,7 +1,6 @@
+import { UIModalPlayer } from '#components'
 import gsap from 'gsap'
 import { CustomEase } from 'gsap/all'
-import { Sprite, SpriteMaterial, Vector3 } from 'three'
-import { clamp } from 'three/src/math/MathUtils'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 gsap.registerPlugin(CustomEase)
 
@@ -9,7 +8,7 @@ export default class ModalSprite extends BasicItem {
   /**
    * Constructor
    */
-  constructor({ position, data }) {
+  constructor({ position, data, name }) {
     super()
     // Elements
     this.scrollManager = this.experience.scrollManager
@@ -19,10 +18,10 @@ export default class ModalSprite extends BasicItem {
     this.$bus = this.experience.$bus
     this.position = position
     this.data = data
+    this.name = name
 
     // New elements
     this.camera = null
-    this.item = null
     this.material = null
     this.active = false
     this.scale = 1.3
@@ -30,45 +29,13 @@ export default class ModalSprite extends BasicItem {
   }
 
   /**
-   * Get material
-   */
-  setMaterial() {
-    this.material = new SpriteMaterial({
-      map: this.resources.circle.clone(),
-    })
-  }
-
-  /**
-   * Get mesh
-   */
-  setSprite() {
-    this.item = new Sprite(this.material)
-    this.item.position.copy(this.position)
-  }
-
-  /**
-   * On mouse enter
-   */
-  onMouseEnter() {
-    if (!this.item.visible) return
-    this.experience.canvas.style.cursor = 'pointer'
-  }
-
-  /**
-   * On mouse leave
-   */
-  onMouseLeave() {
-    if (!this.item.visible) return
-    this.experience.canvas.style.cursor = 'auto'
-  }
-
-  /**
-   * Open modal
+   * Toggle modal effects
    * @param {boolean} open - Open or close the modal
    */
-  openModal(open) {
+  toggleModal(open) {
     this.$bus.emit('audio:click')
     this.scrollManager.setDisable(open)
+
     gsap.to(this.renderUniforms.uModalProgress, {
       value: open ? 1 : 0,
       duration: 1,
@@ -86,11 +53,10 @@ export default class ModalSprite extends BasicItem {
     })
 
     if (open) {
-      const base = { value: this.camera.fov }
-      const fov = { value: this.camera.fov }
+      const fov = { value: this.camera.fov, base: this.camera.fov }
 
       gsap.to(fov, {
-        value: base.value * 0.75,
+        value: fov.base * 0.75,
         duration: 0.5,
         ease: CustomEase.create(
           'custom',
@@ -101,7 +67,7 @@ export default class ModalSprite extends BasicItem {
           this.camera.updateProjectionMatrix()
         },
         onComplete: () => {
-          this.camera.fov = base.value
+          this.camera.fov = fov.base
           this.camera.updateProjectionMatrix()
         },
       })
@@ -109,51 +75,25 @@ export default class ModalSprite extends BasicItem {
   }
 
   /**
-   * On click item
-   */
-  onClick() {
-    if (!this.item.visible) return
-    this.openModal(true)
-  }
-
-  /**
-   * Update
-   */
-  update() {
-    if (!this.item.visible) {
-      this.item.scale.set(0, 0, 0)
-    }
-
-    if (!this.item.visible) return
-
-    // update the sprite scale
-    const target = new Vector3()
-    const camTarget = new Vector3()
-
-    const camPos = this.camera.getWorldPosition(camTarget)
-    const pos = this.item.getWorldPosition(target)
-
-    const distance = camPos.distanceTo(pos)
-
-    const scale = clamp(distance / 40, 0.35, 1) * (this.scale + this.scaleFocus)
-    this.item.scale.set(scale, scale, scale)
-  }
-
-  /**
    * Init
    */
   init() {
-    this.keysManager.on('keydown', (e) => {
-      if (e.keyCode === 27 && this.renderUniforms.uModalProgress.value > 0) {
-        this.openModal(false)
+    this.addCSS2D({
+      id: this.name + '_modal',
+      template: UIModalPlayer,
+      data: this.data,
+      parent: this.item,
+      position: this.position,
+    })
+
+    this.$bus.on('modal:toggle', (data) => this.toggleModal(data))
+    this.keysManager.on('keydown', ({ keyCode }) => {
+      if (keyCode === 27 && this.renderUniforms.uModalProgress.value > 0) {
+        this.toggleModal(false)
       }
     })
 
-    this.$bus.on('modal:close', () => this.openModal(false))
-
     this.camera = this.parentScene.camera.instance
-    this.setMaterial()
-    this.setSprite()
   }
 
   /**
@@ -161,6 +101,6 @@ export default class ModalSprite extends BasicItem {
    */
   dispose() {
     this.keysManager.destroy()
-    this.$bus.off('modal:close')
+    this.$bus.off('modal:toggle')
   }
 }

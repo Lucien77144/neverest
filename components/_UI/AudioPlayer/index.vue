@@ -18,7 +18,6 @@
 </template>
 
 <script lang="ts" setup>
-import gsap from 'gsap'
 import { Vue3Lottie } from 'vue3-lottie'
 import audioPlayer from '~/assets/data/audioplayer.json'
 

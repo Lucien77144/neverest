@@ -45,6 +45,7 @@ export default class TentA2024 extends BasicItem {
           video2024_2: this.resources.video2024_2,
         },
       },
+      name: 'modalSprite2024',
     })
   }
 

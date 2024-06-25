@@ -147,7 +147,7 @@ export default class Loader {
 
     // Audio
     this.loaders.push({
-      extensions: ['mp3', 'ogg', 'wav'],
+      extensions: ['m4a', 'mp3', 'ogg', 'wav'],
       action: (resource) => {
         // Audio
         const audio = document.createElement('audio')

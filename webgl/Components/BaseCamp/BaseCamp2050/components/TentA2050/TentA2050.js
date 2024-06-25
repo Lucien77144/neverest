@@ -52,6 +52,7 @@ export default class TentA2050 extends BasicItem {
       data: {
         template: this.modal,
       },
+      name: 'modalSprite2050',
     })
   }
 

@@ -2,7 +2,7 @@
   <div v-if="data" ref="modalRef" class="modal_dialog modal_dialog--close">
     <div
       class="close__btn"
-      @click="$bus.emit('modal:close'), $bus.emit('audio:click')"
+      @click="$bus.emit('modal:toggle'), $bus.emit('audio:click')"
     >
       <img class="close__btn__icon" src="/assets/img/cross.svg" alt="close" />
       <p class="close__btn__text">

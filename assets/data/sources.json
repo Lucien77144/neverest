@@ -46,7 +46,7 @@
       },
       {
         "name": "ambient_intro",
-        "source": "/sounds/AMBIENT/INTRO.mp3"
+        "source": "/sounds/AMBIENT/intro.m4a"
       },
       {
         "name": "introMountainPlan1",
@@ -348,11 +348,6 @@
       {
         "name": "CloudImg",
         "source": "/img/Degrade.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "circle",
-        "source": "/img/circle.svg",
         "type": "texture"
       },
       {

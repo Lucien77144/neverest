@@ -59,6 +59,7 @@ export default class TentA1953 extends BasicItem {
           return1953: this.resources.return1953,
         },
       },
+      name: 'modalSprite1953',
     })
   }
 

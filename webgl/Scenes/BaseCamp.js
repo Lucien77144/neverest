@@ -22,7 +22,7 @@ export default class BaseCamp extends BasicScene {
 
     // New elements
     this.interest = interest
-    this.camFov = 20
+    this.camFov = 15
     this.list = []
     this.playing = false
     this.factorChange = false
@@ -137,7 +137,7 @@ export default class BaseCamp extends BasicScene {
     this.interest.curr = value
 
     const factor = this.scrollManager.factor
-    this.scrollManager.setFactor(0)
+    this.scrollManager.setFactor(0.05)
     setTimeout(() => {
       this.scrollManager.setFactor(factor)
       this.factorChange = false

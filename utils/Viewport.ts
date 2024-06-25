@@ -35,6 +35,7 @@ export default class Viewport {
    * Constructor
    */
   constructor() {
+    if (!window) return
     if (Viewport._instance) {
       return Viewport._instance
     }

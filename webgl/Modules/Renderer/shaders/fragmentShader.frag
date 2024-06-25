@@ -156,7 +156,7 @@ void main() {
 
     scene0BW = mix(vec4(0.), scene0BW, (1. - bwNoise * .35));
     scene0BW.a = bwNoise;
-    scene0.rgb = mix(scene0.rgb, scene0BW.rgb, uFocProgress * .5);
+    scene0.rgb = mix(scene0.rgb, scene0BW.rgb, uFocProgress * .35);
 
     focUV += (.5 + focTime * .5);
     
