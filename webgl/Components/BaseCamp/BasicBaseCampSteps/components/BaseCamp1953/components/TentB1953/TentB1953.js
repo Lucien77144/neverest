@@ -1,4 +1,4 @@
-import { Object3D, ShaderMaterial, Vector3 } from 'three'
+import { DoubleSide, Object3D, ShaderMaterial, Vector3 } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 import { BCTENT_2_1953 } from '~/const/blocking/baseCamp.const'
 import { InstancedUniformsMesh } from 'three-instanced-uniforms-mesh'
@@ -49,7 +49,7 @@ export default class TentB1953 extends BasicItem {
         uRot: { value: 0.0 },
         uDec:{ value: 0 }
       },
-      side: 2,
+      side: DoubleSide,
       vertexShader,
       fragmentShader,
     })

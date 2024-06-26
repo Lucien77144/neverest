@@ -52,6 +52,7 @@ export default class TentB2024 extends BasicItem {
         uRot: { value: 0.0 },
         uDec:{ value: 0 }
       },
+      side:2,
       vertexShader,
       fragmentShader,
     })
