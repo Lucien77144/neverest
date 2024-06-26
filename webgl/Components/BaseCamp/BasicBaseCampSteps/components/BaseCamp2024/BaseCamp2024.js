@@ -27,7 +27,7 @@ export default class BaseCamp2024 extends BasicBaseCampSteps {
     // New elements
     this.colors = {
       background: '#c1d9e3',
-      mouse: '#869195',
+      mouse: '#ffe7ca',
     }
     this.components = {
       // Boxes

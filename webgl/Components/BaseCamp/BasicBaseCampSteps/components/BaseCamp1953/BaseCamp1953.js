@@ -26,7 +26,7 @@ export default class BaseCamp1953 extends BasicBaseCampSteps {
     // New elements
     this.colors = {
       background: '#b0d4e4',
-      mouse: '#869195',
+      mouse: '#b5c6cb',
     }
     this.components = {
       // Boxes
