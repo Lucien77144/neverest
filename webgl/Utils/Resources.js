@@ -173,16 +173,12 @@ export default class Resources {
           })
 
         tmpScene.onAfterRender = () => {
-          console.log('preloaded')
           tmpScene.clear()
           this.renderer.instance.clear()
           this.groupEnd()
         }
 
-        setTimeout(() => {
-          console.log('preload start for', current.name)
-          this.renderer.instance.render(tmpScene, this.renderer.camera)
-        }, 100)
+        this.renderer.instance.render(tmpScene, this.renderer.camera)
       } else {
         this.groupEnd()
       }
