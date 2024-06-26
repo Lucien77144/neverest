@@ -54,5 +54,5 @@ export default {
   SOUTHCOL: 'South col',
   INTRO_TITLE_1: 'open the way',
   INTRO_TITLE_2: 'Neverest',
-  INTRO_CONTENT: 'Explore Everest, through an immersive documentary to discover and understand Everest through different eras.',
+  INTRO_CONTENT: 'Explore Everest through an immersive documentary to discover and understand the challenges it has faced in different eras.',
 }

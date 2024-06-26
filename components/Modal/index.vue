@@ -11,6 +11,9 @@
     </div>
     <div class="modal transformable" ref="scrollRef">
       <section class="modal__scroll">
+        <p class="modal__scroll__date">
+            {{ data.date }}
+          </p>
         <div class="modal__scroll__wrapper">
           <div class="lottie">
             <client-only>
@@ -77,6 +80,7 @@ const data = ref<{
   template?: any
   title?: string
   values?: any
+  date?: string
 } | null>(null)
 
 // Bus

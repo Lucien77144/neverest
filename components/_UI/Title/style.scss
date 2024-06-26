@@ -1,10 +1,11 @@
 .title {
   position: absolute;
-  top: 10rem;
+  top: 7rem;
   left: 5rem;
   transition: 0.75s ease-in-out;
   transition-property: opacity, transform, visibility;
   z-index: 3;
+  user-select: none;
 
   p {
     max-width: 28rem;

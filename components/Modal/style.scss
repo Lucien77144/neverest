@@ -44,6 +44,18 @@
     height: 100%;
     min-width: 100vw;
     display: flex;
+    position: relative;
+
+    &__date {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: $outfit;
+      font-size: 20rem;
+      opacity: .05;
+      margin: 0;
+    }
 
     .title {
       font-family: $outfit;

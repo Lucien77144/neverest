@@ -63,5 +63,5 @@ export default {
   WESTRIDGE: 'Arête Ouest',
   INTRO_TITLE_1: 'Ouvrez la voie',
   INTRO_TITLE_2: 'Neverest',
-  INTRO_CONTENT: "Explorez l’Everest, à travers un documentaire immersif pour découvrir et comprendre l'Everest à travers différentes époques."
+  INTRO_CONTENT: "Explorez l’Everest à travers un documentaire immersif pour découvrir et comprendre les enjeux qui sont les siens au cours de différentes époques."
 }

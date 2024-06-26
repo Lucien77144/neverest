@@ -31,11 +31,7 @@
       "preload": true
     },
     "items": [
-      {
-        "name": "introMountainTexture",
-        "source": "/img/texturesLoulou/textureIntroMountain.jpg",
-        "type": "texture"
-      },
+
       {
         "name": "intro",
         "source": "/sounds/VOIX_OFF/INTRO.wav",
@@ -50,27 +46,27 @@
       },
       {
         "name": "introMountainPlan1",
-        "source": "/img/introMountain1.png",
+        "source": "/img/introMountain/introMountain1.webp",
         "type": "texture"
       },
       {
         "name": "introMountainPlan2",
-        "source": "/img/introMountain2.png",
+        "source": "/img/introMountain/introMountain2.webp",
         "type": "texture"
       },
       {
         "name": "introMountainPlan3",
-        "source": "/img/introMountain3.png",
+        "source": "/img/introMountain/introMountain3.webp",
         "type": "texture"
       },
       {
         "name": "introMountainPlan4",
-        "source": "/img/introMountain4.png",
+        "source": "/img/introMountain/introMountain4.webp",
         "type": "texture"
       },
       {
         "name": "introMountainPlan5",
-        "source": "/img/introMountain5.png",
+        "source": "/img/introMountain/introMountain5.webp",
         "type": "texture"
       },
       {
@@ -216,6 +212,21 @@
         "type": "texture"
       },
       {
+        "name": "mainTent1953",
+        "source": "/img/texturesMainTente/tentMain_1953.webp",
+        "type": "texture"
+      },
+      {
+        "name": "mainTent2024",
+        "source": "/img/texturesMainTente/tentMain_2024.webp",
+        "type": "texture"
+      },
+      {
+        "name": "mainTent2050",
+        "source": "/img/texturesMainTente/tentMain_2050.webp",
+        "type": "texture"
+      },
+      {
         "name": "flag2024Displacement",
         "source": "/img/flags2024/flag2024displacement.jpg",
         "type": "texture"
@@ -223,126 +234,6 @@
       {
         "name": "riverRepeat",
         "source": "/img/riverRepeat.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCFlagPoleTexture",
-        "source": "/img/texturesLoulou/textureBCFlagPole.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCBigBox_1953Texture",
-        "source": "/img/texturesLoulou/textureBCBigBox1953.png",
-        "type": "texture"
-      },
-      {
-        "name": "BCBigBox_2024Texture",
-        "source": "/img/texturesLoulou/textureBCBigBox2024.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCBigBox_2050Texture",
-        "source": "/img/texturesLoulou/textureBCBigBox2050.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCMediumBox_1953Texture",
-        "source": "/img/texturesLoulou/textureBCMediumBox1953.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCMediumBox_2024Texture",
-        "source": "/img/texturesLoulou/textureBCMediumBox2024.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCSmallBox_1953Texture",
-        "source": "/img/texturesLoulou/textureBCSmallBox1953.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCSmallBox_2050Texture",
-        "source": "/img/texturesLoulou/textureBCSmallBox2050.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCSmallBox_2024Texture",
-        "source": "/img/texturesLoulou/textureBCSmallBox2024.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCTent1_1953Texture",
-        "source": "/img/texturesLoulou/textureBCTent11953.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCTent1_2050Texture",
-        "source": "/img/texturesLoulou/textureBCTent12050.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCTent2_1953Texture",
-        "source": "/img/texturesLoulou/textureBCTent21953.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCTent2_2024Texture",
-        "source": "/img/texturesLoulou/textureBCTent22024.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCTent2_2050Texture",
-        "source": "/img/texturesLoulou/textureBCTent22050.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCTent3_1953Texture",
-        "source": "/img/texturesLoulou/textureBCTent31953.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCTent3_2024Texture",
-        "source": "/img/texturesLoulou/textureBCTent32024.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCTent3_2050Texture",
-        "source": "/img/texturesLoulou/textureBCTent32050.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCCaillouTexture",
-        "source": "/img/texturesLoulou/textureBCCaillou.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCFloorTexture",
-        "source": "/img/texturesLoulou/textureBCFloor.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCMountainLSTexture",
-        "source": "/img/texturesLoulou/textureBCMountainLS.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCMountainLTexture",
-        "source": "/img/texturesLoulou/textureBCMountainL.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCMountainRSTexture",
-        "source": "/img/texturesLoulou/textureBCMountainRS.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCMountainRTexture",
-        "source": "/img/texturesLoulou/textureBCMountainR.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCMountainTexture",
-        "source": "/img/texturesLoulou/textureBCMountain.jpg",
         "type": "texture"
       },
       {

@@ -19,11 +19,12 @@
   top: 50%;
   left: 17rem;
   z-index: 2;
-  will-change: opacity, pointer-events;
+  will-change: opacity, pointer-events, visibility;
 }
 
 .hidden {
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
 }
 

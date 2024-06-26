@@ -27,6 +27,7 @@ export default class TentA2050 extends BasicItem {
         data: {
           title: 'TITLE_2050',
           template: this.modal,
+          date: '2050',
         },
         name: 'modal2050',
       }),
