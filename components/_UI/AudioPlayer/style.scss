@@ -1,21 +1,32 @@
 .audio-player {
+  width: 2.5rem;
+  height: 2.5rem;
   cursor: pointer;
-  animation: fadeIn 1s;
-  transition: opacity 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
+  transition-property: opacity, transform;
+  will-change: opacity, transform;
   display: block;
-  height: 48px;
-  width: 48px;
-  overflow: hidden;
+  border-radius: 50%;
+  animation: pulse 4s infinite;
+  opacity: 0.75;
 
-  &__svg {
+  &.active,
+  &:hover {
+    opacity: 1;
+    transform: scale(0.95);
+  }
+
+  &.active {
+    transform: scale(1.1) !important;
+    animation: none !important;
+  }
+
+  &__container {
+    padding: 1px;
     height: 100%;
-    animation: waveContainer 5s infinite linear;
-
-    path {
-      stroke: $primary;
-      stroke-dasharray: 153px;
-      animation: wave 5s infinite linear;
-    }
+    border-radius: 50%;
+    background-color: $secondary;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
   }
 }
 
@@ -24,29 +35,25 @@
   opacity: 0;
 }
 
-@keyframes wave {
-  0% {
-    stroke-dashoffset: -306px;
-  }
-  100% {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes waveContainer {
-  0% {
-    margin-left: calc(-64px + 2px); // width - strokewidth
-  }
-  100% {
-    margin-left: 0;
-  }
-}
-
 @keyframes fadeIn {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  50%,
+  100% {
+    box-shadow: 0 0 0 2px rgba($secondary, 1);
+  }
+  25% {
+    box-shadow: 0 0 0 15px rgba($secondary, 0);
+  }
+  25.01% {
+    box-shadow: 0 0 0 0px rgba($secondary, 1);
   }
 }

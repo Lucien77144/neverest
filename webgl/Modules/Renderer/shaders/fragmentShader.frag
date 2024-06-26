@@ -209,7 +209,7 @@ void main() {
     float m = min(blob.r + blob.g + blob.b, 1.);
     float mask = 1. - min(m, 1.);
 
-    frag = mix(frag, mix(frag, vec4(uModalColor, 1.), (1. - mask) * play), .995);
+    frag = mix(frag, mix(frag, vec4(uModalColor, .95), (1. - mask) * play), .995);
 
     // -------------------- //
     //         Sky          //

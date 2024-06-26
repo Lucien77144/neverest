@@ -283,5 +283,7 @@ export default class Experience {
     this.sceneManager.dispose()
     this.audioManager.dispose()
     this.debug?.dispose()
+
+    Experience._instance = null
   }
 }

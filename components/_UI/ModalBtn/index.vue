@@ -1,7 +1,7 @@
 <template>
   <div
     :key="data?.id"
-    class="audio-player"
+    class="modal-player"
     @click="toggle(), $bus.emit('audio:click')"
   >
     <client-only>
