@@ -14,6 +14,9 @@ export default {
     },
   },
   CLOSE: 'Fermer',
+  SUBTITLES: 'Sous-titres',
+  SOUNDS: 'Sons',
+  LANGS: 'Langue',
   DRAG: 'Tirer',
   SCROLL_TO_EXPLORE: 'Scrollez pour explorer',
   TITLE_1953:
