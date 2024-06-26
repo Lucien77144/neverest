@@ -49,7 +49,6 @@ export default class TentA1953 extends BasicItem {
     this.item.position.copy(this.position)
     this.item.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
     this.item.name = this.name
-    console.log(this.item)
     const texture1953 = this.resources.mainTent1953
     const texture2024 = this.resources.mainTent2024
     texture1953.flipY = false

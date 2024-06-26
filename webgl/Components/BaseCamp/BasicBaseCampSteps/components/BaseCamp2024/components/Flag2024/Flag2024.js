@@ -18,6 +18,7 @@ export default class Flag2024 extends BasicItem {
     this.time = this.experience.time
 
     // New elements
+    this.material = null
     this.position = position
     this.rotation = rotation
     this.name = name
@@ -34,15 +35,16 @@ export default class Flag2024 extends BasicItem {
    * Set item
    */
   setFlag() {
-    this.flag = this.resources.Flag_2024.scene.clone()
-    this.flag.name = this.name
-    this.flag.position.copy(this.position)
-    this.flag.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
+    this.item = this.resources.Flag_2024.scene.clone()
+    this.item.name = this.name
+    this.item.position.copy(this.position)
+    this.item.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
 
     const texture = this.resources.flag2024Displacement
     texture.flipY = false
 
-    this.flag.children[0].material.onBeforeCompile = (shader) => {
+    this.material = this.item.children[0].material
+    this.material.onBeforeCompile = (shader) => {
       shader.uniforms.uTime = new Uniform(0)
       shader.uniforms.uDisplacementMap = new Uniform(texture)
 
@@ -81,10 +83,7 @@ export default class Flag2024 extends BasicItem {
           transformed.z += texture2D(uDisplacementMap, uv).r * noiseUv;
           `
       )
-
-      this.flag.children[0].material.userData.shader = shader
-
-      this.item = this.flag
+      this.material.userData.shader = shader
     }
   }
 
@@ -99,10 +98,9 @@ export default class Flag2024 extends BasicItem {
    * Update
    */
   update() {
-    if (this.flag?.material?.userData?.shader) {
-      console.log(this.flag.material)
+    if (this.material?.userData?.shader) {
+      this.material.userData.shader.uniforms.uTime.value =
+        this.time.elapsed * 0.001
     }
-    // this.flag.material.userData.shader.uniforms.uTime.value =
-    //   this.time.elapsed * 0.001
   }
 }
