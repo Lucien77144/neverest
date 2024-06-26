@@ -41,20 +41,20 @@ const SCENES: TSceneInfos[] = [
       duration: 2000,
     },
   },
-  {
-    name: 'TestDa',
-    Scene: TestDA,
-    transition: {
-      duration: 2000,
-    },
-  },
-  {
-    name: 'Transition Clouds',
-    Scene: TransitionClouds,
-    transition: {
-      duration: 2000,
-    },
-  },
+  // {
+  //   name: 'TestDa',
+  //   Scene: TestDA,
+  //   transition: {
+  //     duration: 2000,
+  //   },
+  // },
+  // {
+  //   name: 'Transition Clouds',
+  //   Scene: TransitionClouds,
+  //   transition: {
+  //     duration: 2000,
+  //   },
+  // },
   {
     name: 'basecamp',
     Scene: BaseCamp,
@@ -94,45 +94,45 @@ const SCENES: TSceneInfos[] = [
       duration: 4000,
     },
   },
-  {
-    name: 'icefall',
-    Scene: IceFall,
-    nav: {
-      scale: 100,
-      interest: [
-        {
-          start: 0,
-          end: 1,
-          power: 0.1,
-          data: {
-            title: 'ICEFALL',
-            date: '1953',
-          },
-        },
-        {
-          start: 100 / 3,
-          end: 37,
-          power: 0.1,
-          data: {
-            title: 'ICEFALL',
-            date: '2024',
-          },
-        },
-        {
-          start: (100 / 3) * 2,
-          end: 70,
-          power: 0.1,
-          data: {
-            title: 'ICEFALL',
-            date: '2050',
-          },
-        },
-      ],
-    },
-    transition: {
-      duration: 2000,
-    },
-  },
+  // {
+  //   name: 'icefall',
+  //   Scene: IceFall,
+  //   nav: {
+  //     scale: 100,
+  //     interest: [
+  //       {
+  //         start: 0,
+  //         end: 1,
+  //         power: 0.1,
+  //         data: {
+  //           title: 'ICEFALL',
+  //           date: '1953',
+  //         },
+  //       },
+  //       {
+  //         start: 100 / 3,
+  //         end: 37,
+  //         power: 0.1,
+  //         data: {
+  //           title: 'ICEFALL',
+  //           date: '2024',
+  //         },
+  //       },
+  //       {
+  //         start: (100 / 3) * 2,
+  //         end: 70,
+  //         power: 0.1,
+  //         data: {
+  //           title: 'ICEFALL',
+  //           date: '2050',
+  //         },
+  //       },
+  //     ],
+  //   },
+  //   transition: {
+  //     duration: 2000,
+  //   },
+  // },
 ]
 
 const total = (arr: any[]): number => {

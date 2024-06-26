@@ -52,7 +52,7 @@ export default class CSS3DManager {
     id = id?.toLowerCase()
 
     // Add new elements
-    if (!id || !el || this.list[id]) return
+    if (!id || !el) return
 
     // Active element
     el.classList.add('renderer__item--active')

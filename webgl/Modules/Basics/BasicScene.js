@@ -208,10 +208,16 @@ export default class BasicScene {
     ])?.item
 
     // On mouse move event
-    const mouseMove = this.getRaycastedItem(centered, ['onMouseMove'])
-    this.triggerFn(mouseMove?.item, 'onMouseMove', {
+    this.triggerFn(this, 'onMouseMove', centered)
+    Object.values(this.allComponents).forEach((c) =>
+      this.triggerFn(c, 'onMouseMove', centered)
+    )
+
+    // On mouse hover event
+    const mouseHover = this.getRaycastedItem(centered, ['onMouseHover'])
+    this.triggerFn(mouseHover?.item, 'onMouseHover', {
       centered,
-      target: mouseMove?.target,
+      target: mouseHover?.target,
     })
 
     // If mouse leave the hovered item, refresh the hovered item
@@ -409,8 +415,10 @@ export default class BasicScene {
   addCSS2D(item) {
     this.css2d ??= new CSS2DManager(this.scene, this.camera.instance)
 
-    const classList = (item.classList ?? '') + ` ${this.infos?.name}`
-    this.addToCSS2DList({ ...item, classList })
+    this.addToCSS2DList({
+      ...item,
+      classList: (item.classList || '') + ' ' + this.infos?.name,
+    })
   }
 
   /**
@@ -420,8 +428,10 @@ export default class BasicScene {
   addCSS3D(item) {
     this.css3d ??= new CSS3DManager(this.scene, this.camera.instance)
 
-    const classList = (item.classList ?? '') + ` ${this.infos?.name}`
-    this.addToCSS3DList({ ...item, classList })
+    this.addToCSS3DList({
+      ...item,
+      classList: (item.classList || '') + ' ' + this.infos?.name,
+    })
   }
 
   /**

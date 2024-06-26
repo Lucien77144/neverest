@@ -12,7 +12,7 @@ export default class BaseCamp extends BasicScene {
    * Constructor
    */
   constructor({ interest, infos }) {
-    super(infos)
+    super({ infos })
 
     // Get elements from experience
     this.scrollManager = this.experience.scrollManager

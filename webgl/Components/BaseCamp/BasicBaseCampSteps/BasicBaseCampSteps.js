@@ -54,12 +54,12 @@ export default class BasicBaseCampSteps extends BasicItem {
 
       Object.values(this.components).forEach((c) => {
         if (this.ignoreHover.includes(c.name)) return
-        c.onMouseMove = false
+        c.onMouseHover = false
       })
     } else {
       Object.values(this.components).forEach((c) => {
         if (this.ignoreHover.includes(c.name)) return
-        c.onMouseMove = undefined
+        c.onMouseHover = undefined
       })
     }
   }

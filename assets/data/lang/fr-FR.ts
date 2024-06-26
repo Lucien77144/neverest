@@ -14,6 +14,9 @@ export default {
     },
   },
   CLOSE: 'Fermer',
+  SUBTITLES: 'Sous-titres',
+  SOUNDS: 'Sons',
+  LANGS: 'Langue',
   DRAG: 'Tirer',
   SCROLL_TO_EXPLORE: 'Scrollez pour explorer',
   TITLE_1953:
@@ -34,6 +37,8 @@ export default {
   RITUAL_2024: 'Rituel bouddhiste traditionnel avant chaque ascension',
   STATUE_2024: 'Statue de prière du camp de base',
   WIFI_2024: 'Antenne Wifi ’Everest Link’ sur le camp de base',
+  BOUCHONS_2024: "Embouteillage mortel en haut de l'Everest, 2023",
+  BIN_2024: "L'Everest, poubelle d'altitude, 2018",
   BASECAMP_2050: 'Camp de base abandonné, 2050',
   MELTING_ICE_2050: 'Fonte des glaces, apparition ruisseau 2050',
   PREDICTION_2050: 'Prévision de l’Everest après 2050',

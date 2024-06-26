@@ -28,7 +28,7 @@ export default class TentD2050 extends BasicItem {
       audioBtn: new AudioBtn({
         position: new Vector3(-10, 1, -35),
         source: this.resources.tent_box_2050,
-        name: this.name + '_audio',
+        name: this.name,
       }),
     }
   }

@@ -137,9 +137,16 @@ export default class BasicItem {
     this.onClick
 
     /**
-     * If set, this function will be called on mouse down item
+     * If set, this function will be called on mouse hover item
      * If false, the event will be ignored, even if parent is triggering it
-     * @return {Object} - Object with the centered coordinates and the target values
+     * @return {Object} - Object with the centered coordinates and the target values of the raycaster
+     */
+    this.onMouseHover
+
+    /**
+     * If set, this function will be called on mouse move over the screen
+     * If false, the event will be ignored, even if parent is triggering it
+     * @return {Object} - Object with the centered coordinates and the target values of the raycaster
      */
     this.onMouseMove
 

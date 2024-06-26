@@ -1,7 +1,12 @@
 <template>
   <Landing v-if="landing" />
   <Interface />
-  <div ref="webGlCSSRef" id="webgl-css-wrapper" class="webGlCSS">
+  <div
+    ref="webGlCSSRef"
+    id="webgl-css-wrapper"
+    class="webGlCSS scene"
+    :class="sceneClass"
+  >
     <WebGLCSS2DRenderer />
     <WebGLCSS3DRenderer />
   </div>
@@ -24,6 +29,17 @@ import Experience from '~/webgl/Experience'
 import scenes, { type TSceneInfos } from '~/const/scenes.const'
 import type { TExpStore } from '~/stores/experience.store'
 
+useHead({
+  title: 'Neverest',
+  meta: [
+    {
+      name: 'Neverest',
+      content:
+        "A WebGL experience about the Everest Mount and it's challenges.",
+    },
+  ],
+})
+
 // Plugins
 const { $bus }: any = useNuxtApp()
 
@@ -36,6 +52,7 @@ const webGlCSSRef = ref<HTMLElement | null>(null)
 const activeStatus = ref<boolean>(false)
 const sceneRef = ref<TSceneInfos | null>()
 const startBtnRef = ref<HTMLElement | null>(null)
+const sceneClass = ref<string>('')
 
 // Route
 const route = useRoute()
@@ -67,12 +84,14 @@ function start() {
 $bus.on('modal:init', (v: any) => {
   webGlCSSRef.value?.classList.add('webGlCSS--disabled')
 })
-
 $bus.on('modal:destroy', () => {
   setTimeout(
     () => webGlCSSRef.value?.classList.remove('webGlCSS--disabled'),
     1000
   )
+})
+$bus.on('cssRender:toggle', (name: string) => {
+  sceneClass.value = 'scene--' + name
 })
 
 const setVisibility = (name: string) => {

@@ -25,7 +25,7 @@ export default class Antenne2024 extends BasicItem {
       audioBtnAntenne24: new AudioBtn({
         position: this.position.clone().add(new Vector3(0, 1, 0)),
         source: this.resources.antenne_2024,
-        name: this.name + '_audio',
+        name: this.name,
       }),
     }
   }

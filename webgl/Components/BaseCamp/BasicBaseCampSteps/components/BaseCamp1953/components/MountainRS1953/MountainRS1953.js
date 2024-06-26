@@ -23,7 +23,7 @@ export default class MountainRS1953 extends BasicItem {
       audioBtnRS53: new AudioBtn({
         position: new Vector3(2, 6, -85),
         source: this.resources.montagne_1953,
-        name: this.name + '_audio',
+        name: this.name,
       }),
     }
   }
