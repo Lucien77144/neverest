@@ -24,6 +24,8 @@
 
 <script setup lang="ts">
 import Experience from '~/webgl/Experience'
+import gsap from 'gsap'
+import { CustomEase } from 'gsap/all'
 
 // Scene
 import scenes, { type TSceneInfos } from '~/const/scenes.const'
@@ -108,6 +110,8 @@ const setVisibility = (name: string) => {
 
 // On component mounted, create the experience
 onMounted(() => {
+  gsap.registerPlugin(CustomEase)
+
   exp.value = new Experience({
     canvas: canvasRef.value,
     baseScene: route.query.scene,
