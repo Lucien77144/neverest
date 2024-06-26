@@ -45,6 +45,11 @@
         "source": "/sounds/AMBIENT/intro.m4a"
       },
       {
+        "name": "flagTextureIntro",
+        "source": "/img/DrapeauNepal-02.webp",
+        "type": "texture"
+      },
+      {
         "name": "introMountainPlan1",
         "source": "/img/introMountain/introMountain1.webp",
         "type": "texture"
@@ -515,6 +520,21 @@
       {
         "name": "river2024_3",
         "source": "/img/riverTextures/2024/river2024_3.webp",
+        "type": "texture"
+      },
+      {
+        "name": "river2050_1",
+        "source": "/img/riverTextures/2050/river_2050_1.webp",
+        "type": "texture"
+      },
+      {
+        "name": "river2050_2",
+        "source": "/img/riverTextures/2050/river_2050_2.webp",
+        "type": "texture"
+      },
+      {
+        "name": "river2050_3",
+        "source": "/img/riverTextures/2050/river_2050_3.webp",
         "type": "texture"
       }
     ]

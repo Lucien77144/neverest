@@ -1,4 +1,4 @@
-import { AnimationMixer } from 'three'
+import { AnimationMixer, MathUtils, Vector2 } from 'three'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
 
 export default class BaseCampCamera extends BasicItem {
@@ -21,10 +21,8 @@ export default class BaseCampCamera extends BasicItem {
     this.mixer = null
     this.animationAction = null
     this.baseCamRot = null
-    this.camRotTarget = {
-      x: 0,
-      y: 0,
-    }
+    this.camRotCurrent = new Vector2(0, 0)
+    this.camRotTarget = new Vector2(0, 0)
   }
 
   /**
@@ -105,9 +103,9 @@ export default class BaseCampCamera extends BasicItem {
       rotation.y
     )
 
-    if (this.camRotTarget) {
-      this.parentScene.camera.instance.rotation.x += this.camRotTarget.x
-      this.parentScene.camera.instance.rotation.y += this.camRotTarget.y
+    if (this.camRotCurrent) {
+      this.parentScene.camera.instance.rotation.x += this.camRotCurrent.x
+      this.parentScene.camera.instance.rotation.y += this.camRotCurrent.y
     }
   }
 
@@ -116,10 +114,7 @@ export default class BaseCampCamera extends BasicItem {
    * @param {*} centered Centered mouse position
    */
   onMouseMove(centered) {
-    this.camRotTarget = {
-      x: centered.y * 0.0025,
-      y: -centered.x * 0.0025,
-    }
+    this.camRotTarget = new Vector2(centered.y * 0.0025, -centered.x * 0.0025)
   }
 
   /**
@@ -137,5 +132,16 @@ export default class BaseCampCamera extends BasicItem {
    */
   update() {
     this.parentScene?.playing && this.playAnimation(this.scrollManager.current)
+    
+    this.camRotCurrent.x = MathUtils.lerp(
+      this.camRotCurrent.x,
+      this.camRotTarget.x,
+      0.1
+    )
+    this.camRotCurrent.y = MathUtils.lerp(
+      this.camRotCurrent.y,
+      this.camRotTarget.y,
+      0.1
+    )
   }
 }
