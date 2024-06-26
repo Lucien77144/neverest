@@ -269,9 +269,8 @@ export default class SceneManager {
     this.$bus.emit('cssRender:toggle', scene.name)
 
     return new Promise((resolve) => {
-      const prev = this.active.scene.onAfterRender
       this.active.scene.onAfterRender = () => {
-        this.active.scene.onAfterRender = prev
+        this.active.scene.onAfterRender = this.active.scene.onAfterRender
         resolve()
       }
 
