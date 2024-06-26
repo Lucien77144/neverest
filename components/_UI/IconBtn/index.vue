@@ -1,5 +1,10 @@
 <template>
-  <div ref="btn" :class="big && 'big', disable && isDisabled && 'disabled'" class="iconBtn" @click="$emit('click', $props.value), $bus.emit('audio:click')">
+  <div
+    ref="btn"
+    :class="(big && 'big', disable && isDisabled && 'disabled')"
+    class="iconBtn"
+    @click="$emit('click', $props.value), $bus.emit('audio:click')"
+  >
     <button :type="type" :disable="disable" :isDisabled="isDisabled">
       <slot />
     </button>

@@ -1,5 +1,9 @@
 <template>
-  <div :key="data?.id" class="audio-player" @click="toggle(), $bus.emit('audio:click')">
+  <div
+    :key="data?.id"
+    class="modal-player"
+    @click="toggle(), $bus.emit('audio:click')"
+  >
     <client-only>
       <Vue3Lottie
         ref="lottieRef"

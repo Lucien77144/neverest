@@ -18,7 +18,7 @@
     display: block;
     width: 130%;
     height: 0.08rem;
-    background-color: $primary;
+    background-color: rgba($primary, 0.7);
     position: absolute;
     top: 50%;
     left: 50%;
@@ -29,8 +29,8 @@
     pointer-events: none;
   }
 
-  &.disabled::before {
-    opacity: 1;
+  &.disabled {
+    opacity: 0.75;
   }
 
   img {

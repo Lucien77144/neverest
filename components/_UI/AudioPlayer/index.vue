@@ -5,15 +5,17 @@
     class="audio-player"
     @click="toggle(), $bus.emit('audio:click')"
   >
-    <client-only>
-      <Vue3Lottie
-        ref="lottieRef"
-        :animationData="audioPlayer"
-        :autoPlay="false"
-        :speed="1 / audio.duration"
-        @onLoopComplete="resetLottie"
-      />
-    </client-only>
+    <div class="audio-player__container">
+      <client-only>
+        <Vue3Lottie
+          ref="lottieRef"
+          :animationData="audioPlayer"
+          :autoPlay="false"
+          :speed="getSpeed()"
+          @onLoopComplete="resetLottie"
+        />
+      </client-only>
+    </div>
   </div>
 </template>
 
@@ -54,52 +56,57 @@ $bus.on('audio-voix-off:muteAll', () => {
 // Reset the lottie animation
 const resetLottie = () => {
   audio.pause()
-  lottieRef.value?.goToAndStop(1)
   audio.currentTime = 0
 }
 
 // Fade in/out the audio volume
-const fadeAudio = (
-  audio: HTMLAudioElement,
-  duration: number,
-  targetVolume: number
-) => {
-  const volume = audio.volume
-  const steps = 50
-  const stepDuration = duration / steps
-  const stepVolume = (targetVolume - volume) / steps
+// const fadeAudio = (
+//   audio: HTMLAudioElement,
+//   duration: number,
+//   targetVolume: number
+// ) => {
+//   const volume = audio.volume
+//   const steps = 50
+//   const stepDuration = duration / steps
+//   const stepVolume = (targetVolume - volume) / steps
 
-  for (let i = 1; i <= steps; i++) {
-    setTimeout(() => {
-      audio.volume = volume + stepVolume * i
-    }, stepDuration * i)
-  }
-}
+//   for (let i = 1; i <= steps; i++) {
+//     setTimeout(() => {
+//       audio.volume = volume + stepVolume * i
+//     }, stepDuration * i)
+//   }
+// }
 
 // Audio Events
 audio.addEventListener('play', () => {
   audioEnd.value = false
-
+  audioPlayerRef.value?.classList.add('active')
   lottieRef.value?.play()
 })
 audio.addEventListener('pause', () => {
   lottieRef.value?.pause()
+  audioPlayerRef.value?.classList.remove('active')
   isPaused.value = true
   setCues([])
 })
 audio.addEventListener('ended', () => {
   audioEnd.value = true
+  audioPlayerRef.value?.classList.remove('active')
   setCues([])
 })
 
 // Toggle audio
-const toggle = () =>
-  audio?.paused
-    ? ($bus.emit('audio-voix-off:muteAll'), audio?.play())
-    : (lottieRef.value?.goToAndStop(0), audio?.pause())
+const toggle = () => {
+  if (audio.paused) {
+    $bus.emit('audio-voix-off:muteAll')
+    audio?.play()
+  } else {
+    lottieRef.value?.goToAndStop(0), audio?.pause()
+  }
+}
 
-// On mounted
-onMounted(() => lottieRef.value?.setSpeed(1 / audio.duration))
+// Get speed of the lottie animation
+const getSpeed = (): number => 2 / audio.duration
 </script>
 
 <style src="./style.scss" lang="scss" scoped></style>
