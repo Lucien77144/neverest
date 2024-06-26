@@ -173,6 +173,7 @@ export default class Resources {
           })
 
         tmpScene.onAfterRender = () => {
+          console.log('preloaded')
           tmpScene.clear()
           this.renderer.instance.clear()
           this.groupEnd()
