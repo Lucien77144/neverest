@@ -28,8 +28,8 @@
                 },
               })
           "
-          class="img__container w-px-280"
-          src="/assets/img/HS-Everest-2024_1.jpg"
+          class="img__container w-px-340"
+          src="/assets/img/HS-Everest-2024_6.jpg"
           alt=""
         />
         <p
@@ -44,7 +44,7 @@
           "
           class="w-100"
         >
-          {{ $t('SHERPA_FLAG_2024') }}
+          {{ $t('WIFI_2024') }}
         </p>
       </div>
     </div>
@@ -159,8 +159,8 @@
               alt=""
             />
             <img
-              class="img__container m-0 w-px-230"
-              src="/assets/img/HS-Everest-2024_5.jpg"
+              class="img__container m-0 w-px-375"
+              src="/assets/img/HS-Everest-2024_9.jpeg"
               alt=""
             />
           </div>
@@ -176,7 +176,7 @@
             "
             class="text-right w-100"
           >
-            {{ $t('STATUE_2024') }}
+            {{ $t('BIN_2024') }}
           </p>
         </div>
       </div>
@@ -193,7 +193,7 @@
                   })
               "
               class="img__container ml-5 w-px-270 h-px-200"
-              src="/assets/img/HS-Everest-2024_4.jpg"
+              src="/assets/img/HS-Everest-2024_5.jpg"
               alt=""
             />
             <img
@@ -250,7 +250,7 @@
                   })
               "
               class="img__container m-0"
-              src="/assets/img/HS-Everest-2024_6.jpg"
+              src="/assets/img/HS-Everest-2024_8.jpg"
               alt=""
             />
           </div>
@@ -266,7 +266,7 @@
             "
             class="w-px-500 ml-n5"
           >
-            {{ $t('WIFI_2024') }}
+            {{ $t('BOUCHONS_2024') }}
           </p>
         </div>
       </div>
