@@ -1,5 +1,8 @@
 <template>
   <div class="IC_text">
+    <p ref="subtitlesRef" class="IC_text__text">
+        {{ $t('SUBTITLES') }}
+      </p>
     <UIIconBtn
       :big="false"
       :is-disabled="disabled"
@@ -50,6 +53,9 @@
     </UIIconBtn>
   </div>
   <div class="IC_sound">
+    <p ref="soundRef" class="IC_sound__text">
+        {{ $t('SOUNDS') }}
+      </p>
     <UIIconBtn :big="false" :is-disabled="isMuted" @click="toggleMute()">
       <div class="audio-wave">
         <svg
