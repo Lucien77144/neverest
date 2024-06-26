@@ -22,7 +22,7 @@ export default class IntroGroup extends BasicItem {
         16.354,
         4.6,
         0.2,
-        0,
+        -0.3,
         0
       ),
       planeTexture2: new PlaneTextureIntro(
@@ -31,7 +31,7 @@ export default class IntroGroup extends BasicItem {
         17.6,
         4.95,
         0.4,
-        0,
+        -0.3,
         0
       ),
       planeTexture3: new PlaneTextureIntro(
@@ -40,7 +40,7 @@ export default class IntroGroup extends BasicItem {
         18.844,
         5.3,
         0.6,
-        0,
+        -0.3,
         0
       ),
       planeTexture4: new PlaneTextureIntro(
@@ -49,7 +49,7 @@ export default class IntroGroup extends BasicItem {
         20.088,
         5.65,
         0.8,
-        0,
+        -0.3,
         0
       ),
       planeTexture5: new PlaneTextureIntro(
@@ -58,7 +58,7 @@ export default class IntroGroup extends BasicItem {
         21.12,
         6,
         1,
-        0,
+        -0.3,
         0
       ),
       introFlag: new IntroFlag(),
@@ -66,9 +66,9 @@ export default class IntroGroup extends BasicItem {
   }
 
   /**
-   * On mouse move
+   * On mouse hover
    */
-  onMouseMove(e) {
+  onMouseHover(e) {
     this.components.planeTexture1.cursorXPos = e.centered.x
     this.components.planeTexture2.cursorXPos = e.centered.x
     this.components.planeTexture3.cursorXPos = e.centered.x

@@ -74,7 +74,7 @@ export default class PlaneTextureIntro extends BasicItem {
         )
         this.item.position.y = MathUtils.lerp(
             this.item.position.y,
-            this.cursorYPos * this.parallaxMultiplier * 0.3,
+            this.cursorYPos * this.parallaxMultiplier * 0.3 + this.yPos,
             0.1
         )
     }

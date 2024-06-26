@@ -1,5 +1,5 @@
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
-import { MeshNormalMaterial, MeshStandardMaterial, Vector3 } from 'three'
+import { MeshStandardMaterial, Vector3 } from 'three'
 import ModalBtn from '~/webgl/Components/Shared/ModalBtn/ModalBtn'
 
 export default class TentA1953 extends BasicItem {

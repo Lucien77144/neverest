@@ -208,10 +208,16 @@ export default class BasicScene {
     ])?.item
 
     // On mouse move event
-    const mouseMove = this.getRaycastedItem(centered, ['onMouseMove'])
-    this.triggerFn(mouseMove?.item, 'onMouseMove', {
+    this.triggerFn(this, 'onMouseMove', centered)
+    Object.values(this.allComponents).forEach((c) =>
+      this.triggerFn(c, 'onMouseMove', centered)
+    )
+
+    // On mouse hover event
+    const mouseHover = this.getRaycastedItem(centered, ['onMouseHover'])
+    this.triggerFn(mouseHover?.item, 'onMouseHover', {
       centered,
-      target: mouseMove?.target,
+      target: mouseHover?.target,
     })
 
     // If mouse leave the hovered item, refresh the hovered item
