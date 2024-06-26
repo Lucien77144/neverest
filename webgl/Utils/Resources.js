@@ -1,13 +1,6 @@
 import Loader from './Loader.js'
 import sources from './assets/data/sources.json'
-import {
-  Cache,
-  Mesh,
-  MeshBasicMaterial,
-  PlaneGeometry,
-  Scene,
-  Texture,
-} from 'three'
+import { Mesh, MeshBasicMaterial, PlaneGeometry, Scene, Texture } from 'three'
 import gsap from 'gsap'
 import Experience from '../Experience.js'
 
@@ -19,7 +12,6 @@ export default class Resources {
     // Get elements from experience
     this.experience = new Experience()
     this.renderer = this.experience.renderer
-    Cache.enabled = true
 
     // New elements
     this.sources = []
@@ -179,9 +171,9 @@ export default class Resources {
             } else if (i instanceof Texture) {
               const map = i.clone()
               map.source = i.source
-              
+
               const geometry = new PlaneGeometry(2, 2)
-              const material = new MeshBasicMaterial({ map  })
+              const material = new MeshBasicMaterial({ map })
               const mesh = new Mesh(geometry, material)
 
               tmpScene.add(mesh)
