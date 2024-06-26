@@ -31,12 +31,16 @@ const { data } = defineProps({
 const lottieRef = ref<InstanceType<typeof Vue3Lottie>>()
 const modalPlayerRef = ref<HTMLElement>()
 const isOpen = ref(false)
+const flag = ref(false)
 
 // Bus
 const { $bus }: any = useNuxtApp()
 
 // Toggle audio
 const toggle = () => {
+  if (flag.value) return
+  flag.value = true
+
   isOpen.value = !isOpen.value
   $bus.emit('modal:toggle', isOpen.value ? data : null)
 }

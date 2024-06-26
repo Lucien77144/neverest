@@ -23,6 +23,7 @@ export default class ModalBtn extends BasicItem {
     this.data = data
     this.name = name
     this.camera = null
+    this.flag = false
   }
 
   /**
@@ -30,6 +31,9 @@ export default class ModalBtn extends BasicItem {
    * @param {boolean} data - Open or close the modal
    */
   toggleModal(data) {
+    if (this.flag) return
+    this.flag = true
+
     this.$bus.emit('audio:click')
     this.scrollManager.setDisable(!!data)
 
@@ -46,6 +50,9 @@ export default class ModalBtn extends BasicItem {
             this.$bus.emit('modal:destroy')
           }
         }
+      },
+      onComplete: () => {
+        this.flag = false
       },
     })
 
