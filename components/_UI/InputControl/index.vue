@@ -82,6 +82,10 @@ const I18n = useI18n()
 // Bus
 const { $bus }: any = useNuxtApp()
 
+// Refs
+const subtitlesRef = ref<HTMLElement | null>(null)
+const soundRef = ref<HTMLElement | null>(null)
+
 // Store
 const disabled = computed(() => useSubtitlesStore().getDisabled)
 const setDisabled = (val: boolean) => useSubtitlesStore().setDisabled(val)
@@ -93,6 +97,17 @@ $bus.on('audio:mute', () => {
 
 $bus.on('audio:unmute', () => {
   isMuted.value = false
+})
+
+$bus.on('tempo:change', (tempo: string) => {  
+  if (tempo === '1953') {
+    subtitlesRef.value?.classList.remove('color-secondary')
+    soundRef.value?.classList.remove('color-secondary')
+  }
+  if (tempo === '2024' || tempo === '2050') {
+    subtitlesRef.value?.classList.add('color-secondary')
+    soundRef.value?.classList.add('color-secondary')
+  }
 })
 
 function toggleMute() {
