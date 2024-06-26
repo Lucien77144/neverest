@@ -181,7 +181,7 @@ export default class Resources {
               map.source = i.source
               
               const geometry = new PlaneGeometry(2, 2)
-              const material = new MeshBasicMaterial({ map:  })
+              const material = new MeshBasicMaterial({ map  })
               const mesh = new Mesh(geometry, material)
 
               tmpScene.add(mesh)
