@@ -1,44 +1,18 @@
-import { DirectionalLight, DirectionalLightHelper, Group, Vector3 } from 'three'
+import gsap from 'gsap'
 import BaseCampCamera from '../Components/BaseCamp/BaseCampCamera/BaseCampCamera'
 import BasicScene from '../Modules/Basics/BasicScene'
-import Floor from '../Components/BaseCamp/Floor/Floor'
-import gsap from 'gsap'
-import Lights from '../Components/Shared/Lights/Lights'
-import BCSmallBox_1953 from '../Components/BaseCamp/BCSmallBox_1953/BCSmallBox_1953'
-import BCMediumBox_1953 from '../Components/BaseCamp/BCMediumBox_1953/BCMediumBox_1953'
-import BCBigBox_1953 from '../Components/BaseCamp/BCBigBox_1953/BCBigBox_1953'
-import BCSmallBox_2024 from '../Components/BaseCamp/BCSmallBox_2024/BCSmallBox_2024'
-import BCMediumBox_2024 from '../Components/BaseCamp/BCMediumBox_2024/BCMediumBox_2024'
-import BCBigBox_2024 from '../Components/BaseCamp/BCBigBox_2024/BCBigBox_2024'
-import BCSmallBox_2050 from '../Components/BaseCamp/BCSmallBox_2050/BCSmallBox_2050'
-import BCBigBox_2050 from '../Components/BaseCamp/BCBigBox_2050/BCBigBox_2050'
-import BCTent_1_1953 from '../Components/BaseCamp/BCTent_1_1953/BCTent_1_1953'
-import BCTent_2_1953 from '../Components/BaseCamp/BCTent_2_1953/BCTent_2_1953'
-import BCTent_3_1953 from '../Components/BaseCamp/BCTent_3_1953/BCTent_3_1953'
-import BCTent_1_2024 from '../Components/BaseCamp/BCTent_1_2024/BCTent_1_2024'
-import BCTent_2_2024 from '../Components/BaseCamp/BCTent_2_2024/BCTent_2_2024'
-import BCTent_3_2024 from '../Components/BaseCamp/BCTent_3_2024/BCTent_3_2024'
-import BCTent_Main_2050 from '../Components/BaseCamp/BCTent_Main_2050/BCTent_Main_2050'
-import BCTent_1_2050 from '../Components/BaseCamp/BCTent_1_2050/BCTent_1_2050'
-import BCTent_2_2050 from '../Components/BaseCamp/BCTent_2_2050/BCTent_2_2050'
-import BCTent_3_2050 from '../Components/BaseCamp/BCTent_3_2050/BCTent_3_2050'
-import BCMountain from '../Components/BaseCamp/BCMountain/BCMountain'
-import BCMountainL from '../Components/BaseCamp/BCMountainL/BCMountainL'
-import BCMountainLS from '../Components/BaseCamp/BCMountainLS/BCMountainLS'
-import BCMountainR from '../Components/BaseCamp/BCMountainR/BCMountainR'
-import BCMountainRS from '../Components/BaseCamp/BCMountainRS/BCMountainRS'
-import BCFlag from '../Components/BaseCamp/BCFlag/BCFlag'
-import BCCailloux from '../Components/BaseCamp/BCCailloux/BCCailloux'
-
-import { ModalBC1953 } from '#components'
 import BaseCampLight from '../Components/BaseCamp/BaseCampLight/BaseCampLight'
+import FloorAnimation from '../Components/BaseCamp/FloorParticles/FloorAnimation'
+import BaseCamp1953 from '../Components/BaseCamp/BasicBaseCampSteps/components/BaseCamp1953/BaseCamp1953'
+import BaseCamp2024 from '../Components/BaseCamp/BasicBaseCampSteps/components/BaseCamp2024/BaseCamp2024'
+import BaseCamp2050 from '../Components/BaseCamp/BasicBaseCampSteps/components/BaseCamp2050/BaseCamp2050'
 
 export default class BaseCamp extends BasicScene {
   /**
    * Constructor
    */
-  constructor({ interest }) {
-    super()
+  constructor({ interest, infos }) {
+    super(infos)
 
     // Get elements from experience
     this.scrollManager = this.experience.scrollManager
@@ -48,7 +22,6 @@ export default class BaseCamp extends BasicScene {
     // New elements
     this.interest = interest
     this.camFov = 20
-    this.camRot = new Vector3(0, 0, 0)
     this.list = []
     this.playing = false
     this.factorChange = false
@@ -57,184 +30,31 @@ export default class BaseCamp extends BasicScene {
     // Actions
     this.setInterest = useExperienceStore().setInterest
 
-    // Events
-    this.scrollManager.on('scroll', ({ current }) =>
-      this.watchCurrentScroll(current)
-    )
-
     // Components
     this.components = {
-      floor: new Floor(),
+      camera: new BaseCampCamera(),
       lights: new BaseCampLight(),
+      floorAnimation: new FloorAnimation(),
 
-      // BOX
-
-      BCSmallBox_1953: new BCSmallBox_1953({
-        name: 'BCSmallBox_1953',
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
+      baseCamp1953: new BaseCamp1953({
         visibility: [0, 25.87],
+        CSSVisibility: [0, 21.6],
+        tempo: '1953',
+        ignoreHover: ['Floor1953'],
       }),
-      BCMediumBox_1953: new BCMediumBox_1953({
-        name: 'BCMediumBox_1953',
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [0, 25.87],
-      }),
-      BCBigBox_1953: new BCBigBox_1953({
-        name: 'BCBigBox_1953',
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [0, 25.87],
-      }),
-      BCSmallBox_2024: new BCSmallBox_2024({
-        name: 'BCSmallBox_2024',
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
+      baseCamp2024: new BaseCamp2024({
         visibility: [25.87, 75.97],
+        CSSVisibility: [32.45, 71.8],
+        active: false,
+        tempo: '2024',
+        ignoreHover: ['Floor2024'],
       }),
-      BCMediumBox_2024: new BCMediumBox_2024({
-        name: 'BCMediumBox_2024',
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [25.87, 75.97],
-      }),
-      BCBigBox_2024: new BCBigBox_2024({
-        name: 'BCBigBox_2024',
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [25.87, 75.97],
-      }),
-      BCSmallBox_2050: new BCSmallBox_2050({
-        name: 'BCSmallBox_2050',
-        position: new Vector3(9.429, 0.417, -17.631),
-        rotation: new Vector3(Math.PI / 2, 0.204, -0.155),
+      baseCamp2050: new BaseCamp2050({
         visibility: [75.97, 100],
-      }),
-      BCBigBox_2050: new BCBigBox_2050({
-        name: 'BCBigBox_2050',
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [75.97, 100],
-      }),
-
-      // TENT
-
-      BCTent_1_1953: new BCTent_1_1953({
-        name: 'BCTENT_1_1953_1',
-        position: new Vector3(0.328, 0, -35.809),
-        rotation: new Vector3(0, -0.5 + Math.PI / 2, 0),
-        visibility: [0, 25.87],
-      }),
-      BCTent_2_1953: new BCTent_2_1953({
-        name: 'BCTent_2_1953',
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [0, 25.87],
-      }),
-      BCTent_3_1953: new BCTent_3_1953({
-        name: 'BCTENT_3_1953_1',
-        position: new Vector3(-9.319, 0, -38.493),
-        rotation: new Vector3(0, 0.2 + Math.PI / 2, 0),
-        visibility: [0, 25.87],
-      }),
-      BCTent_1_2024: new BCTent_1_2024({
-        name: 'BC_Tent_1_2024_1',
-        position: new Vector3(0.328, 0, -35.809),
-        rotation: new Vector3(0, -0.5 + Math.PI / 2, 0),
-        visibility: [25.87, 75.97],
-      }),
-      BCTent_2_2024: new BCTent_2_2024({
-        name: 'BCTent_2_2024',
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [25.87, 75.97],
-      }),
-      BCTent_3_2024: new BCTent_3_2024({
-        name: 'BCTent_3_2024',
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [25.87, 75.97],
-      }),
-      BCTent_Main_2050: new BCTent_Main_2050({
-        name: 'BCTent_Main_2050',
-        position: new Vector3(0.328, 0, -35.809),
-        rotation: new Vector3(0, -0.5 + Math.PI / 2, 0),
-        visibility: [75.97, 100],
-      }),
-      BCTent_1_2050: new BCTent_1_2050({
-        name: 'BCTent_1_2050',
-        position: new Vector3(0.328, 0, -35.809),
-        rotation: new Vector3(0, -0.3, 0),
-        visibility: [75.97, 100],
-      }),
-      BCTent_2_2050: new BCTent_2_2050({
-        name: 'BCTent_2_2050',
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [75.97, 100],
-      }),
-      BCTent_3_2050: new BCTent_3_2050({
-        name: 'BCTent_3_2050',
-        position: new Vector3(0, 0, 0),
-        rotation: new Vector3(0, 0, 0),
-        visibility: [75.97, 100],
-      }),
-
-      // MOUNTAINS
-
-      BCMountain: new BCMountain({
-        name: 'Mountain',
-        position: new Vector3(0.192, 11.703, -200.766),
-        rotation: new Vector3(Math.PI, -0.65, Math.PI),
-        model: this.resources.items.BCMountain,
-        visibility: [0, 100],
-      }),
-      BCMountainL: new BCMountainL({
-        name: 'MountainL',
-        position: new Vector3(-51.506, -7.769, -140.148),
-        rotation: new Vector3(0, -Math.PI / 3, 0),
-        model: this.resources.items.BCMountainL,
-        visibility: [0, 100],
-      }),
-      BCMountainLS: new BCMountainLS({
-        name: 'MountainLS',
-        position: new Vector3(-22.29, -1, -65.826),
-        rotation: new Vector3(-0.051, 0.094, -0.095),
-        model: this.resources.items.BCMountainLS,
-        visibility: [0, 100],
-      }),
-      BCMountainR: new BCMountainR({
-        name: 'MountainR',
-        position: new Vector3(55.752, 10.605, -162.061),
-        rotation: new Vector3(0, 0, 0),
-        model: this.resources.items.BCMountainR,
-        visibility: [0, 100],
-      }),
-      BCMountainRS: new BCMountainRS({
-        name: 'MountainRS',
-        position: new Vector3(15.168, -0.8, -68.82),
-        rotation: new Vector3(-3.075, -0.701, 3.085),
-        model: this.resources.items.BCMountainRS,
-        visibility: [0, 100],
-      }),
-
-      // SINGLE ITEMS
-
-      BCFlag: new BCFlag({
-        name: 'Flag',
-        position: new Vector3(6.2, 0.251, -18.331),
-        rotation: new Vector3(0.005, 0.291, -0.289),
-        model: this.resources.items.BCFlag,
-        visibility: [0, 25.87],
-        modal: ModalBC1953,
-      }),
-      BCCailloux: new BCCailloux({
-        name: 'TasCailloux',
-        position: new Vector3(-9.567, 0, -32.582),
-        rotation: new Vector3(0, 0.262, 0),
-        model: this.resources.items.BCCailloux,
-        visibility: [0, 25.87],
+        CSSVisibility: [80, 100],
+        active: false,
+        tempo: '2050',
+        ignoreHover: ['Floor2050'],
       }),
     }
 
@@ -247,31 +67,11 @@ export default class BaseCamp extends BasicScene {
   // --------------------------------
 
   /**
-   * Scroll the camera around the cube
-   */
-  setCamera() {
-    this.camera.instance.position.y = 3.7
-    this.camera.instance.position.z = 20
-
-    this.camera.instance.fov = this.camFov
-    this.camera.instance.far = 500
-    this.camera.instance.updateProjectionMatrix()
-
-    this.components['Camera'] = new BaseCampCamera({
-      name: 'Camera',
-      model: this.resources.items.BCAnimCam,
-      position: new Vector3(0, 0, 0),
-      rotation: new Vector3(0, 0, 0),
-      scale: new Vector3(1, 1, 1),
-    })
-  }
-
-  /**
    * Watch the current scroll progression
    * @param {*} value Scroll value
-   * @param {*} instant If the transtiion should be instant
+   * @param {boolean} visibility Update components visibility
    */
-  watchCurrentScroll(value, instant = false) {
+  watchCurrentScroll(value, visibility = true) {
     if (this.scrollManager.disabled) return
 
     const trigger = this.interest.list?.find(({ start, end }) => {
@@ -280,11 +80,13 @@ export default class BaseCamp extends BasicScene {
 
     const power = trigger?.power || this.interest.base
 
-    Object.values(this.components).forEach((c) => this.setComponentVis(c))
+    if (visibility) {
+      Object.values(this.components).forEach((c) => this.setComponentVis(c))
+    }
 
     if (this.interest.curr === power) return
 
-    this.setInterestVis(trigger?.data, instant)
+    this.setInterestVis(trigger?.data, false)
     this.setScrollFactor(power)
   }
 
@@ -297,16 +99,26 @@ export default class BaseCamp extends BasicScene {
     if (!c.visibility?.length) return
 
     const scroll = force ?? this.scrollManager.current
-    const start = c.visibility[0]
-    const end = c.visibility[1]
 
     // If current scroll is between visibility values
+    const start = c.visibility[0]
+    const end = c.visibility[1]
     if (start <= scroll && scroll <= end) {
-      c.item.visible = true
+      !c.isActive && c.toggleActive()
+
+      this.components.floorAnimation.setEffectColor(c.colors.mouse)
+      this.components.floorAnimation.setBackgroundColor(c.colors.background)
     } else {
-      if (c.item.visible) {
-        c.item.visible = false
-      }
+      c.isActive && c.toggleActive()
+    }
+
+    // If current scroll is between CSS visibility values
+    const startCSS = c.CSSVisibility[0]
+    const endCSS = c.CSSVisibility[1]
+    if (startCSS <= scroll && scroll <= endCSS) {
+      !c.isActiveCSS && c.toggleActiveCSS()
+    } else {
+      c.isActiveCSS && c.toggleActiveCSS()
     }
   }
 
@@ -319,8 +131,7 @@ export default class BaseCamp extends BasicScene {
     data && this.setInterest({ data })
     this.setInterest({ visible: !!data })
 
-    const val = {
-      ...this.camRot,
+    const value = {
       fov: this.camera.instance?.fov,
     }
 
@@ -330,15 +141,13 @@ export default class BaseCamp extends BasicScene {
       ease: 'power1.inOut',
     })
 
-    gsap.to(val, {
-      x: !!data ? 0.1 : 0,
+    gsap.to(value, {
       fov: !!data ? this.camFov * 0.85 : this.camFov,
       duration: instant ? 0 : 1,
       ease: 'power1.inOut',
       onUpdate: () => {
-        this.camRot.x = val.x
         if (!this.camera.instance) return
-        this.camera.instance.fov = val.fov
+        this.camera.instance.fov = value.fov
         this.camera.instance.updateProjectionMatrix()
       },
     })
@@ -351,11 +160,10 @@ export default class BaseCamp extends BasicScene {
   setScrollFactor(value) {
     if (this.factorChange) return
     this.factorChange = true
-
     this.interest.curr = value
 
     const factor = this.scrollManager.factor
-    this.scrollManager.setFactor(0)
+    this.scrollManager.setFactor(0.05)
     setTimeout(() => {
       this.scrollManager.setFactor(factor)
       this.factorChange = false
@@ -374,14 +182,11 @@ export default class BaseCamp extends BasicScene {
    * Init the scene
    */
   init() {
-    // Set the camera
-    this.setCamera()
     this.setInterestVis(null)
     this.setInterest({ visible: false })
 
     // Init the scene and components (basic scene)
     super.init()
-    Object.values(this.components).forEach((c) => this.setComponentVis(c, 0))
   }
 
   /**
@@ -389,8 +194,16 @@ export default class BaseCamp extends BasicScene {
    */
   onInitComplete() {
     super.onInitComplete()
-    this.watchCurrentScroll(0)
     this.playing = true
+
+    // Events
+    this.watchCurrentScroll(0, false)
+    this.scrollManager.on('scroll', ({ current }) =>
+      this.watchCurrentScroll(current)
+    )
+    this.components.floorAnimation.setBackgroundColor(
+      this.components.baseCamp1953.colors.background
+    )
   }
 
   /**

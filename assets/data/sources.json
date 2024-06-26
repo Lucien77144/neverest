@@ -1,257 +1,22 @@
 [
   {
-    "name": "audios",
-    "data": {},
+    "name": "global",
+    "data": {
+      "preload": true
+    },
     "items": [
       {
-        "name": "babyshark",
-        "source": "/sounds/babyshark.mp3"
-      },
-      {
-        "name": "onichan",
-        "source": "/sounds/onichan.mp3"
-      },
-      {
-        "name": "yameteAh",
-        "source": "/sounds/yamete_ah.mp3"
-      },
-      {
-        "name": "tedTalk",
-        "source": "/sounds/ted_talk.mp3",
-        "subtitles": {
-          "fr": "/subtitles/ted_talk/fr.vtt",
-          "en": "/subtitles/ted_talk/en.vtt"
-        }
+        "name": "noisePostProc",
+        "source": "/img/noise.jpg",
+        "type": "texture"
       },
       {
         "name": "click",
         "source": "/sounds/click.mp3"
       },
       {
-        "name": "flag1953",
-        "source": "/sounds/flag_1953.mp3"
-      },
-      {
-        "name": "vent2050",
-        "source": "/sounds/vent_2050.mp3"
-      }
-    ]
-  },
-  {
-    "name": "videos",
-    "data": {},
-    "items": [
-      {
-        "name": "return1953",
-        "source": "/video/return1953.mp4",
-        "subtitles": {
-          "fr": "/subtitles/return1953/fr.vtt",
-          "en": "/subtitles/return1953/en.vtt"
-        }
-      },
-      {
-        "name": "archives1953",
-        "source": "/video/archives1953.mp4",
-        "subtitles": {
-          "fr": "/subtitles/archives1953/fr.vtt",
-          "en": "/subtitles/archives1953/en.vtt"
-        }
-      }
-    ]
-  },
-  {
-    "name": "textures",
-    "data": {},
-    "items": [
-      {
-        "name": "focusMask",
-        "source": "/img/focus_mask.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "introMountainTexture",
-        "source": "/img/texturesLoulou/textureIntroMountain.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCFlagPoleTexture",
-        "source": "/img/texturesLoulou/textureBCFlagPole.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCBigBox_1953Texture",
-        "source": "/img/texturesLoulou/textureBCBigBox1953.png",
-        "type": "texture"
-      },
-      {
-        "name": "BCBigBox_2024Texture",
-        "source": "/img/texturesLoulou/textureBCBigBox2024.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCBigBox_2050Texture",
-        "source": "/img/texturesLoulou/textureBCBigBox2050.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCMediumBox_1953Texture",
-        "source": "/img/texturesLoulou/textureBCMediumBox1953.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCMediumBox_2024Texture",
-        "source": "/img/texturesLoulou/textureBCMediumBox2024.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCSmallBox_1953Texture",
-        "source": "/img/texturesLoulou/textureBCSmallBox1953.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCSmallBox_2050Texture",
-        "source": "/img/texturesLoulou/textureBCSmallBox2050.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCSmallBox_2024Texture",
-        "source": "/img/texturesLoulou/textureBCSmallBox2024.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCTent1_1953Texture",
-        "source": "/img/texturesLoulou/textureBCTent11953.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCTent1_2050Texture",
-        "source": "/img/texturesLoulou/textureBCTent12050.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCTent2_1953Texture",
-        "source": "/img/texturesLoulou/textureBCTent21953.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCTent2_2024Texture",
-        "source": "/img/texturesLoulou/textureBCTent22024.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCTent2_2050Texture",
-        "source": "/img/texturesLoulou/textureBCTent22050.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCTent3_1953Texture",
-        "source": "/img/texturesLoulou/textureBCTent31953.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCTent3_2024Texture",
-        "source": "/img/texturesLoulou/textureBCTent32024.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCTent3_2050Texture",
-        "source": "/img/texturesLoulou/textureBCTent32050.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCCaillouTexture",
-        "source": "/img/texturesLoulou/textureBCCaillou.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCFloorTexture",
-        "source": "/img/texturesLoulou/textureBCFloor.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCMountainLSTexture",
-        "source": "/img/texturesLoulou/textureBCMountainLS.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCMountainLTexture",
-        "source": "/img/texturesLoulou/textureBCMountainL.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCMountainRSTexture",
-        "source": "/img/texturesLoulou/textureBCMountainRS.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCMountainRTexture",
-        "source": "/img/texturesLoulou/textureBCMountainR.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "BCMountainTexture",
-        "source": "/img/texturesLoulou/textureBCMountain.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "dirt",
-        "source": "/img/dirt.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "lennaTexture",
-        "source": "/img/lenna.png",
-        "type": "texture"
-      },
-      {
-        "name": "ground1953",
-        "source": "/img/Ground_Texture_1953.exr",
-        "type": "texture"
-      },
-      {
-        "name": "ground2024",
-        "source": "/img/Ground_Texture_2024.exr",
-        "type": "texture"
-      },
-      {
-        "name": "testDA1",
-        "source": "/img/texturesTestDA/testDA1.png",
-        "type": "texture"
-      },
-      {
-        "name": "testDA2",
-        "source": "/img/texturesTestDA/testDA2.png",
-        "type": "texture"
-      },
-      {
-        "name": "testDA3",
-        "source": "/img/texturesTestDA/testDA3.png",
-        "type": "texture"
-      },
-      {
-        "name": "testDA4",
-        "source": "/img/texturesTestDA/testDA4.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "CloudImg",
-        "source": "/img/Degrade.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "tent2_1953_texture",
-        "source": "/img/tent2_1953.webp",
-        "type": "texture"
-      },
-      {
-        "name": "circle",
-        "source": "/img/circle.svg",
-        "type": "texture"
-      },
-      {
-        "name": "blob",
-        "source": "/img/transitions/blob.svg",
-        "type": "texture"
+        "name": "ENFlag",
+        "source": "/models/BaseCamp/1953/flag_1953.glb"
       },
       {
         "name": "flagTexture",
@@ -261,9 +26,54 @@
     ]
   },
   {
-    "name": "Intro",
-    "data": {},
+    "name": "intro",
+    "data": {
+      "preload": true
+    },
     "items": [
+
+      {
+        "name": "intro",
+        "source": "/sounds/VOIX_OFF/INTRO.wav",
+        "subtitles": {
+          "fr": "/subtitles/voix_off_intro/fr.vtt",
+          "en": "/subtitles/voix_off_intro/en.vtt"
+        }
+      },
+      {
+        "name": "ambient_intro",
+        "source": "/sounds/AMBIENT/intro.m4a"
+      },
+      {
+        "name": "introMountainPlan1",
+        "source": "/img/introMountain/introMountain1.webp",
+        "type": "texture"
+      },
+      {
+        "name": "introMountainPlan2",
+        "source": "/img/introMountain/introMountain2.webp",
+        "type": "texture"
+      },
+      {
+        "name": "introMountainPlan3",
+        "source": "/img/introMountain/introMountain3.webp",
+        "type": "texture"
+      },
+      {
+        "name": "introMountainPlan4",
+        "source": "/img/introMountain/introMountain4.webp",
+        "type": "texture"
+      },
+      {
+        "name": "introMountainPlan5",
+        "source": "/img/introMountain/introMountain5.webp",
+        "type": "texture"
+      },
+      {
+        "name": "introImg",
+        "source": "/img/EcranAccueil.jpg",
+        "type": "texture"
+      },
       {
         "name": "introMountain",
         "source": "/models/Intro/mount_everest_topo_map.glb"
@@ -271,9 +81,201 @@
     ]
   },
   {
-    "name": "BaseCamp",
-    "data": {},
+    "name": "basecamp",
+    "data": {
+      "preload": true
+    },
     "items": [
+      {
+        "name": "intro_basecamp",
+        "source": "/sounds/VOIX_OFF/INTRO_BASECAMP.wav",
+        "subtitles": {
+          "fr": "/subtitles/voix_off_basecamp_intro/fr.vtt",
+          "en": "/subtitles/voix_off_basecamp_intro/en.vtt"
+        }
+      },
+      {
+        "name": "box_1953",
+        "source": "/sounds/VOIX_OFF/BOX_1953.wav",
+        "subtitles": {
+          "fr": "/subtitles/voix_off_box_1953/fr.vtt",
+          "en": "/subtitles/voix_off_box_1953/en.vtt"
+        }
+      },
+      {
+        "name": "flag_1953",
+        "source": "/sounds/VOIX_OFF/FLAG_1953.wav",
+        "subtitles": {
+          "fr": "/subtitles/voix_off_flag_1953/fr.vtt",
+          "en": "/subtitles/voix_off_flag_1953/en.vtt"
+        }
+      },
+      {
+        "name": "montagne_1953",
+        "source": "/sounds/VOIX_OFF/MONTAGNE_1953.wav",
+        "subtitles": {
+          "fr": "/subtitles/voix_off_montagne_1953/fr.vtt",
+          "en": "/subtitles/voix_off_montagne_1953/en.vtt"
+        }
+      },
+      {
+        "name": "montagne_2024",
+        "source": "/sounds/VOIX_OFF/MONTAGNE_2024.wav",
+        "subtitles": {
+          "fr": "/subtitles/voix_off_montagne_2024/fr.vtt",
+          "en": "/subtitles/voix_off_montagne_2024/en.vtt"
+        }
+      },
+      {
+        "name": "drapeau_priere_2024",
+        "source": "/sounds/VOIX_OFF/DRAPEAU_PRIERE_2024.wav",
+        "subtitles": {
+          "fr": "/subtitles/voix_off_drapeau_priere_2024/fr.vtt",
+          "en": "/subtitles/voix_off_drapeau_priere_2024/en.vtt"
+        }
+      },
+      {
+        "name": "antenne_2024",
+        "source": "/sounds/VOIX_OFF/ANTENNE_2024.wav",
+        "subtitles": {
+          "fr": "/subtitles/voix_off_antenne_2024/fr.vtt",
+          "en": "/subtitles/voix_off_antenne_2024/en.vtt"
+        }
+      },
+      {
+        "name": "tent_box_2050",
+        "source": "/sounds/VOIX_OFF/TENT_BOX_2050.wav",
+        "subtitles": {
+          "fr": "/subtitles/voix_off_tent_box_2050/fr.vtt",
+          "en": "/subtitles/voix_off_tent_box_2050/en.vtt"
+        }
+      },
+      {
+        "name": "tent_green_2050",
+        "source": "/sounds/VOIX_OFF/TENT_GREEN_2050.wav",
+        "subtitles": {
+          "fr": "/subtitles/voix_off_tent_green_2050/fr.vtt",
+          "en": "/subtitles/voix_off_tent_green_2050/en.vtt"
+        }
+      },
+      {
+        "name": "tent_purple_2050",
+        "source": "/sounds/VOIX_OFF/TENT_PURPLE_2050.wav",
+        "subtitles": {
+          "fr": "/subtitles/voix_off_tent_purple_2050/fr.vtt",
+          "en": "/subtitles/voix_off_tent_purple_2050/en.vtt"
+        }
+      },
+      {
+        "name": "return1953",
+        "source": "/video/return1953.mp4",
+        "subtitles": {
+          "fr": "/subtitles/return1953/fr.vtt",
+          "en": "/subtitles/return1953/en.vtt"
+        }
+      },
+      {
+        "name": "ambient_1953",
+        "source": "/sounds/AMBIENT/1953.mp3"
+      },
+      {
+        "name": "ambient_2024",
+        "source": "/sounds/AMBIENT/2024.mp3"
+      },
+      {
+        "name": "ambient_2050",
+        "source": "/sounds/AMBIENT/2050.mp3"
+      },
+      {
+        "name": "ambient_conclusion",
+        "source": "/sounds/AMBIENT/CONCLUSION.mp3"
+      },
+      {
+        "name": "archives1953",
+        "source": "/video/archives1953.mp4"
+      },
+      {
+        "name": "video2024_1",
+        "source": "/video/video2024_1.mp4",
+        "subtitles": {
+          "fr": "/subtitles/video2024_1/fr.vtt",
+          "en": "/subtitles/video2024_1/en.vtt"
+        }
+      },
+      {
+        "name": "video2024_2",
+        "source": "/video/video2024_2.mp4"
+      },
+      {
+        "name": "testVent",
+        "source": "/img/testVent.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "mainTent1953",
+        "source": "/img/texturesMainTente/tentMain_1953.webp",
+        "type": "texture"
+      },
+      {
+        "name": "mainTent2024",
+        "source": "/img/texturesMainTente/tentMain_2024.webp",
+        "type": "texture"
+      },
+      {
+        "name": "mainTent2050",
+        "source": "/img/texturesMainTente/tentMain_2050.webp",
+        "type": "texture"
+      },
+      {
+        "name": "flag2024Displacement",
+        "source": "/img/flags2024/flag2024displacement.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "riverRepeat",
+        "source": "/img/riverRepeat.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "CloudImg",
+        "source": "/img/Degrade.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "blob",
+        "source": "/img/transitions/blob.svg",
+        "type": "texture"
+      },
+      {
+        "name": "BCMountainLS_1953_texture",
+        "source": "/img/Mountains/mountainLS_1953.webp",
+        "type": "texture"
+      },
+      {
+        "name": "BCMountainRS_1953_texture",
+        "source": "/img/Mountains/mountainRS_1953.webp",
+        "type": "texture"
+      },
+      {
+        "name": "BCMountainLS_2024_texture",
+        "source": "/img/Mountains/mountainLS_2024.webp",
+        "type": "texture"
+      },
+      {
+        "name": "BCMountainRS_2024_texture",
+        "source": "/img/Mountains/mountainRS_2024.webp",
+        "type": "texture"
+      },
+      {
+        "name": "BCMountainLS_2050_texture",
+        "source": "/img/Mountains/mountainLS_2050.webp",
+        "type": "texture"
+      },
+      {
+        "name": "BCMountainRS_2050_texture",
+        "source": "/img/Mountains/mountainRS_2050.webp",
+        "type": "texture"
+      },
       {
         "name": "BCTent",
         "source": "/models/BaseCamp/tent.glb"
@@ -343,6 +345,22 @@
         "source": "/models/BaseCamp/Box/bigBox_1953.glb"
       },
       {
+        "name": "BCSmallBox_2024",
+        "source": "/models/BaseCamp/Box/smallBox_2024.glb"
+      },
+      {
+        "name": "BCMediumBox_2024",
+        "source": "/models/BaseCamp/Box/mediumBox_2024.glb"
+      },
+      {
+        "name": "BCBigBox_2024",
+        "source": "/models/BaseCamp/Box/bigBox_2024.glb"
+      },
+      {
+        "name": "BCBigBox_2050",
+        "source": "/models/BaseCamp/Box/bigBox_2050.glb"
+      },
+      {
         "name": "BCTent2024",
         "source": "/models/BaseCamp/tent2024.glb"
       },
@@ -351,36 +369,76 @@
         "source": "/models/BaseCamp/tentMain2024.glb"
       },
       {
-        "name": "BCBloc",
-        "source": "/models/BaseCamp/bloc.glb"
+        "name": "BCMountain_1953",
+        "source": "/models/BaseCamp/Mountains/mountain_1953.glb"
       },
       {
-        "name": "BCBloc2024",
-        "source": "/models/BaseCamp/bloc2024.glb"
+        "name": "BCMountain_2024",
+        "source": "/models/BaseCamp/Mountains/mountain_2024.glb"
       },
       {
-        "name": "BCMountain",
-        "source": "/models/BaseCamp/Mountains/mountain.glb"
+        "name": "BCMountain_2050",
+        "source": "/models/BaseCamp/Mountains/mountain_2050.glb"
       },
       {
-        "name": "BCMountainL",
-        "source": "/models/BaseCamp/Mountains/mountainL.glb"
+        "name": "BCMountainL_1953",
+        "source": "/models/BaseCamp/Mountains/mountainL_1953.glb"
       },
       {
-        "name": "BCMountainLS",
-        "source": "/models/BaseCamp/Mountains/mountainLS.glb"
+        "name": "BCMountainL_2024",
+        "source": "/models/BaseCamp/Mountains/mountainL_2024.glb"
       },
       {
-        "name": "BCMountainR",
-        "source": "/models/BaseCamp/Mountains/mountainR.glb"
+        "name": "BCMountainL_2050",
+        "source": "/models/BaseCamp/Mountains/mountainL_2050.glb"
       },
       {
-        "name": "BCMountainRS",
-        "source": "/models/BaseCamp/Mountains/mountainRS.glb"
+        "name": "BCMountainLS_1953",
+        "source": "/models/BaseCamp/Mountains/mountainLS_1953.glb"
       },
       {
-        "name": "BCFlag",
-        "source": "/models/BaseCamp/1953/flag_1953.glb"
+        "name": "BCMountainR_1953",
+        "source": "/models/BaseCamp/Mountains/mountainR_1953.glb"
+      },
+      {
+        "name": "BCMountainR_2024",
+        "source": "/models/BaseCamp/Mountains/mountainR_2024.glb"
+      },
+      {
+        "name": "BCMountainR_2050",
+        "source": "/models/BaseCamp/Mountains/mountainR_2050.glb"
+      },
+      {
+        "name": "BCMountainRS_1953",
+        "source": "/models/BaseCamp/Mountains/mountainRS_1953.glb"
+      },
+      {
+        "name": "BCFloor_1953",
+        "source": "/models/BaseCamp/1953/Sol_1953.glb"
+      },
+      {
+        "name": "BCFloor_2024",
+        "source": "/models/BaseCamp/2024/Sol_2024.glb"
+      },
+      {
+        "name": "BCRiver_2024",
+        "source": "/models/BaseCamp/2024/Riviere_2024_2.glb"
+      },
+      {
+        "name": "BCFloor_2050",
+        "source": "/models/BaseCamp/2050/Sol_2050.glb"
+      },
+      {
+        "name": "BCRiver_2050",
+        "source": "/models/BaseCamp/2050/Riviere_2050.glb"
+      },
+      {
+        "name": "BCAntenne_2024",
+        "source": "/models/BaseCamp/2024/antenne_2024.glb"
+      },
+      {
+        "name": "Flag_2024",
+        "source": "/models/BaseCamp/2024/flag_2024.glb"
       },
       {
         "name": "BCCailloux",
@@ -393,11 +451,61 @@
       {
         "name": "TentMain",
         "source": "/models/BaseCamp/TENT_MAINTEST.glb"
+      },
+      {
+        "name": "VentTente1_1953",
+        "source": "/img/texturesVent/Tente1_1953.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTente1_2024",
+        "source": "/img/texturesVent/Tente1_2024.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTente1_2050",
+        "source": "/img/texturesVent/Tente1_2050.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTente2_1953",
+        "source": "/img/texturesVent/Tente2_1953.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTente2_2024",
+        "source": "/img/texturesVent/Tente2_2024.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTente2_2050",
+        "source": "/img/texturesVent/Tente2_2050.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTente3_1953",
+        "source": "/img/texturesVent/Tente3_1953.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTente3_2024",
+        "source": "/img/texturesVent/Tente3_2024.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTente3_2050",
+        "source": "/img/texturesVent/Tente3_2050.jpg",
+        "type": "texture"
+      },
+      {
+        "name": "VentTenteMain_2050",
+        "source": "/img/texturesVent/TenteMain_2050.jpg",
+        "type": "texture"
       }
     ]
   },
   {
-    "name": "IceFall",
+    "name": "iceFall",
     "data": {},
     "items": [
       {
@@ -411,27 +519,6 @@
       {
         "name": "IFFloor",
         "source": "/models/IceFall/floor.glb"
-      }
-    ]
-  },
-  {
-    "name": "TestDA",
-    "data": {},
-    "items": [
-      {
-        "name": "TESTDAMountain",
-        "source": "/models/TestDA/GlacierTest2.glb"
-      }
-    ]
-  },
-  {
-    "name": "font",
-    "data": {},
-    "items": [
-      {
-        "name": "roboto",
-        "source": "/font/Roboto.json",
-        "type": "font"
       }
     ]
   }

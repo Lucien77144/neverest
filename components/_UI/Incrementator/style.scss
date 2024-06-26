@@ -1,0 +1,47 @@
+h1 {
+  margin: 0;
+  color: $white;
+  font-size: 5rem;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  user-select: none;
+}
+
+.loader {
+  z-index: 10001;
+  background-color: #FFFFFF;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100vw;
+  height: 100vh;
+  transition: 0.5s ease-in-out;
+
+  &.disabled {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .lottie-animation-container {
+    width: 20vw;
+  }
+
+  p {
+    position: absolute;
+    right: 4rem;
+    bottom: 4rem;
+    color: #41545A;
+    font-size: .9rem;
+    font-family: $lato;
+    font-weight: 600;
+    user-select: none;
+  }
+}

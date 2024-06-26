@@ -6,11 +6,12 @@ h1 {
   top: 70%;
   left: 50%;
   transform: translate(-50%, -50%);
+  user-select: none;
 }
 
 .loader {
   z-index: 10001;
-  background-color: $black;
+  background-color: #FFFFFF;
 
   position: fixed;
   top: 0;
@@ -30,6 +31,18 @@ h1 {
   }
 
   .lottie-animation-container {
-    width: 50vw;
+    width: 20vw;
+  }
+
+  p {
+    position: absolute;
+    right: 4rem;
+    bottom: 4rem;
+    color: #41545A;
+    font-size: .9rem;
+    font-family: $lato;
+    font-weight: 600;
+    user-select: none;
+    margin: 0;
   }
 }

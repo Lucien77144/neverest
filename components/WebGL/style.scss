@@ -14,19 +14,22 @@
 }
 
 .start__btn {
+  transition: 1s ease-in-out;
   position: absolute;
-  bottom: 7rem;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 50%;
+  left: 17rem;
   z-index: 2;
-  will-change: opacity, pointer-events;
-  transition: 0.5s ease-in-out;
+  will-change: opacity, pointer-events, visibility;
 }
 
 .hidden {
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  margin-top: 5rem;
+}
+
+.d-none {
+  display: none !important;
 }
 
 .webGlCSS {

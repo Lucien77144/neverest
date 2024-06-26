@@ -11,6 +11,7 @@ export default class BasicItem {
 
     // New elements
     this.parentScene = null // Parent scene of the item   /!/ - Null in the constructor - /!/
+    this.parentComponent = null // Parent component of the item if exists   /!/ - Null in the constructor - /!/
 
     // --------------------------------
     // Elements (to override in the child class)
@@ -114,6 +115,11 @@ export default class BasicItem {
     this.afterSceneInit
 
     /**
+     * After the item and its childs has been built and rendered completely one time
+     */
+    this.onAfterRender
+
+    /**
      * If set, this function will be called on each tick to update
      * If false, the event will be ignored, even if parent is triggering it
      */
@@ -133,6 +139,7 @@ export default class BasicItem {
     /**
      * If set, this function will be called on mouse down item
      * If false, the event will be ignored, even if parent is triggering it
+     * @return {Object} - Object with the centered coordinates and the target values
      */
     this.onMouseMove
 
@@ -246,6 +253,6 @@ export default class BasicItem {
    */
   dispose() {
     // Debug
-    this.debugFolder && this.debug?.remove(this.debugFolder)
+    this.debugFolder && this.debug?.remove?.(this.debugFolder)
   }
 }

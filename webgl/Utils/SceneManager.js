@@ -9,6 +9,7 @@ export default class SceneManager {
   constructor() {
     // Get elements from experience
     this.experience = new Experience()
+    this.renderer = this.experience.renderer
     this.scrollManager = this.experience.scrollManager
     this.debug = this.experience.debug
     this.resources = this.experience.resources
@@ -64,11 +65,14 @@ export default class SceneManager {
     this.debug.persist(this.debugScene, persist.controller.value.rawValue)
     this.debugFolder.disabled = false
 
+    this.$bus.emit('debug:scene', this.debugScene.value)
+
     // Add switch event on change scene
     setTimeout(() =>
-      this.debugScene.on('change', ({ value }) =>
+      this.debugScene.on('change', ({ value }) => {
         this.switch(this.getSceneFromList(value))
-      )
+        this.$bus.emit('debug:scene', value)
+      })
     )
   }
 
@@ -135,6 +139,7 @@ export default class SceneManager {
         base: this.baseScrollFactor,
         current: this.scrollManager.factor,
       },
+      infos: { ...next },
     })
 
     // Switch function start on previous scene
@@ -145,7 +150,7 @@ export default class SceneManager {
 
     // Add render mesh if unset :
     const transition = next.transition
-    this.renderMesh ??= this.experience.renderer.renderMesh
+    this.renderMesh ??= this.renderer.renderMesh
 
     // Get current values :
     const currStart = this.start
@@ -157,6 +162,7 @@ export default class SceneManager {
     const diff = findIndex(next.name) - findIndex(previous)
     this.renderMesh.material.uniforms.uDirection.value = Math.sign(diff)
 
+    const isHalf = { value: false }
     gsap.to(this.renderMesh.material.uniforms.uTransition, {
       value: 1,
       duration: transition.duration / 1000,
@@ -164,6 +170,11 @@ export default class SceneManager {
       onUpdate: () => {
         // Progression of the transition :
         const progress = this.renderMesh.material.uniforms.uTransition.value
+
+        if (!isHalf.value && progress >= 0.5) {
+          isHalf.value = true
+          this.$bus.emit('scene--transition:half', next.name)
+        }
 
         // Interpolate values :
         const interpolate = (from, to) => from + (to - from) * progress
@@ -247,6 +258,7 @@ export default class SceneManager {
         base: this.baseScrollFactor,
         current: this.scrollManager.factor,
       },
+      infos: { ...scene },
     })
 
     // Switch complete function on the new scene
@@ -254,6 +266,20 @@ export default class SceneManager {
 
     // Start navigation
     this.$bus.on('scene:switch', (scene) => this.switch(scene))
+
+    return new Promise((resolve) => {
+      const prev = this.active.scene.onAfterRender
+      this.active.scene.onAfterRender = () => {
+        this.active.scene.onAfterRender = prev
+        resolve()
+      }
+
+      this.renderer.instance.render(
+        this.active.scene,
+        this.active.camera.instance
+      )
+      this.renderer.instance.clear()
+    })
   }
 
   /**

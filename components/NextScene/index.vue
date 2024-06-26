@@ -8,7 +8,7 @@
         scroll > 100 - GAP && navigation.scene.nav.end !== scenes.nav.total,
     }"
   >
-    <UIDragBtn @navigate="navigate">
+    <UIDragBtn @navigate="">
       {{ $t('DRAG') }}
     </UIDragBtn>
   </div>

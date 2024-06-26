@@ -5,18 +5,12 @@ export default class Intro extends BasicScene {
   /**
    * Constructor
    */
-  constructor() {
-    super()
+  constructor({ infos }) {
+    super(infos)
 
     // Components
     this.components = {
       introGroup: new IntroGroup(),
-    }
-
-    // Audios
-    this.audios = {
-      babyshark: { group: 'Enfants', loop: true, volume: 0.3, persist: true },
-      tedTalk: { group: 'Enfants', loop: true, volume: 0.3, persist: true },
     }
 
     // Init the scene
@@ -24,17 +18,13 @@ export default class Intro extends BasicScene {
     this.setCam()
   }
 
-  // --------------------------------
-  // Workflow
-  // --------------------------------
-
   /**
-   * On scroll
-   * @param {*} delta
+   * Set camera
    */
-  //onScroll(delta) {
-  //  this.camera.instance.position.z += delta / 100
-  //}
+  setCam() {
+    this.camera.instance.position.set(0, 0, 13)
+    this.camera.instance.lookAt(0, 0, 0)
+  }
 
   // --------------------------------
   // Lifecycle
@@ -53,10 +43,5 @@ export default class Intro extends BasicScene {
    */
   onDisposeStart() {
     this.$bus.emit('title:disable', true)
-  }
-
-  setCam(){
-    this.camera.instance.position.set(0,25,50)
-    this.camera.instance.lookAt(0,0,0)
   }
 }

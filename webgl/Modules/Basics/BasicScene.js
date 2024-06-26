@@ -1,4 +1,4 @@
-import { FogExp2, Group, Scene } from 'three'
+import { Group, Scene } from 'three'
 import BasicCamera from './BasicCamera'
 import Experience from '~/webgl/Experience'
 import gsap from 'gsap'
@@ -9,7 +9,7 @@ export default class BasicScene {
   /**
    * Constructor
    */
-  constructor() {
+  constructor({ infos }) {
     // Get elements from experience
     this.experience = new Experience()
     this.raycaster = this.experience.raycaster
@@ -20,6 +20,7 @@ export default class BasicScene {
     this.scene = new Scene()
     this.camera = new BasicCamera()
     this.allComponents = {}
+    this.infos = infos // Informations of the scene stored in the scene const
     this.hovered = null
     this.holded = null
     this.holdProgress = null
@@ -27,6 +28,7 @@ export default class BasicScene {
     this.wireframe = false
 
     // Events
+    this.handleAfterRender = this.onAfterRenderEvt.bind(this)
     this.handleMouseDownEvt = this.onMouseDownEvt.bind(this)
     this.handleMouseUpEvt = this.onMouseUpEvt.bind(this)
     this.handleMouseMoveEvt = this.onMouseMoveEvt.bind(this)
@@ -45,9 +47,6 @@ export default class BasicScene {
 
     // Getters
     this.progressHold = computed(() => useHoldStore().getProgress)
-
-    // Scope
-    this.scope = effectScope()
 
     // --------------------------------
     // Elements (to override in the child class)
@@ -105,6 +104,11 @@ export default class BasicScene {
      * On switch between scene complete and this scene is the new one
      */
     this.onInitComplete
+
+    /**
+     * After the scene has been built and rendered completely one time
+     */
+    this.onAfterRender
   }
 
   // --------------------------------
@@ -140,15 +144,49 @@ export default class BasicScene {
   }
 
   /**
+   * After the scene has been built and rendered completely one time
+   */
+  onAfterRenderEvt() {
+    const afterRender = (item, fn = () => {}, bind = this) => {
+      const val = { ready: [], max: 0 }
+
+      item.traverse((o) => {
+        if (o.isMesh && o.visible) {
+          val.max++
+
+          if (!this.ready) {
+            o.onAfterRender = () => {
+              if (val.ready.includes(o.uuid)) return
+              val.ready.push(o.uuid)
+
+              if (val.ready.length === val.max) {
+                fn.bind(bind)()
+                this.ready = true
+              }
+
+              o.onAfterRender?.()
+            }
+          }
+        }
+      })
+    }
+
+    this.onAfterRender && afterRender(this.scene, this.onAfterRender)
+    Object.values(this.allComponents).forEach(
+      (c) => c.onAfterRender && afterRender(c.item, c.onAfterRender, c)
+    )
+  }
+
+  /**
    * Raycast on mouse down
    */
   onMouseDownEvt({ centered }) {
     // Clicked item
-    const clicked = this.getRaycastedItem(centered, ['onClick'])
+    const clicked = this.getRaycastedItem(centered, ['onClick'])?.item
     this.triggerFn(clicked, 'onClick')
 
     // Holded item
-    this.holded = this.getRaycastedItem(centered, ['onHold'])
+    this.holded = this.getRaycastedItem(centered, ['onHold'])?.item
     this.holded && this.handleHold()
   }
 
@@ -163,16 +201,18 @@ export default class BasicScene {
    * Raycast on mouse move
    */
   onMouseMoveEvt({ centered }) {
-    // Trigger mouse move on all components
-    Object.values(this.allComponents).forEach((c) =>
-      this.triggerFn(c, 'onMouseMove', centered)
-    )
-
     // Get hovered item
     const hovered = this.getRaycastedItem(centered, [
       'onMouseEnter',
       'onMouseLeave',
-    ])
+    ])?.item
+
+    // On mouse move event
+    const mouseMove = this.getRaycastedItem(centered, ['onMouseMove'])
+    this.triggerFn(mouseMove?.item, 'onMouseMove', {
+      centered,
+      target: mouseMove?.target,
+    })
 
     // If mouse leave the hovered item, refresh the hovered item
     if (this.hovered?.item?.id !== hovered?.item?.id) {
@@ -181,7 +221,7 @@ export default class BasicScene {
       this.triggerFn(this.hovered, 'onMouseEnter')
     }
     // Get holded item hovered
-    const holded = this.getRaycastedItem(centered, ['onHold'])
+    const holded = this.getRaycastedItem(centered, ['onHold'])?.item
     // If user leave the hold item, reset the holded item
     if (this.holded?.item?.id !== holded?.item?.id) {
       this.resetHolded()
@@ -256,7 +296,7 @@ export default class BasicScene {
    * Get raycasted item
    * @param {*} centered Coordinates of the cursor
    * @param {*} fn Check available functions in the item
-   * @returns Item triggered
+   * @returns Item triggered and target infos
    */
   getRaycastedItem(centered, fn = []) {
     if (!this.raycaster) return
@@ -290,7 +330,8 @@ export default class BasicScene {
       return ids.includes(target?.object?.id) && isSet
     })
 
-    return match[match.length - 1]
+    const item = match[match.length - 1]
+    return item && { item, target }
   }
 
   /**
@@ -324,15 +365,32 @@ export default class BasicScene {
   getRecursiveComponents(components = this.components) {
     const res = {}
 
-    const flatComponents = (c) => {
+    const flatComponents = (c, parent) => {
       Object.keys(c).forEach((key) => {
         const value = c[key]
+
+        if (res[key]) {
+          const oldKey = key
+          const count = Object.keys(res).filter((r) => r.includes(key)).length
+          key = `${key}_${count}`
+
+          console.warn(
+            `Component name '${oldKey}' already exists, renamed to '${key}'`
+          )
+        }
+        if (!value) {
+          return console.warn(`Component ${key} is not defined`, c)
+        }
+
         value.parentScene = this
+        if (parent) {
+          value.parentComponent = parent
+        }
 
         res[key] = value
         value.init?.()
 
-        value?.components && flatComponents(value.components)
+        value?.components && flatComponents(value.components, value)
       })
     }
     flatComponents(components)
@@ -350,7 +408,9 @@ export default class BasicScene {
    */
   addCSS2D(item) {
     this.css2d ??= new CSS2DManager(this.scene, this.camera.instance)
-    this.addToCSS2DList(item)
+
+    const classList = (item.classList ?? '') + ` ${this.infos?.name}`
+    this.addToCSS2DList({ ...item, classList })
   }
 
   /**
@@ -359,7 +419,9 @@ export default class BasicScene {
    */
   addCSS3D(item) {
     this.css3d ??= new CSS3DManager(this.scene, this.camera.instance)
-    this.addToCSS3DList(item)
+
+    const classList = (item.classList ?? '') + ` ${this.infos?.name}`
+    this.addToCSS3DList({ ...item, classList })
   }
 
   /**
@@ -395,6 +457,7 @@ export default class BasicScene {
   init() {
     this.allComponents = this.getRecursiveComponents()
     this.addItemsToScene()
+    this.handleAfterRender()
 
     this.debug && this.setDebug()
     this.audios && this.camera.addAudios(this.audios)
@@ -446,10 +509,6 @@ export default class BasicScene {
    * Dispose the scene
    */
   dispose() {
-    // Scope
-    this.scope.stop()
-    this.scope = null
-
     // Items
     Object.values(this.allComponents).forEach((c) => {
       this.triggerFn(c, 'dispose')
@@ -458,7 +517,7 @@ export default class BasicScene {
     })
 
     // Camera
-    this.scene.remove(this.camera.instance)
+    this.scene.clear()
     this.camera.dispose()
     this.css2d?.dispose()
     this.css3d?.dispose()

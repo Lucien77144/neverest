@@ -1,7 +1,7 @@
 .IC_text {
   position: absolute;
   bottom: 1.4rem;
-  right: 5.10rem;
+  right: 5.1rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,7 +31,7 @@
 
   .icon {
     &-big {
-      width: 1.5rem;
+      width: 1.3rem;
       margin: 0.4rem;
     }
   }
@@ -71,8 +71,81 @@
 
   .icon {
     &-big {
-      width: 1.5rem;
+      width: 1.3rem;
       margin: 0.4rem;
     }
+  }
+}
+
+.audio-wave {
+  cursor: pointer;
+  animation: fadeIn 1s;
+  transition: opacity 0.5s ease-in-out;
+  display: block;
+  height: 48px;
+  width: 48px;
+  overflow: hidden;
+  transform: scale(0.5);
+
+  &__svg {
+    height: 100%;
+    animation: waveContainer infinite linear;
+    animation-duration: 5s;
+    transition: 1s ease-in-out;
+    padding-left: 4px;
+
+    path {
+      transition: 1s ease-in-out;
+      transition-property: d;
+      stroke: $primary;
+      stroke-dasharray: 153px;
+      animation: wave infinite linear forwards;
+      animation-duration: 5s;
+    }
+
+    &--muted {
+      padding-left: 0;
+      transition: 0.5s ease-in-out;
+      animation: none;
+
+      path {
+        transition: 0.5s ease-in-out;
+        stroke-dasharray: 612px !important;
+        animation: none;
+
+        d: path(
+          'M2 28C3 28 3.12195 28 6.4878 28C13.2195 28 9.85366 28 14.3415 28C18.8293 28 15.4634 28 21.0732 28C26.6829 28 22.1951 28 27.8049 28C33.4146 28 31.1707 28 35.6585 28C40.1463 28 39.0244 28 42.3902 28C45.7561 28 48 28 48 28C48 28 49.122 28 52.4878 28C59.2195 28 55.8537 28 60.3415 28C63.2883 28 63 28 64 28C65 28 65.122 28 68.4878 28C75.2195 28 71.8537 28 76.3415 28C80.8293 28 77.4634 28 83.0732 28C88.6829 28 84.1951 28 89.8049 28C95.4146 28 93.1707 28 97.6585 28C102.146 28 101.024 28 104.39 28C107.756 28 110 28 110 28C110 28 111.122 28 114.488 28C121.22 28 117.854 28 122.341 28C125.288 28 125 28 126 28'
+        );
+      }
+    }
+  }
+}
+
+.disabled {
+  .input-subtitle__line {
+    opacity: 0.5;
+  }
+}
+
+.input-subtitle__line {
+  opacity: 1;
+  transition: .25s ease-in-out;
+}
+
+@keyframes wave {
+  0% {
+    stroke-dashoffset: -306px;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes waveContainer {
+  0% {
+    margin-left: calc(-64px + 2px); // width - strokewidth
+  }
+  100% {
+    margin-left: 0;
   }
 }

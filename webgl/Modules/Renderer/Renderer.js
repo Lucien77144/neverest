@@ -3,7 +3,6 @@ import {
   Color,
   LinearFilter,
   Mesh,
-  NoToneMapping,
   PerspectiveCamera,
   PlaneGeometry,
   RGBAFormat,
@@ -29,7 +28,6 @@ export default class Renderer {
     this.viewport = this.experience.viewport
     this.debug = this.experience.debug
     this.time = this.experience.time
-    this.sceneManager = this.experience.sceneManager
     this.stats = this.experience.stats
     this.$bus = this.experience.$bus
 
@@ -42,7 +40,7 @@ export default class Renderer {
     this.context = null
     this.debugFolder = null
     this.clearColor = {
-      color: '#87CEEB',
+      color: '#C7C6C8',
       alpha: 0,
     }
 
@@ -75,6 +73,24 @@ export default class Renderer {
         )
       })
 
+    this.debugFolder.addBinding(this.instance, 'toneMappingExposure', {
+      label: 'Tone Mapping Exposure',
+      min: 0,
+      max: 10,
+      step: 0.01,
+    })
+
+    this.debugFolder.addBinding(this.instance, 'toneMapping', {
+      label: 'Tone Mapping',
+      options: {
+        None: 0,
+        Linear: 1,
+        Reinhard: 2,
+        Cineon: 3,
+        ACESFilmic: 4,
+      },
+    })
+
     // Panels
     if (this.stats) {
       this.stats.setRenderPanel(this.context)
@@ -94,22 +110,6 @@ export default class Renderer {
   }
 
   /**
-   * Set render targets and mesh
-   */
-  setRenderTargets() {
-    const size = this.instance.getDrawingBufferSize(new Vector2())
-    this.rt0 = new WebGLRenderTarget(size.width, size.height, {
-      minFilter: LinearFilter,
-      magFilter: LinearFilter,
-      format: RGBAFormat,
-      stencilBuffer: false,
-      samples: 4,
-    })
-
-    this.rt1 = this.rt0.clone()
-  }
-
-  /**
    * Raycast on mouse move
    */
   onMouseMoveEvt({ centered }) {
@@ -124,7 +124,7 @@ export default class Renderer {
    */
   setRenderMesh() {
     this.renderMesh = new Mesh(
-      new PlaneGeometry(2, 2),
+      new PlaneGeometry(2, 2, 100, 100),
       new ShaderMaterial({
         uniforms: {
           // Scene gesture
@@ -132,13 +132,17 @@ export default class Renderer {
           uScene1: new Uniform(this.rt1.texture),
           uTransition: new Uniform(0),
           uDirection: new Uniform(1),
+          uBackgroundColor: new Uniform(new Color(this.clearColor.color)),
+          uNoisePostProc: new Uniform(),
+          uNoiseRepeat: new Uniform(new Vector2(1, 1)),
 
           // Focus
-          uFocColor: new Uniform(new Color('#f1dad2')),
+          uFocTransitionColor: new Uniform(new Color('#0d1113')),
+          uFocColor: new Uniform(new Color('#6c6ca7')),
           uFocProgress: new Uniform(0),
 
           // Data modal
-          uModalColor: new Uniform(new Color('#0d1a48')),
+          uModalColor: new Uniform(new Color('#131313')),
           uModalProgress: new Uniform(0),
           uBlob: new Uniform(),
 
@@ -168,7 +172,6 @@ export default class Renderer {
       antialias: true,
       stencil: false,
       alpha: false,
-      depth: true,
       powerPreference: 'high-performance',
     })
 
@@ -178,14 +181,27 @@ export default class Renderer {
     this.instance.setPixelRatio(this.viewport.dpr)
 
     // Options
-    this.instance.physicallyCorrectLights = true
-    this.instance.outputColorSpace = SRGBColorSpace
-    // this.instance.toneMapping = NoToneMapping
     this.instance.toneMapping = ACESFilmicToneMapping
-    this.instance.toneMappingExposure = 1
+    this.instance.toneMappingExposure = 1.1
+    this.instance.outputColorSpace = SRGBColorSpace
 
     // Context
     this.context = this.instance.getContext()
+  }
+
+  /**
+   * Set render targets and mesh
+   */
+  setRenderTargets() {
+    const size = this.instance.getDrawingBufferSize(new Vector2())
+    this.rt0 = new WebGLRenderTarget(size.width, size.height, {
+      generateMipmaps: false,
+      minFilter: LinearFilter,
+      magFilter: LinearFilter,
+      format: RGBAFormat,
+      samples: 1,
+    })
+    this.rt1 = this.rt0.clone()
   }
 
   /**
@@ -204,8 +220,8 @@ export default class Renderer {
    */
   renderTargets() {
     // Get elements from experience
-    const active = this.sceneManager.active
-    const next = this.sceneManager.next
+    const active = this.experience.sceneManager.active
+    const next = this.experience.sceneManager.next
 
     // Scene1
     if (active?.camera?.instance) {

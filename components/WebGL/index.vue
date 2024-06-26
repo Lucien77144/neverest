@@ -1,5 +1,5 @@
 <template>
-  <Landing v-if="!activeStatus && landing" />
+  <Landing v-if="landing" />
   <Interface />
   <div ref="webGlCSSRef" id="webgl-css-wrapper" class="webGlCSS">
     <WebGLCSS2DRenderer />
@@ -9,8 +9,10 @@
   <div id="webgl-interface">
     <UIInterestData />
     <UITitle />
-    <div class="start__btn" :class="sceneRef && 'hidden'">
-      <UIBtn @click="start(), $bus.emit('audio:unmute'), $bus.emit('audio:vent2050')">{{ $t('START') }}</UIBtn>
+    <div ref="startBtnRef" class="start__btn hidden">
+      <UIBtn class="inverse" @click="start()">
+        {{ $t('START') }}
+      </UIBtn>
     </div>
   </div>
 </template>
@@ -20,6 +22,7 @@ import Experience from '~/webgl/Experience'
 
 // Scene
 import scenes, { type TSceneInfos } from '~/const/scenes.const'
+import type { TExpStore } from '~/stores/experience.store'
 
 // Plugins
 const { $bus }: any = useNuxtApp()
@@ -31,7 +34,8 @@ const exp = shallowRef<Experience | null>(null)
 const canvasRef = ref<HTMLElement | null>(null)
 const webGlCSSRef = ref<HTMLElement | null>(null)
 const activeStatus = ref<boolean>(false)
-const sceneRef = ref<TSceneInfos>()
+const sceneRef = ref<TSceneInfos | null>()
+const startBtnRef = ref<HTMLElement | null>(null)
 
 // Route
 const route = useRoute()
@@ -39,15 +43,22 @@ const route = useRoute()
 // get active scene
 const active = computed(() => useExperienceStore().getActive)
 const landing = computed(() => useExperienceStore().getLanding)
+const navigation = computed(() => useExperienceStore().getNavigation)
 
 watch(active, (v: boolean) =>
   setTimeout(() => {
     activeStatus.value = v
   }, 750)
 )
+watch(navigation, ({ scene }: TExpStore['navigation']) => {
+  setVisibility(scene?.name || 'intro')
+})
 
+/**
+ * Start the experience
+ */
 function start() {
-  $bus.emit('audio:unmute')
+  $bus.emit('audio:start')
   sceneRef.value = scenes.nav.list.find((s) => s.name === 'basecamp')
   sceneRef.value && $bus.emit('scene:switch', sceneRef.value)
 }
@@ -64,6 +75,18 @@ $bus.on('modal:destroy', () => {
   )
 })
 
+const setVisibility = (name: string) => {
+  if (name !== 'intro') {
+    startBtnRef.value?.classList.add('hidden')
+  } else {
+    $bus.on('audio:intro', () => {
+      setTimeout(() => {
+        startBtnRef.value?.classList.remove('hidden')
+      }, 10000)
+    })
+  }
+}
+
 // On component mounted, create the experience
 onMounted(() => {
   exp.value = new Experience({
@@ -73,9 +96,7 @@ onMounted(() => {
   })
 
   // On component unmounted, dispose the experience
-  onUnmounted(() => {
-    exp.value?.dispose()
-  })
+  onUnmounted(() => exp.value?.dispose())
 })
 </script>
 

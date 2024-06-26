@@ -8,6 +8,7 @@ type TCSSRendererStore = {
   layers?: number[] | number // Layers to render the element
   el?: Element | ComponentPublicInstance | null // Component ref
   data?: any // Data to pass to the component
+  classList?: string // Class list to apply to the element
 }
 
 export interface ICSS2DRendererStore extends TCSSRendererStore {

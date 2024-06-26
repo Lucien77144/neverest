@@ -1,6 +1,6 @@
 import Loader from './Loader.js'
 import sources from './assets/data/sources.json'
-import { Texture } from 'three'
+import { Cache, Scene, Texture } from 'three'
 import gsap from 'gsap'
 import Experience from '../Experience.js'
 
@@ -11,6 +11,8 @@ export default class Resources {
   constructor(_groups) {
     // Get elements from experience
     this.experience = new Experience()
+    this.renderer = this.experience.renderer
+    Cache.enabled = !this.experience.debug
 
     // New elements
     this.sources = []
@@ -20,6 +22,7 @@ export default class Resources {
     this.toLoad = null
     this.loaded = null
     this.loader = null
+    this.preLoaded = { current: 0, max: 0 }
 
     // Plugins
     this.$bus = useNuxtApp().$bus
@@ -97,9 +100,22 @@ export default class Resources {
         }),
       }))
 
-    this.toLoad
-      ? this.loadNextGroup()
-      : setTimeout(() => this.$bus.emit('loadingGroupEnd'))
+    this.toLoad ? this.loadNextGroup() : () => this.$bus.emit('loadingGroupEnd')
+  }
+
+  /**
+   * Group end loading
+   */
+  groupEnd() {
+    // Trigger
+    this.$bus.emit('groupEnd', [this.groups.current])
+
+    if (this.sources.length > 0) {
+      this.loadNextGroup()
+    } else {
+      this.$bus.emit('resources:done')
+      this.experience.audioManager.setEvents()
+    }
   }
 
   /**
@@ -122,7 +138,6 @@ export default class Resources {
       }
 
       this.items[file.resource.name] = data
-      
 
       // Progress and event
       this.groups.current.loaded++
@@ -135,7 +150,7 @@ export default class Resources {
         ease: 'power2.inOut',
         onUpdate: () => this.$bus.emit('loading', this.progress.value),
         onComplete: () => {
-          if (this.progress.value === 100 && !this.experience.landingPage) {
+          if (this.progress.value === 100) {
             this.$bus.emit('start')
           }
         },
@@ -143,17 +158,28 @@ export default class Resources {
     })
 
     // Loader all end event
-    this.$bus.on('loadingGroupEnd', () => {
-      this.groups.loaded.push(this.groups.current)
+    this.$bus.on('loadingGroupEnd', async () => {
+      const current = this.groups.current
+      this.groups.loaded.push(current)
 
-      // Trigger
-      this.$bus.emit('groupEnd', [this.groups.current])
+      if (current.data.preload) {
+        const tmpScene = new Scene()
+        current.items
+          .map((i) => this.items[i.name])
+          .forEach((i) => {
+            if (i.scene) {
+              tmpScene.add(i.scene)
+            }
+          })
 
-      if (this.sources.length > 0) {
-        this.loadNextGroup()
+        tmpScene.onAfterRender = () => {
+          tmpScene.clear()
+          this.renderer.instance.clear()
+          this.groupEnd()
+        }
+        this.renderer.instance.render(tmpScene, this.renderer.camera)
       } else {
-        this.$bus.emit('resources:done')
-        this.experience.audioManager.setEvents()
+        this.groupEnd()
       }
     })
   }

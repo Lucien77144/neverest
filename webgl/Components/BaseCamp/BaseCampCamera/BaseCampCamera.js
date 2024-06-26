@@ -5,12 +5,11 @@ export default class BaseCampCamera extends BasicItem {
   /**
    * Constructor
    */
-  constructor(_options = {}) {
+  constructor() {
     super()
 
-    this.options = _options
-
     // Get elements from experience
+    this.resources = this.experience.resources
     this.scrollManager = this.experience.scrollManager
 
     // New elements
@@ -26,13 +25,6 @@ export default class BaseCampCamera extends BasicItem {
       x: 0,
       y: 0,
     }
-  }
-
-  /**
-   * Set Name
-   */
-  setName() {
-    this.name = this.options.name
   }
 
   /**
@@ -59,47 +51,10 @@ export default class BaseCampCamera extends BasicItem {
   }
 
   /**
-   * Set Position
-   * @param {Object} _position
-   * @param {Number} _position.x
-   * @param {Number} _position.y
-   * @param {Number} _position.z
-   */
-  setPosition(_position) {
-    this.position = _position
-  }
-
-  /**
-   * Set Rotation
-   * @param {Object} _rotation
-   * @param {Number} _rotation.x
-   * @param {Number} _rotation.y
-   * @param {Number} _rotation.z
-   */
-  setRotation(_rotation) {
-    this.rotation = _rotation
-  }
-
-  /**
-   * Set Scale
-   * @param {Object} _scale
-   * @param {Number} _scale.x
-   * @param {Number} _scale.y
-   * @param {Number} _scale.z
-   */
-  setScale(_scale) {
-    this.scale = _scale
-  }
-
-  /**
    * Set item
    */
   setItem() {
-    this.setName()
-    this.setModel(this.options.model)
-    this.setPosition(this.options.position)
-    this.setRotation(this.options.rotation)
-    this.setScale(this.options.scale)
+    this.setModel(this.resources.items.BCAnimCam)
     this.setMixer()
 
     // Set item
@@ -149,7 +104,6 @@ export default class BaseCampCamera extends BasicItem {
       -rotation.z,
       rotation.y
     )
-    this.parentScene.camera.instance.rotation.x += this.parentScene.camRot.x
 
     if (this.camRotTarget) {
       this.parentScene.camera.instance.rotation.x += this.camRotTarget.x

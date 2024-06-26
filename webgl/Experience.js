@@ -4,7 +4,13 @@ import Resources from './Utils/Resources'
 import SceneManager from './Utils/SceneManager'
 import CursorManager from '../utils/CursorManager'
 import DragManager from '~/utils/DragManager'
-import { ClampToEdgeWrapping, Raycaster } from 'three'
+import {
+  ClampToEdgeWrapping,
+  MirroredRepeatWrapping,
+  Raycaster,
+  RepeatWrapping,
+  Vector2,
+} from 'three'
 import AudioManager from './Utils/AudioManager'
 import Debug from './Utils/Debug'
 
@@ -149,21 +155,29 @@ export default class Experience {
       blob.repeat.set(1, 1)
       uniforms.uBlob.value = blob
     }
+
+    const noise = items.noisePostProc
+    if (noise) {
+      const x = this.viewport.width / noise.source.data.width
+      const y = this.viewport.height / noise.source.data.height
+      noise.wrapS = noise.wrapT = RepeatWrapping
+
+      uniforms.uNoisePostProc.value = noise
+      uniforms.uNoiseRepeat.value = new Vector2(x, y)
+    }
   }
 
   /**
    * Start the experience
    */
   start() {
-    if (
-      !this.sceneManager?.active &&
-      this.resources.toLoad === this.resources.loaded
-    ) {
+    this.sceneManager.init(this.viewport.debug && this.baseScene).then(() => {
       this.setActive(true)
-      this.sceneManager.init(this.viewport.debug && this.baseScene)
 
-      this.update()
-    }
+      // Events
+      this.$bus.on('tick', this.handleUpdate)
+      this.$bus.emit('loading:complete')
+    })
   }
 
   /**
@@ -202,12 +216,15 @@ export default class Experience {
     this.initDebug()
 
     // Set elements
-    this.scrollManager = new ScrollManager({ limit: { min: 0, max: 100 } })
+    this.scrollManager = new ScrollManager({
+      limit: { min: 0, max: 100 },
+      decimal: 1000,
+    })
+    this.renderer = new Renderer()
     this.keysManager = new KeysManager()
     this.sceneManager = new SceneManager()
     this.raycaster = new Raycaster()
     this.resources = new Resources()
-    this.renderer = new Renderer()
     this.audioManager = new AudioManager()
 
     // Set global debuggers
@@ -216,7 +233,6 @@ export default class Experience {
     // Events
     this.$bus.on('start', this.handleStart)
     this.$bus.on('resize', this.handleResize)
-    this.$bus.on('tick', this.handleUpdate)
     this.$bus.on('resources:done', this.handleUniforms)
     this.scrollManager.on('scroll', this.handleScroll)
   }
@@ -227,6 +243,7 @@ export default class Experience {
   resize() {
     this.renderer.resize()
     this.sceneManager.resize()
+    this.setUniforms()
   }
 
   /**
@@ -266,5 +283,7 @@ export default class Experience {
     this.sceneManager.dispose()
     this.audioManager.dispose()
     this.debug?.dispose()
+
+    Experience._instance = null
   }
 }

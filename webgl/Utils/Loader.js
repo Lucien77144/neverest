@@ -147,7 +147,7 @@ export default class Loader {
 
     // Audio
     this.loaders.push({
-      extensions: ['mp3', 'ogg', 'wav'],
+      extensions: ['m4a', 'mp3', 'ogg', 'wav'],
       action: (resource) => {
         // Audio
         const audio = document.createElement('audio')
@@ -237,6 +237,7 @@ export default class Loader {
     })
 
     // Update the track on locale change
+    this.onLangChange(element, this.i18n.locale.value || 'fr')
     this.$bus.on('lang:change', (locale) => this.onLangChange(element, locale))
   }
 

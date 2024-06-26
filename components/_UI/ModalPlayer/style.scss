@@ -1,0 +1,54 @@
+.modal-player {
+  width: 4rem;
+  height: 4rem;
+  cursor: pointer;
+  animation: fadeIn 1s;
+  transition: 0.5s ease-in-out;
+  transition-property: opacity, transform;
+  will-change: opacity, transform;
+  display: block;
+  border-radius: 50%;
+  animation: pulse 4s infinite;
+  opacity: 0.75;
+
+  &:hover {
+    opacity: 1;
+    transform: scale(0.95);
+  }
+
+  &__container {
+    padding: 1px;
+    height: 100%;
+    border-radius: 50%;
+    background-color: $secondary;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  }
+}
+
+.hidden {
+  display: none;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  50%,
+  100% {
+    box-shadow: 0 0 0 2px rgba($secondary, 1);
+  }
+  25% {
+    box-shadow: 0 0 0 15px rgba($secondary, 0);
+  }
+  25.01% {
+    box-shadow: 0 0 0 0px rgba($secondary, 1);
+  }
+}

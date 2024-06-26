@@ -1,5 +1,5 @@
 button {
-  padding: 15px 25px;
+  padding: 15px 17px;
   border: none;
   background-color: transparent;
   cursor: pointer;
@@ -8,10 +8,103 @@ button {
   font-family: $azeret;
   color: $secondary;
   text-transform: uppercase;
-  background-image: url('/assets/img/btnBg.svg');
   transition: all 0.1s ease-in-out;
+  position: relative;
+
+  #bg1 {
+    display: block;
+  }
+  #bg2 {
+    display: none;
+  }
+
+  .bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    z-index: -1;
+    object-fit: contain;
+  }
+
+  &.secondary {
+    position: relative;
+    background-image: none;
+    color: $primary;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0.5rem;
+      left: 50%;
+      width: 90%;
+      transform: translateX(-50%);
+      height: 0.15rem;
+      background-color: $primary;
+    }
+
+    .bg {
+      display: none;
+    }
+
+    #bg1 {
+      display: none;
+    }
+    #bg2 {
+      display: none;
+    }
+  }
 
   &:hover {
     transform: scale(1.05);
+  }
+}
+
+.inverse {
+  button {
+    color: $primary;
+    padding: 15px 32px;
+
+    #bg1 {
+      display: none;
+    }
+    #bg2 {
+      display: block;
+    }
+  }
+}
+
+.round {
+  button {
+    position: relative;
+    height: 4.76rem;
+    width: 4.76rem;
+    padding: 0;
+    border-radius: 50%;
+    background-image: none;
+    color: $primary;
+    background-color: $white;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      width: 6rem;
+      height: 6rem;
+      border-radius: 50%;
+      background-color: transparent;
+      border: 0.15rem solid $white;
+      transition: all 0.1s ease-in-out;
+      user-select: none;
+    }
+
+    &:hover {
+      &::after {
+        transform: translate(-50%, -50%) scale(.8);
+      }
+    }
   }
 }

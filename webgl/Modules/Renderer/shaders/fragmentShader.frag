@@ -1,16 +1,22 @@
 uniform sampler2D uScene0;
 uniform sampler2D uScene1;
+uniform sampler2D uBlob;
+uniform sampler2D uNoisePostProc;
 uniform float uTime;
 uniform float uTransition;
 uniform float uModalProgress;
 uniform float uFocProgress;
-uniform sampler2D uBlob;
+uniform vec3 uBackgroundColor;
 uniform vec3 uModalColor;
 uniform vec3 uFocColor;
+uniform vec3 uFocTransitionColor;
+uniform vec2 uNoiseRepeat;
 uniform vec2 uResolution;
 uniform vec2 uCursor;
 uniform vec2 uRatio;
+
 varying vec2 vUv;
+varying vec2 vUvNoise;
 
 // Renvoie un nombre entre 0 et 1, la magnitude multiplie ce nombre
 float clampedSine(float t, float magnitude) {
@@ -103,61 +109,91 @@ vec2 getMaskUv(vec2 uv) {
     return maskUv;
 }
 
+vec2 getZoomedUv(vec2 uv, float timing) {    
+    vec2 centeredUv = uv - 0.5;
+    vec2 zoomedUv = centeredUv * (1.0 - timing); // Appliquer le zoom
+    zoomedUv += 0.5; // Recentrer les coordonnées UV
+
+    return zoomedUv;
+}
+
+vec4 getMountainAmbiant() {
+    vec3 res = vec3(0.);
+
+    return vec4(res, 1.);
+}
+
 void main() {
     vec2 uv = vUv;
     vec4 frag = vec4(0.);
 
-    vec2 scene0UV = vec2(uv.x,uv.y+uTransition);
-    vec4 scene0 = texture2D(uScene0, scene0UV);
-    vec4 scene0BW = vec4(applyBlackAndWhite(scene0.rgb), 1.);
-    float sceneMask = smoothstep(.9, 1., (1. - scene0BW.r) * 5.);
+    // -------------------- //
+    //       Scene 0        //
+    // -------------------- //
+    float zoomInTransiTiming = clamp(abs(pow(uTransition/0.6,3.0)),0.0,1.0);
+    float fadeOutTransiTiming = clamp(-(uTransition-1.0)*5.0,0.0,1.0);
 
-    vec2 focUV = uv;
-    focUV -= .5;
-    float focNoise = smoothstep(0., 1., cnoise(focUV * 15.));
-    float circle = length(focUV - .35 * focNoise);
+    vec2 zoomedUv = getZoomedUv(uv, zoomInTransiTiming);
+    vec4 scene0 = texture2D(uScene0, zoomedUv);
+
+    // vec4 ambiantScene0 = getMountainAmbiant();
+
+    vec4 scene0BW = vec4(applyBlackAndWhite(scene0.rgb), 1.);
+
+    // -------------------- //
+    //        Focus         //
+    // -------------------- //
+    vec2 focTime = vec2(cos(uTime * .001) * .1, sin(uTime * .001) * .1);
+    vec2 focUV = uv + focTime;
+    focUV -= (.5 + focTime * .5);
+
+    float focNoise = smoothstep(0., 1., cnoise(focUV * uFocProgress));
+    float circle = length((focUV - .35 * focNoise));
 
     float bwTime = (cos(uTime * .001) + uTime * .5) * -.001;
     vec2 bwUv = vec2(focUV.x * cos(bwTime) - focUV.y * sin(bwTime), focUV.x * sin(bwTime) + focUV.y * cos(bwTime));
-    float bwNoise = smoothstep(0., 1., cnoise(focUV * 4. + bwTime)) * .3;
+    float bwNoise = smoothstep(0., 1., cnoise(focUV * 4. + bwTime)) * .75;
 
-    scene0BW = mix(vec4(0.), scene0BW, (1. - bwNoise));
+    scene0BW = mix(vec4(0.), scene0BW, (1. - bwNoise * .35));
     scene0BW.a = bwNoise;
-    scene0.rgb = mix(scene0.rgb, scene0BW.rgb, uFocProgress * .5);
-    
-    // float sceneMask = scene0.r * length(focUV);
-    // float circle = sceneMask;
+    scene0.rgb = mix(scene0.rgb, scene0BW.rgb, uFocProgress * .35);
 
-    focUV += .5;
+    focUV += (.5 + focTime * .5);
     
     // float focVal = 1. - smoothstep(circle, 0.0, uFocProgress);
     // float focVal2 = 1. - smoothstep(circle, 0.0, uFocProgress - .35);
     
-    float focVal = 1. - smoothstep(circle, 0.0, 1. - uFocProgress - sceneMask);
-    float focVal2 = 1. - smoothstep(circle, 0.0, 1. - uFocProgress + .35);
+    float focVal = 1. - smoothstep(circle, 0.0, 1. - uFocProgress);
+    float focVal2 = 1. - smoothstep(circle, 0.0, 1. - uFocProgress + .75);
 
     vec3 sceneRGB = scene0.rgb; 
-    vec3 coveredScene = mix(sceneRGB, vec3(.98), focVal * uFocProgress);
+    vec3 coveredScene = mix(sceneRGB, uFocTransitionColor, uFocProgress);
     scene0.rgb = mix(sceneRGB, coveredScene, focVal * uFocProgress);
-    scene0.rgb = mix(scene0.rgb, mix(sceneRGB, coveredScene, .5), (focVal2 + .25) * uFocProgress);
+    scene0.rgb = mix(scene0.rgb, mix(sceneRGB, coveredScene, .6), focVal2 * uFocProgress);
 
+    // scene0.rgb = mix(sceneRGB, coveredScene, focVal * uFocProgress);
+    // scene0.rgb = mix(scene0.rgb, mix(sceneRGB, coveredScene, .35), uFocProgress);
+
+    // scene0.rgb = mix(sceneRGB, coveredScene, focVal * uFocProgress);
+    // scene0.rgb = mix(scene0.rgb, mix(sceneRGB, coveredScene, .5), (focVal2 + .25) * uFocProgress);
+
+    // -------------------- //
+    //       Scene 1        //
+    // -------------------- //
     vec2 scene1UV = vec2(uv.x,uv.y-(1.0-uTransition));
     vec4 scene1 = texture2D(uScene1, scene1UV);
 
     // -------------------- //
     //     Transition       //
     // -------------------- //
-    float inverseuTransi = -uTransition + 1.;
-    float cloudSizeMultiplicator = pow((inverseuTransi-0.5) * 2., 8.) * -.35 + .35;
-    vec4 transiWithColor = vec4(step(inverseuTransi,uv.y),step(uv.y,inverseuTransi),0.0,1.0);
 
-    //vec4 test = vec4(step(uTransition,uv.y)*topImage.x+step(uv.y,uTransition)*bottomImage.x,step(uTransition,uv.y)*topImage.y+step(uv.y,uTransition)*bottomImage.y,step(uTransition,uv.y)*topImage.z+step(uv.y,uTransition)*bottomImage.z,1.0);
-    vec4 cloud = step(cnoise(uv*30.0),0.1) * vec4(0.81,0.87,0.96,1.0) + step(0.1,cnoise(uv*30.0)) * vec4(1.0);
-    frag = scene0 * step(uv.y,inverseuTransi) + step(inverseuTransi,uv.y) * scene1;
+    // Obtenir la couleur de la texture à la nouvelle position UV
+    vec4 scene0Texture = texture2D(uScene0, zoomedUv);
+    vec4 scene1Texture = texture2D(uScene1,uv);
+    
 
-    float isInCloudBand = max(sign(uv.y-(inverseuTransi-(cloudSizeMultiplicator+sin(uv.x*40.0)*cloudSizeMultiplicator*0.05))),0.0) * max(sign((inverseuTransi+cloudSizeMultiplicator+sin(uv.x*40.0)*cloudSizeMultiplicator*0.05)-uv.y),0.0);
-    frag *= (-isInCloudBand+1.0);
-    frag += isInCloudBand * cloud;
+    scene0 = mix(scene0, vec4(1.0), zoomInTransiTiming);
+    frag = mix(scene1, scene0, fadeOutTransiTiming);
 
     // -------------------- //
     //        Modal         //
@@ -173,7 +209,35 @@ void main() {
     float m = min(blob.r + blob.g + blob.b, 1.);
     float mask = 1. - min(m, 1.);
 
-    frag = mix(frag, mix(frag, vec4(uModalColor, 1.), (1. - mask) * play), .95);
+    frag = mix(frag, mix(frag, vec4(uModalColor, .95), (1. - mask) * play), .995);
+
+    // -------------------- //
+    //         Sky          //
+    // -------------------- //
+    float skyTime = (sin(uTime * .0007) + uTime * .5) * -.001;
+    float skyNoise1 = smoothstep(0., 1., cnoise(uv * 4. + skyTime * vec2(1., .5))) * .75;
+
+    vec3 skyColor = uBackgroundColor;
+    skyColor = mix(skyColor, vec3(0.), skyNoise1 * .5);
+
+    frag = vec4(mix(skyColor, frag.rgb, frag.a), 1.);
+
+    // -------------------- //
+    //      Post Proc       //
+    // -------------------- //
+    vec3 noiseT = texture2D(uNoisePostProc, vUvNoise * uNoiseRepeat).rgb;
+    // vec3 noiseScene0T = texture2D(uScene0, vUvNoise).rgb;
+
+    // vec3 noise = mix(noiseT, noiseScene0T, .3);
+
+    // frag.rgb = mix(noiseT, frag.rgb, clamp(cnoise(uv * 3. - uTime * .00025) * 2., 0.5, .9));
+    // frag.rgb = mix(noiseT, frag.rgb, noiseT.r * .99);
+    frag.rgb = mix(frag.rgb, vec3(0.), abs(1. - noiseT.r) * .8 );
 
     gl_FragColor = frag;
+    // gl_FragColor = getMountainAmbiant();
+
+   
+    #include <tonemapping_fragment> // To fix tonemapping problems when using render targets (only if tone mapping is enabled)
+    #include <colorspace_fragment> // To fix colors problems when using render targets
 }

@@ -7,6 +7,7 @@ type TOptions = {
   speed?: number
   factor?: number
   current?: number
+  decimal?: number
   disabled?: boolean
 }
 
@@ -24,6 +25,7 @@ export default class ScrollManager extends EventEmitter {
   public delta: number
   public target: number
   public current: number
+  public decimal: number
   public limit?: TOptions['limit']
 
   // Private
@@ -34,7 +36,14 @@ export default class ScrollManager extends EventEmitter {
   // Plugin
   private $bus: any
 
-  constructor({ limit, speed, factor, current, disabled }: TOptions = {}) {
+  constructor({
+    limit,
+    speed,
+    factor,
+    current,
+    decimal,
+    disabled,
+  }: TOptions = {}) {
     super()
 
     // Get options
@@ -43,6 +52,7 @@ export default class ScrollManager extends EventEmitter {
     this.factor = factor ?? 0.3
     this.current = current ?? 0
     this.target = current ?? 0
+    this.decimal = decimal ?? 10
     this.disabled = disabled ?? false
 
     // Plugin
@@ -193,7 +203,7 @@ export default class ScrollManager extends EventEmitter {
 
     const prev = this.current
     const current = MathUtils.lerp(this.current, this.target, this.speed)
-    this.current = Math.floor(current * 1000) / 1000
+    this.current = Math.floor(current * this.decimal) / this.decimal
 
     if (this.current !== prev) this._emit()
   }
