@@ -12,7 +12,7 @@ export default class Resources {
     // Get elements from experience
     this.experience = new Experience()
     this.renderer = this.experience.renderer
-    Cache.enabled = !this.experience.debug
+    Cache.enabled = true
 
     // New elements
     this.sources = []
@@ -178,9 +178,9 @@ export default class Resources {
           this.renderer.instance.clear()
           this.groupEnd()
         }
-        setTimeout(() =>
-          this.renderer.instance.render(tmpScene, this.renderer.camera)
-        )
+
+        console.log('preload start for', current.name)
+        this.renderer.instance.render(tmpScene, this.renderer.camera)
       } else {
         this.groupEnd()
       }
