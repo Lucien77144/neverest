@@ -1,0 +1,32 @@
+.call-to-scroll {
+  position: fixed;
+  z-index: 1;
+  transform: translateX(-50%);
+  bottom: 0;
+  left: 50%;
+  transition: 0.25s ease-in-out;
+  transition-property: opacity, visibility;
+  will-change: opacity, visibility;
+  display: flex;
+  align-items: center;
+  height: 10rem;
+
+  .lottie {
+    width: auto;
+    height: 70%;
+  }
+
+  .label {
+    font-size: .9rem;
+    font-family: $azeret;
+    width: 8rem;
+    color: $secondary;
+    margin-left: 1rem;
+    text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  &.hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+}

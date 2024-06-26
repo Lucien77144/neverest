@@ -14,6 +14,7 @@ export default {
     },
   },
   CLOSE: 'Close',
+  SCROLL: 'Scroll to explore',
   SUBTITLES: 'Subtitles',
   SOUNDS: 'Sounds',
   LANGS: 'Language',

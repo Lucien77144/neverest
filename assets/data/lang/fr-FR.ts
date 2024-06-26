@@ -14,6 +14,7 @@ export default {
     },
   },
   CLOSE: 'Fermer',
+  SCROLL: 'Scrollez pour explorer',
   SUBTITLES: 'Sous-titres',
   SOUNDS: 'Sons',
   LANGS: 'Langue',
@@ -53,7 +54,8 @@ export default {
   LANDING:
     "Escaladez l'Everest et plongez dans les récits passionnants des expéditions historiques, découvrez les défis actuels des alpinistes et explorez les visions futures de cette montagne légendaire.",
   LANDING_START: 'Cette expérience propose du contenu audio.',
-  LANDING_START_2: 'Pour en profiter dans le meilleur des cadres, nous vous conseillons d’activer le son.',
+  LANDING_START_2:
+    'Pour en profiter dans le meilleur des cadres, nous vous conseillons d’activer le son.',
   ACTIVATE: 'Activer le son',
   NO_ACTIVATE: 'Ne pas activer',
   BASECAMP: 'Camp de base',
@@ -68,5 +70,6 @@ export default {
   WESTRIDGE: 'Arête Ouest',
   INTRO_TITLE_1: 'Ouvrez la voie',
   INTRO_TITLE_2: 'Neverest',
-  INTRO_CONTENT: "Explorez l’Everest à travers un documentaire immersif pour découvrir et comprendre les enjeux qui sont les siens au cours de différentes époques."
+  INTRO_CONTENT:
+    'Explorez l’Everest à travers un documentaire immersif pour découvrir et comprendre les enjeux qui sont les siens au cours de différentes époques.',
 }

@@ -25,6 +25,7 @@ export default class BaseCamp extends BasicScene {
     this.list = []
     this.playing = false
     this.factorChange = false
+    this.callToScrollFlag = false
 
     // Store
     // Actions
@@ -73,6 +74,11 @@ export default class BaseCamp extends BasicScene {
    */
   watchCurrentScroll(value, visibility = true) {
     if (this.scrollManager.disabled) return
+
+    if (value > 2.5 && !this.callToScrollFlag) {
+      this.callToScrollFlag = true
+      this.$bus.emit('callScroll:stop')
+    }
 
     const trigger = this.interest.list?.find(({ start, end }) => {
       return value >= start && value <= end

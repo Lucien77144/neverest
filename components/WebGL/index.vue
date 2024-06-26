@@ -12,6 +12,7 @@
   </div>
   <canvas ref="canvasRef" class="canvas" />
   <div id="webgl-interface">
+    <UICallToScroll />
     <UIInterestData />
     <UITitle />
     <div ref="startBtnRef" class="start__btn hidden">
