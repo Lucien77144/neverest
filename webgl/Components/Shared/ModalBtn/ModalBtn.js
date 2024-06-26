@@ -97,7 +97,7 @@ export default class ModalBtn extends BasicItem {
    * Dispose
    */
   dispose() {
-    this.keysManager.destroy()
+    this.keysManager.off('keydown')
     this.$bus.off('modal:toggle')
   }
 }

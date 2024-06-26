@@ -173,7 +173,7 @@ export default class SceneManager {
 
         if (!isHalf.value && progress >= 0.5) {
           isHalf.value = true
-          this.$bus.emit('scene--transition:half', next.name)
+          this.$bus.emit('cssRender:toggle', next.name)
         }
 
         // Interpolate values :
@@ -266,6 +266,7 @@ export default class SceneManager {
 
     // Start navigation
     this.$bus.on('scene:switch', (scene) => this.switch(scene))
+    this.$bus.emit('cssRender:toggle', scene.name)
 
     return new Promise((resolve) => {
       const prev = this.active.scene.onAfterRender

@@ -27,7 +27,7 @@ export default class Flag1953 extends BasicItem {
       audioBtnFlag53: new AudioBtn({
         position: this.position.clone().add(new Vector3(0, 1, 0)),
         source: this.resources.flag_1953,
-        name: this.name + '_audio',
+        name: this.name,
       }),
     }
   }

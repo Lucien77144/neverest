@@ -415,8 +415,10 @@ export default class BasicScene {
   addCSS2D(item) {
     this.css2d ??= new CSS2DManager(this.scene, this.camera.instance)
 
-    const classList = (item.classList ?? '') + ` ${this.infos?.name}`
-    this.addToCSS2DList({ ...item, classList })
+    this.addToCSS2DList({
+      ...item,
+      classList: (item.classList || '') + ' ' + this.infos?.name,
+    })
   }
 
   /**
@@ -426,8 +428,10 @@ export default class BasicScene {
   addCSS3D(item) {
     this.css3d ??= new CSS3DManager(this.scene, this.camera.instance)
 
-    const classList = (item.classList ?? '') + ` ${this.infos?.name}`
-    this.addToCSS3DList({ ...item, classList })
+    this.addToCSS3DList({
+      ...item,
+      classList: (item.classList || '') + ' ' + this.infos?.name,
+    })
   }
 
   /**

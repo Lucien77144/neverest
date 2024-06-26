@@ -26,7 +26,7 @@ export default class Flag2024 extends BasicItem {
       audioBtnFlag24: new AudioBtn({
         position: this.position.clone().add(new Vector3(0, 0.2, 0)),
         source: this.resources.drapeau_priere_2024,
-        name: this.name + '_audio',
+        name: this.name,
       }),
     }
   }

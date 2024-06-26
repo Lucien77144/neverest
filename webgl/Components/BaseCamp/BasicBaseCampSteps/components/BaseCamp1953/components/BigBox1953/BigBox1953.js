@@ -26,7 +26,7 @@ export default class BigBox1953 extends BasicItem {
       audioBtnBox53: new AudioBtn({
         position: new Vector3(-4.647, 1, -35.246),
         source: this.resources.box_1953,
-        name: this.name + '_audio',
+        name: this.name,
       }),
     }
   }

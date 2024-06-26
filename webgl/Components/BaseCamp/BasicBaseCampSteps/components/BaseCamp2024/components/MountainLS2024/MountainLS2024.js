@@ -24,7 +24,7 @@ export default class MountainLS2024 extends BasicItem {
       audioBtnLS24: new AudioBtn({
         position: new Vector3(-8, 10, -135),
         source: this.resources.montagne_2024,
-        name: this.name + '_audio',
+        name: this.name,
       }),
     }
   }

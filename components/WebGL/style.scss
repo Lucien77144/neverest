@@ -42,3 +42,19 @@
     transition: 0.25s ease-in-out;
   }
 }
+
+.scene {
+  :deep(.basecamp) {
+    transition: 1s ease-in-out 0.5s;
+    transition-property: opacity, visibility;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &:not(&--basecamp) {
+    :deep(.basecamp) {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+}
