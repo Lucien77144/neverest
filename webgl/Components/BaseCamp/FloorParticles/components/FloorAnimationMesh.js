@@ -17,10 +17,10 @@ export default class FloorAnimationMesh extends BasicItem {
   }
 
   /**
-   * On mouse move
+   * On mouse hover
    * @param {*} target
    */
-  onMouseMove({ target }) {
+  onMouseHover({ target }) {
     this.animEffect?.setTarget(target.point)
   }
 

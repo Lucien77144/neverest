@@ -66,9 +66,9 @@ export default class IntroGroup extends BasicItem {
   }
 
   /**
-   * On mouse move
+   * On mouse hover
    */
-  onMouseMove(e) {
+  onMouseHover(e) {
     this.components.planeTexture1.cursorXPos = e.centered.x
     this.components.planeTexture2.cursorXPos = e.centered.x
     this.components.planeTexture3.cursorXPos = e.centered.x
