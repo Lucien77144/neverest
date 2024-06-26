@@ -1,8 +1,5 @@
 import { UIAudioPlayer } from '#components'
-import gsap from 'gsap'
-import { CustomEase } from 'gsap/all'
 import BasicItem from '~/webgl/Modules/Basics/BasicItem'
-gsap.registerPlugin(CustomEase)
 
 export default class AudioBtn extends BasicItem {
   /**
