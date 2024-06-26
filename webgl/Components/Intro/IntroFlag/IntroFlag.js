@@ -1,4 +1,4 @@
-import { Mesh, MeshStandardMaterial, PlaneGeometry, PointLight, ShaderMaterial, Uniform } from "three"
+import { AmbientLight, Mesh, MeshStandardMaterial, PlaneGeometry, PointLight, ShaderMaterial, Uniform } from "three"
 import Experience from "~/webgl/Experience"
 import BasicItem from "~/webgl/Modules/Basics/BasicItem"
 import flagVert from './FlagShader/FlagShader.vert?raw'
@@ -55,7 +55,7 @@ export default class IntroFlag extends BasicItem {
       //  },
       //})
 
-      const flagMaterial = new MeshStandardMaterial({map:this.resources.flagTexture})
+      const flagMaterial = new MeshStandardMaterial({map:this.resources.flagTextureIntro,transparent:true})
       flagMaterial.onBeforeCompile = (shader) => {
         shader.uniforms.uTime = { value: 0 }; // Ajout de l'uniforme uTime
         shader.vertexShader = `
@@ -96,8 +96,7 @@ export default class IntroFlag extends BasicItem {
       };
       this.flag = new Mesh(flagGeometry, flagMaterial)
       this.flag.position.set(1.2,0,3)
-      const light = new PointLight(0xffffff,4,0,0)
-      light.position.set(2,1,4.2)
+      const light = new AmbientLight(0xFFFFFF,4)
       this.item.add(light)
   
       this.item.add(this.flag)
