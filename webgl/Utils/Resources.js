@@ -178,7 +178,9 @@ export default class Resources {
           this.renderer.instance.clear()
           this.groupEnd()
         }
-        this.renderer.instance.render(tmpScene, this.renderer.camera)
+        setTimeout(() =>
+          this.renderer.instance.render(tmpScene, this.renderer.camera)
+        )
       } else {
         this.groupEnd()
       }
