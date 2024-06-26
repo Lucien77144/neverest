@@ -179,8 +179,10 @@ export default class Resources {
           this.groupEnd()
         }
 
-        console.log('preload start for', current.name)
-        this.renderer.instance.render(tmpScene, this.renderer.camera)
+        setTimeout(() => {
+          console.log('preload start for', current.name)
+          this.renderer.instance.render(tmpScene, this.renderer.camera)
+        }, 100)
       } else {
         this.groupEnd()
       }
