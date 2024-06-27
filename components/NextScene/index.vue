@@ -10,8 +10,7 @@
     "
   >
     <UIText style="top: 10rem; right: 5rem"
-      >Voici vers quoi tendent les prévisions pour 2050 si la situation ne
-      change pas.</UIText
+      >{{ $t('PREVISIONS_2050') }}</UIText
     >
     <UIDragBtn>
       {{ $t('DRAG') }}

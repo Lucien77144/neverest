@@ -52,15 +52,13 @@
           </div>
         </div>
         <UIText style="max-width: 80ch; bottom: 4rem"
-          >L’Everest n’est qu’un exemple parmi les désastres causé par le
-          tourisme de masse.<br />En soutenant ces organismes, nous avons
-          l'opportunité de changer les choses.</UIText
+          >{{$t('DESASTER_2050')}}<br />{{$t('CHANGE_THINGS_2050')}}</UIText
         >
       </div>
       <h1 class="alternative-end__date">2050</h1>
       <div ref="creditsRef" class="credits">
         <UIBtn :secondary="true">
-          Crédits
+          {{$t('CREDITS')}}
         </UIBtn>
       </div>
       <div
@@ -97,10 +95,10 @@
         </p>
       </div>
       <div ref="textRef1" style="top: 10rem; right: 35rem" class="text">
-        <UIText>Toutefois, il existe un second futur envisageable.</UIText>
+        <UIText>{{ $t('OTHER_FUTURE') }}</UIText>
       </div>
       <div ref="textRef2" style="bottom: 15rem; left: 6em" class="text">
-        <UIText>2050 arrive vite mais il est encore temps d’agir!</UIText>
+        <UIText>{{ $t('GO_2050') }}</UIText>
       </div>
       <img
         class="alternative-end__scene"
