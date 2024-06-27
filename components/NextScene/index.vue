@@ -3,10 +3,11 @@
     v-if="navigation?.scene?.nav"
     ref="next"
     class="next"
-    :class="{
-      active:
-        scroll > 100 - GAP && navigation.scene.nav.end !== scenes.nav.total,
-    }"
+    :class="
+      scroll > 100 - GAP &&
+      navigation.scene.nav.end == scenes.nav.total &&
+      'active'
+    "
   >
     <UIText style="top: 10rem; right: 5rem"
       >Voici vers quoi tendent les prévisions pour 2050 si la situation ne
@@ -35,10 +36,12 @@ const scroll = computed(() => useExperienceStore().getScroll)
 const navigation = computed(() => useExperienceStore().getNavigation)
 
 $bus.on('modal:init', () => {
+  console.log(navigation.value?.scene?.nav?.end, scenes.nav.total);
+  
   if (
     scroll.value > 100 - GAP &&
-    navigation.value?.scene?.nav?.end !== scenes.nav.total
-  ) {
+    navigation.value?.scene?.nav?.end == scenes.nav.total
+  ) {    
     next.value?.classList.remove('active')
   }
 })
@@ -46,8 +49,10 @@ $bus.on('modal:destroy', () => {
   setTimeout(() => {
     if (
       scroll.value > 100 - GAP &&
-      navigation.value?.scene?.nav?.end !== scenes.nav.total
+      navigation.value?.scene?.nav?.end == scenes.nav.total
     ) {
+      console.log('yes');
+      
       next.value?.classList.add('active')
     }
   }, 1000)

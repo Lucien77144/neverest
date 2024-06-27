@@ -1,5 +1,5 @@
 <template>
-  <div class="call-to-scroll" ref="callToScrollRef">
+  <div class="call-to-scroll hidden" ref="callToScrollRef">
     <div class="lottie">
       <client-only>
         <Vue3Lottie
@@ -26,6 +26,12 @@ const callToScrollRef = ref<HTMLElement>()
 
 // Bus
 const { $bus }: any = useNuxtApp()
+
+$bus.on('audio:start', () => {
+  setTimeout(() => {
+    callToScrollRef.value?.classList.remove('hidden')
+  }, 6000)
+})
 
 $bus.on('callScroll:stop', () => {
   callToScrollRef.value?.classList.add('hidden')
