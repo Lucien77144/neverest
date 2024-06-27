@@ -10,20 +10,55 @@
     width: 100vw;
   }
 
+  &__assos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5rem;
+
+    &__items {
+      display: flex;
+      justify-content: center;
+      gap: 5rem;
+
+      a {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        color: $secondary;
+        font-size: .8rem;
+        gap: 1rem;
+        transition: transform 0.15s ease-in-out;
+
+        &:hover {
+          transform: scale(1.05);
+        }
+
+        img {
+          height: 2.8rem;
+          width: auto;
+        }
+      }
+    }
+  }
+
   &__end {
     position: absolute;
     top: 0;
     left: 0;
     opacity: 0;
+    visibility: hidden;
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 7, 33, 0.85);
+    background-color: rgba(0, 7, 33, 0.90);
     z-index: 30;
     color: $secondary;
-    pointer-events: none;
 
     &__close {
       position: absolute;
@@ -97,6 +132,8 @@
     height: 100%;
     width: 100%;
     object-fit: cover;
+    user-select: none;
+    pointer-events: none;
   }
 
   &__close {
@@ -163,3 +200,59 @@
   top: 2rem;
   right: 4rem;
 }
+
+.modal-player {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 4rem;
+  height: 4rem;
+  cursor: pointer;
+  animation: fadeIn 1s;
+  transition: 0.5s ease-in-out;
+  transition-property: opacity, transform;
+  will-change: opacity, transform;
+  display: block;
+  border-radius: 50%;
+  animation: pulse 4s infinite;
+  opacity: 0;
+  z-index: 3;
+
+  &__container {
+    padding: 1px;
+    height: 100%;
+    border-radius: 50%;
+    background-color: $secondary;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  }
+}
+
+.hidden {
+  display: none;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  50%,
+  100% {
+    box-shadow: 0 0 0 2px rgba($secondary, 1);
+  }
+  25% {
+    box-shadow: 0 0 0 15px rgba($secondary, 0);
+  }
+  25.01% {
+    box-shadow: 0 0 0 0px rgba($secondary, 1);
+  }
+}
+

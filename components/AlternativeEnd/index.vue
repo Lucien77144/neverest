@@ -4,10 +4,7 @@
       <div ref="alternativeEndEndRef" class="alternative-end__end">
         <div
           class="alternative-end__end__close"
-          @click="
-          $bus.emit('alternativeEnd:hideEnd'),
-            $bus.emit('audio:click')
-        "
+          @click="$bus.emit('alternativeEnd:hideEnd'), $bus.emit('audio:click')"
         >
           <img
             class="alternative-end__end__close__icon"
@@ -18,13 +15,69 @@
             {{ $t('CLOSE') }}
           </p>
         </div>
-        bla bla texte
+        <div class="alternative-end__assos">
+          <div class="alternative-end__assos__items">
+            <a
+              href="https://everestsummiteersassociation.org/"
+              target="_blank"
+              rel="noopener"
+              ><img src="/assets/img/ESA.png" alt="" />Everest summiters
+              association</a
+            >
+            <a href="https://spcc.org.np/" target="_blank" rel="noopener"
+              ><img src="/assets/img/SPCC.png" alt="" />Sagarmatha Pollution
+              Control Committee</a
+            >
+            <a
+              href="https://www.mteverestbiogasproject.org/"
+              target="_blank"
+              rel="noopener"
+              ><img src="/assets/img/BiogasProject.png" alt="" />Mount Everest
+              Biogas Project</a
+            >
+          </div>
+          <div class="alternative-end__assos__items">
+            <a
+              href="https://www.sherpafoundation.org/"
+              target="_blank"
+              rel="noopener"
+              ><img src="/assets/img/SF.png" alt="" />Sherpa Foundation</a
+            >
+            <a
+              href="https://globalconservation.org/"
+              target="_blank"
+              rel="noopener"
+              ><img src="/assets/img/GC.png" alt="" />Global Conservation</a
+            >
+          </div>
+        </div>
+        <UIText style="max-width: 80ch; bottom: 4rem"
+          >L’Everest n’est qu’un exemple parmi les désastres causé par le
+          tourisme de masse.<br />En soutenant ces organismes, nous avons
+          l'opportunité de changer les choses.</UIText
+        >
       </div>
       <h1 class="alternative-end__date">2050</h1>
       <div ref="creditsRef" class="credits">
-        <UIBtn :secondary="true" @click="$bus.emit('alternativeEnd:showEnd')">
+        <UIBtn :secondary="true">
           Crédits
         </UIBtn>
+      </div>
+      <div
+        ref="modalPlayerRef"
+        class="modal-player"
+        @click="$bus.emit('alternativeEnd:showEnd'), $bus.emit('audio:click')"
+      >
+        <div class="modal-player__container">
+          <client-only>
+            <Vue3Lottie
+              ref="lottieRef"
+              :animationData="modalAnimation"
+              :autoPlay="true"
+              :loop="true"
+            />
+          </client-only>
+        </div>
       </div>
       <div
         class="alternative-end__close"
@@ -60,6 +113,8 @@
 
 <script lang="ts" setup>
 import gsap from 'gsap'
+import { Vue3Lottie } from 'vue3-lottie'
+import modalAnimation from '~/assets/data/modalAnim.json'
 
 // Bus
 const { $bus }: any = useNuxtApp()
@@ -70,13 +125,15 @@ const alternativeEndEndRef = ref<HTMLElement>()
 const textRef1 = ref<HTMLElement>()
 const textRef2 = ref<HTMLElement>()
 const creditsRef = ref<HTMLElement>()
+const modalPlayerRef = ref<HTMLElement>()
 
 $bus.on('alternativeEnd:show', () => {
   if (
     !textRef1.value ||
     !textRef2.value ||
     !alternativeEndRef.value ||
-    !creditsRef.value
+    !creditsRef.value ||
+    !modalPlayerRef.value
   )
     return
   gsap.to(alternativeEndRef.value, {
@@ -102,6 +159,12 @@ $bus.on('alternativeEnd:show', () => {
     duration: 0.5,
     ease: 'power2.inOut',
   })
+  gsap.to(modalPlayerRef.value, {
+    opacity: 1,
+    delay: 1.5,
+    duration: 0.5,
+    ease: 'power2.inOut',
+  })
 })
 
 $bus.on('alternativeEnd:hide', () => {
@@ -109,13 +172,19 @@ $bus.on('alternativeEnd:hide', () => {
     !textRef1.value ||
     !textRef2.value ||
     !alternativeEndRef.value ||
-    !creditsRef.value
+    !creditsRef.value ||
+    !modalPlayerRef.value
   )
     return
   gsap.to(textRef2.value, {
     opacity: 0,
     duration: 0.3,
     ease: 'power2.inOut',
+  })
+  gsap.to(modalPlayerRef.value, {
+    opacity: 0,
+    duration: 0.3,
+    ease: 'power2.Out',
   })
   gsap.to(textRef1.value, {
     opacity: 0,
@@ -140,6 +209,7 @@ $bus.on('alternativeEnd:showEnd', () => {
   if (!alternativeEndEndRef.value) return
   gsap.to(alternativeEndEndRef.value, {
     opacity: 1,
+    visibility: 'visible',
     duration: 0.5,
     ease: 'power2.inOut',
   })
@@ -150,6 +220,13 @@ $bus.on('alternativeEnd:hideEnd', () => {
     opacity: 0,
     duration: 0.5,
     ease: 'power2.inOut',
+    onComplete: () => {
+      if (!alternativeEndEndRef.value) return
+      gsap.to(alternativeEndEndRef.value, {
+        visibility: 'hidden',
+        duration: 0,
+      })
+    },
   })
 })
 </script>
