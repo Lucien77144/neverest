@@ -4,6 +4,7 @@
     <UIRadialProgress />
     <div class="panel">
       <Modal />
+      <AlternativeEnd />
       <UISubtitle />
       <NextScene />
       <!-- <UIProgressBar /> -->

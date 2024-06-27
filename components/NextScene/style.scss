@@ -1,15 +1,15 @@
 .next {
   position: fixed;
-  left: 50%;
+  width: 100%;
   transition: 1s cubic-bezier(0.4, -1, 0.4, 2);
-  transform: translate(-50%, -100%);
+  transform: translate(0, -100%);
   opacity: 0;
   pointer-events: all;
   visibility: hidden;
 
   &.active {
     visibility: visible;
-    transform: translate(-50%, 0) !important;
+    transform: translate(0, 0) !important;
     opacity: 1 !important;
   }
 }

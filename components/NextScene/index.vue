@@ -8,7 +8,11 @@
         scroll > 100 - GAP && navigation.scene.nav.end !== scenes.nav.total,
     }"
   >
-    <UIDragBtn @navigate="">
+    <UIText style="top: 10rem; right: 5rem"
+      >Voici vers quoi tendent les prévisions pour 2050 si la situation ne
+      change pas.</UIText
+    >
+    <UIDragBtn>
       {{ $t('DRAG') }}
     </UIDragBtn>
   </div>
@@ -29,6 +33,25 @@ const { $bus }: any = useNuxtApp()
 // Getters
 const scroll = computed(() => useExperienceStore().getScroll)
 const navigation = computed(() => useExperienceStore().getNavigation)
+
+$bus.on('modal:init', () => {
+  if (
+    scroll.value > 100 - GAP &&
+    navigation.value?.scene?.nav?.end !== scenes.nav.total
+  ) {
+    next.value?.classList.remove('active')
+  }
+})
+$bus.on('modal:destroy', () => {
+  setTimeout(() => {
+    if (
+      scroll.value > 100 - GAP &&
+      navigation.value?.scene?.nav?.end !== scenes.nav.total
+    ) {
+      next.value?.classList.add('active')
+    }
+  }, 1000)
+})
 
 /**
  * Switch scene

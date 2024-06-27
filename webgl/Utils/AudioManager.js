@@ -73,6 +73,7 @@ export default class AudioManager {
       ambient_1953: this.resources.items.ambient_1953,
       ambient_2024: this.resources.items.ambient_2024,
       ambient_2050: this.resources.items.ambient_2050,
+      ambient_conclusion: this.resources.items.ambient_conclusion,
     }
 
     this.$bus.on('audio:click', () => sounds.click.play())
@@ -164,7 +165,7 @@ export default class AudioManager {
       sounds.ambient_2024.loop = true
       sounds.ambient_2024.volume = 0
       gsap.to(sounds.ambient_2024, {
-        volume: 0.5,
+        volume: 0.3,
         duration: 3,
       })
     })
@@ -180,11 +181,42 @@ export default class AudioManager {
         },
       })
 
+      // fade out conclusion
+      gsap.to(sounds.ambient_conclusion, {
+        volume: 0,
+        duration: 3,
+        onComplete: () => {
+          sounds.ambient_conclusion.pause()
+          sounds.ambient_conclusion.currentTime = 0
+        },
+      })
+
       // play 2050
       sounds.ambient_2050.play()
       sounds.ambient_2050.loop = true
       sounds.ambient_2050.volume = 0
       gsap.to(sounds.ambient_2050, {
+        volume: 1,
+        duration: 3,
+      })
+    })
+
+    this.$bus.on('audio:conclusion', () => {
+      // fade out 2050
+      gsap.to(sounds.ambient_2050, {
+        volume: 0,
+        duration: 3,
+        onComplete: () => {
+          sounds.ambient_2050.pause()
+          sounds.ambient_2050.currentTime = 0
+        },
+      })
+
+      // play conclusion
+      sounds.ambient_conclusion.play()
+      sounds.ambient_conclusion.loop = true
+      sounds.ambient_conclusion.volume = 0
+      gsap.to(sounds.ambient_conclusion, {
         volume: 1,
         duration: 3,
       })
