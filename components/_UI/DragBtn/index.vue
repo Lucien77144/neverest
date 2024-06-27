@@ -23,8 +23,11 @@ const dragger = ref<HTMLElement>()
 const drag = ref<HTMLElement>()
 const position = ref<number>(10)
 
+// Bus
+const { $bus }: any = useNuxtApp()
+
 // Emits
-const $emit = defineEmits(['navigate'])
+// const $emit = defineEmits(['navigate'])
 
 /**
  * On mounted
@@ -40,7 +43,9 @@ onMounted(() => {
     position.value = clamp(10, max, position.value + e.delta.y * -1)
 
     if (position.value === max) {
-      $emit('navigate')
+      // $emit('navigate')
+      $bus.emit('alternativeEnd:show')
+      $bus.emit('audio:conclusion')
     }
   })
 
