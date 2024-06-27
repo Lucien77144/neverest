@@ -15,6 +15,9 @@ export default {
   },
   CLOSE: 'Close',
   SCROLL: 'Scroll to explore',
+  REFRESH: 'Refresh',
+  NOT_SUPPORTED:
+    'The experience is not available in this format. Please use another device or switch to landscape mode and reload the page.',
   SUBTITLES: 'Subtitles',
   SOUNDS: 'Sounds',
   LANGS: 'Language',
@@ -52,7 +55,8 @@ export default {
   LANDING:
     'Climb Everest and immerse yourself in exciting tales of historic expeditions, discover the current challenges facing mountaineers and explore future visions of this legendary mountain.',
   LANDING_START: 'This experience offers audio content.',
-  LANDING_START_2: 'To enjoy it in the best possible setting, we recommend activating the sound.',
+  LANDING_START_2:
+    'To enjoy it in the best possible setting, we recommend activating the sound.',
   ACTIVATE: 'Activate sound',
   NO_ACTIVATE: 'Do not activate',
   BASECAMP: 'Base camp',
@@ -60,5 +64,6 @@ export default {
   SOUTHCOL: 'South col',
   INTRO_TITLE_1: 'open the way',
   INTRO_TITLE_2: 'Neverest',
-  INTRO_CONTENT: 'Explore Everest through an immersive documentary to discover and understand the challenges it has faced in different eras.',
+  INTRO_CONTENT:
+    'Explore Everest through an immersive documentary to discover and understand the challenges it has faced in different eras.',
 }

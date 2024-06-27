@@ -15,6 +15,9 @@ export default {
   },
   CLOSE: 'Fermer',
   SCROLL: 'Scrollez pour explorer',
+  REFRESH: 'Rafrachir',
+  NOT_SUPPORTED:
+    "L'expérience n'est pas disponible dans ce format. Veuillez utiliser un autre appareil ou passer en mode paysage puis recharger la page.",
   SUBTITLES: 'Sous-titres',
   SOUNDS: 'Sons',
   LANGS: 'Langue',

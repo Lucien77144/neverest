@@ -1,0 +1,21 @@
+.not-supported {
+  width: 100dvw;
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+
+  &__container {
+    width: 50%;
+    min-width: 400px;
+    max-width: 500px;
+    color: $white;
+    text-align: center;
+  }
+
+  .reload-btn {
+      z-index: 2;
+  }
+}
