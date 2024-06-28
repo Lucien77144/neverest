@@ -34,9 +34,7 @@ const { $bus }: any = useNuxtApp()
 const scroll = computed(() => useExperienceStore().getScroll)
 const navigation = computed(() => useExperienceStore().getNavigation)
 
-$bus.on('modal:init', () => {
-  console.log(navigation.value?.scene?.nav?.end, scenes.nav.total);
-  
+$bus.on('modal:init', () => {  
   if (
     scroll.value > 100 - GAP &&
     navigation.value?.scene?.nav?.end == scenes.nav.total
@@ -49,9 +47,7 @@ $bus.on('modal:destroy', () => {
     if (
       scroll.value > 100 - GAP &&
       navigation.value?.scene?.nav?.end == scenes.nav.total
-    ) {
-      console.log('yes');
-      
+    ) {      
       next.value?.classList.add('active')
     }
   }, 1000)

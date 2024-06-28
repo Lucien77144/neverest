@@ -30,7 +30,7 @@ const { $bus }: any = useNuxtApp()
 $bus.on('audio:start', () => {
   setTimeout(() => {
     callToScrollRef.value?.classList.remove('hidden')
-  }, 6000)
+  }, 1000)
 })
 
 $bus.on('callScroll:stop', () => {
