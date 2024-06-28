@@ -65,7 +65,7 @@ export default class BCRiver_2024 extends BasicItem {
   init() {
     this.setItem()
      
-    this.setMaterial()
+    // this.setMaterial()
   }
 
   update(){

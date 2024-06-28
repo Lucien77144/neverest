@@ -73,15 +73,6 @@
         "name": "introMountainPlan5",
         "source": "/img/introMountain/introMountain5.webp",
         "type": "texture"
-      },
-      {
-        "name": "introImg",
-        "source": "/img/EcranAccueil.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "introMountain",
-        "source": "/models/Intro/mount_everest_topo_map.glb"
       }
     ]
   },
@@ -237,16 +228,6 @@
         "type": "texture"
       },
       {
-        "name": "riverRepeat",
-        "source": "/img/riverRepeat.jpg",
-        "type": "texture"
-      },
-      {
-        "name": "CloudImg",
-        "source": "/img/Degrade.jpg",
-        "type": "texture"
-      },
-      {
         "name": "blob",
         "source": "/img/transitions/blob.svg",
         "type": "texture"
@@ -280,10 +261,6 @@
         "name": "BCMountainRS_2050_texture",
         "source": "/img/Mountains/mountainRS_2050.webp",
         "type": "texture"
-      },
-      {
-        "name": "BCTent",
-        "source": "/models/BaseCamp/tent.glb"
       },
       {
         "name": "BCTent_1_1953",
@@ -366,14 +343,6 @@
         "source": "/models/BaseCamp/Box/bigBox_2050.glb"
       },
       {
-        "name": "BCTent2024",
-        "source": "/models/BaseCamp/tent2024.glb"
-      },
-      {
-        "name": "BCTentMain2024",
-        "source": "/models/BaseCamp/tentMain2024.glb"
-      },
-      {
         "name": "BCMountain_1953",
         "source": "/models/BaseCamp/Mountains/mountain_1953.glb"
       },
@@ -454,10 +423,6 @@
         "source": "/models/BaseCamp/cam.glb"
       },
       {
-        "name": "TentMain",
-        "source": "/models/BaseCamp/TENT_MAINTEST.glb"
-      },
-      {
         "name": "VentTente1_1953",
         "source": "/img/texturesVent/Tente1_1953.jpg",
         "type": "texture"
@@ -536,24 +501,6 @@
         "name": "river2050_3",
         "source": "/img/riverTextures/2050/river_2050_3.webp",
         "type": "texture"
-      }
-    ]
-  },
-  {
-    "name": "iceFall",
-    "data": {},
-    "items": [
-      {
-        "name": "IFMountains",
-        "source": "/models/IceFall/mountains.glb"
-      },
-      {
-        "name": "IFIceblocks",
-        "source": "/models/IceFall/iceblocks.glb"
-      },
-      {
-        "name": "IFFloor",
-        "source": "/models/IceFall/floor.glb"
       }
     ]
   }
